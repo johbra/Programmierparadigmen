@@ -1,0 +1,2136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+<head>
+<!-- 2016-08-15 Mon 17:52 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Programmierparadigmen</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Johannes Brauer" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Programmierparadigmen</h1>
+
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Inhaltsideen</h2>
+<div class="outline-text-2" id="text-orgheadline1">
+<ul class="org-ul">
+<li>funktionale Programmierung</li>
+<li>logische Programmierung</li>
+<li>Contraint Programming</li>
+<li>Datalog/Datomic</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline13" class="outline-2">
+<h2 id="orgheadline13">Metadaten</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+</div><div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">Umfang/Semester</h3>
+<div class="outline-text-3" id="text-orgheadline2">
+<ul class="org-ul">
+<li>40 Uh / 5</li>
+<li>40 Uh / 6</li>
+<li>7 ECTS</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Prüfungsform</h3>
+<div class="outline-text-3" id="text-orgheadline3">
+<ul class="org-ul">
+<li>Klausur</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">Ziele</h3>
+<div class="outline-text-3" id="text-orgheadline7">
+</div><div id="outline-container-orgheadline4" class="outline-4">
+<h4 id="orgheadline4">Qualifikationsziel: Verständnis von mathematischen und formalen Grundlagen der Informatik</h4>
+<div class="outline-text-4" id="text-orgheadline4">
+<ul class="org-ul">
+<li>Modulziel:
+Absolventen kennen die mathematischen Grundlagen der funktionalen
+und prädikativen Programmierung.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline5" class="outline-4">
+<h4 id="orgheadline5">Qualifikationsziel: Kenntnisse und Fertigkeiten zur algorithmischen Formulierung von Problemlösungen und ihrer Umsetzung in verständliche und effiziente Computerprogramme</h4>
+<div class="outline-text-4" id="text-orgheadline5">
+<ul class="org-ul">
+<li>Modulziele:
+<ul class="org-ul">
+<li>Entwicklung der Fähigkeit, korrekte Programme systematisch zu entwickeln</li>
+<li>Entwicklung der Fähigkeit, fortgeschrittene Programmiertechniken anzuwenden</li>
+<li>Entwicklung der Fähigkeit den Nutzen verschiedener Programmierstile zu erkennen</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline6" class="outline-4">
+<h4 id="orgheadline6">Qualifikationsziel: Befähigung zum Einsatz professioneller Methoden und Werkzeuge zur Softwareentwicklung</h4>
+<div class="outline-text-4" id="text-orgheadline6">
+<ul class="org-ul">
+<li>Modulziel:
+Absolventen kennen innovative Methoden der professionellen Softwareentwicklung.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12">Lerninhalte lt. Modulhandbuch</h3>
+<div class="outline-text-3" id="text-orgheadline12">
+</div><div id="outline-container-orgheadline8" class="outline-4">
+<h4 id="orgheadline8">Gegenüberstellung der klassischen Programmierparadigmen:</h4>
+<div class="outline-text-4" id="text-orgheadline8">
+<ul class="org-ul">
+<li>imperative Programmierung</li>
+<li>funktionale Programmierung</li>
+<li>prädikative Programmierung</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline9" class="outline-4">
+<h4 id="orgheadline9">Funktionale Programmierung</h4>
+<div class="outline-text-4" id="text-orgheadline9">
+<ul class="org-ul">
+<li>Funktionsbegriff / funktionale Abstraktion</li>
+<li>Programmieren mit Funktionen</li>
+<li>Methodische Abstraktion: Entwurfsvorschriften à Funktionen hˆherer Ordnung</li>
+<li>weitere funktionale Programmiertechniken</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline10" class="outline-4">
+<h4 id="orgheadline10">Prädikative Programmierung</h4>
+<div class="outline-text-4" id="text-orgheadline10">
+<ul class="org-ul">
+<li>Grundlagen</li>
+<li>Programmiertechniken</li>
+<li>Anwendungen</li>
+<li>Prolog</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgheadline11" class="outline-4">
+<h4 id="orgheadline11">Erweiterung der prädikativen Programmierung</h4>
+<div class="outline-text-4" id="text-orgheadline11">
+<ul class="org-ul">
+<li>Constraint-Programmierung</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline51" class="outline-2">
+<h2 id="orgheadline51">Einstieg</h2>
+<div class="outline-text-2" id="text-orgheadline51">
+</div><div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27">Beispiele</h3>
+<div class="outline-text-3" id="text-orgheadline27">
+</div><div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14">Interpretieren Sie diesen Programmcode:</h4>
+<div class="outline-text-4" id="text-orgheadline14">
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">defn</span> <span style="color: #006699;">power</span> <span style="color: #7388D6;">[</span>x y<span style="color: #7388D6;">]</span>
+   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">if</span> <span style="color: #909183;">(</span>= y 0<span style="color: #909183;">)</span> 1
+       <span style="color: #909183;">(</span>* x <span style="color: #709870;">(</span>power x <span style="color: #907373;">(</span>- y 1<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline15" class="outline-4">
+<h4 id="orgheadline15">Aufgabe</h4>
+<div class="outline-text-4" id="text-orgheadline15">
+<p>
+Schreiben Sie eine statische Java-Methode, die ein Array von doubles
+als Argument akzeptiert und den Durchschnitt der Zahlen liefert.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline16" class="outline-4">
+<h4 id="orgheadline16">Lösung</h4>
+<div class="outline-text-4" id="text-orgheadline16">
+<div class="small">
+<div class="org-src-container">
+
+<pre class="src src-java"><span style="color: #0000FF;">public</span> <span style="color: #0000FF;">static</span> <span style="color: #6434A3;">double</span> <span style="color: #006699;">average</span> <span style="color: #707183;">(</span><span style="color: #6434A3;">double</span><span style="color: #7388D6;">[]</span> <span style="color: #BA36A5;">numbers</span><span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
+  <span style="color: #6434A3;">double</span> <span style="color: #BA36A5;">sum</span> = 0;
+  <span style="color: #0000FF;">for</span> <span style="color: #7388D6;">(</span><span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">i</span> = 0; i &lt; numbers.<span style="color: #6434A3;">length</span>; i++<span style="color: #7388D6;">)</span> <span style="color: #7388D6;">{</span>
+    sum += numbers<span style="color: #909183;">[</span>i<span style="color: #909183;">]</span>;
+  <span style="color: #7388D6;">}</span>
+  <span style="color: #0000FF;">return</span> sum / numbers.length;
+<span style="color: #707183;">}</span>
+</pre>
+</div>
+
+</div>
+
+<p>
+versus
+</p>
+
+<div class="small">
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">defn</span> <span style="color: #006699;">average</span>
+ <span style="color: #7388D6;">[</span>numbers<span style="color: #7388D6;">]</span>
+ <span style="color: #7388D6;">(</span>/ <span style="color: #909183;">(</span><span style="color: #006FE0;">apply</span> + numbers<span style="color: #909183;">)</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">count</span> numbers<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline17" class="outline-4">
+<h4 id="orgheadline17">Aufgabe</h4>
+<div class="outline-text-4" id="text-orgheadline17">
+<p>
+Gegeben ist eine Liste mit Preisen:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-java"><span style="color: #0000FF;">final</span> <span style="color: #6434A3;">List</span><span style="color: #707183;">&lt;</span><span style="color: #6434A3;">BigDecimal</span><span style="color: #707183;">&gt;</span> <span style="color: #BA36A5;">prices</span> = Arrays.asList<span style="color: #707183;">(</span>
+  <span style="color: #0000FF;">new</span> <span style="color: #6434A3;">BigDecimal</span><span style="color: #7388D6;">(</span><span style="color: #008000;">"10"</span><span style="color: #7388D6;">)</span>, <span style="color: #0000FF;">new</span> <span style="color: #6434A3;">BigDecimal</span><span style="color: #7388D6;">(</span><span style="color: #008000;">"30"</span><span style="color: #7388D6;">)</span>, <span style="color: #0000FF;">new</span> <span style="color: #6434A3;">BigDecimal</span><span style="color: #7388D6;">(</span><span style="color: #008000;">"17"</span><span style="color: #7388D6;">)</span>,
+  <span style="color: #0000FF;">new</span> <span style="color: #6434A3;">BigDecimal</span><span style="color: #7388D6;">(</span><span style="color: #008000;">"20"</span><span style="color: #7388D6;">)</span>, <span style="color: #0000FF;">new</span> <span style="color: #6434A3;">BigDecimal</span><span style="color: #7388D6;">(</span><span style="color: #008000;">"15"</span><span style="color: #7388D6;">)</span>, <span style="color: #0000FF;">new</span> <span style="color: #6434A3;">BigDecimal</span><span style="color: #7388D6;">(</span><span style="color: #008000;">"18"</span><span style="color: #7388D6;">)</span>,
+  <span style="color: #0000FF;">new</span> <span style="color: #6434A3;">BigDecimal</span><span style="color: #7388D6;">(</span><span style="color: #008000;">"45"</span><span style="color: #7388D6;">)</span>, <span style="color: #0000FF;">new</span> <span style="color: #6434A3;">BigDecimal</span><span style="color: #7388D6;">(</span><span style="color: #008000;">"12"</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>;
+</pre>
+</div>
+
+<p>
+Schreiben Sie Java-Code, der alle Preise größer als 20, rabattiert um
+10%, aufsummiert.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline22" class="outline-4">
+<h4 id="orgheadline22">Lösung</h4>
+<div class="outline-text-4" id="text-orgheadline22">
+</div><div id="outline-container-orgheadline18" class="outline-5">
+<h5 id="orgheadline18">Java &lt; 8</h5>
+<div class="outline-text-5" id="text-orgheadline18">
+<div class="org-src-container">
+
+<pre class="src src-java"><span style="color: #6434A3;">BigDecimal</span> <span style="color: #BA36A5;">totalOfDiscountedPrices</span> = <span style="color: #D0372D;">BigDecimal</span>.ZERO;
+
+<span style="color: #0000FF;">for</span><span style="color: #707183;">(</span><span style="color: #6434A3;">BigDecimal</span> <span style="color: #BA36A5;">price</span> : prices<span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
+  <span style="color: #0000FF;">if</span><span style="color: #7388D6;">(</span>price.compareTo<span style="color: #909183;">(</span>BigDecimal.valueOf<span style="color: #709870;">(</span>20<span style="color: #709870;">)</span><span style="color: #909183;">)</span> &gt; 0<span style="color: #7388D6;">)</span>
+    totalOfDiscountedPrices =
+       totalOfDiscountedPrices.add<span style="color: #7388D6;">(</span>price.multiply<span style="color: #909183;">(</span>BigDecimal.valueOf<span style="color: #709870;">(</span>0.9<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>;
+<span style="color: #707183;">}</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline19" class="outline-5">
+<h5 id="orgheadline19">Java 8</h5>
+<div class="outline-text-5" id="text-orgheadline19">
+<div class="org-src-container">
+
+<pre class="src src-java"><span style="color: #0000FF;">final</span> <span style="color: #6434A3;">BigDecimal</span> <span style="color: #BA36A5;">totalOfDiscountedPrices</span> =
+  prices.stream<span style="color: #707183;">()</span>
+        .filter<span style="color: #707183;">(</span>price -&gt; price.compareTo<span style="color: #7388D6;">(</span>BigDecimal.valueOf<span style="color: #909183;">(</span>20<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span> &gt; 0<span style="color: #707183;">)</span>
+        .map<span style="color: #707183;">(</span>price -&gt; price.multiply<span style="color: #7388D6;">(</span>BigDecimal.valueOf<span style="color: #909183;">(</span>0.9<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+        .reduce<span style="color: #707183;">(</span><span style="color: #D0372D;">BigDecimal</span>.ZERO, BigDecimal::add<span style="color: #707183;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline20" class="outline-5">
+<h5 id="orgheadline20">Clojure</h5>
+<div class="outline-text-5" id="text-orgheadline20">
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">prices</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">map</span> bigdec <span style="color: #909183;">[</span>10 30 17 20 15 18 45 12<span style="color: #909183;">]</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">totalOfDiscountedPrices</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">reduce</span> + 0
+          <span style="color: #909183;">(</span><span style="color: #006FE0;">map</span> <span style="color: #709870;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #907373;">[</span>p<span style="color: #907373;">]</span> <span style="color: #907373;">(</span>* p 0.9M<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+               <span style="color: #709870;">(</span><span style="color: #006FE0;">filter</span> <span style="color: #907373;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #6276BA;">[</span>p<span style="color: #6276BA;">]</span> <span style="color: #6276BA;">(</span>&gt; p 20M<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+                       prices<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">oder syntaktisch gezuckert</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">totalOfDiscountedPrices2</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">-&gt;&gt;</span> prices
+       <span style="color: #909183;">(</span><span style="color: #006FE0;">filter</span> #<span style="color: #709870;">(</span>&gt; <span style="color: #BA36A5;">%</span> 20M<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+       <span style="color: #909183;">(</span><span style="color: #006FE0;">map</span>    #<span style="color: #709870;">(</span>* <span style="color: #BA36A5;">%</span> 0.9M<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+       <span style="color: #909183;">(</span><span style="color: #006FE0;">reduce</span> + 0<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-5">
+<h5 id="orgheadline21">????</h5>
+<div class="outline-text-5" id="text-orgheadline21">
+<div class="org-src-container">
+
+<pre class="src src-smalltalk">prices :=  #(10.0s 30.0s 17.0s 20.0s 15.0s 18.0s 45.0s 12.0s).
+
+totalOfDiscountedPrices :=
+((prices select: [:p | p &gt; 20.0s])
+	  collect: [:p | p * 0.9s])
+	  fold: [:sum :p| sum + p]
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline23" class="outline-4">
+<h4 id="orgheadline23">Aufgabe: Mehr Geld bitte!</h4>
+<div class="outline-text-4" id="text-orgheadline23">
+<p>
+Sie senden einen Brief an Ihre Eltern mit dem Inhalt:
+</p>
+<pre class="example">
+ SEND
++MORE
+-----
+MONEY
+</pre>
+<p>
+Wieviel Geld erhalten Sie?
+</p>
+
+<p>
+Die Aufgabe besteht darin, jedem Buchstaben aus \(\{S,E,N,D,M,O,R,Y\}\)
+eine unterschiedliche Ziffer aus \(\{0,...,9\}\) zuzuordnen, so dass die
+Gleichung 
+\[SEND+MORE=MONEY\]
+erfüllt wird.
+</p>
+
+<p>
+<b>Aufgabe</b>: Lösen Sie das Problem in einer Programmiersprache Ihrer
+Wahl! Beachten Sie Nebenbedingungen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline24" class="outline-4">
+<h4 id="orgheadline24">Lösungsansatz: „Rohe Gewalt“</h4>
+<div class="outline-text-4" id="text-orgheadline24">
+<ul class="org-ul">
+<li>Alles durchprobieren!</li>
+<li>Man braucht 8 ineinander geschachtelte Schleifen.</li>
+<li>Achtung: Acht Variablen (<code>S,E,N,D,M,O,R,Y</code>) können zehn verschiedene
+Werte annehmen. Ergibt \(10^{8}\) Möglichkeiten.</li>
+<li>Allerdings verringern einschränkende Bedingungen die Zahl der Möglichkeiten:
+<ul class="org-ul">
+<li><code>S</code> und <code>M</code> dürfen nicht \(0\) sein.</li>
+<li>Da <code>M</code> als Übertrag entsteht, kann <code>M</code> nur \(1\) sein.</li>
+<li>Die Werte der Variablen müssen paarweise verschieden sein.</li>
+</ul></li>
+<li>Weitere logische Überlegungen über Zusammenhänge zwischen den
+Ziffern können das Verfahren beschleunigen (s.&nbsp;u.).</li>
+<li>Lösung z.&nbsp;B. in Smalltalk:</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-java">| z1 z2 z3 used |
+used := Set <span style="color: #0000FF;">new</span>.
+1 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #707183;">[</span>:s | 
+   used add: s.
+   0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #7388D6;">[</span>:e | 
+      <span style="color: #909183;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: e<span style="color: #909183;">)</span>  ifFalse: <span style="color: #909183;">[</span>
+          used add: e.
+          0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #709870;">[</span>:n | 
+             <span style="color: #907373;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: n<span style="color: #907373;">)</span>  ifFalse: <span style="color: #907373;">[</span>
+                used add: n.
+                0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #6276BA;">[</span>:d | 
+                   <span style="color: #858580;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: d<span style="color: #858580;">)</span> ifFalse: <span style="color: #858580;">[</span>
+                      used add: d.
+                      1 to: 1 <span style="color: #0000FF;">do</span>: <span style="color: #80A880;">[</span>:m |
+                         <span style="color: #887070;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: m<span style="color: #887070;">)</span>  ifFalse: <span style="color: #887070;">[</span>
+                            used add: m.
+                            0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #707183;">[</span>:o | 
+                               <span style="color: #7388D6;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: o<span style="color: #7388D6;">)</span> ifFalse: <span style="color: #7388D6;">[</span>
+                                  used add: o.
+                                  0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #909183;">[</span>:r | 
+                                     <span style="color: #709870;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: r<span style="color: #709870;">)</span> ifFalse: <span style="color: #709870;">[</span>
+                                        used add: r.
+                                        0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #907373;">[</span>:y | 
+                                           <span style="color: #6276BA;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: y<span style="color: #6276BA;">)</span> ifFalse: <span style="color: #6276BA;">[</span> 
+                                              z1 := 1000 * s + <span style="color: #858580;">(</span>100 * e<span style="color: #858580;">)</span> 
+                                                    + <span style="color: #858580;">(</span>10 * n<span style="color: #858580;">)</span> + d.
+                                              z2 := 1000 * m + <span style="color: #858580;">(</span>100 * o<span style="color: #858580;">)</span> 
+                                                    + <span style="color: #858580;">(</span>10 * r<span style="color: #858580;">)</span> + e.
+                                              z3 := 10000 * m + <span style="color: #858580;">(</span>1000 * o<span style="color: #858580;">)</span> 
+                                                    + <span style="color: #858580;">(</span>100 * n<span style="color: #858580;">)</span> 
+                                                    + <span style="color: #858580;">(</span>10 * e<span style="color: #858580;">)</span> + y.
+                                              z1 + z2 = z3 ifTrue: <span style="color: #858580;">[</span>
+                                                 Transcript 
+                                                   show: <span style="color: #008000;">'   '</span>,<span style="color: #6434A3;">z1</span> <span style="color: #BA36A5;">printString</span>; cr; 
+                                                   <span style="color: #D0372D;">show</span>: <span style="color: #008000;">'+'</span>,<span style="color: #6434A3;">z2</span> <span style="color: #BA36A5;">printString</span>; cr; 
+                                                   <span style="color: #D0372D;">show</span>: <span style="color: #008000;">'---------'</span>;cr;
+                                                   <span style="color: #D0372D;">show</span>: <span style="color: #6434A3;">z3</span> <span style="color: #BA36A5;">printString</span>; cr<span style="color: #858580;">]</span><span style="color: #6276BA;">]</span><span style="color: #907373;">]</span>.
+                                        used remove: r <span style="color: #709870;">]</span><span style="color: #909183;">]</span>.
+                                  used remove:o <span style="color: #7388D6;">]</span><span style="color: #707183;">]</span>.
+                            used remove: m <span style="color: #887070;">]</span><span style="color: #80A880;">]</span>. 
+                      used remove: d<span style="color: #858580;">]</span><span style="color: #6276BA;">]</span>.
+                used remove: n<span style="color: #907373;">]</span><span style="color: #709870;">]</span>.
+          used remove: e<span style="color: #909183;">]</span><span style="color: #7388D6;">]</span>.            
+    used remove:s<span style="color: #707183;">]</span>.
+</pre>
+</div>
+<p>
+Resultat:
+</p>
+<pre class="example">
+  9567
++ 1085
+------
+ 10652
+</pre>
+</div>
+</div>
+<div id="outline-container-orgheadline25" class="outline-4">
+<h4 id="orgheadline25">Lösungsansatz: Constraint Satisfaction</h4>
+<div class="outline-text-4" id="text-orgheadline25">
+<ul class="org-ul">
+<li>Einfaches Modell durch Spezifikation der folgenden Gleichung als Einschränkung:
+\[1000*S+100*E+10*N+D \]
+\[+ 1000*M+100*O+10*R+E \]
+\[= 10000*M+1000*O+100*N+10*E+Y\]</li>
+<li>Den Variablen \(E, N, D, O, R, Y\) wird die Domäne \(\{0 \ldots 9\}\), 
+der Variablen \(S\) die Domäne \(\{1 \ldots 9\}\) und \(M\) die Domäne 
+\(\{1\}\) zugeordnet.</li>
+<li>Außerdem muss die Einschränkung 
+\(all\_different([S,E,N,D,M,O,R,Y])\) hinzugefügt werden.</li>
+<li>Das Modell ist nicht effizient, weil alle Variablen bis auf eine
+schon belegt sein müssen, bevor die „Haupteinschränkung”
+geprüft werden kann.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-4">
+<h4 id="orgheadline26">Verfeinertes CSP-Modell</h4>
+<div class="outline-text-4" id="text-orgheadline26">
+<ul class="org-ul">
+<li><p>
+Nutzung der Überträge der Addition für die Zerlegung der „großen“
+Einschränkung in mehrere kleine:
+</p>
+ \begin{eqnarray*}
+    E+D & = & Y+10*C1  \\
+    C1+N+R & = & E+10*C2  \\
+    C2+E+O & = & N+10*C3  \\
+    C3+S+M & = & 10*M+O
+\end{eqnarray*}</li>
+<li><p>
+Die Domänen der Variablen:
+</p>
+ \begin{eqnarray*}
+    E,N,D,O,R,Y & := & \{0,\ldots,9\} \\
+            S & := & \{1,\ldots,9\} \\
+            M & := & \{1\} \\
+       C1,C2,C3 & := & \{0,1\}   
+\end{eqnarray*}</li>
+<li>Die „kleinen“ Einschränkungen werden während
+der Belegungsphase früher geprüft und damit inkonsistente Belegungen
+ausgesondert.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline38" class="outline-3">
+<h3 id="orgheadline38">Software-Technik &#x2013; eine unreife Technologie?</h3>
+<div class="outline-text-3" id="text-orgheadline38">
+</div><div id="outline-container-orgheadline28" class="outline-4">
+<h4 id="orgheadline28">Hat die Software-Technik ein Problem?</h4>
+<div class="outline-text-4" id="text-orgheadline28">
+<p>
+fragt <a class='org-ref-reference' href="#AmitRathore2012">AmitRathore2012</a>
+</p>
+
+<ul class="org-ul">
+<li>Warum ist kein Software-Projekt so einfach wie es scheint?</li>
+
+<li>Warum wird kein Software-Projekt rechtzeitig und unter Einhaltung des
+Budgets fertig?</li>
+
+<li>Warum hat jede nicht-triviale Software Fehler?</li>
+
+<li>Warum tut Software oft nicht das, was sie tun soll?</li>
+
+<li>Warum ist es so schwierig, Änderungen an Software vorzunehmen?</li>
+
+<li>Gleichgültig, wie klar der Plan eines Projekts zu Beginn war, warum
+wird daraus am Ende immer ein riesiger Haufen Morast?</li>
+
+<li>Alle kennen das Problem und scheinen es zu akzeptieren!?</li>
+
+<li>Die Software-Industrie reagiert mit Puffern für Zeit und Budget und
+der Akzeptanz mittelmäßiger Software!?</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline29" class="outline-4">
+<h4 id="orgheadline29">Viele Software-Projekte werden durch falsche Annahmen von vornherein gefährdet.</h4>
+<div class="outline-text-4" id="text-orgheadline29">
+<p>
+So ist es meistens falsch, anzunehmen, dass
+</p>
+
+<ul class="org-ul">
+<li>der Anwender bei Projektbeginn genau weiß, was er will,</li>
+
+<li>der Anwender das, wovon er weiß, dass er es will, vollständig
+mitteilen kann,</li>
+
+<li>der Entwickler ausreichend verstanden hat, was der Anwender mitteilen
+konnte,</li>
+
+<li>das kommunizierte Wissen ausreicht, um die vom Anwender gewollten
+Funktionen produzieren zu können,</li>
+
+<li>der Entwickler eine wissenschaftlich begründete Methode besitzt, um
+das Verstandene in Software zu übertragen,</li>
+
+<li>der Anwender versteht, was der Entwickler außer den vorgelegten
+Beispielen noch leisten könnte,</li>
+
+<li>der Anwender also wüsste, welche Software möglich wäre, wenn der
+Entwickler besser über seine Bedürfnisse unterrichtet wäre.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline30" class="outline-4">
+<h4 id="orgheadline30">Ein „berühmtes” Beispiel</h4>
+<div class="outline-text-4" id="text-orgheadline30">
+<p>
+<b>W. Gibbs in Scientific Armerican</b>:
+</p>
+
+<ul class="org-ul">
+<li>1994 sollte der Denver International Airport als gigantisches,
+technisches Wunderwerk mit einem vollautomatischen unterirdischen
+Gepäcktransportsystem eingeweiht werden.</li>
+
+<li>Die gesamte Hardware incl. 400 Telecars war pünktlich fertig; die
+Software fehlte.</li>
+
+<li>Die Eröffnung musste immer wieder verschoben werden.</li>
+
+<li>Neun Monate später konnte der Software-Hersteller noch keine Prognose
+zum Fertigstellungstermin abgeben.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline31" class="outline-4">
+<h4 id="orgheadline31">Thomas C. Hales bemerkt in Formal Proof</h4>
+<div class="outline-text-4" id="text-orgheadline31">
+<p>
+<a class='org-ref-reference' href="#Hales2008">Hales2008</a>
+</p>
+
+<ul class="org-ul">
+<li>On average, a programmer introduces <b>1.5 bugs per line while typing</b>.
+Most are typing errors that are spotted at once.</li>
+
+<li>About* one bug per hundred lines of computer code ships to market
+without detection*.</li>
+
+<li>Bugs are an accepted part of programming culture.</li>
+
+<li>The book that describes itself as the „bestselling software testing
+book of all time“ states that „testers shouldn't want to verify that
+a program runs correctly“.</li>
+
+<li>Another book on software testing states „Don't insist that every bug
+be fixed &#x2026; When the programmer fixes a minor bug, he might create a
+more serious one.“</li>
+
+<li>Corporations may keep critical bugs off the books to limit legal
+liability. Only those bugs should be corrected that affect profit.
+<b>The tools designed to root out bugs are themselves full of bugs.</b></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline32" class="outline-4">
+<h4 id="orgheadline32">Software besteht aus Millionen Code-Zeilen</h4>
+<div class="outline-text-4" id="text-orgheadline32">
+<ul class="org-ul">
+<li>die einzige Sicht: Programmtext</li>
+<li>Baumstruktur links zeigt nicht die Abhängigkeit der Komponenten.</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./Abbildungen/MillionLoc.png" alt="MillionLoc.png" width="600px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline33" class="outline-4">
+<h4 id="orgheadline33">Software ist unsichtbar</h4>
+<div class="outline-text-4" id="text-orgheadline33">
+
+<div class="figure">
+<p><img src="./Abbildungen/SwAuto.png" alt="SwAuto.png" width="600px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline34" class="outline-4">
+<h4 id="orgheadline34">Beispiel zur Schärfung des Problembewusstseins</h4>
+<div class="outline-text-4" id="text-orgheadline34">
+<ul class="org-ul">
+<li><p>
+Aufgabenstellung (in Anlehnung an <a class='org-ref-reference' href="#KlaerenSperber2007">KlaerenSperber2007</a>)
+</p>
+
+<blockquote>
+<p>
+Auf einem Parkplatz stehen Personenkraftwagen und Motorräder ohne
+Beiwagen. Zusammen seien es \(n\) Fahrzeuge mit insgesamt \(m\) Rädern.
+Bestimme die Anzahl \(P\) der PKWs!
+</p>
+</blockquote></li>
+
+<li>Typische informelle Problemspezifikation.</li>
+
+<li>Gesucht ist eine Berechnungsvorschrift für die Funktion \(P(n, m)\).</li>
+
+<li>Wie kann der Zusammenhang zwischen der Anzahl der PKWs \(P(n,m)\), der
+Anzahl der Motorräder \(M(n,m)\), der Anzahl der Räder \(m\) und der
+Anzahl der Fahrzeuge \(n\) formuliert werden?</li>
+</ul>
+
+<p>
+\[\begin{aligned}
+           P + M = n \\  4P + 2M = m
+         \end{aligned}\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline35" class="outline-4">
+<h4 id="orgheadline35">Beispiel zur Schärfung des Problembewusstseins (2)</h4>
+<div class="outline-text-4" id="text-orgheadline35">
+<ul class="org-ul">
+<li><p>
+Lösung des Gleichungssystems:
+</p>
+
+\begin{eqnarray*}
+       M & = & n - P \\
+     4P + 2(n-P) & = & m\\
+     4P + 2n - 2P & = & m \\
+     2P & = & m- 2n\\
+     P & = & \frac{m-2n}{2}
+      \end{eqnarray*}</li>
+<li><p>
+Problem scheinbar gelöst. Formel könnte in ein Programm übersetzt
+werden. ABER: Was liefert die Formel für \(n=3\) und \(m=9\)?
+</p>
+
+\begin{aligned}
+        P(3,9) = \frac{9-2\cdot 3}{2} = 1,5
+      \end{aligned}
+<p>
+Anderthalb PKWs stehen auf dem Parkplatz!
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline36" class="outline-4">
+<h4 id="orgheadline36">Beispiel zur Schärfung des Problembewusstseins (3)</h4>
+<div class="outline-text-4" id="text-orgheadline36">
+<ul class="org-ul">
+<li>Schlussfolgerung: \(m\) muss gerade sein.</li>
+
+<li>ABER: Was liefert die Formel für \(n=5\) und \(m=2\)?</li>
+
+<li>\begin{aligned}
+      P(5,2) = \frac{2-2\cdot 5}{2} = -4
+\end{aligned}
+Vier PKWs „fehlen“ auf dem Parkplatz!</li>
+
+<li>Schlussfolgerung: Die Anzahl der Räder muss mindestens doppelt so
+groß sein wie die Anzahl der Fahrzeuge.</li>
+
+<li>ABER: Was liefert die Formel für \(n=2\) und \(m=10\)?</li>
+
+<li>\begin{aligned}
+  P(2,10) = \frac{10-2\cdot 2}{2} = 3
+\end{aligned}</li>
+
+<li>Problem: Unsinnigkeit des Ergebnisses nicht sofort erkennbar. (Wenn
+3 von 2 Fahrzeugen PKWs sind, muss es noch ein „negatives” Motorrad
+geben.)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline37" class="outline-4">
+<h4 id="orgheadline37">Beispiel zur Schärfung des Problembewusstseins (4)</h4>
+<div class="outline-text-4" id="text-orgheadline37">
+<ul class="org-ul">
+<li>Schlussfolgerung: Die Anzahl der Räder darf höchstens viermal so groß
+sein wie die Anzahl der Fahrzeuge.</li>
+
+<li>Fazit:
+
+<ul class="org-ul">
+<li>Die Problemspezifikation ist unvollständig. Das „Programm“
+liefert nur dann sinnvolle Ergebnisse, wenn folgende Bedingung
+gilt: \[m \mbox{ gerade und } 2n\leq m \leq4n\]
+<b>Aufgabe</b>: Begründen Sie, warum mit dieser Bedingung die Lösung
+des Gleichungssystems die folgenden Anforderungen erfüllt:
+
+<ul class="org-ul">
+<li>\(P\) ist eine ganze Zahl.</li>
+
+<li>\(P\) wird nicht negativ.</li>
+
+<li>\(P\) wird nicht größer als \(n\).</li>
+</ul></li>
+
+<li>Fehlerhafte Abstraktion: In der mathematischen Formel sind \(m\) und
+\(n\) irgendwelche Zahlen, auf dem Parkplatz aber nicht.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline39" class="outline-3">
+<h3 id="orgheadline39">Was ist ein Paradigma?</h3>
+<div class="outline-text-3" id="text-orgheadline39">
+<p>
+Das Wort Paradigma leitet sich vom griechischen Wort παράδειγμα
+(parádeigma) ab, das (lt. Menge-Güthling) übersetzt <i>Beispiel</i> oder
+<i>Vorbild</i> bedeutet.
+</p>
+
+<p>
+Laut Duden sind Synonyme: [Fall]beispiel, Leitbild, Modell[fall],
+Muster[beispiel], Musterbild, Vorbild; (bildungssprachlich)
+Inkarnation, Prototyp; (bildungssprachlich veraltend) Exempel 
+</p>
+
+<p>
+Häufig wird das Wort im Sinne von <i>Denkmuster</i> gebraucht.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline42" class="outline-3">
+<h3 id="orgheadline42">Was ist ein Programmierparadigma?</h3>
+<div class="outline-text-3" id="text-orgheadline42">
+</div><div id="outline-container-orgheadline40" class="outline-4">
+<h4 id="orgheadline40">Begriffsbestimmung</h4>
+<div class="outline-text-4" id="text-orgheadline40">
+<p>
+Antwort lt. <a href="https://de.wikipedia.org/wiki/Programmierparadigma">Wikipedia</a>: ein fundamentaler Programmierstil
+</p>
+
+<p>
+Was ist ein Programmierstil?
+</p>
+
+<p>
+Antwort lt. <a href="https://de.wikipedia.org/wiki/Programmierstil">Wikipedia</a>: „Ein Programmierstil (engl. code conventions,
+coding conventions, coding standards) ist in der Programmierung das
+Erstellen von Quellcode nach bestimmten vorgegebenen Regeln.“
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline41" class="outline-4">
+<h4 id="orgheadline41">übliche Klassifikationen</h4>
+<div class="outline-text-4" id="text-orgheadline41">
+<!-- This HTML table template is generated by emacs 24.4.51.2 -->
+<table border="1">
+  <tr>
+    <td colspan="2" align="left" valign="top">
+      &nbsp;&nbsp;&nbsp;Imperative&nbsp;Programmierung&nbsp;&nbsp;&nbsp;&nbsp;
+    </td>
+    <td colspan="2" align="left" valign="top">
+      &nbsp;Deklarative&nbsp;Programmmierung&nbsp;&nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">
+      Prozedurrale&nbsp;&nbsp;<br />
+      Programmierung
+    </td>
+    <td align="left" valign="top">
+      Objektorientierte<br />
+      Programmierung&nbsp;&nbsp;&nbsp;
+    </td>
+    <td align="left" valign="top">
+      Funktionale&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      Programmierung&nbsp;
+    </td>
+    <td align="left" valign="top">
+      Logische&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+      Programmierung
+    </td>
+  </tr>
+</table>
+
+<ul class="org-ul">
+<li>Imperativ Programmieren heißt, zu beschreiben, <b>wie</b> die Lösung eines
+Problems zu erzielen ist.</li>
+<li>Deklarativ Programmieren heißt, zu beschreiben, <b>was</b> das zu lösende
+Problem ist.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline43" class="outline-3">
+<h3 id="orgheadline43">Die „klassischen” Programmierparadigmen</h3>
+<div class="outline-text-3" id="text-orgheadline43">
+<ul class="org-ul">
+<li>Imperative Programmierung
+<ul class="org-ul">
+<li>Grundkonzepte: Variablen, Wertzuweisungen</li>
+<li>Programm = Folge von Anweisungen, die eine Zustandsänderung
+bewirken</li>
+<li>Strukturierte Sprachen</li>
+<li>Modulare Sprachen</li>
+<li>Objektorientierte Sprachen</li>
+<li>Hybride Sprachen</li>
+</ul></li>
+
+<li>Funktionale (applikative) Programmierung
+<ul class="org-ul">
+<li>Grundkonzept: Funktion i.S.d. Mathematik</li>
+<li><p>
+Programm = Ausdruck, der einen Wert als Ergebnis liefert
+</p>
+<pre class="example">
+(defn power [x y]
+   (if (= y 0) 1
+       (* x (power x (- y 1)))))
+</pre></li>
+</ul></li>
+</ul>
+
+<ul class="org-ul">
+<li>Logische (prädikative) Programmierung
+<ul class="org-ul">
+<li>Grundkonzept: Formale, mathematische Logik</li>
+<li><p>
+Beispiel: Sprache Prolog mit Fakten und Regeln
+</p>
+
+<p>
+Fakten:
+</p>
+<ul class="org-ul">
+<li>Hans ist direkter Chef von Franz.</li>
+<li>Franz ist direkter Chef von Heinz.</li>
+<li><code>direkterChef(hans, franz).</code></li>
+<li><code>direkterChef(franz, heinz).</code></li>
+</ul>
+<p>
+Regeln:
+</p>
+<ul class="org-ul">
+<li>Eine Person X ist Vorgesetzter von Y, wenn X direkter Chef von
+Y ist oder wenn X direkter Chef von Z und Z Vorgesetzter von Y
+ist.</li>
+<li><code>vorgesetzter(X,Y):-direkterChef(X,Y).</code></li>
+<li><code>vorgesetzter(X,Y):-direkterChef(X,Z), vorgesetzter(Z,Y).</code></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="outline-container-orgheadline44" class="outline-4">
+<h4 id="orgheadline44">Prozedurorientiertes vs. objektorientiertes Denken</h4>
+<div class="outline-text-4" id="text-orgheadline44">
+<p>
+(Darstellung angelehnt an <a class='org-ref-reference' href="#Moessenboeck">Moessenboeck</a>
+</p>
+
+<ul class="org-ul">
+<li>Prozedurorientiertes Denken: Algorithmen, Prozeduren stehen im
+Vordergrund, Daten sind „zweitrangig“.</li>
+
+<li>Beispiel: Flächenberechnung vom geometrischen Figuren:</li>
+</ul>
+
+<div class="figure">
+<p><img src="./Abbildungen/flaechen.png" alt="flaechen.png" width="350px" />
+</p>
+</div>
+
+<pre class="example">
+flaeche := kreisFlaeche(kreis);
+flaeche := rechteckFlaeche (rechteck);
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline45" class="outline-4">
+<h4 id="orgheadline45">Merkmale der prozeduralen Programmierung</h4>
+<div class="outline-text-4" id="text-orgheadline45">
+<ul class="org-ul">
+<li>in konventionellen Sprachen für jede Figurart eigene Prozedur
+erforderlich</li>
+
+<li><p>
+Fallunterscheidungen notwendig, wenn in einem Programm Figuren
+verschiedener Arten gleichzeitig vorkommen; sei z.B. \(f\) eine
+beliebige geometrische Figur:
+</p>
+
+<pre class="example">
+...
+if f is Rechteck 
+   then flaeche := rechteckFlaeche(f)
+elsif f is Kreis 
+   then flaeche := kreisFlaeche(f)
+elsif f is Dreieck 
+   then flaeche := dreiecksFlaeche(f)
+...
+</pre></li>
+
+<li>Warum sind solche Fallunterscheidungen problematisch?</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline46" class="outline-4">
+<h4 id="orgheadline46">Objektorientiertes Denken &#x2026;</h4>
+<div class="outline-text-4" id="text-orgheadline46">
+<p>
+&#x2026; stellt die Daten in den Mittelpunkt der Betrachtung:
+</p>
+
+
+<div class="figure">
+<p><img src="./Abbildungen/objekte.png" alt="objekte.png" width="350px" />
+</p>
+</div>
+
+<pre class="example">
+flaeche := f flaechenInhalt
+flaeche = f.flaechenInhalt();
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline47" class="outline-4">
+<h4 id="orgheadline47">Merkmale der Objektorientierten Programmierung:</h4>
+<div class="outline-text-4" id="text-orgheadline47">
+<ul class="org-ul">
+<li>Ein Objekt antwortet auf den Empfang einer Frage (einer Nachricht).</li>
+
+<li>Das Figurobjekt „weiß selbst“ wie die Antwort (der Flächeninhalt) zu
+ermitteln ist.</li>
+
+<li>Fallunterscheidungen werden weitgehend überflüssig.</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline48" class="outline-4">
+<h4 id="orgheadline48">Die Überbrückung der „Abstraktionslücke“</h4>
+<div class="outline-text-4" id="text-orgheadline48">
+
+<div class="figure">
+<p><img src="./Abbildungen/Abstraktionsluecke.png" alt="Abstraktionsluecke.png" width="650px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline49" class="outline-4">
+<h4 id="orgheadline49">Bedeutung der Abstraktion in der Software-Technik</h4>
+<div class="outline-text-4" id="text-orgheadline49">
+<ul class="org-ul">
+<li>Komplexität von Softwaresystemen überfordert
+
+<ul class="org-ul">
+<li>die Fähigkeit von Menschen, sie in Gänze zu erfassen,</li>
+
+<li>die Fähigkeit der Entwickler, sie so zu bauen, dass sie den
+Anforderungen in korrekter Weise entspricht.</li>
+</ul></li>
+
+<li>Wenn ein Entwickler für eine Aufgabe sechs Monate benötigt, wie lange
+brauchen dann sechs Entwickler, wenn sie die Aufgabe gemeinsam
+erledigen sollen?</li>
+
+<li>Ohne leistungsfähige Abstraktionskonzepte ist die Beherrschung von
+Komplexität unmöglich.</li>
+
+<li>Die Zeit, die ein Programmierer benötigt, um eine Zeile Code zu
+schreiben, ist eine Konstante (unabhängig von der
+Programmiersprache).</li>
+
+<li>Daher ist das Abstraktionsniveau der von einer Programmiersprache
+bereitgestellten Ausdrucksmittel entscheidend
+
+<ul class="org-ul">
+<li>für die Beherrschung von Komplexität und</li>
+
+<li>die Produktivität der Programmierer.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline50" class="outline-4">
+<h4 id="orgheadline50">Eine Bezahl-App</h4>
+<div class="outline-text-4" id="text-orgheadline50">
+<p>
+Entwicklung beschrieben durch Wille Faler in
+<a href="http://agile.dzone.com/news/one-night-clojure-makes-scala">http://agile.dzone.com/news/one-night-clojure-makes-scala</a>
+</p>
+
+<p>
+„A simple metric generated with cloc“:
+</p>
+
+<ul class="org-ul">
+<li>Java version: 755 lines of code (LOC)</li>
+
+<li>Scala version: 200 LOC's</li>
+
+<li>Clojure version: 57 LOC's</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline81" class="outline-2">
+<h2 id="orgheadline81">Funktionale Programmierung</h2>
+<div class="outline-text-2" id="text-orgheadline81">
+</div><div id="outline-container-orgheadline54" class="outline-3">
+<h3 id="orgheadline54">Programmieren mit Funktionen</h3>
+<div class="outline-text-3" id="text-orgheadline54">
+</div><div id="outline-container-orgheadline52" class="outline-4">
+<h4 id="orgheadline52">Exkurs: Programmieren mit Funktionen <i>(1)</i></h4>
+<div class="outline-text-4" id="text-orgheadline52">
+<ul class="org-ul">
+<li>Merkmale der imperativen Programmierung:
+<ol class="org-ol">
+<li>Wesentliche Konzepte:
+<ul class="org-ul">
+<li>Variablen: benannte Speicherzellen</li>
+<li>Zuweisung: Verändern des Wertes einer Variablen</li>
+</ul></li>
+<li>Die Werte der Variablen repräsentieren den Zustand der Maschine.</li>
+<li>Das Programm ist eine Folge von Zustandsänderungen.</li>
+<li>Im imperativen Programmierstil spiegelt sich die
+Von-Neumann-Architektur wider (hinderlich bei der Programmierung
+komplexer Anwendungen).</li>
+<li>Imperative Programme sind nicht referenztransparent: \(f(x)+f(x)\)
+      ist nicht notwendigerweise gleich \(2\cdot f(x)\).</li>
+</ol></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline53" class="outline-4">
+<h4 id="orgheadline53">Exkurs: Programmieren mit Funktionen / (2)/</h4>
+<div class="outline-text-4" id="text-orgheadline53">
+<ul class="org-ul">
+<li>Merkmale der funktionalen Programmierung:
+<ol class="org-ol">
+<li>Gute mathematische Grundlage der Programmierung (Funktionsbegriff)</li>
+<li>Programme werden kürzer und besser lesbar.</li>
+<li>Verarbeitung komplexer (häufig symbolischer) Datenstrukturen</li>
+<li>Keine Variablen als benannte Speicherzellen</li>
+<li>Keine Iteration</li>
+<li>Funktionale Sprachen haben besondere Bedeutung für die Definition
+der Semantik von Programmiersprachen:</li>
+<li>z.B. durch Definition eines Interpreters, geschrieben in einer
+funktionalen Sprache.</li>
+</ol></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline55" class="outline-3">
+<h3 id="orgheadline55">Ein erstes Beispiel</h3>
+<div class="outline-text-3" id="text-orgheadline55">
+<p>
+Tafelübung funktionale Abstraktion (fn) einführen
+</p>
+</div>
+
+<div id="outline-container-orgheadline56" class="outline-4">
+<h4 id="orgheadline56">Eine einfache Funktion</h4>
+<div class="outline-text-4" id="text-orgheadline56">
+<ul class="org-ul">
+<li>Berechnung des Bruttobetrags einer Rechnung aus dem Nettobetrag:
+<ul class="org-ul">
+<li>mathematisch<br  />
+\(brutto(netto, mhrwrtstr) = netto + netto \frac{mhrwrtstr}{100}\)</li>
+<li><p>
+Definition einer Funktion <code>brutto</code>:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">brutto</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>netto mhrwrtstr<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span>+ netto <span style="color: #709870;">(</span>/ <span style="color: #907373;">(</span>* netto mhrwrtstr<span style="color: #907373;">)</span> 100<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline57" class="outline-4">
+<h4 id="orgheadline57">Aufbau von Ausdrücken</h4>
+<div class="outline-text-4" id="text-orgheadline57">
+<ul class="org-ul">
+<li>Jeder Ausdruck ist von der Form<br  />
+\[(operator\ operand_{1} \ldots\ operand_{n})\]</li>
+<li><i>Operatoren</i> sind Namen von
+<ul class="org-ul">
+<li>Standardfunktionen: +, /, <code>sqrt</code>, &#x2026;</li>
+<li>eigenen Funktionen: <code>brutto</code>, &#x2026;</li>
+<li>Pseudofunktionen: <code>def</code>, <code>fn</code>, &#x2026;</li>
+</ul></li>
+<li><i>Operanden</i> sind
+<ul class="org-ul">
+<li>Konstanten: 3.14, &#x2026;</li>
+<li>Variable: <code>netto</code>, &#x2026;</li>
+<li>Ausdrücke: <code>(f ....)</code></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline58" class="outline-4">
+<h4 id="orgheadline58">Wert eines Ausdrucks</h4>
+<div class="outline-text-4" id="text-orgheadline58">
+<ul class="org-ul">
+<li>Anwendung einer Funktion auf ihre Argumente:<br  />
+<code>(brutto 100.0 16.0)</code></li>
+<li>Ersetze jedes Auftreten von <code>netto</code> durch 100.0 und von <code>mhrwrtstr</code>
+durch 16.0:<br  />
+<code>= (+ 100.0 (/ (* 100.0 16.0) 100))</code></li>
+<li>Auswertung erfolgt von innen nach außen:<br  />
+<code>= (+ 100.0 (/ (* 100.0 16.0) 100))</code><br  />
+<code>= (+ 100.0 (/ 1600.0 100))</code></li>
+<li>im nächsten Schritt:<br  />
+<code>= (+ 100.0 (/ 1600.0 100))</code><br  />
+<code>= (+ 100.0 16.0))</code></li>
+<li>schließlich:<br  />
+<code>= 116.0</code></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline64" class="outline-3">
+<h3 id="orgheadline64">Clojure</h3>
+<div class="outline-text-3" id="text-orgheadline64">
+</div><div id="outline-container-orgheadline59" class="outline-4">
+<h4 id="orgheadline59">Eigenschaften von Clojure</h4>
+<div class="outline-text-4" id="text-orgheadline59">
+<p>
+Clojure &#x2026;
+</p>
+<ul class="org-ul">
+<li>ist ein Lisp-Dialekt.</li>
+<li>läuft auf der Java Virtual Machine.</li>
+<li>ermöglicht verschiedene Programmierstile (imperativ, <b>funktional</b>,
+objektorientiert, &#x2026;).</li>
+<li>behandelt Funktionen als Werte erster Ordnung (first class values),
+d.h. sie können u.a. &#x2026;
+<ul class="org-ul">
+<li>als Argumente an Prozeduren/Funktionen/Methoden übergeben werden,</li>
+<li>als Resultate von Prozeduren/Funktionen/Methoden auftreten.</li>
+</ul></li>
+<li>besitzt eine einzige Auswertungsregel für die Anwendung von
+Funktionen (Ausnahmen für Pseudofunktionen).</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline60" class="outline-4">
+<h4 id="orgheadline60">Web-Seiten zu Clojure</h4>
+<div class="outline-text-4" id="text-orgheadline60">
+<ul class="org-ul">
+<li><a href="http://clojure.org/">Hauptseite</a></li>
+<li><a href="http://clojure.org/features">Features</a></li>
+<li><a href="http://clojure.org/downloads">Download</a></li>
+<li>Dokumentation
+<ul class="org-ul">
+<li><a href="http://clojuredocs.org/">clojuredocs</a></li>
+<li><a href="http://clojure-doc.org/">clojure-doc</a></li>
+</ul></li>
+<li><a href="http://groups.google.com/group/clojure">Google Gruppe</a></li>
+<li>Tutorials
+<ul class="org-ul">
+<li><a href="http://dev.clojure.org/display/doc/Getting+Started">Getting Started</a></li>
+<li><a href="http://www.braveclojure.com/">CLOJURE for the BRAVE and TRUE</a></li>
+<li><a href="http://www.moxleystratton.com/blog/2008/05/01/clojure-tutorial-for-the-non-lisp-programmer/">Clojure Tutorial For the Non-Lisp Programmer</a></li>
+<li><a href="http://java.ociweb.com/mark/clojure/article.html">Clojure - Functional Programming for the JVM</a></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline61" class="outline-4">
+<h4 id="orgheadline61">Benutzung von Clojure</h4>
+<div class="outline-text-4" id="text-orgheadline61">
+<ul class="org-ul">
+<li><a href="http://try-clojure.org/">Try Clojure</a></li>
+<li>Command line tool - the repl
+<code>java -cp clojure.jar clojure.main</code></li>
+<li>Clooj - editor and IDE written entirely in Clojure itself
+<ul class="org-ul">
+<li><a href="https://github.com/arthuredelstein/clooj">clooj, a lightweight IDE for clojure</a></li>
+<li><a href="https://www.mediafire.com/?kxa2an0k0ings">Download</a></li>
+</ul></li>
+<li><a href="http://www.lighttable.com/">LightTable</a> is a new interactive IDE &#x2026;</li>
+<li><a href="http://leiningen.org/index.html">Leiningen</a></li>
+<li><a href="http://dev.clojure.org/display/doc/Getting+Started+with+La+Clojure+and+IntelliJ+IDEA">La Clojure and IntelliJ IDEA</a></li>
+<li><a href="http://dev.clojure.org/display/doc/Getting+Started+with+Eclipse+and+Counterclockwise">Eclipse and Counterclockwise</a></li>
+<li><a href="http://clojure-doc.org/articles/tutorials/emacs.html">Clojure with Emacs</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline62" class="outline-4">
+<h4 id="orgheadline62">Die Read-Eval-Print-Loop</h4>
+<div class="outline-text-4" id="text-orgheadline62">
+<ul class="org-ul">
+<li>Read: lies einen Ausdruck</li>
+<li>Eval(uate): werte ihn aus</li>
+<li>Print: gib das Ergebnis aus</li>
+</ul>
+
+<div class="figure">
+<p><img src="./Abbildungen/ReadEvalPrint.png" alt="ReadEvalPrint.png" width="650px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline63" class="outline-4">
+<h4 id="orgheadline63"><code>brutto</code> in der Repl</h4>
+<div class="outline-text-4" id="text-orgheadline63">
+<p>
+Demonstration
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline76" class="outline-3">
+<h3 id="orgheadline76">Methodische Abstraktion &#x2013; Entwurfsvorschrift I</h3>
+<div class="outline-text-3" id="text-orgheadline76">
+</div><div id="outline-container-orgheadline65" class="outline-4">
+<h4 id="orgheadline65">Entwurfsvorschriften - Übersicht</h4>
+<div class="outline-text-4" id="text-orgheadline65">
+<ul class="org-ul">
+<li><i>Entwurfsvorschriften</i> sind Handlungsanleitungen für die Entwicklung
+kleiner (zunächst funktionaler) Programme.</li>
+<li>Programmstrukturen folgen den Datenstrukturen.</li>
+<li>Abstraktion von der Lösung von Einzelproblemen zur Lösung von
+Problemklassen.</li>
+<li>Entwicklung funktionaler Programme:
+<ul class="org-ul">
+<li>Funktionen im mathematischen Sinne:
+<ul class="org-ul">
+<li>keine Nebeneffekte</li>
+<li>kein Gedächtnis (stateless)</li>
+</ul></li>
+<li>Nutzung der funktionalen Abstraktion</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline66" class="outline-4">
+<h4 id="orgheadline66">Entwurfsvorschrift I]Entwurfsvorschrift I <i>(1)</i></h4>
+<div class="outline-text-4" id="text-orgheadline66">
+<p>
+Programm für die Berechnung der Fläche eines Dreiecks aus Grundseite und
+Höhe:
+</p>
+
+<ol class="org-ol">
+<li>die <b>Zweckbestimmung</b>:</li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Flaeche eines Dreiecks aus</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Grundseite und Hoehe</span>
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>Hinzufügen des <b>Funktionskopfs</b></li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Flaeche eines Dreiecks aus</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Grundseite und Hoehe</span>
+<span style="color: #008000;">\blue</span><span style="color: #707183;">{</span><span style="color: #7388D6;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dreiecksflaeche</span><span style="background-color: #FFDCDC; text-decoration: underline;">}</span>
+  <span style="color: #008000;">\blue</span><span style="color: #7388D6;">{</span><span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[</span>grundseite hoehe<span style="color: #709870;">]</span><span style="background-color: #FFDCDC; text-decoration: underline;">}</span> 
+      <span style="color: #D0372D;">nil</span><span style="background-color: #FFDCDC; text-decoration: underline;">))</span>
+</pre>
+</div>
+<p>
+<code>nil</code> steht hier als Platzhalter für den Funktionsrumpf.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline67" class="outline-4">
+<h4 id="orgheadline67">Entwurfsvorschrift I <i>(2)</i></h4>
+<div class="outline-text-4" id="text-orgheadline67">
+<ol class="org-ol">
+<li>Festlegen des <b>Vertrags</b>:</li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Flaeche eines Dreiecks aus</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Grundseite und Hoehe</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dreiecksflaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>grundseite hoehe<span style="color: #909183;">]</span>
+<span style="color: #008000;">\blue</span><span style="color: #909183;">{</span>    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> grundseite<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> hoehe<span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+<span style="color: #008000;">\blue</span><span style="color: #909183;">{</span>     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> \<span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #008000;">\}</span><span style="color: #909183;">}</span>
+    <span style="color: #D0372D;">nil</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+<ol class="org-ol">
+<li>Hinzufügen von <b>Beispielanwendungen / Tests</b></li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Flaeche eines Dreiecks aus</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dreiecksflaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>grundseite hoehe<span style="color: #909183;">]</span>
+    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> grundseite<span style="color: #709870;">)</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> hoehe<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span> <span style="color: #D0372D;">nil</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #008000;">\blue</span><span style="color: #707183;">{</span><span style="color: #7388D6;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-dreiecksflaeche</span><span style="background-color: #FFDCDC; text-decoration: underline;">}</span> 
+<span style="color: #008000;">\blue</span><span style="color: #7388D6;">{</span>  <span style="color: #909183;">(</span><span style="color: #006FE0;">is</span>  <span style="color: #709870;">(</span>= 25 <span style="color: #907373;">(</span>dreiecksflaeche 10 5<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="background-color: #FFDCDC; text-decoration: underline;">)</span><span style="color: #707183;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline68" class="outline-4">
+<h4 id="orgheadline68">Entwurfsvorschrift I <i>(3)</i></h4>
+<div class="outline-text-4" id="text-orgheadline68">
+<ol class="org-ol">
+<li>Ersetzen von <code>nil</code> als Platzhalter im Funktionsrumpf durch die korrekte</li>
+</ol>
+<p>
+Berechnungsvorschrift:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dreiecksflaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>grundseite hoehe<span style="color: #909183;">]</span>
+    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> grundseite<span style="color: #709870;">)</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> hoehe<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span>
+<span style="color: #008000;">\blue</span><span style="color: #909183;">{</span>    <span style="color: #709870;">(</span>/ <span style="color: #907373;">(</span>* grundseite hoehe<span style="color: #907373;">)</span> 2<span style="color: #709870;">)</span><span style="color: #909183;">}</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-dreiecksflaeche</span> 
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span>  <span style="color: #909183;">(</span>= 25 <span style="color: #709870;">(</span>dreiecksflaeche 10 5<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline69" class="outline-4">
+<h4 id="orgheadline69"><code>dreiecksflaeche</code> in Clooj</h4>
+<div class="outline-text-4" id="text-orgheadline69">
+
+<div class="figure">
+<p><img src="./Abbildungen/dreiecksflaecheInClooj.png" alt="dreiecksflaecheInClooj.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline70" class="outline-4">
+<h4 id="orgheadline70">Entwurfsvorschrift I Zusammenfassung Vier Phasen:</h4>
+<div class="outline-text-4" id="text-orgheadline70">
+<ol class="org-ol">
+<li>Zweckbestimmung, Vertrag, Funktionskopf</li>
+<li>Tests</li>
+<li>Funktionsrumpf</li>
+<li>Testen</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline71" class="outline-4">
+<h4 id="orgheadline71">Entwurfsvorschrift I - Phase 1 <i>(1)</i></h4>
+<div class="outline-text-4" id="text-orgheadline71">
+<p>
+Zweckbestimmung, Vertrag, Funktionskopf
+</p>
+<ul class="org-ul">
+<li>Ziele:
+<ul class="org-ul">
+<li>Beschreiben des Zwecks der Funktionen</li>
+<li>Spezifizieren der Art der Eingabedaten und des Ergebnisses</li>
+<li>Benennen der Funktion</li>
+<li>Aufschreiben ihres Kopfes</li>
+</ul></li>
+<li>Aktivitäten:
+<ul class="org-ul">
+<li>Wähle einen Funktionsnamen.</li>
+<li>Analysiere das Problem daraufhin, welche unbestimmten Größen sie
+verarbeiten muss.</li>
+<li>Wähle einen Namen für jede Eingangsgröße, der sich möglichst in
+der Problembeschreibung wiederfindet.</li>
+<li>&#x2026;</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline72" class="outline-4">
+<h4 id="orgheadline72">Entwurfsvorschrift I - Phase 1 <i>(2)</i></h4>
+<div class="outline-text-4" id="text-orgheadline72">
+<p>
+Vertrag, Funktionskopf, Zweckbestimmung
+</p>
+<ul class="org-ul">
+<li>Aktivitäten:
+<ul class="org-ul">
+<li>&#x2026;</li>
+<li>Beschreibe unter Verwendung der Namen für die Eingangsgrößen, was
+die Funktion aus diesen ermitteln soll.</li>
+<li><p>
+Formuliere den Vertrag und den Funktionskopf.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet ... aus x1 ... </span>
+        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">name</span> 
+           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x1 ... <span style="color: #909183;">]</span> 
+             <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> x1<span style="color: #709870;">)</span> ... <span style="color: #909183;">]</span>
+              <span style="color: #D0372D;">:post</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span>
+             ... <span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline73" class="outline-4">
+<h4 id="orgheadline73">Entwurfsvorschrift I - Phase 2</h4>
+<div class="outline-text-4" id="text-orgheadline73">
+<p>
+Beispiele / Tests
+</p>
+<ul class="org-ul">
+<li>Ziel: Veranschaulichung der Beziehung zwischen Ein- und Ausgabedaten
+anhand von Beispielen</li>
+<li>Aktivitäten:
+<ul class="org-ul">
+<li>Versuche, aus der Problembeschreibung Beispiele abzuleiten.</li>
+<li>Bestätige die Resultate.</li>
+<li><p>
+Schreibe die Beispiele als Tests auf.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">name</span> 
+           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x1 ... <span style="color: #909183;">]</span> 
+             <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> x1<span style="color: #709870;">)</span> ... <span style="color: #909183;">]</span>
+              <span style="color: #D0372D;">:post</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span>
+             ... <span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+        <span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-name</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span><span style="color: #006FE0;">name</span> ... <span style="color: #709870;">)</span> ...<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline74" class="outline-4">
+<h4 id="orgheadline74">Entwurfsvorschrift I - Phase 3</h4>
+<div class="outline-text-4" id="text-orgheadline74">
+<p>
+Funktionsrumpf
+</p>
+
+<ul class="org-ul">
+<li>Ziel: Definition der Funktion</li>
+<li>Aktivitäten:
+<ul class="org-ul">
+<li>Entwickle die Berechnungsvorschrift für die Ermittlung des
+Resultats bestehend aus
+<ul class="org-ul">
+<li>Clojure-Standardfunktionen,</li>
+<li>eigenen Funktionen und</li>
+<li>den Variablen (Parameter).</li>
+</ul></li>
+<li>Wenn vorhanden, benutze die mathematische Formel aus der
+Problembeschreibung.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline75" class="outline-4">
+<h4 id="orgheadline75">Entwurfsvorschrift I - Phase 4</h4>
+<div class="outline-text-4" id="text-orgheadline75">
+<p>
+Testen
+</p>
+
+<ul class="org-ul">
+<li>Ziele: Aufspüren von
+<ul class="org-ul">
+<li>Fehlern in der Berechnungsvorschrift,</li>
+<li>auch Tippfehler,</li>
+<li>Vertragsverletzungen in der Formulierung der Tests</li>
+</ul></li>
+<li>Aktivitäten:
+<ul class="org-ul">
+<li>Wende die Funktion auf die in den Beispielen angegebenen
+Eingabedaten (Argumente) an.</li>
+<li>Prüfe, ob die Resultate mit den erwarteten übereinstimmen
+(geschieht durch <code>(run-tests)</code> automatisch).</li>
+<li>Füge weitere Tests hinzu.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline77" class="outline-3">
+<h3 id="orgheadline77">Verwendung von Hilfsfunktionen</h3>
+<div class="outline-text-3" id="text-orgheadline77">
+<p>
+Hilfsfunktionen <i>(1)</i>
+</p>
+
+<ul class="org-ul">
+<li>Problembeschreibung:
+Der Eigentümer eines Vorstadtkinos kann seine Preise für
+Eintrittskarten frei festlegen. Er hat einen exakten Zusammenhang
+zwischen dem Kartenpreis und der durchschnittlichen Besucheranzahl
+empirisch festgestellt: Bei einem Preis von pro Karte kommen im
+Schnitt 120 Zuschauer. Reduziert er den Preis um , erhöht sich die
+Besucherzahl um 15. Aber mehr Besucher verursachen höhere Kosten.
+Jede Veranstaltung kostet plus für jeden Zuschauer. Der Eigentümer
+möchte nun wissen, wie groß der Profit bei einem bestimmten
+Kartenpreis ist.</li>
+</ul>
+
+<p>
+Hilfsfunktionen <i>(2)</i>
+</p>
+
+<ul class="org-ul">
+<li>Können wir dem Kinoeigentümer helfen?</li>
+
+<li>Versuchen wir zunächst die Abhängigkeiten zu erkennen, die sich aus
+der Problembeschreibung ableiten lassen:</li>
+</ul>
+
+<p>
+[method=direct]Hilfsfunktionen <i>(3)</i>
+</p>
+
+<ul class="org-ul">
+<li>Entwerfen wir nun für jeden Zusammenhang eine Funktion und wenden
+dabei die Entwurfsvorschrift an.</li>
+
+<li>Danach ist in Phase 1 zunächst der Vertrag, der Funktionskopf und die
+Zweckbestimmung aufzuschreiben.</li>
+
+<li><p>
+Beginnen wir mit der Hauptfunktion für den Profit:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet den Profit aus der Differenz zwischen</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Einnahmen und Kosten bei gegebenem Kartenpreis</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">profit</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+     <span style="color: #D0372D;">:post</span><span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span>
+    ...<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+</ul>
+
+<p>
+[method=direct]Hilfsfunktionen <i>(4)</i>
+</p>
+
+<ul class="org-ul">
+<li><p>
+Die Berechnung der Einnahmen:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Einnahmen aus dem Produkt von </span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Besucherzahl und Kartenpreis</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">einnahmen</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+     <span style="color: #D0372D;">:post</span><span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> \<span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span>
+    ...<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+
+<li><p>
+Die Kosten:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die entstehenden Kosten bei gegebenem</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Kartenpreis aus Fixkosten und variablen Kosten</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">kosten</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> \<span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span>
+   ...<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+</ul>
+
+<p>
+[method=direct]Hilfsfunktionen <i>(5)</i>
+</p>
+
+<ul class="org-ul">
+<li><p>
+Die Anzahl der Besucher:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Besucherzahl bei gegebenem</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Kartenpreis nach empirisch ermittelter Formel</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">besucherzahl</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> \<span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span>
+   ...<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+</ul>
+
+<p>
+Hilfsfunktionen <i>(6)</i>
+</p>
+
+<ul class="org-ul">
+<li>In Phase II versuchen wir Beispiele zu finden; beginnen wir mit der
+Funktion <code>besucherzahl</code>.</li>
+
+<li>Aus der Problembeschreibung lassen sich folgende Beispiele ableiten:
+
+<ul class="org-ul">
+<li>(besucherzahl 500) = 120</li>
+
+<li>(besucherzahl 490) = 135</li>
+
+<li>(besucherzahl 510) = 105</li>
+
+<li>(besucherzahl 400) = 270</li>
+</ul></li>
+
+<li>Hinweis: Um Rundungsfehler zu vermeiden, werden alle Beträge in Cent
+angegeben.</li>
+
+<li>Lässt sich aus den Beispielen ein allgemeiner Zusammenhang ableiten?</li>
+
+<li>Antwort: (besucherzahl p) = (+ 120 (* (/ 15 10) (- 500 p)))</li>
+</ul>
+
+<p>
+[method=direct]Hilfsfunktionen <i>(7)</i>
+</p>
+
+<ul class="org-ul">
+<li><p>
+Die Funktion <code>besucherzahl</code> ergibt sich somit zu:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Besucherzahl bei gegebenem</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Kartenpreis nach empirisch ermittelter Formel</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">besucherzahl</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> \<span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span>
+   <span style="color: #909183;">{</span><span style="color: #008000;">\blue</span><span style="color: #709870;">(</span>+ 120 <span style="color: #907373;">(</span>*<span style="color: #6276BA;">(</span>/ 15 10 <span style="color: #6276BA;">)</span> <span style="color: #6276BA;">(</span>- 500 kartenpreis<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">}</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">{</span><span style="color: #008000;">\red</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-besucherzahl</span><span style="background-color: #FFDCDC; text-decoration: underline;">}</span>
+<span style="color: #7388D6;">{</span><span style="color: #008000;">\red</span>   <span style="color: #909183;">(</span><span style="color: #006FE0;">is</span> <span style="color: #709870;">(</span>= <span style="color: #907373;">(</span>besucherzahl 500<span style="color: #907373;">)</span> 120<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">}</span>
+<span style="color: #7388D6;">{</span><span style="color: #008000;">\red</span>   <span style="color: #909183;">(</span><span style="color: #006FE0;">is</span> <span style="color: #709870;">(</span>= <span style="color: #907373;">(</span>besucherzahl 490<span style="color: #907373;">)</span> 135<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">}</span>
+<span style="color: #7388D6;">{</span><span style="color: #008000;">\red</span>   <span style="color: #909183;">(</span><span style="color: #006FE0;">is</span> <span style="color: #709870;">(</span>= <span style="color: #907373;">(</span>besucherzahl 510<span style="color: #907373;">)</span> 105<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">}</span>
+<span style="color: #7388D6;">{</span><span style="color: #008000;">\red</span>   <span style="color: #909183;">(</span><span style="color: #006FE0;">is</span> <span style="color: #709870;">(</span>= <span style="color: #907373;">(</span>besucherzahl 400<span style="color: #907373;">)</span> 270<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="background-color: #FFDCDC; text-decoration: underline;">)</span><span style="color: #707183;">}</span>
+</pre>
+</div></li>
+</ul>
+
+<p>
+[method=direct]Hilfsfunktionen <i>(8)</i>
+</p>
+
+<ul class="org-ul">
+<li><p>
+Für die Funktion <code>kosten</code> gehen wir ähnlich vor und erhalten
+schließlich:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die entstehenden Kosten bei gegebenem</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Kartenpreis aus Fixkosten und variablen Kosten</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">kosten</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+     <span style="color: #D0372D;">:post</span><span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> \<span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span> <span style="color: #008000;">\}</span>
+    <span style="color: #909183;">(</span>+ 18000 <span style="color: #709870;">(</span>* 5 <span style="color: #907373;">(</span>besucherzahl kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-kosten</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>kosten 500<span style="color: #709870;">)</span> 18600<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>kosten 400<span style="color: #709870;">)</span> 19350<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+</ul>
+
+<p>
+[method=direct]Hilfsfunktionen <i>(9)</i>
+</p>
+
+<ul class="org-ul">
+<li><p>
+ebenso für die Funktion <code>einnahmen</code>:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Einnahmen aus dem Produkt von </span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Besucherzahlund Kartenpreis</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">einnahmen</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> \<span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span>
+    <span style="color: #909183;">(</span>* <span style="color: #709870;">(</span>besucherzahl kartenpreis<span style="color: #709870;">)</span> kartenpreis<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-einnahmen</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>einnahmen 500<span style="color: #709870;">)</span> 60000<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>einnahmen 400<span style="color: #709870;">)</span> 108000<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+</ul>
+
+<p>
+[method=direct]Hilfsfunktionen <i>(10)</i>
+</p>
+
+<ul class="org-ul">
+<li><p>
+zum Schluss die Funktion <code>profit</code>:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet den Profit aus der Differenz zwischen</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Einnahmen und Kosten bei gegebenem Kartenpreis</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">profit</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #008000;">\{</span><span style="color: #D0372D;">:pre</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+     <span style="color: #D0372D;">:post</span><span style="color: #909183;">[</span><span style="color: #709870;">(</span><span style="color: #006FE0;">number?</span> \<span style="color: #BA36A5;">%</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span><span style="color: #008000;">\}</span>
+    <span style="color: #909183;">(</span>- <span style="color: #709870;">(</span>einnahmen kartenpreis<span style="color: #709870;">)</span>
+       <span style="color: #709870;">(</span>kosten kartenpreis<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-profit</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>profit 500<span style="color: #709870;">)</span> 41400<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>profit 400<span style="color: #709870;">)</span> 88650<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+</ul>
+
+<p>
+Hilfsfunktionen <i>(11)</i>
+</p>
+
+<p>
+<b>Regel für Hilfsfunktionen:</b>
+</p>
+
+<p>
+<b>Definiere für jeden Zusammenhang zwischen Größen, die sich aus der
+Problembeschreibung ergeben, eine Funktion.</b>
+</p>
+
+<p>
+[method=direct]Hilfsfunktionen <i>(12)</i> <b>So nicht!!</b>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">profit</span>
+   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+     <span style="color: #909183;">(</span>-
+       <span style="color: #709870;">(</span>*
+         <span style="color: #907373;">(</span>+ 120
+            <span style="color: #6276BA;">(</span>* <span style="color: #858580;">(</span>/ 15 10 <span style="color: #858580;">)</span>
+               <span style="color: #858580;">(</span>- 500 kartenpreis<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+         kartenpreis<span style="color: #709870;">)</span>
+       <span style="color: #709870;">(</span>+ 18000
+          <span style="color: #907373;">(</span>* 5
+             <span style="color: #6276BA;">(</span>+ 120
+                <span style="color: #858580;">(</span>* <span style="color: #80A880;">(</span>/ 15 10 <span style="color: #80A880;">)</span>
+                <span style="color: #80A880;">(</span>- 500 kartenpreis<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+Hilfsfunktionen
+</p>
+
+<ul class="org-ul">
+<li>vgl. auch Kent Beck: Best practice patterns: method invocation</li>
+
+<li>Hilfsfunktionen entsprechen dem Prinzip der funktionalen Abstraktion</li>
+
+<li>oder der hierarchischen Dekomposition</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline78" class="outline-3">
+<h3 id="orgheadline78">Variablendefinitionen</h3>
+<div class="outline-text-3" id="text-orgheadline78">
+<p>
+Variablendefinitionen /(1) / Weitere Verbesserung der Lesbarkeit des
+Programms durch
+</p>
+
+<p>
+<b>Regel für Variablendefinitionen:</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline79" class="outline-3">
+<h3 id="orgheadline79">Ersetze jede Konstante, deren Bedeutung sich nicht aus dem Kontext</h3>
+<div class="outline-text-3" id="text-orgheadline79">
+<p>
+ergibt, durch einen sprechenden Variablennamen. *
+</p>
+
+<p>
+Anmerkung: Der Begriff <i>Variable</i> ist hier vorläufig mit <i>benannter
+Konstante</i> gleichzusetzen.
+</p>
+
+<p>
+[method=direct]Variablendefinitionen /(2) / Zum Beispiel für die
+Funktion <code>profit</code> und ihre Hilfsfunktionen:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">fixkosten</span> 18000<span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">kosten-pro-besucher</span> 5<span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">basis-besucherzahl</span> 120<span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">besucher-preis-faktor</span> <span style="color: #7388D6;">(</span>/ 15 10<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">preis-fuer-basis-besucherzahl</span> 500<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+(Das vollständige Programm <code>profit</code> (kino.clj) steht in Moodle zur
+Verfügung.)
+</p>
+
+<p>
+<b>Gegenbeispiel:</b> für die Formel zur Berechnung der Dreiecksfläche
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-clojure"><span style="color: #707183;">(</span>/ <span style="color: #7388D6;">(</span>* grundseite hoehe<span style="color: #7388D6;">)</span> 2<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+<b>nicht</b> die Konstante 2 durch eine Variable zwei ersetzen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline80" class="outline-3">
+<h3 id="orgheadline80">Zusammenfassung</h3>
+<div class="outline-text-3" id="text-orgheadline80">
+<p>
+Zusammenfassung
+</p>
+
+<ul class="org-ul">
+<li>Funktionen (im Sinne der funktionalen Programmierung) stellen ein
+bedeutsames Mittel der funktionalen Abstraktion dar durch:
+
+<ul class="org-ul">
+<li>Abstraktion konkreter Ausdrücke zu parametrisierten Funktionen,</li>
+
+<li>Benennung der Funktionen.</li>
+</ul></li>
+
+<li>Abstraktion von Teilausdrücken führt durch die Einführung von
+Hilfsfunktionen zu einer Abstraktionshierarchie.</li>
+
+<li>Eine Entwurfsvorschrift
+
+<ul class="org-ul">
+<li>ist kein Allheilmittel,</li>
+
+<li>stellt eine Handlungsanleitung dar,</li>
+
+<li>dient der „Disziplinierung“ der Programmierer.</li>
+
+<li>Phase 3 stellt hohe Anforderungen:
+
+<ul class="org-ul">
+<li>Verstehen der Problembeschreibung</li>
+
+<li>Vermögen, mathematische Zusammenhänge zu erkennen</li>
+
+<li>Einarbeitung in fremde Begriffswelt</li>
+
+<li>Entwicklung eigener Fachsprachen</li>
+
+<li>Fähigkeit zur Abstraktion</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgheadline82" class="outline-2">
+<h2 id="orgheadline82">Logische Programmierung</h2>
+</div>
+<div id="outline-container-orgheadline83" class="outline-2">
+<h2 id="orgheadline83">Weitere &#x2026;</h2>
+</div>
+
+<div id="outline-container-orgheadline84" class="outline-2">
+<h2 id="orgheadline84"><h2 class='org-ref-bib-h1'>Literatur</h2>
+<ul class='org-ref-bib'><li><a id="AmitRathore2012">[AmitRathore2012] Amit Rathore, Clojure in Action, Manning Publications Co. (2012).</a></li>
+<li><a id="Hales2008">[Hales2008] Thomas Hales, Formal Proof, <i>Notices of the AMS</i>, <b>55(11)</b>, (2008).</a></li>
+<li><a id="KlaerenSperber2007">[KlaerenSperber2007] Herbert Klaeren & Michael Sperber, Die Macht der Abstraktion, B. G. Teubner (2007).</a></li>
+<li><a id="Moessenboeck">[Moessenboeck] Hanspeter M\"ossenb\"ock, Objektorientierte Programmierung in Oberon-2, Springer-Verlag GmbH (1994).</a></li>
+</ul></h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Autor: Johannes Brauer</p>
+<p class="email">Email: <a href="mailto:brauer@nordakademie.de">brauer@nordakademie.de</a></p>
+<p class="date">Created: 2016-08-15 Mon 17:52</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

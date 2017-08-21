@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?><infoDebug><tree>
+   <node type="pr">
+     <predicate_name>br_is_even     </predicate_name>
+       <input_element>
+br_is_even
+       </input_element>
+
+
+   </node>
+   <children>
+<tree>
+   <node type="cl">
+     <predicate_name>br_is_even     </predicate_name>
+       <input_element>
+br_is_even
+       </input_element>
+
+
+     <rule>br_is_even:-even(_10185),not(next(_10185,_10190))     </rule>
+     <line_begin>29     </line_begin>
+     <line_end>32     </line_end>
+   </node>
+   <children>
+<tree>
+   <node type="pr">
+     <predicate_name>even(_10185)     </predicate_name>
+       <input_element>
+even(_10647)
+       </input_element>
+
+       <output_element>
+even(nil)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="fact">
+     <predicate_name>even(_10185)     </predicate_name>
+       <input_element>
+even(_10647)
+       </input_element>
+
+       <output_element>
+even(nil),(20,22),1
+       </output_element>
+
+   </node>
+   <children>
+   </children>
+</tree>
+<tree>
+   <node type="cl">
+     <predicate_name>even(_10949)     </predicate_name>
+       <input_element>
+even(_10647)
+       </input_element>
+
+
+     <rule>even(_10949):-odd(_10954),next(_10954,_10949)     </rule>
+     <line_begin>23     </line_begin>
+     <line_end>24     </line_end>
+   </node>
+   <children>
+<tree>
+   <node type="pr">
+     <predicate_name>odd(_10954)     </predicate_name>
+       <input_element>
+odd(_11411)
+       </input_element>
+
+       <output_element>
+odd(b)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="cl">
+     <predicate_name>odd(_11642)     </predicate_name>
+       <input_element>
+odd(_11411)
+       </input_element>
+
+       <output_element>
+odd(b)
+       </output_element>
+
+     <rule>odd(_11642):-even(_11647),next(_11647,_11642)     </rule>
+     <line_begin>25     </line_begin>
+     <line_end>28     </line_end>
+   </node>
+   <children>
+<tree>
+   <node type="dup">
+     <predicate_name>even(_11647)     </predicate_name>
+       <input_element>
+even(_12112)
+       </input_element>
+
+       <output_element>
+even(nil)
+       </output_element>
+
+     <reference>_12733     </reference>
+   </node>
+   <children>
+   </children>
+</tree>
+<tree>
+   <node type="pr_list">
+     <predicate_name>next(_11647,_11642)     </predicate_name>
+       <input_element>
+next(nil,_11642)
+       </input_element>
+
+       <output_element>
+next(nil,b)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="pr">
+     <predicate_name>next(nil,_13517)     </predicate_name>
+       <input_element>
+next(nil,_11642)
+       </input_element>
+
+       <output_element>
+next(nil,b)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="cl">
+     <predicate_name>next(nil,_13271)     </predicate_name>
+       <input_element>
+next(nil,_11642)
+       </input_element>
+
+
+     <rule>next(nil,_13271):-br(nil),br(_13271),nil<_13271,not(between(nil,_13271))     </rule>
+     <line_begin>10     </line_begin>
+     <line_end>13     </line_end>
+   </node>
+   <children>
+<tree>
+   <node type="pr">
+     <predicate_name>br(nil)     </predicate_name>
+       <input_element>
+br(nil)
+       </input_element>
+
+
+   </node>
+   <children>
+<tree>
+   <node type="fact">
+     <predicate_name>br(nil)     </predicate_name>
+       <input_element>
+br(nil)
+       </input_element>
+
+
+   </node>
+   <children>
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+<tree>
+   <node type="cl">
+     <predicate_name>next(nil,_13228)     </predicate_name>
+       <input_element>
+next(nil,_11642)
+       </input_element>
+
+       <output_element>
+next(nil,b)
+       </output_element>
+
+     <rule>next(nil,_13228):-br(_13228),not(has_preceding(_13228))     </rule>
+     <line_begin>14     </line_begin>
+     <line_end>15     </line_end>
+   </node>
+   <children>
+<tree>
+   <node type="pr">
+     <predicate_name>br(_13228)     </predicate_name>
+       <input_element>
+br(_14354)
+       </input_element>
+
+       <output_element>
+br(a)
+       </output_element>
+       <output_element>
+br(b)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="fact">
+     <predicate_name>br(_13228)     </predicate_name>
+       <input_element>
+br(_14354)
+       </input_element>
+
+       <output_element>
+br(a),(37,39),1
+       </output_element>
+       <output_element>
+br(b),(40,40),1
+       </output_element>
+
+   </node>
+   <children>
+   </children>
+</tree>
+
+   </children>
+</tree>
+<tree>
+   <node type="pr_list">
+     <predicate_name>not(has_preceding(_13228))     </predicate_name>
+       <input_element>
+not(has_preceding(a))
+       </input_element>
+       <input_element>
+not(has_preceding(b))
+       </input_element>
+
+       <output_element>
+not(has_preceding(b))
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="pr">
+     <predicate_name>has_preceding(a)     </predicate_name>
+       <input_element>
+has_preceding(a)
+       </input_element>
+
+       <output_element>
+has_preceding(a)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="cl">
+     <predicate_name>has_preceding(a)     </predicate_name>
+       <input_element>
+has_preceding(a)
+       </input_element>
+
+
+     <rule>has_preceding(a):-br(a),br(_15504),_15504>a     </rule>
+     <line_begin>16     </line_begin>
+     <line_end>19     </line_end>
+   </node>
+   <children>
+<tree>
+   <node type="pr">
+     <predicate_name>br(a)     </predicate_name>
+       <input_element>
+br(a)
+       </input_element>
+
+       <output_element>
+br(a)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="fact">
+     <predicate_name>br(a)     </predicate_name>
+       <input_element>
+br(a)
+       </input_element>
+
+       <output_element>
+br(a),(37,39),1
+       </output_element>
+
+   </node>
+   <children>
+   </children>
+</tree>
+
+   </children>
+</tree>
+<tree>
+   <node type="pr_list">
+     <predicate_name>br(_15504)     </predicate_name>
+       <input_element>
+br(_15504)
+       </input_element>
+
+       <output_element>
+br(a)
+       </output_element>
+       <output_element>
+br(b)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="dup">
+     <predicate_name>br(_17355)     </predicate_name>
+       <input_element>
+br(_15504)
+       </input_element>
+
+       <output_element>
+br(a)
+       </output_element>
+       <output_element>
+br(b)
+       </output_element>
+
+     <reference>_17373     </reference>
+   </node>
+   <children>
+   </children>
+</tree>
+
+   </children>
+</tree>
+<tree>
+   <node type="pr_list">
+     <predicate_name>_15504>a     </predicate_name>
+       <input_element>
+a>a
+       </input_element>
+       <input_element>
+b>a
+       </input_element>
+
+
+   </node>
+   <children>
+
+
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+<tree>
+   <node type="pr">
+     <predicate_name>has_preceding(b)     </predicate_name>
+       <input_element>
+has_preceding(b)
+       </input_element>
+
+
+   </node>
+   <children>
+<tree>
+   <node type="cl">
+     <predicate_name>has_preceding(b)     </predicate_name>
+       <input_element>
+has_preceding(b)
+       </input_element>
+
+
+     <rule>has_preceding(b):-br(b),br(_20144),_20144>b     </rule>
+     <line_begin>16     </line_begin>
+     <line_end>19     </line_end>
+   </node>
+   <children>
+<tree>
+   <node type="pr">
+     <predicate_name>br(b)     </predicate_name>
+       <input_element>
+br(b)
+       </input_element>
+
+       <output_element>
+br(b)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="fact">
+     <predicate_name>br(b)     </predicate_name>
+       <input_element>
+br(b)
+       </input_element>
+
+       <output_element>
+br(b),(40,40),1
+       </output_element>
+
+   </node>
+   <children>
+   </children>
+</tree>
+
+   </children>
+</tree>
+<tree>
+   <node type="pr_list">
+     <predicate_name>br(_20144)     </predicate_name>
+       <input_element>
+br(_20144)
+       </input_element>
+
+       <output_element>
+br(a)
+       </output_element>
+       <output_element>
+br(b)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="dup">
+     <predicate_name>br(_21931)     </predicate_name>
+       <input_element>
+br(_20144)
+       </input_element>
+
+       <output_element>
+br(a)
+       </output_element>
+       <output_element>
+br(b)
+       </output_element>
+
+     <reference>_21949     </reference>
+   </node>
+   <children>
+   </children>
+</tree>
+
+   </children>
+</tree>
+<tree>
+   <node type="pr_list">
+     <predicate_name>_20144>b     </predicate_name>
+       <input_element>
+a>b
+       </input_element>
+       <input_element>
+b>b
+       </input_element>
+
+
+   </node>
+   <children>
+
+
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+<tree>
+   <node type="pr_list">
+     <predicate_name>next(_10954,_10949)     </predicate_name>
+       <input_element>
+next(b,_10949)
+       </input_element>
+
+
+   </node>
+   <children>
+<tree>
+   <node type="pr">
+     <predicate_name>next(b,_26410)     </predicate_name>
+       <input_element>
+next(b,_10949)
+       </input_element>
+
+
+   </node>
+   <children>
+<tree>
+   <node type="cl">
+     <predicate_name>next(b,_26191)     </predicate_name>
+       <input_element>
+next(b,_10949)
+       </input_element>
+
+
+     <rule>next(b,_26191):-br(b),br(_26191),b<_26191,not(between(b,_26191))     </rule>
+     <line_begin>10     </line_begin>
+     <line_end>13     </line_end>
+   </node>
+   <children>
+<tree>
+   <node type="dup">
+     <predicate_name>br(b)     </predicate_name>
+       <input_element>
+br(b)
+       </input_element>
+
+       <output_element>
+br(b)
+       </output_element>
+
+     <reference>_27140     </reference>
+   </node>
+   <children>
+   </children>
+</tree>
+<tree>
+   <node type="pr_list">
+     <predicate_name>br(_26191)     </predicate_name>
+       <input_element>
+br(_26191)
+       </input_element>
+
+       <output_element>
+br(a)
+       </output_element>
+       <output_element>
+br(b)
+       </output_element>
+
+   </node>
+   <children>
+<tree>
+   <node type="dup">
+     <predicate_name>br(_27970)     </predicate_name>
+       <input_element>
+br(_26191)
+       </input_element>
+
+       <output_element>
+br(a)
+       </output_element>
+       <output_element>
+br(b)
+       </output_element>
+
+     <reference>_27988     </reference>
+   </node>
+   <children>
+   </children>
+</tree>
+
+   </children>
+</tree>
+<tree>
+   <node type="pr_list">
+     <predicate_name>b<_26191     </predicate_name>
+       <input_element>
+b<a
+       </input_element>
+       <input_element>
+b<b
+       </input_element>
+
+
+   </node>
+   <children>
+
+
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+<tree>
+   <node type="pr_list">
+     <predicate_name>not(next(_10185,_10190))     </predicate_name>
+       <input_element>
+not(next(nil,_10190))
+       </input_element>
+
+
+   </node>
+   <children>
+<tree>
+   <node type="dup">
+     <predicate_name>next(nil,_31775)     </predicate_name>
+       <input_element>
+next(nil,_10190)
+       </input_element>
+
+       <output_element>
+next(nil,b)
+       </output_element>
+
+     <reference>_31810     </reference>
+   </node>
+   <children>
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+   </children>
+</tree>
+
+<file name="/cygdrive/c/fernan/research/BDDEDUC/DES/DES2.3/examples/parity.dl">
+<namefile>/cygdrive/c/fernan/research/BDDEDUC/DES/DES2.3/examples</namefile>
+</file></infoDebug>

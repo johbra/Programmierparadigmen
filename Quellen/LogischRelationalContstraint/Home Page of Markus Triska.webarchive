@@ -1,0 +1,1038 @@
+bplist00—_WebMainResource’	
+_WebResourceMIMEType_WebResourceTextEncodingName^WebResourceURL_WebResourceFrameName_WebResourceDataYtext/htmlUUTF-8_https://www.metalevel.at/POuR<!DOCTYPE html><html><head>
+    <title>Home Page of Markus Triska</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Prolog,Emacs,PostScript,DCG,Constraints">
+    <style type="text/css">
+<!--
+      td, dl { padding: 3pt }
+      .recommended { font-weight: bold }
+      h1 { font-size: 300%; }
+      a:link { text-decoration: none; }
+      a:hover { text-decoration: underline; }
+-->
+    </style>
+  </head>
+  <body style="padding-left: 5%; padding-right: 5%; padding-bottom: 3cm">
+    <br>
+    <center>
+      <h1>Home Page of <a href="markus.jpg">Markus Triska</a></h1>
+    </center>
+
+    <br><br>
+
+    <div style="margin-left: 70%; display: inline-block; text-align: right">
+        Find your way‚Äîfrom darkness...
+        <span style="display: inline-block; width: 30px"></span>
+      <br>
+      to light.
+      <br>
+      <div style="display: inline-block; padding-top: 5pt">
+        <i><a href="knight_of_cups">Knight of Cu</a><a href="robe">ps</a></i>
+      </div>
+    </div>
+
+    <br><br>
+    <h2>Contact</h2>
+    <p style="line-height: 1.5">
+      E-mail: <a href="mailto:triska@metalevel.at">triska@metalevel.at</a><br>
+      GitHub: <a href="https://github.com/triska">github.com/triska</a>
+    </p>
+    <br>
+
+    <h2>Publications</h2>
+
+    <h3 style="padding-left: 10pt">Books</h3>
+    <dl>
+      <dd>
+        <dl>
+          <dt>
+            <a href="/prolog"><b>The Power of Prolog</b></a>
+          </dt>
+          <dd>Introduction to modern Prolog.</dd>
+          <dd>2005‚àí<i>today</i></dd>
+        </dl>
+      </dd>
+    </dl>
+
+
+    <h3 style="padding-left: 10pt">Peer-reviewed articles</h3>
+    <dl>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>The Boolean Constraint Solver of SWI-Prolog: System Description</b> (<a href="swiclpb.pdf"><b>pdf</b></a>, <a href="swiclpb.bib">bib</a>)
+          </dt>
+          <dd>Markus Triska</dd>
+          <dd>FLOPS 2016, LNCS 9613, pp. 45-61</dd>
+        </dl>
+      </dd>
+
+      
+      <dd>
+        <dl>
+          <dt>
+            <b>Tor: Extensible Search with Hookable Disjunction</b> (<a href="http://users.ugent.be/~tschrijv/Research/papers/ppdp2012.pdf">pdf</a>)
+          </dt>
+          <dd>Tom Schrijvers, Markus Triska, Bart Demoen</dd>
+          <dd>PPDP 2012, ACM 2012, pp. 103-114</dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>The Finite Domain Constraint Solver of SWI-Prolog</b> (<a href="swiclpfd.pdf"><b>pdf</b></a>, <a href="swiclpfd.bib">bib</a>)
+          </dt>
+          <dd>Markus Triska</dd>
+          <dd>FLOPS 2012, LNCS 7294, pp. 307-316</dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>An Effective Greedy Heuristic for the Social Golfer Problem</b> (<a href="sgpgreedy.pdf">pdf</a>)
+          </dt>
+          <dd>Markus Triska and Nysret Musliu</dd>
+          <dd>Annals of Operations Research Vol. 194(1) (2012), pp. 413-425</dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>An Improved SAT Formulation for the Social Golfer Problem</b> (<a href="sgpsat.pdf">pdf</a>)
+          </dt>
+          <dd>Markus Triska and Nysret Musliu</dd>
+          <dd>Annals of Operations Research Vol. 194(1) (2012), pp. 427-438</dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>SWI-Prolog</b> (<a href="http://arxiv.org/pdf/1011.5332v1">pdf</a>)
+          </dt>
+          <dd>Jan Wielemaker, Tom Schrijvers, Markus Triska, Torbj√∂rn Lager</dd>
+          <dd>TPLP 12 (2012), pp. 67-96</dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>A Constraint Programming Application for Rotating Workforce Scheduling</b> (<a href="fcscp.pdf">pdf</a>)
+          </dt>
+          <dd>Markus Triska and Nysret Musliu</dd>
+          <dd>IEA/AIE 2011, Studies in Computational Intelligence 363 (2011), pp. 83-88</dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>Better Termination for Prolog with Constraints</b>
+          </dt>
+          <dd>Markus Triska, Ulrich Neumerkel, Jan Wielemaker</dd>
+          <dd>WLPE 2008</dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>Constraint solving for high-level WCET analysis</b>
+          </dt>
+          <dd>Adrian Prantl, Jens Knoop, Markus Schordan, Markus Triska</dd>
+          <dd>WLPE 2008</dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>A Generalised Finite Domain Constraint Solver for SWI-Prolog</b>
+          </dt>
+          <dd>Markus Triska, Ulrich Neumerkel, Jan Wielemaker</dd>
+          <dd>WLP 2008</dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>Declarative language extensions for Prolog courses</b>
+          </dt>
+          <dd>Ulrich Neumerkel, Markus Triska, and Jan Wielemaker</dd>
+          <dd>FDPE 2008</dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>Compiler Technology for Blue Gene Systems</b>
+          </dt>
+          <dd>Stefan Kral, Markus Triska and Christoph W. Ueberhuber</dd>
+          <dd>Euro-Par 2006, LNCS 4128, pp. 279-288</dd>
+        </dl>
+      </dd>
+    </dl>
+
+    <h3 style="padding-left: 10pt">Theses</h3>
+    <dl>
+      <dd>
+        <dl>
+          <dt>
+            <b>Solution Methods for the Social Golfer Problem</b>
+            (<a href="mst.pdf">pdf</a>)
+          </dt>
+          <dd>
+            Masters thesis, under the supervision of
+            Priv.-Doz.&nbsp;Dr.&nbsp;Nysret Musliu
+          </dd>
+          <dd>
+            Accepted in April 2008, Technische Universit√§t Wien
+          </dd>
+        </dl>
+      </dd>
+
+      <dd>
+        <dl>
+          <dt>
+            <b>Correctness Considerations in CLP(FD) Systems</b>
+            (<a href="drt.pdf"><b>pdf</b></a>, <a href="drt.bib">bib</a>)
+          </dt>
+          <dd>
+            Doctoral thesis, under the supervision of
+            Priv.-Doz.&nbsp;Dr.&nbsp;Nysret Musliu
+          </dd>
+          <dd>
+            Accepted in January 2014, Technische Universit√§t Wien
+          </dd>
+        </dl>
+      </dd>
+    </dl>
+
+    <br><br>
+    <h2>Prolog resources</h2>
+
+    Prolog is the most popular logic programming language. You can use
+    it to elegantly solve problems from such diverse areas as
+    combinatorial optimisation, scheduling, natural language
+    processing, data&nbsp;analysis, system&nbsp;verification and
+    web&nbsp;hosting.
+
+    <br><br>
+
+    You interacted with a Prolog program when you accessed this
+    page: It was served to you
+    by <a href="https://github.com/triska/proloxy"><b>Proloxy</b></a>.
+
+    <br><br> I am the current maintainer of
+    the <a href="http://groups.google.com/groups?group=comp.lang.prolog"><tt>comp.lang.prolog</tt></a> <a href="/prolog/faq/">Frequently
+      Asked Questions</a>.
+    <br><br>
+
+    <center>
+
+      <table width="80%">
+        <colgroup><col width="12%">
+        </colgroup><tbody><tr>
+
+          <td valign="top">
+            <a class="recommended" href="acomip/">Acomip</a>
+          </td>
+          <td>
+            <i>A Couple of Meta-interpreters in Prolog</i>, collection of
+            <b>meta-interpreters</b> and tutorial.
+          </td>
+        </tr>
+
+
+        <tr>
+          <td valign="top">
+            <a href="alzint/">Alzint</a>
+          </td>
+          <td>
+            Interpreter for AL(Z) (assignment language over integers),
+            a simple Turing-complete programming language.  Supports
+            tracing and reverse execution. Written in Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="/bitcoinolog/">Bitcoinolog</a>
+          </td>
+          <td>
+            Reason about <b>Bitcoin</b> addresses with Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="http://eu.swi-prolog.org/man/clpb.html">CLP(B)</a>
+          </td>
+          <td>
+            Constraint solver over Boolean variables that ships with
+            SWI-Prolog. You can try a
+            <a href="http://swish.swi-prolog.org/example/knights_and_knaves.pl">show-case</a>
+            and download
+            further <a class="recommended" href="https://github.com/triska/clpb">CLP(B)
+              sample programs</a> and
+            <a href="https://github.com/triska/clpb/blob/master/zdd">a
+              variant based on ZDDs</a>.
+          </td>
+        </tr>
+
+
+        <tr>
+          <td valign="top">
+            <a href="http://eu.swi-prolog.org/man/clpfd.html">CLP(FD)</a>
+          </td>
+          <td>
+            Finite domain constraint solver that ships with
+            SWI-Prolog. Using a
+            slightly <a href="various/golf_swi.pl">modified
+              version</a> of
+            a <a href="various/golf_orig.pl">program</a> by Mats
+            Carlsson, you can for example solve instances of
+            the <a href="sgp/">social golfer problem</a> with
+            SWI-Prolog. An example with 8 games a week in groups of 4
+            (32 players in total) playing for 9 weeks
+            is <a href="various/sol9.txt">sol9.txt</a>. You can also
+            try <a href="http://swish.swi-prolog.org/example/clpfd_sudoku.pl">Sudoku</a>
+            and <a href="http://swish.swi-prolog.org/example/clpfd_queens.pl">N-queens</a>,
+            read a short <a href="/prolog/clpfd">CLP(FD) primer</a> and study a
+            collection
+            of <a href="https://github.com/triska/clpfd" class="recommended">CLP(FD) sample programs</a>.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="http://github.com/triska/clpz">CLP(Z)</a>
+          </td>
+          <td>
+            Constraint logic programming over <i>integers</i>
+            for <a href="https://sicstus.sics.se/">SICStus&nbsp;Prolog</a>.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="various/conn4/">Connect 4</a>
+          </td>
+          <td>
+            Connect 4 (four in a row, plot four) game that plays
+            against itself. Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="prolog/dcg">DCG Primer</a>
+          </td>
+          <td>
+            Introduction to Prolog <b>definite clause grammars</b>&nbsp;(DCGs).
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="ediprolog/">ediprolog</a>
+          </td>
+          <td>
+            Emacs does Interactive Prolog. Elisp definitions to
+            interact with SWI&nbsp;Prolog in arbitrary Emacs buffers.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="etrace/">etrace</a>
+          </td>
+          <td>
+            Graphical Prolog Tracer in Emacs.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="misc/galeshapley.pl">galeshapley.pl</a>
+          </td>
+          <td>
+            Gale-Shapley algorithm to find a stable&nbsp;matching,
+            also known as <b>stable&nbsp;marriage</b>, implemented in
+            Prolog. A Prolog program that finds all stable matchings
+            by exhaustive search:
+            <a href="misc/allstable.pl">allstable.pl</a>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td valign="top">
+            <a href="knight/">Knight's Tour</a>
+          </td>
+          <td>
+            Closed knight's tours on an <i>N</i>x<i>N</i> chessboard,
+            written in Prolog. Example application of the
+            <tt>circuit/1</tt> constraint, describing a Hamiltonian
+            circuit.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="http://github.com/triska/letswicrypt">LetSWICrypt</a>
+          </td>
+          <td>
+            Walkthrough document and sample files for running
+            <b>HTTPS&nbsp;servers</b> with SWI-Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="lisprolog/">Lisprolog</a>
+          </td>
+          <td>
+            Interpreter and parser for a simple <b>Lisp</b>, written in Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="misc/markov.pl">markov.pl</a>
+          </td>
+          <td>
+            <b>Markov chain</b> demonstration, written in Prolog. Train a
+            Markov chain of arbitrary order and use it for text
+            generation.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="queens/">N-queens</a>
+          </td>
+          <td>
+            N-queens constraint solving visualization, written in
+            Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="logic/plres.pl">plres.pl</a>
+          </td>
+          <td>
+            Prolog program that finds shortest resolution
+            refutations of propositional clauses.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="presprover/">Presprover</a>
+          </td>
+          <td>
+            Presprover can determine validity and satisfiability of all
+            formulas of <b>Presburger arithmetic</b>. Written in Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="https://github.com/triska/proloxy"><b>Proloxy</b></a>
+          </td>
+          <td>
+            HTTP <b>reverse proxy</b>, written in Prolog.
+          </td>
+        </tr>
+
+
+        <tr>
+          <td valign="top">
+            <a href="various/prost">Prost</a>
+          </td>
+          <td>
+            Prolog streams (sequences, delayed/lazy/infinite lists)
+            demonstration.
+          </td>
+        </tr>
+
+
+        <tr>
+          <td valign="top">
+            <a href="various/quine.pl">quine.pl</a>
+          </td>
+          <td>
+            A Prolog <b>quine</b>, bootstrapped
+            from <a href="various/quinebs.pl">quinebs.pl</a>. Prolog is
+            fully reflective, allowing for a more concise
+            quine: <a href="various/quinerefl.pl">quinerefl.pl</a>.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="https://github.com/triska/rits">RITS</a>
+          </td>
+          <td>Rule-based Intelligent <b>Tutoring&nbsp;System</b>.
+            Implements a domain-specific language for guiding students
+            through solving tasks, emulating an instructor. Try
+            the <a href="/rits/demo.html">web-based&nbsp;demo</a>!
+            Written in Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="scc.pl">scc.pl</a>
+          </td>
+          <td>
+            Prolog library for computing the <b>strongly connected
+              components</b> of a graph using Tarjan's algorithm.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="http://eu.swi-prolog.org/pldoc/man?section=simplex">simplex</a>
+          </td>
+          <td>
+            Prolog library for solving <b>linear programming</b>
+            problems. Implements the simplex algorithm, and contains a
+            streamlined version for solving transportation and
+            assignment problems. Also contains a simplistic
+            branch-and-bound implementation to solve mixed <b>integer
+            programs</b>. A show-case
+            is <a href="various/colgen/">delayed
+            column&nbsp;generation</a>.
+          </td>
+        </tr>
+
+
+        <tr>
+          <td valign="top">
+            <a href="simsttab/">Simsttab</a>
+          </td>
+          <td>
+            A <b>timetabling engine</b> for schools.  Written in Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="sudoku/">Sudoku</a>
+          </td>
+          <td>
+            <b>Sudoku</b> constraint solving visualization, written in
+            Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="tist/">Tist</a>
+          </td>
+          <td>
+            <i>Thinking in States</i>; various show-cases (puzzle,
+            interpreter, compiler, virtual machine), realized using
+            declarative approaches. Examples in Prolog, Haskell and J.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="various/trs.pl">trs.pl</a>
+          </td>
+          <td>
+            Prolog definitions for reasoning about <b>term rewriting
+              systems</b>, using algorithms described in
+            <i>Term Rewriting&nbsp;and All&nbsp;That</i> by Baader and Nipkow.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="various/wisemen.pl">Wisemen</a>
+          </td>
+          <td>
+            Demonstrates agent reasoning using constraint handling
+            rules (CHR). See source file for documentation.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="wumpusworld/">Wumpus World</a>
+          </td>
+          <td>
+            An AI-classic. Contains a framework to test your own
+            agents and a simple example agent. Written in Prolog.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="zurg/">Zurg</a>
+          </td>
+          <td>
+            A Prolog solution to a search problem called <i>Escape from
+              Zurg</i>.
+          </td>
+        </tr>
+
+      </tbody></table>
+
+    </center>
+
+    <br><br>
+    <h2>Emacs resources</h2>
+
+    Emacs is an extensible editor. You can use it for editing programs
+    and also for more general interaction with the operating system
+    such as: compiling programs, interacting with version control
+    systems, writing e-mails and managing files. Importantly, you can
+    also use Emacs itself to
+    report <a href="/ei/"><b>Emacs&nbsp;issues</b></a>. Take
+    the <a href="https://www.gnu.org/software/emacs/tour/">Emacs&nbsp;tour</a>
+    for more information.
+
+    <br><br> A useful customization when using Emacs is to remap
+    Caps&nbsp;Lock to act as an additional Ctrl&nbsp;key.
+
+    <br><br> I recommend to use Emacs with a
+    <a href="https://en.wikipedia.org/wiki/Dvorak_Simplified_Keyboard">Dvorak</a>
+    keyboard layout.
+    <br><br>
+
+    <center>
+
+      <table width="80%">
+        <colgroup><col width="12%">
+
+        </colgroup><tbody><tr>
+          <td valign="top">
+            <a href="cdvdmacs/">cdvdmacs</a>
+          </td>
+          <td>
+            Create data CDs and DVDs from within Emacs.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="ediprolog/">ediprolog</a>
+          </td>
+          <td>
+            Emacs does Interactive Prolog. Elisp definitions to
+            interact with SWI&nbsp;Prolog in arbitrary Emacs buffers.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="etrace/">etrace</a>
+          </td>
+          <td>
+            Graphical Prolog Tracer in Emacs.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="freud/">Freud</a></td>
+          <td>
+            Standalone C++ port of the Emacs Psychiatrist, simulating
+            a Rogerian analyst using phrase-production techniques
+            similar to the classic ELIZA demonstration of pseudo-AI.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="imimacs/">imimacs</a>
+          </td>
+          <td>
+            Instant messaging in Emacs. Very simple IM system.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="linum/">linum</a>
+          </td>
+          <td>
+            Emacs definitions for displaying <b>line&nbsp;numbers</b>
+            to the left of buffers.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="misc/openwith.el">openwith.el</a>
+          </td>
+          <td>
+            openwith.el lets you associate external applications with
+            files, so that you can open them from within Emacs via
+            C-x&nbsp;C-f, with RET in dired, etc.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="pceprolog/">PceProlog</a>
+          </td>
+          <td>
+            <b>Prolog development</b> using GNU Emacs.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="pointback/">pointback</a>
+          </td>
+          <td>
+            Emacs definitions for restoring previous window points
+            when switching buffers.
+          </td>
+        </tr>
+
+
+        <tr>
+          <td valign="top">
+            <a href="unicapl/">UnicAPL</a>
+          </td>
+          <td>
+            Enter and typeset <b>APL</b> and <b>A+</b> in Emacs and
+            LaTeX using Unicode.
+          </td>
+        </tr>
+
+      </tbody></table>
+
+    </center>
+
+    <br><br>
+    <h2>PostScript resources</h2>
+
+    PostScript is a stack-oriented programming language. It is
+    supremely useful as a page description language and supported by
+    many printers and programs. You can extend the language with
+    user-defined procedures and easily build environments for
+    visualizing structured data very conveniently.
+    <br><br>
+    The <a href="https://www.adobe.com/products/postscript/pdfs/PLRM.pdf">PostScript
+      Language Reference</a> is one of the finest technical reference
+    manuals due to its elegance, clarity and completeness.
+
+    <br><br>
+    <center>
+      <table width="80%">
+        <colgroup><col width="12%">
+
+        </colgroup><tbody><tr>
+          <td valign="top">
+            <a class="recommended" href="postscript/animations">Animations</a>
+          </td>
+          <td>
+            PostScript lets you draw portable animations of search
+            processes and nice pictures of solutions.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="postscript/austria">Austria</a>
+          </td>
+          <td>
+            Scalable PostScript outline of Austria.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="postscript/temperatures">Temperatures</a>
+          </td>
+          <td>
+            Visualization of daily maximum temperatures in Vienna,
+            using PostScript.
+          </td>
+        </tr>
+
+      </tbody></table>
+    </center>
+
+    <br><br>
+    <h2>Other programs</h2>
+
+    <center>
+      <table width="80%">
+        <colgroup><col width="12%">
+
+        </colgroup><tbody><tr>
+          <td valign="top">
+            <a href="alana/">Alana</a>
+          </td>
+          <td>
+            A <b>Turing machine simulator</b> with many examples (unary and
+            binary addition, subtraction, multiplication, a 5-state
+            busy beaver, 2 string parsing examples, divisibility test,
+            primality test) and a theoretical introduction to Turing
+            machines. A more formal document about this is
+            <a href="alana/alana.pdf">alana.pdf</a>.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="blinkory/">Blinkory</a>
+          </td>
+          <td>
+            Memory game involving a sequence of blinking disks.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="cgiforum/">CGIForum</a>
+          </td>
+          <td>
+            Light-weight discussion board with expandable/collapsible
+            threads, name registration, multiple sections, previewing,
+            searching, and marking of new entries. Written in Perl.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="contests/">Contests</a>
+          </td>
+          <td>
+            Material from <b>programming contests</b>.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a class="recommended" href="finomaton/">Finomaton</a>
+          </td>
+          <td>
+            Finomaton lets you draw finite state machines (automata)
+            and similar graphs. It outputs MetaPost code that
+            can be transformed to PostScript and used in TeX and LaTeX
+            documents. Written in Tcl/Tk.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="various/goco.tcl">goco.tcl</a>
+          </td>
+          <td>
+            <i>GO considered</i>, minimalistic front-end for GNU
+            Go. Written in Tcl/Tk
+            (<a href="various/goco.png">screenshot</a>).
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="greenpoint/">Greenpoint</a>
+          </td>
+          <td><i>Der gr√ºne Punkt</i> in METAFONT.</td>
+        </tr>
+
+
+        <tr>
+          <td valign="top">
+            <a href="hoarescope/">Hoarescope</a>
+          </td>
+          <td>
+            Hoarescope helps to prove partial correctness assertions
+            of <i>AL</i> programs over natural numbers using Hoare
+            logic (Hoare calculus). The resulting proof tree is
+            exported to LaTeX. If the remaining formulas are of
+            Presburger arithmetic, you can
+            use <a href="presprover/">Presprover</a>
+            to see whether they are valid. A more formal paper about
+            this
+            is <a href="wahlfpr/hoarescope.pdf">hoarescope.pdf</a>.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="jind/">Jind</a>
+          </td>
+          <td>
+            An interactive interpreter for a toy programming
+            language. You are to formulate how to get out of a rather
+            general maze. Written in Java.
+          </td>
+        </tr>
+
+
+        <tr>
+          <td valign="top">
+            <a href="various/jugs.maude">jugs.maude</a>
+          </td>
+          <td>
+            A water jugs puzzle expressed as a term rewriting system in
+            <a href="http://maude.cs.uiuc.edu/">Maude</a>. A transcript of an
+            example session: <a href="various/jugs.txt">jugs.txt</a>.
+          </td>
+        </tr>
+
+
+        <tr>
+          <td valign="top">
+            <a href="various/knighttour.lisp">knighttour.lisp</a>
+          </td>
+          <td>
+            Finds a knight's tour on an 8x8 chessboard using
+            first-fail heuristics (always choose the position which is
+            reachable from the fewest other positions). Written in
+            Lisp.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="magon/">Magic Hexagon</a></td>
+          <td>
+            3 ways to compute all magic hexagons of order 3.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="misc/">misc</a></td>
+          <td>
+            Miscellaneous programs and code snippets, prototypes, work
+            in progress etc.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="various/puzpan/">Puzpan</a>
+          </td>
+          <td>
+            Puzzle game involving a panel of squares.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="spakes/">Spakes</a>
+          </td>
+          <td>
+            <i>Snakes</i>-Clone for up to 4 players that can be played
+            across the Internet. Optionally, AI players (computer
+            controlled) can join the game. Written in C++.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="swap/">Swap</a>
+          </td>
+          <td>
+            File transfer program with resume-capability. Written in
+            Tcl/Tk.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="tickletankle/">Tickletankle</a>
+          </td>
+          <td>
+            A 2-player game with fractal terrain that can be played
+            locally or across the Internet or a LAN. You can play
+            against a human player or a computer-controlled opponent
+            (AI player). Written in Tcl/Tk.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="various/worldcup">Worldcup</a>
+          </td>
+          <td>
+            Statistical simulation of FIFA World Cup.
+          </td>
+        </tr>
+      </tbody></table>
+    </center>
+
+    <br><br>
+    <h2>Other texts</h2>
+
+    <center>
+
+      <table width="80%">
+        <colgroup><col width="12%">
+
+        </colgroup><tbody><tr>
+          <td valign="top"><a href="compass/"><b>Compass</b></a></td>
+          <td>Compass buying tips.</td>
+        </tr>
+
+        <tr>
+          <td valign="top"><a href="various/compnumerik.pdf">compnumerik.pdf</a></td>
+          <td>
+            Short paper about <b>numerical issues</b> involved in
+            approximating exponential and cosine functions using
+            Taylor series. German.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="various/fourier.pdf">fourier.pdf</a></td>
+          <td>
+            Short paper about <b>Fourier series</b> with some common example
+            expansions. German.
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top">
+            <a href="logic/">Logic</a>
+          </td>
+          <td>
+            Some proofs and solved exercises.
+          </td>
+        </tr>
+
+      </tbody></table>
+
+    </center>
+
+
+
+    <br><br><br>
+
+    A <a href="joke">joke</a>.
+    <br><br>
+
+    A <a href="/music_tip">music tip</a>.
+
+    <br><br>
+
+    <a href="mercy">Mercy</a>
+    <br><br>
+
+    <a href="faith">Faith to the End</a>
+  
+
+</body></html>    ( > \ k Ç î û § ¿ ¡                           v

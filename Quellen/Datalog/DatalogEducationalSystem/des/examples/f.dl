@@ -1,0 +1,79 @@
+%%%%%%%%%%%%
+% DATALOG
+%%%%%%%%%%%%
+
+:-type(flight(origin:string,destination:string,time:real)).
+
+flight(london,ny,9).
+flight(mad,par,1.5).
+flight(par,ny,10.0).
+
+:-type(travel(origin:string,destination:string,time:real)).
+travel(X,Y,T) :- flight(X,Y,T).
+travel(X,Y,T) :- flight(X,Z,T1), travel(Z,Y,T2), T=T1+T2.
+
+% Assuming a flight between Madrid and London in 2 hours, how long will it take to reach New York from Madrid?
+% ?- flight(mad,london,2) => travel(mad,ny,T).
+
+
+%%%%%%%%%%%%
+% SQL
+%%%%%%%%%%%%
+
+CREATE OR REPLACE TABLE flight(origin string, destination string, time real)
+CREATE OR REPLACE TABLE travel(origin string, destination string, time real)
+
+% ?- flight(mad,london,2) => travel(mad,ny,T).
+% Con esquema
+WITH flight(origin,destination,flight) AS 
+       SELECT 'mad','london',2.0 
+SELECT time 
+FROM travel 
+WHERE origin='mad' AND destination='ny'
+
+% Sin esquema
+WITH flight AS SELECT 'mad','london',2.0 
+SELECT time 
+FROM travel 
+WHERE origin='mad' AND destination='ny'
+
+% Más en general
+WITH Schema1 AS AssumedRelation1, 
+     ... ,
+     SchemaN AS AssumedRelationN
+SELECT ProjList 
+FROM Relation1, ... , RelationM
+
+% Notas:
+% - Todas las relaciones nuevas se asumen temporalmente en el WITH según el estándar SQL
+% - En la propuesta, para añadir extensional o intensionalmente tuplas a una relación, 
+%   se usa el mismo nombre de una relación existente. El estándar SQL no lo soporta, claro
+
+% Otro ejemplo.
+% Si sólo existe la relación flight y asumimos la relación travel:
+
+WITH travel(origin,destination,time) AS 
+(SELECT * FROM flight) 
+UNION 
+(SELECT flight.origin,travel.destination,flight.time+travel.time 
+ FROM flight, travel 
+ WHERE flight.destination = travel.origin
+)
+SELECT * FROM travel;
+
+% Pero esto ya funciona en SQL estándar. Otro caso es que sólo existiese la vista:
+CREATE VIEW travel(origin,destination,time) AS SELECT * FROM flight
+
+% Añadir la cláusula recursiva sería:
+
+WITH travel(origin,destination,time) AS 
+(SELECT flight.origin,travel.destination,flight.time+travel.time 
+ FROM flight, travel 
+ WHERE flight.destination = travel.origin
+)
+SELECT * FROM travel;
+
+% El sistema tendría que construir la vista asumida como la unión de la nueva 
+% definición y la antigua para procesar la consulta hipotética (y después 
+% recuperar la vista original)
+
