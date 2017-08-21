@@ -1,0 +1,1638 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+<head>
+<!-- 2017-08-10 Thu 00:02 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Programmierparadigmen</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Johannes Brauer" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Programmierparadigmen
+<br>
+<span class="subtitle">Aufgaben</span>
+</h1>
+
+<div id="outline-container-org4c8b016" class="outline-2">
+<h2 id="org4c8b016"><span class="section-number-2">1</span> Teil 1 (5. Semester)</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-org9b8926b" class="outline-3">
+<h3 id="org9b8926b"><span class="section-number-3">1.1</span> Aufgabe (SEND-MORE-MONEY)</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Lösen Sie das SEND-MORE-MONEY-Problem aus der Vorlesung (<a href="ProPar-Einstieg.html#aufgabe1">Aufgabe: Mehr
+Geld bitte!</a>) in einer Programmiersprache Ihrer Wahl! Beachten Sie
+Nebenbedingungen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org83e9f3a" class="outline-3">
+<h3 id="org83e9f3a"><span class="section-number-3">1.2</span> Aufgabe (Beweis Pkw-Motorräder-Problem)</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Führen Sie für das Pkw-Motorräder-Problem aus der <a href="ProPar-Einstieg.html#aufgabePkw">Vorlesung</a> den dort
+verlangten Beweis!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9d06cc2" class="outline-3">
+<h3 id="org9d06cc2"><span class="section-number-3">1.3</span> Aufgabe (Entwurfsvorschrift I)</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Schreiben Sie gemäß Entwurfsvorschrift I den Vertrag, die
+Zweckbestimmung für eine Funktion auf, die den Rauminhalt eines Quaders
+berechnet, für den Länge, Breite und Höhe gegeben ist. Formulieren Sie
+drei Beispielanwendungen als Tests, die das Verhalten der Funktion
+veranschaulichen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcb01337" class="outline-3">
+<h3 id="orgcb01337"><span class="section-number-3">1.4</span> Aufgabe (Entwurfsvorschrift I)</h3>
+<div class="outline-text-3" id="text-1-4">
+<ol class="org-ol">
+<li>Eine Funktion, die aus der Entfernung und der Geschwindigkeit zweier
+Züge die Zeit ermittelt, nach der die Züge sich treffen, wenn Sie
+sich auf einem gemeinsamen Streckenabschnitt von ihren jeweiligen
+Startpunkten aus aufeinander zu bewegen.</li>
+
+<li>Eine Funktion, die aus einem gegebenen Anfangskapital, einem
+Jahreszinssatz und einer in Monaten gemessenen Laufzeit das
+Endkapital ermittelt. Die Zinsgutschrift erfolgt einmalig am Ende der
+Laufzeit. Während der Laufzeit gibt es weder Einzahlungen noch
+Abhebungen.</li>
+
+<li><p>
+Eine Funktion, die aus der Länge und Breite eines rechteckigen
+Fußbodens, die Anzahl der benötigten Fliesen berechnet, deren Größe
+ebenfalls durch Länge und Breite gegeben ist.
+</p>
+
+<p>
+Hinweis: Der Funktionsaufruf <code>(Math/ceil x)</code> liefert die/ kleinste
+ganze Zahl, die größer als x ist.
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orga9a27f4" class="outline-3">
+<h3 id="orga9a27f4"><span class="section-number-3">1.5</span> Aufgabe (Bedingte Funktionen)</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Schreiben Sie ein Programm, das aus dem Bruttoeinkommen eines
+Arbeitnehmers, das sich aus der Anzahl der Arbeitsstunden und seinem
+Bruttostundenlohn ergibt, sein Nettoeinkommen durch Abzug der
+Einkommensteuer berechnet. Die Einkommensteuer wird dabei nach einem
+steuererklärungaufbierdeckelgeeigneten Tarif ermittelt, der
+folgendermaßen definiert ist:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Einkommen</b></th>
+<th scope="col" class="org-right"><b>Steuersatz</b> [%]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(<= 5000\)</td>
+<td class="org-right">0</td>
+</tr>
+
+<tr>
+<td class="org-left">\(> 5000\) und \(\leq 10000\)</td>
+<td class="org-right">15</td>
+</tr>
+
+<tr>
+<td class="org-left">\(>10000\) und \(\leq 100000\)</td>
+<td class="org-right">29</td>
+</tr>
+
+<tr>
+<td class="org-left">\(>100000\)</td>
+<td class="org-right">64</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Der Steuersatz gilt immer nur für die Einkommensanteile in dem
+jeweiligen Intervall.
+</p>
+
+<p>
+Die Funktion <code>nettoeinkommen</code> soll nach folgendem Schema aufrufbar sein:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">          <span style="color: #707183;">(</span>nettoeinkommen <span style="color: #808080;">anzahlArbeitsStunden</span> <span style="color: #808080;">stundenLohn</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+<p>
+Hier noch ein paar Testvorgaben:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-nettoeinkommen</span>
+      <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>/ 500085 100<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>nettoeinkommen 1 5001<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+      <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>/ 925071 100<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>nettoeinkommen 1 10001<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+      <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>/ 7315036 100<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>nettoeinkommen 1 100001<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+<p>
+Hinweise:
+</p>
+
+<ol class="org-ol">
+<li>Lesen Sie den Aufgabentext aufmerksam durch. Jeder Satz bedeutet
+etwas.</li>
+
+<li>Entwickeln Sie die Funktion gemäß Entwurfsvorschrift II. Benutzen Sie
+Hilfsfunktionen und machen von Variablendefinitionen Gebrauch.</li>
+
+<li>Um das Rechnen mit inexakten Zahlen zu vermeiden, geben Sie
+Steuersätze nicht als Gleitkommazahlen wie 0.29 sondern als rationale
+Zahlen ein. In diesem Beispiel: (/ 29 100)</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org667d3b0" class="outline-3">
+<h3 id="org667d3b0"><span class="section-number-3">1.6</span> Aufgabe (Datenstrukturen)</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Gehen Sie für die Lösung der Aufgabe nach Entwurfsvorschrift III
+vor!
+</p>
+
+<ol class="org-ol">
+<li><p>
+Definieren Sie eine Datenstruktur für „Zeitpunkte seit
+Mitternacht”, die aus den Komponenten <code>stunden</code>, <code>minuten</code> und
+<code>sekunden</code> besteht.
+</p>
+
+<p>
+Entwickeln Sie eine Funktion <code>zeit-&gt;sekunden</code>, die eine
+   Zeitpunkt-seit-Mittnacht-Struktur verarbeitet und die seit
+   Mitternacht vergangenen Sekunden berechnet.
+</p></li>
+</ol>
+
+<ol class="org-ol">
+<li><p>
+Definieren Sie geeignete <b>Datenstrukturen</b> für Kreise, die durch
+</p>
+
+<ul class="org-ul">
+<li>die Koordinaten des Mittelpunkts und</li>
+<li>den Radius und</li>
+</ul>
+<p>
+gegeben sind.
+</p>
+
+<p>
+Schreiben Sie eine Funktion, die prüft, ob ein Punkt
+   innerhalb eines Kreises liegt.
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org44ff4d3" class="outline-3">
+<h3 id="org44ff4d3"><span class="section-number-3">1.7</span> Aufgabe (gemischte Daten)</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Ein <i>Mitarbeiter</i> ist entweder
+</p>
+
+<ul class="org-ul">
+<li>ein <i>Festangestellter</i> oder</li>
+<li>ein <i>Werkstudent</i></li>
+</ul>
+
+<p>
+Ein <i>Festangestellter</i> wird definiert durch
+</p>
+
+<ul class="org-ul">
+<li>seinen Namen,</li>
+<li>sein Grundgehalt,</li>
+<li>die im letzten Monat geleisteten Arbeitsstunden.</li>
+</ul>
+
+<p>
+Ein <i>Werkstudent</i> wird definiert durch
+</p>
+
+<ul class="org-ul">
+<li>seinen Namen,</li>
+<li>seinen Stundenlohn,</li>
+<li>die im letzten Monat geleisteten Arbeitsstunden.</li>
+</ul>
+
+<p>
+Definieren Sie unter Berücksichtigung von Entwurfsvorschrift IV
+</p>
+
+<ul class="org-ul">
+<li>geeignete Datenstrukturen für <i>Mitarbeiter</i>,</li>
+<li>eine Funktionsschablone für Funktionen, die <i>Mitarbeiter</i>
+verarbeiten.</li>
+</ul>
+
+<p>
+Entwickeln auf der Grundlage dieser Schablone eine Funktion, die den
+Bruttomonatslohn eines Mitarbeiters berechnet. Bei <i>Festangestellten</i>
+berechnet sich der Monatslohn aus dem Grundgehalt zuzüglich
+Überstundenentgelt. Überstunden sind die über die monatliche
+Sollarbeitszeit (die als globale Konstante definiert wird)
+hinausgehenden Arbeitsstunden. Der Stundenlohn pro Überstunde berechnet
+sich aus dem Grundgehalt und der monatlichen Sollarbeitszeit plus
+\(25\%\). Minderstunden bleiben unberücksichtigt.
+</p>
+</div>
+</div>
+<div id="outline-container-orgced3e50" class="outline-3">
+<h3 id="orgced3e50"><span class="section-number-3">1.8</span> Aufgabe (elementare Ausdrücke über Listen)</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+Werten Sie die folgenden Funktionsaufrufe aus:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Nr.</th>
+<th scope="col" class="org-left">Ausdruck</th>
+<th scope="col" class="org-left">Lösung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">a)</td>
+<td class="org-left"><code>(first '((A) B C D))</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">b)</td>
+<td class="org-left"><code>(rest '((A)(B C D)))</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">c)</td>
+<td class="org-left"><code>(cons '(A B) '(A B))</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">d)</td>
+<td class="org-left"><code>(cons 'A '())</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">e)</td>
+<td class="org-left"><code>(first '(((A))))</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">f)</td>
+<td class="org-left"><code>(rest '(((A))))</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">g)</td>
+<td class="org-left"><code>(cons '((A)) empty)</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">h)</td>
+<td class="org-left"><code>(= 'X1 'X2)</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">i)</td>
+<td class="org-left"><code>(= '(X1) 'X2)</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">j)</td>
+<td class="org-left"><code>(= '(X1) '(X2))</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">k)</td>
+<td class="org-left"><code>(list? 'X1)</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">l)</td>
+<td class="org-left"><code>(list? '(X1))</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">m)</td>
+<td class="org-left"><code>(list? '())</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">n)</td>
+<td class="org-left"><code>(list? '(())</code></td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org33dd944" class="outline-3">
+<h3 id="org33dd944"><span class="section-number-3">1.9</span> Aufgabe (listenverarbeitende Funktionen)</h3>
+<div class="outline-text-3" id="text-1-9">
+<ol class="org-ol">
+<li>Die Funktion <code>sum</code> liefere, angewendet auf eine Liste von Zahlen <code>x</code>,
+die Summe der Elemente.</li>
+
+<li>Die Funktion <code>prod</code> liefere, angewendet auf eine Liste von Zahlen
+<code>x</code>, das Produkt der Elemente.</li>
+
+<li>Die Funktion <code>maximum</code> liefere, angewendet auf eine Liste von Zahlen
+<code>x</code>, das Maximum der Elemente.</li>
+
+<li>Die Funktion <code>enthaelt?</code> beantworte, angewendet auf ein Symbol und
+eine Liste von Symbolen, die Frage, ob das Symbol in der Liste
+enthalten ist oder nicht</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgbef41e3" class="outline-3">
+<h3 id="orgbef41e3"><span class="section-number-3">1.10</span> Aufgabe (listenverarbeitende Funktionen)</h3>
+<div class="outline-text-3" id="text-1-10">
+<p>
+Schreiben Sie eine Funktion <code>(declist x)</code>, die aus einer Liste <code>x</code> von
+Zahlen eine neue Liste berechnet, deren Elemente um 1 kleiner sind, als
+die der ursprünglichen Liste:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">x</th>
+<th scope="col" class="org-left">(declist x)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">(2 5 7)</td>
+<td class="org-left">(1 4 6)</td>
+</tr>
+
+<tr>
+<td class="org-left">()</td>
+<td class="org-left">()</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org9cd681f" class="outline-3">
+<h3 id="org9cd681f"><span class="section-number-3">1.11</span> Aufgabe (listenverarbeitende Funktionen)</h3>
+<div class="outline-text-3" id="text-1-11">
+<ol class="org-ol">
+<li><p>
+Definieren Sie eine Funktion <code>(flatten x)</code>, die als Argument eine
+Liste <code>x</code> mit beliebig tief geschachtelten Unterlisten hat und als
+Ergebnis eine Liste von Atomen liefern soll mit der Eigenschaft, dass
+alle Atome, die in x vorkommen auch in <code>(flatten x)</code> in derselben
+Reihenfolge vorkommen:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">x</th>
+<th scope="col" class="org-left">(flatten x)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">(A (B C) D)</td>
+<td class="org-left">(A B C D)</td>
+</tr>
+
+<tr>
+<td class="org-left">(((A B) C)(D E))</td>
+<td class="org-left">(A B C D E)</td>
+</tr>
+
+<tr>
+<td class="org-left">((((A))))</td>
+<td class="org-left">(A)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+<b>Hinweis:</b> Definieren Sie zuerst in der bekannten Art und Weise
+eine rekursive Datenstruktur für geschachtelte Listen. Leiten Sie
+daraus eine passende <b>Funktionsschablone</b> ab.
+</p></li>
+
+<li><p>
+Schreiben Sie eine Funktion <code>(frequencies x)</code>, die aus einer Liste
+<code>x</code> von Atomen eine Liste von zwei-elementigen Listen erzeugt: Dabei
+ist das erste Element das Atom aus <code>x</code>, das zweite Element die
+Häufigkeit des Auftretens in <code>x</code>. Die Reihenfolge der Strukturen in
+der Ergebnisliste ist belanglos.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">x</th>
+<th scope="col" class="org-left">(frequencies x)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">(A B A B A C A)</td>
+<td class="org-left">((A 4) (B 2) (C 1))</td>
+</tr>
+
+<tr>
+<td class="org-left">()</td>
+<td class="org-left">()</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org4683712" class="outline-3">
+<h3 id="org4683712"><span class="section-number-3">1.12</span> Aufgabe (Datentyp <b>Nat</b>)</h3>
+<div class="outline-text-3" id="text-1-12">
+<ol class="org-ol">
+<li>Schreiben Sie eine Funktion <code>repeat</code>, die eine natürliche Zahl
+\(n\in Nat\) (Definition des Datentyps \(Nat\) s. Vorlesung) und ein
+Symbol \(s\) als Argumente nimmt und eine Liste mit dem \(n\) -maligen
+Auftreten von \(s\) erzeugt.</li>
+
+<li><p>
+Schreiben Sie eine Funktion <code>Int-&gt;Nat</code>, die eine beliebige positive
+ganze Zahl in eine äquivalentes Element des Datentyps \(Nat\)
+verwandelt, z.B.:
+</p>
+
+<p>
+<code>(Int-&gt;Nat 3) =&gt; (succ (succ (succ zero)))</code>
+</p></li>
+
+<li><p>
+Schreiben Sie eine Funktion <code>Nat-&gt;Int</code>, die eine natürliche Zahl
+\(n\in Nat\) in eine normale Clojure-Number verwandelt, z.B.:
+</p>
+
+<p>
+<code>(Nat-&gt;Int (succ (succ (succ zero)))) =&gt; 3</code>
+</p></li>
+
+<li><p>
+Schreiben Sie eine Funktion
+</p>
+
+<p>
+<code>;; times: Nat Nat -&gt; Nat</code><br />
+, die zwei natürliche Zahlen multipliziert.
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgac38dbf" class="outline-3">
+<h3 id="orgac38dbf"><span class="section-number-3">1.13</span> Aufgabe (Symbolische Differentiation)</h3>
+<div class="outline-text-3" id="text-1-13">
+<p>
+Es sollen Ausdrücke abgeleitet werden, die nur aus Konstanten, Variablen
+und den Operationen \(+\) und \(\cdot\) bestehen.
+</p>
+
+<p>
+Sei \(D_x\) die partielle Ableitung einer Funktion \(f\) nach \(x\), dann
+gelten folgende Regeln:
+</p>
+
+<ul class="org-ul">
+<li>\(D_x(x) = 1\)</li>
+
+<li>\(D_x(y) = 0\), \(y\neq x\), sei \(y\) eine Konstante oder Variable</li>
+
+<li>\(D_x(e_1 + e_2) = D_x(e_1)+D_x(e_2)\) (Summenregel)</li>
+
+<li>\(D_x(e_1\cdot e_2) = e_1\cdot D_x(e_2) + e_2\cdot D_x(e_1)\)
+(Produktregel)</li>
+</ul>
+
+<p>
+Repräsentation der Formeln:
+</p>
+
+<ul class="org-ul">
+<li>Konstante: numerisches Atom</li>
+
+<li>Variable: symbolisches Atom</li>
+
+<li>\(e_1 + e_2\): (ADD \(e_1\) \(e_2\))</li>
+
+<li>\(e_1 \cdot e_2\): (MUL \(e_1\) \(e_2\))</li>
+</ul>
+
+<p>
+<b>Anwendungsbeispiele:</b>
+</p>
+
+<p>
+Der Ausdruck <code>(diff '(add x x) x)</code> liefere '<code>(add 1 1)</code>
+</p>
+
+<p>
+oder <code>(diff '(mul x x) 'x)</code> liefere '<code>(add (mul x 1) (mul 1 x))</code>.
+</p>
+
+<p>
+<b>Hinweise</b>:
+</p>
+
+<ul class="org-ul">
+<li>Definieren Sie zur Erzeugung von Formeln geeignete Hilfsfunktionen!</li>
+
+<li>Wenn eine Formel nicht korrekt aufgebaut ist, kann das Symbol
+'<code>ERROR</code> zurückgeliefert werden, das möglicherweise in einem
+korrekten Teil der Formel eingeschachtelt erscheint.</li>
+
+<li>Machen Sie ausgiebig von lokalen Definitionen Gebrauch.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org981d23e" class="outline-3">
+<h3 id="org981d23e"><span class="section-number-3">1.14</span> Aufgabe (Auswertung von Ausdrücken)</h3>
+<div class="outline-text-3" id="text-1-14">
+<p>
+Werten Sie die folgenden Ausdrücke Schritt für Schritt aus:
+</p>
+
+<ol class="org-ol">
+<li><code>(+ (* ( / 12 8) 2/3 ) (- 20 (sqrt 4)))</code></li>
+<li><p>
+ 
+</p>
+
+<pre class="example">
+              (cond
+                 (= 0 0 ) false
+                 (&gt; 0 1 ) (= 'a 'a)
+                 :else ( = (/ 1 0 ) 9))
+</pre></li>
+<li><p>
+ 
+</p>
+
+<pre class="example">
+              (cond 
+                 (= 2 0) false
+                 (&gt; 2 1) (= 'a 'a )
+                 :else (= ( / 1 2) 9))
+</pre></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgdec5e30" class="outline-3">
+<h3 id="orgdec5e30"><span class="section-number-3">1.15</span> Aufgabe (Auswertung von Ausdrücken)</h3>
+<div class="outline-text-3" id="text-1-15">
+<p>
+Gegeben sei die folgende Funktionsdefinition:
+</p>
+
+<pre class="example">
+           ;; f:  number number -&gt; number
+           (def f
+              (fn [x y]
+                  (+ (* 3 x) (* y y))))
+</pre>
+
+<p>
+Werten Sie die folgenden Ausdrücke Schritt für Schritt aus:
+</p>
+
+<ol class="org-ol">
+<li><code>(+ (f 1 2) (f 2 1))</code></li>
+<li><code>(f 1 (* 2 3))</code></li>
+<li><code>(f (f 1 (* 2 3)) 19)</code></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org13eb486" class="outline-3">
+<h3 id="org13eb486"><span class="section-number-3">1.16</span> Aufgabe (rekursive Induktion)</h3>
+<div class="outline-text-3" id="text-1-16">
+<p>
+Gegeben sei folgende Clojure-Funktion
+</p>
+
+<pre class="example">
+        (def f
+          (fn [n]
+            (cond
+              (= n 0) 0
+              :else (+ (f (- n 1))
+                       (/ 1 (* n (+ n 1)))))))
+</pre>
+
+<p>
+Zeigen Sie, dass der Aufruf <code>(f n)</code> die Zahl \[f(n)=\frac{n}{n+1}\]
+berechnet.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org25b2453" class="outline-3">
+<h3 id="org25b2453"><span class="section-number-3">1.17</span> Aufgabe (Verarbeitung von zwei Listen)</h3>
+<div class="outline-text-3" id="text-1-17">
+<p>
+Die in den folgenden Aufgaben zu entwickelnden Funktionen haben alle 2
+Listen-Parameter. Lösen Sie diese Aufgaben unter Anwendung von
+Entwurfsvorschrift V. Überlegen Sie dabei, ob für die Erstellung der
+Funktionsschablone der Zugriff auf das erste Element und die Restliste
+hinsichtlich des ersten, des zweiten oder beider Parameter vorgenommen
+werden muss.
+</p>
+
+<ol class="org-ol">
+<li>Schreiben Sie ein Funktion <code>concatenate</code>, die zwei Listen von
+Symbolen aneinander hängt. Beispiel:
+= (concatenate ’(a b c) ’(d e f)) <code>&gt; ’(a b c d e f)</code></li>
+
+<li>Schreiben Sie eine Funktion <code>mult-2-num-lists</code>, die zwei gleich lange
+Listen mit Zahlen zu einer Liste verarbeitet, die die Produkte der
+korrespondierenden Elemente der Argumentlisten enthält. Beispiel:
+<code>(mult-2-num-lists ’(2 3 4) ’(7 8 9)) =&gt; ’(14 24 36)</code></li>
+
+<li>Entwickeln Sie eine Funktion <code>merge</code>, die 2 Listen von Zahlen
+verarbeitet, die aufsteigend sortiert sind. Sie liefert eine
+sortierte Liste von Zahlen, die alle Zahlen aus den beiden
+Argumentlisten enthält. Wenn Zahlen in den Argumentliste mehrfach
+vorkommen, sollen Sie auch in der Ergebnisliste entsprechend oft
+auftauchen. Beispiel:
+=(merge ’(2 5 7) ’(1 3 5 9)) =&gt; ’(1 2 3 5 5 7 9) =</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org2107399" class="outline-3">
+<h3 id="org2107399"><span class="section-number-3">1.18</span> Aufgabe (<i>optional</i>)</h3>
+<div class="outline-text-3" id="text-1-18">
+<p>
+Entwerfen Sie einen Satz von Funktionen für die Mengenoperationen
+VEREINIGUNG, DURCHSCHNITT, DIFFERENZ, wobei Mengen als Listen von Atomen
+ohne Wiederholungen repräsentiert werden sollen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfde521e" class="outline-3">
+<h3 id="orgfde521e"><span class="section-number-3">1.19</span> Aufgabe (Anwendung von <code>map</code>, <code>filter</code> und <code>reduce</code>)</h3>
+<div class="outline-text-3" id="text-1-19">
+<p>
+Implementieren Sie folgende Funktionen unter Nutzung der Funktionen
+<code>filter</code>, <code>reduce</code> und <code>map</code> aus dem Skript (Diese finden Sie in moodle
+im Themenblock Beispiele.):
+</p>
+
+<ol class="org-ol">
+<li>Eine Funktion, die zu allen Zahlen einer Liste jeweils 42 addiert.</li>
+<li>Eine Funktion, die sich wie a) verhält, aber nur die geraden Zahlen
+zurückgibt.</li>
+<li>Eine Funktion, die sich wie b) verhält, aber das Produkt aller Zahlen
+zurückgibt.</li>
+<li>Eine Funktion, die aus einer Liste von Zahlen alle Zahlen streicht,
+die nicht durch 4 oder 5 teilbar sind.</li>
+<li>Eine Funktion, die die Summe der Quadrate der natürlichen Zahlen in
+einer Liste berechnet.</li>
+<li>Eine Funktion <code>und</code>, die genau dann <code>true</code> zurück liefert, wenn alle
+Elemente einer Liste von Booleans <code>true</code> sind.</li>
+<li>Eine Funktion <code>partitioniere</code>, die ein Prädikat als Argument nimmt
+und, angewandt auf eine Liste, zwei Listen zurückgibt, wobei erstere
+alle Elemente enthält, die das Prädikat erfüllen, und die andere die
+restlichen Elemente enthält.</li>
+<li>Eine Funktion <code>sort</code>, die, angewendet auf eine Liste von Zahlen,
+diese Liste absteigend sortiert.</li>
+<li>Modifizieren Sie die Funktion <code>sort</code> aus 8. so, dass durch einen
+zusätzlichen Parameter die Sortierreihenfolge bestimmt werden kann.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orge724c7f" class="outline-3">
+<h3 id="orge724c7f"><span class="section-number-3">1.20</span> Aufgabe (Definition von Funktionen höherer Ordnung)</h3>
+<div class="outline-text-3" id="text-1-20">
+<p>
+Definieren Sie die folgenden Funktionen höherer Ordnung rekursiv oder
+durch Verwendung von anderen Funktionen höherer Ordnung:
+</p>
+
+<ol class="org-ol">
+<li><p>
+Eine Funktion
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">         <span style="color: #707183;">(</span><span style="color: #6434A3;">Number</span> -&gt; <span style="color: #6434A3;">Number</span><span style="color: #707183;">)</span> <span style="color: #707183;">(</span>Number-&gt; <span style="color: #6434A3;">Number</span><span style="color: #707183;">)</span> list-of <span style="color: #6434A3;">Number</span> 
+            -&gt; list-of <span style="color: #6434A3;">Number</span>,</pre>
+</pre>
+</div>
+
+<p>
+die zwei Funktionen und eine Liste von Zahlen als Argument erhält und
+auf jede Zahl zuerst die erste und dann die zweite Funktion anwendet.
+</p></li>
+<li><p>
+Eine Funktion
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">          <span style="color: #707183;">(</span><span style="color: #6434A3;">Number</span> -&gt; <span style="color: #6434A3;">Number</span><span style="color: #707183;">)</span> <span style="color: #707183;">(</span><span style="color: #6434A3;">Number</span> -&gt; <span style="color: #6434A3;">Number</span><span style="color: #707183;">)</span> -&gt; <span style="color: #6434A3;">Number</span>,</pre>
+</pre>
+</div>
+
+<p>
+die zwei Funktionen als Argument erhält und die kleinste natürliche
+Zahl sucht, für die diese beiden Funktionen dasselbe Ergebnis
+liefern. Begrenzen Sie die Suche auf Zahlen bis 1000 und geben Sie
+<code>nil</code> zurück, wenn keine passende Zahl gefunden wurde.
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org1430aa8" class="outline-3">
+<h3 id="org1430aa8"><span class="section-number-3">1.21</span> Aufgabe (Anwendung von mapp und reduce)</h3>
+<div class="outline-text-3" id="text-1-21">
+<p>
+Was liefern die folgenden Ausdrücke:
+</p>
+
+<ol class="org-ol">
+<li><code>((mapp abs) '( 4 -7 3))</code></li>
+<li><code>(def betraege (mapp abs))</code></li>
+<li><code>(betraege '(4 -7 -3))</code></li>
+<li><code>(reduce * ((mapp abs) '( 4 -7 3)) 1)</code></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgc4ed938" class="outline-3">
+<h3 id="orgc4ed938"><span class="section-number-3">1.22</span> Aufgabe &#x2013; der Vertrag von <code>mapp</code></h3>
+<div class="outline-text-3" id="text-1-22">
+<p>
+Wie lautet er?
+</p>
+</div>
+</div>
+<div id="outline-container-org996a727" class="outline-3">
+<h3 id="org996a727"><span class="section-number-3">1.23</span> Aufgabe (Hilfsfunktionen mit akkumulierenden Parametern)</h3>
+<div class="outline-text-3" id="text-1-23">
+<ol class="org-ol">
+<li>Schreiben Sie die Funktion <code>sum</code>, die die Summe der
+Elemente einer Liste von Zahlen berechnet, unter Benutzung einer
+Hilfsfunktion mit akkumulierendem Parameter.  Verwenden Sie die
+Funktiosnschablone aus der Vorlesung.  Formulieren Sie die
+Akkumulatorinvariante.</li>
+
+<li><p>
+Gegeben ist ein Weg in einem ungerichteten Graphen, dessen 
+Knoten Orte repräsentieren und dessen Kanten mit den Entfernungen 
+zwischen den Orten attributiert sind, z. B. so:
+</p>
+
+
+<div class="figure">
+<p><img src="./entfernungen.png" alt="entfernungen.png" />
+</p>
+</div>
+
+<p>
+Entwickeln Sie eine Funktion, die aus einer Liste mit relativen 
+Entfernungen eine Liste mit den absoluten Entfernungen der Orte 
+vom Ursprungsort berechnet. Für den obigen Graphen soll also aus 
+der Liste (120 90 70 65) die Liste (120 210 280 345) werden.
+</p>
+<ol class="org-ol">
+<li>Entwickeln Sie zunächst eine Funktion (ggf. mit Hilfsfunktion)
+nach den bekannten Entwurfsvorschriften (ohne akkumulierende
+Parameter).</li>
+
+<li>Diskutieren Sie, warum eine Hilfsfunktion mit akkumulierendem
+Parameter sinnvoll ist.</li>
+<li>Entwickeln Sie eine solche.</li>
+</ol></li>
+<li>Definieren Sie eine Funktion <code>(singletons x)</code>, die als Argument
+eine Liste von den Atomen <code>x</code> hat und als Ergebnis eine Liste von
+den Atomen liefern soll, die in <code>x</code> genau einmal auftreten.</li>
+
+<li value="4">Modifizieren die Funktion <code>(singletons x)</code> so, dass zwei
+akkumulierende Parameter verwendet werden.  Der eine soll zum
+Akkumulieren der Atome, die genau einmal in <code>x</code> auftreten, dienen,
+der andere zum Akkumulieren der Atome, die mehrmals in <code>x</code>
+auftreten.</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6b9a3b4" class="outline-2">
+<h2 id="org6b9a3b4"><span class="section-number-2">2</span> Teil 2 (6. Semester)</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-org46113b7" class="outline-3">
+<h3 id="org46113b7"><span class="section-number-3">2.1</span> Aufgabe (alternative Listenimplementierung)</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Gegeben sind folgende Definitionen für <code>cons</code> und <code>first</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">ns</span> <span style="color: #6434A3;">dataasproc</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #006FE0;">use</span> '<span style="color: #6434A3;">clojure.test</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">cons</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x y<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[</span>m<span style="color: #709870;">]</span> <span style="color: #709870;">(</span>m x y<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">first</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>z<span style="color: #909183;">]</span> <span style="color: #909183;">(</span>z <span style="color: #709870;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #907373;">[</span>p q<span style="color: #907373;">]</span> p<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+<ol class="org-ol">
+<li>Verifizieren Sie, dass der Ausdruck <code>(first (cons x y))</code> als
+Resultat <code>x</code> liefert.</li>
+<li>Fügen Sie die passende Definition von <code>rest</code> hinzu.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orge8164d5" class="outline-3">
+<h3 id="orge8164d5"><span class="section-number-3">2.2</span> Aufgabe (verzögerte Auswertung - Streams)</h3>
+<div class="outline-text-3" id="text-2-2">
+</div><div id="outline-container-orgee50500" class="outline-4">
+<h4 id="orgee50500">Streams</h4>
+<div class="outline-text-4" id="text-orgee50500">
+<p>
+Ein Stream ist eine unendliche Folge von Werten. Selbstverständlich
+kann ein solche Folge nicht tatsächlich erzeugt werden - dies
+beanspruchte unendlich viel Zeit. Es ist aber möglich, Code zu
+erzeugen, der weiß, wie die Folge zu erzeugen ist und anderen Code,
+der weiß, wieviel Elemente benötigt werden.
+</p>
+
+<p>
+Die UNIX pipe <code>(cmd1 | cmd2)</code> ist ein Stream; sie sorgt dafür, dass <code>cmd1</code>
+genau so viel Output erzeugt wie <code>cmd2</code> an Input verlangt.
+Web-Programme, die auf Klicks von Benutzern auf Web-Seiten reagieren,
+können die Benutzeraktivitäten als Stream betrachten &#x2013; ohne zu wissen,
+wann die nächste Aktivität kommt und wie viele es sein werden &#x2013; und
+entsprechend antworten.
+</p>
+
+<p>
+Allgemeiner gesprochen: Streams stellen eine Art Arbeitsteilung dar:
+Ein Teil der Software weiß, wie aufeinanderfolgende Werte der unendlichen
+Folge zu erzeugen sind, weiß aber nicht, wie viele benötigt werden und
+was mit ihnen passieren soll. Ein anderer Teil kann ermitteln, wie viele
+Werte benötigt werden und was mit ihnen geschehen soll, weiß aber nicht,
+wie sie zu erzeugen sind.
+</p>
+
+<p>
+Es gibt viele Möglichkeiten, Streams zu implementieren. Hier werden wir
+eine einfache Variante realisieren, die einen Stream als <i>thunk</i> repräsentiert,
+der, wenn er aufgerufen wird, einen zweielementigen Vektor erzeugt, dessen
+erstes Element den ersten Wert der unendlichen Folge enthält. Im zweiten
+Element wird ein thunk abgelegt, der den Stream für das zweite und die
+übrigen Elemente der unendlichen Folge repräsentiert.
+</p>
+
+<p>
+Aus „nostalgischen” Gründen werden hier zunächst zwei Funktionen für den
+Zugriff auf das erste (<code>car</code>) und das zweite (<code>cdr</code>) Element eines Vektors
+definiert:
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">car</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>v<span style="color: #909183;">]</span> <span style="color: #909183;">(</span>v 0<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">(v 0) ist das Gleiche wie (get v 0), wenn v ein Vektor</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">cdr</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>v<span style="color: #909183;">]</span> <span style="color: #909183;">(</span>v 1<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+<p>
+Die Definition von thunks für die Repäsentation unendlicher Folgen erfolgt
+üblicherweise rekursiv.
+</p>
+
+<dl class="org-dl">
+<dt>1. Beispiel:</dt><dd><p>
+eine unendliche Folge von Einsen
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">ones</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[]</span> <span style="color: #909183;">[</span>1 ones<span style="color: #909183;">]</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+<p>
+Machen Sie sich die Wirkung der folgenden Ausdrücke klar. Beachten
+Sie die Klammern!
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">  <span style="color: #707183;">(</span>ones<span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; [1 #function[user/ones]]</span>
+  <span style="color: #707183;">(</span>car <span style="color: #7388D6;">(</span>ones<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; 1</span>
+  <span style="color: #707183;">(</span>car <span style="color: #7388D6;">(</span><span style="color: #909183;">(</span>cdr <span style="color: #709870;">(</span>ones<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; 1</span></pre>
+</pre>
+</div></dd>
+
+<dt>2. Beispiel:</dt><dd><p>
+die natürlichen Zahlen
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">nats</span>
+    <span style="color: #7388D6;">(</span><span style="color: #0000FF;">letfn</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span>f <span style="color: #907373;">[</span>x<span style="color: #907373;">]</span> <span style="color: #907373;">[</span>x <span style="color: #6276BA;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #858580;">[]</span> <span style="color: #858580;">(</span>f <span style="color: #80A880;">(</span>+ x 1<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">]</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+      <span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[]</span> <span style="color: #709870;">(</span>f 1<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+<p>
+Machen Sie sich die Wirkung der folgenden Ausdrücke klar. Beachten Sie die
+Klammern!
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">  <span style="color: #707183;">(</span>car <span style="color: #7388D6;">(</span>nats<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; 1</span>
+  <span style="color: #707183;">(</span>car <span style="color: #7388D6;">(</span><span style="color: #909183;">(</span>cdr <span style="color: #709870;">(</span>nats<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; 2</span>
+  <span style="color: #707183;">(</span>car <span style="color: #7388D6;">(</span><span style="color: #909183;">(</span>cdr <span style="color: #709870;">(</span><span style="color: #907373;">(</span>cdr <span style="color: #6276BA;">(</span>nats<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>  <span style="color: #8D8D84; font-style: italic;">;=&gt; 3</span></pre>
+</pre>
+</div></dd>
+
+<dt>3. Beispiel:</dt><dd><p>
+die Zweierpotenzen
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">powers-of-two</span>
+    <span style="color: #7388D6;">(</span><span style="color: #0000FF;">letfn</span> <span style="color: #909183;">[</span><span style="color: #709870;">(</span>f <span style="color: #907373;">[</span>x<span style="color: #907373;">]</span> <span style="color: #907373;">[</span>x <span style="color: #6276BA;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #858580;">[]</span> <span style="color: #858580;">(</span>f <span style="color: #80A880;">(</span>* x 2<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">]</span><span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+      <span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[]</span> <span style="color: #709870;">(</span>f 2<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+<p>
+Machen Sie sich die Wirkung der folgenden Ausdrücke klar. Beachten Sie die
+Klammern!
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">  <span style="color: #707183;">(</span>car <span style="color: #7388D6;">(</span>powers-of-two<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; 2</span>
+  <span style="color: #707183;">(</span>car <span style="color: #7388D6;">(</span><span style="color: #909183;">(</span>cdr <span style="color: #709870;">(</span>powers-of-two<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; 4</span>
+  <span style="color: #707183;">(</span>car <span style="color: #7388D6;">(</span><span style="color: #909183;">(</span>cdr <span style="color: #709870;">(</span><span style="color: #907373;">(</span>cdr <span style="color: #6276BA;">(</span>powers-of-two<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; 8</span></pre>
+</pre>
+</div></dd>
+</dl>
+
+<p>
+Man könnte eine Funktion höherer Ordnung schreiben, die einen Stream und
+ein Prädikat als Argumente akzeptiert und eine Zahl zurückgibt, die sagt,
+wieviele Elemente des Streams erzeugt werden müssen, bevor das Prädikat
+<code>true</code> liefert:
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">number-until</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>stream tester<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span>f <span style="color: #6276BA;">[</span>stream answer<span style="color: #6276BA;">]</span>
+              <span style="color: #6276BA;">(</span><span style="color: #0000FF;">let</span> <span style="color: #858580;">[</span>pr <span style="color: #80A880;">(</span>stream<span style="color: #80A880;">)</span><span style="color: #858580;">]</span>
+                <span style="color: #858580;">(</span><span style="color: #0000FF;">if</span> <span style="color: #80A880;">(</span>tester <span style="color: #887070;">(</span>car pr<span style="color: #887070;">)</span><span style="color: #80A880;">)</span>
+                  answer
+                  <span style="color: #80A880;">(</span>f <span style="color: #887070;">(</span>cdr pr<span style="color: #887070;">)</span> <span style="color: #887070;">(</span>+ answer 1<span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+      <span style="color: #709870;">(</span>f stream 1<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+<p>
+Beispielanwendung:
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #707183;">(</span>number-until powers-of-two <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span> <span style="color: #909183;">(</span>&gt; x 16<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; 5</span></pre>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org36b79ae" class="outline-4">
+<h4 id="org36b79ae">Aufgaben</h4>
+<div class="outline-text-4" id="text-org36b79ae">
+<ol class="org-ol">
+<li><p>
+Schreiben Sie eine Funktion <code>stream-for-n-steps</code>, die einen Stream
+<code>s</code> und eine Zahl <code>n</code> nimmt. Sie gibt eine Liste mit den ersten <code>n</code>
+Elementen von <code>s</code> zurück. (Lösung erfordert ca. 4 Zeilen.)
+</p>
+<p>
+Beispielanwendung:
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">   <span style="color: #707183;">(</span>stream-for-n-steps powers-of-two 5<span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; (2 4 8 16 32)</span></pre>
+</pre>
+</div></li>
+
+<li><p>
+Schreiben Sie einen Stream <code>funny-number-stream</code>, der dem für
+natürliche Zahlen ähnelt, nur sollen alle durch 5 teilbaren Zahlen
+negiert werden, z. B. \(1, 2, 3, 4, -5, 6, 7, 8, 9, -10, 11, \ldots\). 
+</p>
+
+<p>
+Testen Sie die Funktion mithilfe von <code>stream-for-n-steps</code>.
+</p></li>
+<li>Zusatzaufgabe (optional)
+Die Streams <code>ones</code>, <code>nats</code> und <code>powers-of-two</code> haben gemeinsam, dass für die
+Berechnung des nächstes Elements maximal das vorherige bekannt sein
+muss. Daher ist es nahe liegend, eine Funktion höherer Ordnung
+<code>stream-maker</code> zu schreiben, die aus dem ersten Element und einer
+Funktion zur Berechnung des nächsten einen Stream baut.</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org25a8b7f" class="outline-3">
+<h3 id="org25a8b7f"><span class="section-number-3">2.3</span> Aufgabe (Umgebungsdiagramme)</h3>
+<div class="outline-text-3" id="text-2-3">
+<ol class="org-ol">
+<li><p>
+Grundlage:
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">   <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">nimmt einen Betrag als Startkapital eines Kontos</span>
+   <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">und erzeugt eine "belaste-Funktion"</span>
+   <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">erzeuge-konto: (number -&gt; (number -&gt; (mixed number symbol)))</span>
+   <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">erzeuge-konto</span>
+     <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>startwert<span style="color: #909183;">]</span>
+       <span style="color: #909183;">(</span><span style="color: #0000FF;">let</span> <span style="color: #709870;">[</span>konto <span style="color: #907373;">(</span><span style="color: #006FE0;">atom</span> startwert<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+         <span style="color: #709870;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #907373;">[</span>betrag<span style="color: #907373;">]</span>
+           <span style="color: #907373;">(</span><span style="color: #0000FF;">cond</span>
+             <span style="color: #6276BA;">(</span>&gt;= @konto betrag<span style="color: #6276BA;">)</span>
+             <span style="color: #6276BA;">(</span><span style="color: #0000FF;">do</span>
+               <span style="color: #858580;">(</span><span style="color: #006FE0;">swap!</span> konto - betrag<span style="color: #858580;">)</span>
+               @konto<span style="color: #6276BA;">)</span>
+
+             <span style="color: #D0372D;">:else</span> 'konto-ueberzogen<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+<ol class="org-ol">
+<li><p>
+Wie sieht das Umgebungsdiagramm aus, wenn zwei Konten angelegt
+werden?
+</p>
+
+<p>
+<code>(def konto1 (erzeuge-konto 100))</code><br />
+<code>(def konto2 (erzeuge-konto 200))</code>
+</p></li>
+
+<li>Stellen Sie die Auswertung von <code>(konto2 120)</code> dar!</li>
+
+<li><p>
+Wie sieht das Umgebungsdiagramm aus für?
+</p>
+
+<p>
+<code>(def konto1 (erzeuge-konto 100))</code><br />
+<code>(def konto2 konto1)</code>
+</p></li>
+</ol></li>
+
+<li><p>
+Betrachten Sie die folgende Variante der Prozedur <code>erzeuge-konto</code>.
+Machen Sie sich ihre Wirkungsweise klar.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">   <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">erzeuge-konto (number -&gt; (symbol -&gt; (number -&gt; (mixed number symbol))))</span>
+   <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">nimmt einen Betrag als Startkapital und erzeugt ein "Konto-Object"</span>
+   <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">erzeuge-konto</span>
+     <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>startkapital<span style="color: #909183;">]</span>
+       <span style="color: #909183;">(</span><span style="color: #0000FF;">let</span>
+           <span style="color: #709870;">[</span><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Exemplarvariable</span>
+            konto <span style="color: #907373;">(</span><span style="color: #006FE0;">atom</span> startkapital<span style="color: #907373;">)</span>
+
+            <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Exemplarmethoden:</span>
+            <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">belaste: (number -&gt; (mixed number symbol))</span>
+            <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Effekt: bucht vom konto betrag ab, liefert neuen </span>
+            <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Kontostand als Resultat, falls Konto nicht ueberzogen</span>
+            belaste
+            <span style="color: #907373;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #6276BA;">[</span>betrag<span style="color: #6276BA;">]</span>
+              <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span>
+                <span style="color: #858580;">(</span>&gt;= @konto betrag<span style="color: #858580;">)</span>
+                <span style="color: #858580;">(</span><span style="color: #0000FF;">do</span>
+                  <span style="color: #80A880;">(</span><span style="color: #006FE0;">swap!</span> konto - betrag<span style="color: #80A880;">)</span>
+                  @konto<span style="color: #858580;">)</span>
+                <span style="color: #D0372D;">:else</span> 'konto-ueberzogen<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+            <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">schreibegut: (number -&gt; number)</span>
+            <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Effekt: schreibt konto betrag gut</span>
+            <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">liefert neuen Kontostand als Resultat</span>
+            schreibegut
+            <span style="color: #907373;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #6276BA;">[</span>betrag<span style="color: #6276BA;">]</span>
+              <span style="color: #6276BA;">(</span><span style="color: #0000FF;">do</span>
+                <span style="color: #858580;">(</span><span style="color: #006FE0;">swap!</span> konto + betrag<span style="color: #858580;">)</span>
+                @konto<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+
+            <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">method dispatcher</span>
+            <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">verteile: (number -&gt; (mixed number symbol))</span>
+            <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">verwaltet die von Konten verstandenen Nachrichten</span>
+            verteile
+            <span style="color: #907373;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #6276BA;">[</span>nachricht<span style="color: #6276BA;">]</span>
+              <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span>
+                <span style="color: #858580;">(</span>= nachricht 'belaste<span style="color: #858580;">)</span> belaste
+                <span style="color: #858580;">(</span>= nachricht 'schreibegut<span style="color: #858580;">)</span> schreibegut
+                <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #80A880;">(</span><span style="color: #6434A3;">Exception.</span> <span style="color: #008000;">"unbekannte Nachricht"</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+         verteile<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+<p>
+Wie sieht das Umgebungsdiagramm für die folgende Ausdruckssequenz
+aus:
+</p>
+
+<p>
+<code>(def konto (erzeuge-konto 200))</code><br />
+<code>((konto 'schreibegut) 60)</code><br />
+<code>((konto 'belaste) 120)</code>
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org7dcc8d3" class="outline-3">
+<h3 id="org7dcc8d3"><span class="section-number-3">2.4</span> Aufgabe (Constraint Propagation)</h3>
+<div class="outline-text-3" id="text-2-4">
+<ol class="org-ol">
+<li>Unter Verwendung der aus der Vorlesung bekannten <i>primitive constraints</i>
+<code>multiplier</code>, <code>adder</code> und <code>constant</code> schreiben Sie eine Prozedur
+<code>averager</code>, die drei Konnektoren <code>a</code>, <code>b</code> und <code>c</code> als Eingänge
+benutzt und ein Constraint so implementiert, dass der Wert von <code>c</code>
+der Mittelwert der Werte an <code>a</code> und <code>b</code> ist.</li>
+
+<li><p>
+Schreiben Sie für die Zinseszins-Formel:
+</p>
+
+<p>
+\[\frac{K_{n}}{K_{0}}=(1+\frac{p}{100})^{n}\]
+</p>
+
+<p>
+eine Constraint-Programming-Spezifikation. Orientieren Sie sich dabei 
+an dem Celsius-Fahrenheit-Konverter aus der Vorlesung. Die
+Clojure-Implementierung finden Sie in moodle im TB <i>Beispiele</i> unter<br />
+<code>celsius-fahrenheit.clj</code>.<br />
+Am gleichen Ort unter<br />
+<code>sicp-cps.zip</code> <br />
+finden Sie ein Leiningen-Projekt mit der Implementierung des für den 
+Celsius-Fahrenheit-Konverter benutzten Constraint-Propagation-Systems
+aus der Vorlesung.
+</p>
+
+<p>
+Gehen Sie wie folgt vor:
+</p>
+<ol class="org-ol">
+<li>Erweitern Sie das Constraint-Programming-System um einen
+<code>exponentiator</code> (in Anlehnung an <code>adder</code> bzw. <code>multiplier</code>, der die
+Gleichung \(z = x^y\) löst!</li>
+<li>Zeichnen Sie ein \glqq Schaltbild\grqq{} für die 
+Zinseszins-Formel!</li>
+<li>Setzen Sie dann das Schaltbild in eine Clojure-Lösung nach dem
+Vorbild des Celsius-Fahrenheit-Konverters um!</li>
+<li>Testen Sie Ihre Lösung, indem Sie Werte für jeweils 3 von 4 Größen
+der Formel vorgeben.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orge89188e" class="outline-3">
+<h3 id="orge89188e"><span class="section-number-3">2.5</span> Aufgabe (Prolog)</h3>
+<div class="outline-text-3" id="text-2-5">
+<ol class="org-ol">
+<li><p>
+Schreiben Sie ein Prolog-Programm, dass festhält:
+</p>
+<ul class="org-ul">
+<li>ein Löwe, ein Tiger und eine Kuh sind Lebewesen;</li>
+<li>Löwe und Tiger sind Fleichfresser.<br /></li>
+</ul>
+<p>
+Anschließend testen Sie Ihr Programm durch Eingabe der folgenden
+Zielausdrücke:
+</p>
+<ul class="org-ul">
+<li>Es gibt ein Lebewesen Tiger in der Datenbank.</li>
+<li>Eine Kuh und ein Tiger sind beide Lebewesen (Konjunktion zweier Ziele).</li>
+<li>Ein Löwe ist ein Lebewesen und Fleichfresser.</li>
+<li>Ein Kuh ist ein Lebewesen und Fleichfresser.</li>
+</ul></li>
+<li><p>
+Gegeben sei die folgende Faktenbasis über Reisemöglichkeiten:
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog">   byCar(auckland,hamilton).
+   byCar(hamilton,raglan).
+   byCar(valmont,saarbruecken).
+   byCar(valmont,metz).
+
+   byTrain(metz,frankfurt).
+   byTrain(saarbruecken,frankfurt).
+   byTrain(metz,paris).
+   byTrain(saarbruecken,paris).
+
+   byPlane(frankfurt,bangkok).
+   byPlane(frankfurt,singapore).
+   byPlane(paris,losAngeles).
+   byPlane(bangkok,auckland).
+   byPlane(losAngeles,auckland).</pre>
+</pre>
+</div>
+<ol class="org-ol">
+<li>Schreiben Sie ein Prädikat <code>travel/2</code>, das ermittelt, ob es
+möglich ist, von einem Ort zu einem anderen zu reisen, indem
+der Reiseweg aus den in der Faktenbasis gegebenen Direktverbindungen verkettet
+wird. Z. B. sollte die Frage
+<code>travel(valmont,raglan).</code> als Resultat <code>true</code> liefern.</li>
+
+<li><p>
+Das Prädikat <code>travel/2</code> ermöglicht zu beweisen, dass es z. B. einen Reiseweg
+von Valmont nach Raglan gibt. Für eine detaillierte Reiseplanung
+wäre es aber wünschenswert, auch zu erfahren, über welche
+Zwischenstationen die Reise führt. Schreiben Sie dafür ein
+Prädikat <code>travel/3</code>, das dann z. B. auf die Frage<br />
+<code>travel(valmont,paris, go(valmont,metz,go(metz,paris)))</code><br />
+mit <code>true</code> und auf die Frage<br />
+<code>travel(valmont,losAngeles,X).</code> <br />
+mit<br />
+<code>X = go(valmont,metz,go(metz,paris,go(paris,losAngeles)))</code> <br />
+antwortet. Hier gibt es möglicherweise Alternativen.
+</p>
+
+<p>
+<b>Hinweis</b>: Jeder Zwischenschritt auf der Reise muss registriert
+werden. Betrachten Sie zuerst den Basisfall der Rekursion
+<code>(travel(X,Y) :- onestep(X,Y).)</code> und erweitern ihn so, dass
+<code>travel</code> in seinem dritten Argument speichert, dass ein Schritt
+von <code>X</code> nach <code>Y</code> zurückgelegt wurde.
+</p>
+
+<p>
+Betrachen Sie anschließend die rekursive Regel:
+</p>
+<pre class="example">
+travel(X,Y) :- onestep(X,Z), travel(Z,Y).
+
+</pre>
+<p>
+Diese Klausel sollte eine Struktur zurückgeben, die anzeigt, dass ein Schritt
+von <code>X</code> nach <code>Z</code> zurücklegt und welcher Weg von <code>Z</code> nach <code>Y</code>
+genommen werden muss.
+</p></li>
+
+<li><p>
+Erweitern Sie das Prädikat <code>travel/3</code> so, dass auch angezeigt wird,
+mit welchem Verkehrsmittel die jeweilige Teilstrecke
+zurückgelegt wird.
+</p>
+
+<p>
+<b>Hinweis</b>: Für jede Teilstrecke muss man sich merken, welches
+Verkehrsmittel benutzt wurde. Erweitern Sie dafür die
+<code>go</code>-Struktur aus der vorangegangenen Teilaufgabe um ein
+Argument <code>Transport</code>.
+</p></li>
+</ol></li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Autor: Johannes Brauer</p>
+<p class="date">Created: 2017-08-10 Thu 00:02</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

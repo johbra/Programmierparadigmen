@@ -1,0 +1,674 @@
+Schreiben Sie gemäß Entwurfsvorschrift I den Vertrag, die
+Zweckbestimmung für eine Funktion auf, die den Rauminhalt eines Quaders
+berechnet, für den Länge, Breite und Höhe gegeben ist. Formulieren Sie
+drei Beispielanwendungen als Tests, die das Verhalten der Funktion
+veranschaulichen.
+
+Entwickeln Sie gemäß Entwurfsvorschrift I die folgenden Funktionen:
+
+1. Eine Funktion, die aus der Entfernung und der Geschwindigkeit zweier
+   Züge die Zeit ermittelt, nach der die Züge sich treffen, wenn Sie
+   sich auf einem gemeinsamen Streckenabschnitt von ihren jeweiligen
+   Startpunkten aus sich aufeinander zu bewegen.
+
+2. Eine Funktion, die aus einem gegebenen Anfangskapital, einem
+   Jahreszinssatz und einer in Monaten gemessenen Laufzeit das
+   Endkapital ermittelt. Die Zinsgutschrift erfolgt einmalig am Ende der
+   Laufzeit. Während der Laufzeit gibt es weder Einzahlungen noch
+   Abhebungen.
+
+3. Eine Funktion, die aus der Länge und Breite eines rechteckigen
+   Fußbodens, die Anzahl der benötigten Fliesen berechnet, deren Größe
+   ebenfalls durch Länge und Breite gegeben ist.
+
+   Hinweis: Der Funktionsaufruf =(ceiling x)= liefert die kleinste ganze
+   Zahl, die größer als x ist.
+
+Schreiben Sie eine Funktion gemäß Entwurfsvorschrift I für die
+Berechnung des Volumens eines Zylinders. Sie berechnet sich aus
+Grundfläche mal Höhe. Definieren Sie eine Konstante für $\pi$, und
+Hilfsfunktionen für die Berechnung der Grundfläche und des Quadrats
+einer Zahl.
+
+Testen Sie die Funktion z.B. mit
+
+#+BEGIN_EXAMPLE
+       (check-within (cylinder-volume 1 1) pi 0.01)
+#+END_EXAMPLE
+
+Die Testprozedur
+
+#+BEGIN_EXAMPLE
+       (check-within expr expr expr)
+#+END_EXAMPLE
+
+funktioniert wie ähnlich wie =check-expect=, besitzt einen dritten
+Ausdruck als Parameter, der als Wert eine Zahl $delta$ hat. Der Testfall
+überprüft, dass der Wert des ersten $expr$ maximal um $delta$ von der
+entsprechenden Zahl im zweiten $expr$ abweicht.
+
+Beachten Sie die Angaben in /moodle/ bzgl. der Abgabe der Lösungen. Sie
+dürfen 2er-Gruppen bilden.
+
+Schreiben Sie ein Programm, das aus dem Bruttoeinkommen eines
+Arbeitnehmers, das sich aus der Anzahl der Arbeitsstunden und seinem
+Bruttostundenlohn ergibt, sein Nettoeinkommen durch Abzug der
+Einkommenssteuer berechnet. Die Einkommenssteuer wird dabei nach einem
+steuererklärungaufbierdeckelgeeigneten Tarif ermittelt, der
+folgendermaßen definiert ist:
+
+| *Einkommen*                  | *Steuersatz* [%]   |
+|------------------------------+--------------------|
+| $<= 5000$                    | 0                  |
+| $> 5000\; und \leq 10000$    | 15                 |
+| $>10000\; und \leq 100000$   | 29                 |
+| $>100000$                    | 64                 |
+
+Der Steuersatz gilt immer nur für die Einkommensanteile in dem
+jeweiligen Intervall.
+
+Die Funktion =nettoeinkommen= soll nach folgendem Schema aufrufbar sein:
+
+#+BEGIN_EXAMPLE
+          (nettoeinkommen anzahlArbeitsStunden stundenLohn)
+#+END_EXAMPLE
+
+Hier noch ein paar Testvorgaben:
+
+#+BEGIN_EXAMPLE
+       (check-expect  (nettoeinkommen 1 5001)   (/ 500085 100))
+       (check-expect  (nettoeinkommen 1 10001)  (/ 925071 100))
+       (check-expect  (nettoeinkommen 1 100001) (/ 7315036 100))
+#+END_EXAMPLE
+
+Hinweise:
+
+1. Lesen Sie den Aufgabentext aufmerksam durch. Jeder Satz bedeutet
+   etwas.
+
+2. Entwickeln Sie die Funktion gemäß Entwurfsvorschrift II. Benutzen Sie
+   Hilfsfunktionen. Senden Sie bis zum in der Vorlesung genannten Termin
+   Ihr Racket-Programm an brauer@nordakademie.de. Sie dürfen 2er-Gruppen
+   bilden.
+
+3. Um das Rechnen mit inexakten Zahlen zu vermeiden, geben Sie
+   Steuersätze nicht als Gleitkommazahlen wie 0.29 sondern als rationale
+   Zahlen ein. In diesem Beispiel: (/ 29 100)
+
+4. Suchen Sie sich einen Abgeordneten, der Ihre Lösung in den Bundestag
+   einbringt. Wer diese Aufgabe bis zum 31.12.2013 gelöst hat, bekommt
+   in der vierten Nachklausur einen Punkt gut geschrieben.
+
+[a5] Gehen Sie für die Lösung der Aufgaben nach Entwurfsvorschrift III
+vor!
+
+1. 
+
+   1. Definieren Sie eine Datenstruktur für "'Zeitpunkte seit
+      Mitternacht"', die aus den Komponenten =stunden=, =minuten= und
+      =sekunden= besteht.
+
+   2. Entwickeln Sie eine Funktion =zeit->sekunden=, die eine
+      Zeitpunkt-seit-Mittnacht-Struktur verarbeitet und die seit
+      Mitternacht vergangenen Sekunden berechnet.
+
+2. [a5b] Definieren Sie eine Datenstruktur für Kreise, die durch
+
+   -  die Koordinaten des Mittelpunkts,
+
+   -  den Radius und
+
+   -  ihre Farbe
+
+   gegeben sind.
+
+   Für die Koordinaten ist die vordefinierte Datenstruktur =posn= zu
+   verwenden, die den folgenden Vertrag besitzt:
+
+   #+BEGIN_EXAMPLE
+       ; Eine posn besteht aus
+       ; - einer Zahl für die X-,
+       ; - einer Zahl für die Y-Koordinate
+       (: make-posn (number number -> posn))
+       (: posn? (any -> boolean))
+       (: posn-x (posn -> number))
+       (: posn-y (posn -> number))
+   #+END_EXAMPLE
+
+   Damit =posn= verwendet werden kann, muss in die erste Zeile Ihres
+   Programms =(require lang/posn)= eingetragen werden.
+
+   Farben sind durch Symbole [1] wie =red=, =blue= etc. zu bezeichnen.
+
+   1. Schreiben Sie eine Funktion, die prüft, ob ein Punkt (=posn=)
+      innerhalb eines Kreises liegt.
+
+   2. Kreise können auch gezeichnet werden. Die Prozeduren =draw-circle=
+      und =draw-solid-disk= [2] zeichnen einen Kreis als Umriss bzw.
+      ausgefüllt. Die Prozeduren verlangen jeweils drei Parameter: den
+      Mittelpunkt, den Radius und die Farbe. Schreiben Sie eine
+      Funktion, die einen Kreis als Argument und ein Symbol (=umriss=
+      oder =gefuellt=) akzeptiert und ihn entsprechend malt.
+
+      Mit =(start 200 200)= wird eine Zeichenfläche mit 200 mal 200
+      Pixeln geöffnet.
+
+Ein /Mitarbeiter/ ist entweder
+
+-  ein /Festangestellter/ oder
+
+-  ein /Werkstudent/
+
+Ein /Festangestellter/ wird definiert durch
+
+-  seinen Namen,
+
+-  sein Grundgehalt,
+
+-  die im letzten Monat geleisteten Arbeitsstunden.
+
+Ein /Werkstudent/ wird definiert durch
+
+-  seinen Namen,
+
+-  seinen Stundenlohn,
+
+-  die im letzten Monat geleisteten Arbeitsstunden.
+
+Definieren Sie unter Berücksichtigung von Entwurfsvorschrift IV
+
+-  geeignete Datenstrukturen für /Mitarbeiter/,
+
+-  eine Funktionsschablone für Funktionen, die /Mitarbeiter/
+   verarbeiten.
+
+Entwickeln auf der Grundlage dieser Schablone eine Funktion, die den
+Bruttomonatslohn eines Mitarbeiters berechnet. Bei /Festangestellten/
+berechnet sich der Monatslohn aus dem Grundgehalt zuzüglich
+Überstundenentgelt. Überstunden sind die über die monatliche
+Sollarbeitszeit (die als globale Konstante definiert wird)
+hinausgehenden Arbeitsstunden. Der Stundenlohn pro Überstunde berechnet
+sich aus dem Grundgehalt und der monatlichen Sollarbeitszeit plus
+$25\%$. Minderstunden bleiben unberücksichtigt.
+
+Werten Sie die folgenden Funktionsaufrufe aus:
+
+|p0.5cm|p5cm|p8cm| a) & (first '((A) B C D)) &
+b) & (rest '((A)(B C D))) &
+c) & (cons '(A B) '(A B)) &
+d) & (cons 'A '()) &
+
+e) & (first '(((A)))) &
+f) & (rest '(((A)))) &
+g) & (cons '((A)) empty) &
+h) & (equal? 'X1 'X2) &
+i) & (equal=? '(X1) 'X2) &
+j) & (equal? '(X1) '(X2)) &
+k) & (pair? 'X1) &
+l) & (pair? '(X1)) &
+m) & (pair? '()) &
+n) & (pair? '(empty)) &
+
+1. Werten Sie die folgenden Ausdrücke Schritt für Schritt aus:
+
+   1. =(+ (* ( / 12 8) 2/3 ) (- 20 (sqrt 4)))=
+
+   2. =    (cond=
+      =       [(= 0 0 ) false]=
+      =       [(> 0 1 ) (symbol=? ’a ’a)]=
+      =       [else ( = (/ 1 0 ) 9)])=
+
+   3. =    ( cond =
+      =       [(= 2 0) false]=
+      =       [(> 2 1) (symbol=? ’a ’a )]=
+      =       [else (= ( / 1 2) 9)])=
+
+2. Gegeben sei die folgende Funktionsdefinition:
+
+   =    ;; f:  number number -> number=
+   =    (define f=
+   =       (lambda (x y)=
+   =           (+ (* 3 x) (* y y))))=
+
+   Werten Sie die folgenden Ausdrücke Schritt für Schritt aus:
+
+   1. =(+ (f 1 2) (f 2 1))=
+
+   2. =(f 1 (* 2 3))=
+
+   3. =(f (f 1 (* 2 3)) 19)=
+
+1. Die Funktion =sum= liefere, angewendet auf eine Liste von numerischen
+   Atomen =x=, die Summe der Elemente.
+
+2. Die Funktion =prod= liefere, angewendet auf eine Liste von
+   numerischen Atomen =x=, das Produkt der Elemente.
+
+3. Die Funktion =maximum= liefere, angewendet auf eine Liste von
+   numerischen Atomen =x=, das Maximum der Elemente.
+
+4. Die Funktion =enthaelt?= beantworte, angewendet auf ein Symbol und
+   eine Liste von Symbolen, die Frage, ob das Symbol in der Liste
+   enthalten ist oder nicht
+
+Schreiben Sie eine Funktion =(declist x)=, die aus einer Liste =x= von
+Integers eine neue Liste berechnet, deren Elemente um 1 kleiner sind,
+als die der ursprünglichen Liste:
+
+| x         | (declist x)   |
+|-----------+---------------|
+| (2 5 7)   | (1 4 6)       |
+| empty     | empty         |
+
+Beachten Sie die Angaben in Moodle bzgl. der Abgabe der Lösungen. Sie
+dürfen 2er-Gruppen bilden.
+
+1. Definieren Sie eine Funktion =(flatten x)=, die als Argument eine
+   Liste =x= mit beliebig tief geschachtelten Unterlisten hat und als
+   Ergebnis eine Liste von Atomen liefern soll mit der Eigenschaft, dass
+   alle Atome, die in x vorkommen auch in =(flatten x)= in derselben
+   Reihenfolge vorkommen:
+
+   | x                  | (flatten x)   |
+   |--------------------+---------------|
+   | (A (B C) D)        | (A B C D)     |
+   | (((A B) C)(D E))   | (A B C D E)   |
+   | ((((A))))          | (A)           |
+
+   **** Hinweis:
+
+   Definieren Sie zuerst in der bekannten Art und Weise eine rekursive
+   Datenstruktur für geschachtelte Listen. Wenden Sie dann die passende
+   *Entwurfsvorschrift* an.
+
+2. Schreiben Sie eine Funktion =(frequencies x)=, die aus einer Liste
+   =x= von Atomen eine Liste von zwei-elementigen Strukturen
+   (define-record-procedures) erzeugt: Dabei ist das erste Element das
+   Atom aus =x=, das zweite Element die Häufigkeit des Auftretens in
+   =x=. Die Reihenfolge der Strukturen in der Ergebnisliste ist
+   belanglos.
+
+   | x                 | (frequencies x)       |
+   |-------------------+-----------------------|
+   | (A B A B A C A)   | (<A 4> <B 2> <C 1>)   |
+   | empty             | empty                 |
+
+   =<A 4>= stehe für einen Record mit den Elementen =A= und $4$
+
+Entwerfen Sie einen Satz von Funktionen für die Mengenoperationen
+VEREINIGUNG, DURCHSCHNITT, DIFFERENZ, wobei Mengen als Listen von Atomen
+ohne Wiederholungen repräsentiert werden sollen.
+
+Die in den folgenden Aufgaben zu entwickelnden Funktionen haben alle 2
+Listen-Parameter. Lösen Sie diese Aufgaben unter Anwendung von
+Entwurfsvorschrift V. Überlegen Sie dabei, ob für die Erstellung der
+Funktionsschablone der Zugriff auf das erste Element und die Restliste
+hinsichtlich des ersten, des zweiten oder beider Parameter vorgenommen
+werden muss.
+
+1. Schreiben Sie ein Funktion =concatenate=, die zwei Listen von
+   Symbolen aneinander hängt. Beispiel:
+   = (concatenate ’(a b c) ’(d e f)) => ’(a b c d e f)=
+
+2. Schreiben Sie eine Funktion =mult-2-num-lists=, die zwei gleich lange
+   Listen mit Zahlen zu einer Liste verarbeitet, die die Produkte der
+   korrespondierenden Elemente der Argumentlisten enthält. Beispiel:
+   =(mult-2-num-lists ’(2 3 4) ’(7 8 9)) => ’(14 24 36)=
+
+3. Entwickeln Sie eine Funktion =merge=, die 2 Listen von Zahlen
+   verarbeitet, die aufsteigend sortiert sind. Sie liefert eine
+   sortierte Liste von Zahlen, die alle Zahlen aus den beiden
+   Argumentlisten enthält. Wenn Zahlen in den Argumentliste mehrfach
+   vorkommen, sollen Sie auch in der Ergebnisliste entsprechend oft
+   auftauchen. Beispiel:
+   =(merge ’(2 5 7) ’(1 3 5 9)) => ’(1 2 3 5 5 7 9) =
+
+1. Schreiben Sie eine Funktion =repeat=, die eine natürliche Zahl
+   $n\in Nat$ (Definition des Datentyps $Nat$ s. Vorlesung) und ein
+   Symbol $s$ als Argumente nimmt und eine Liste mit dem $n$-maligen
+   Auftreten von $s$ erzeugt.
+
+2. Schreiben Sie eine Funktion =Int->Nat=, die eine beliebige positive
+   ganze Zahl in eine äquivalentes Element des Datentyps $Nat$
+   verwandelt, z.B.:
+   =(Int->Nat 3) => (succ (succ (succ zero)))=
+
+3. Schreiben Sie eine Funktion =Nat->Int=, die eine natürliche Zahl
+   $n\in Nat$ in eine normale Racket-Number verwandelt, z.B.:
+   =(Nat->Int (succ (succ (succ zero)))) => 3=
+
+4. Schreiben Sie eine Funktion
+   =;; times: Nat Nat -> Nat=
+   , die zwei natürliche Zahlen multipliziert.
+
+Beachten Sie die Angaben in Moodle bzgl. der Abgabe der Lösungen. Sie
+dürfen 2er-Gruppen bilden.
+
+Es sollen Ausdrücke abgeleitet werden, die nur aus Konstanten, Variablen
+und den Operationen $+$ und $\cdot$ bestehen.
+
+Sei $D_x$ die partielle Ableitung einer Funktion $f$ nach $x$, dann
+gelten folgende Regeln:
+
+-  $D_x(x) = 1$
+
+-  $D_x(y) = 0$, $y\neq x$, sei $y$ eine Konstante oder Variable
+
+-  $D_x(e_1 + e_2) = D_x(e_1)+D_x(e_2)$ (Summenregel)
+
+-  $D_x(e_1\cdot e_2) = e_1\cdot D_x(e_2) + e_2\cdot D_x(e_1)$
+   (Produktregel)
+
+Repräsentation der Formeln:
+
+-  Konstante: numerisches Atom
+
+-  Variable: symbolisches Atom
+
+-  $e_1 + e_2$: (ADD $e_1$ $e_2$)
+
+-  $e_1 \cdot e_2$: (MUL $e_1$ $e_2$)
+
+Hinweise:
+
+-  Definieren Sie zur Erzeugung von Formeln geeignete Hilfsfunktionen!
+
+-  Wenn eine Formel nicht korrekt aufgebaut ist, kann das Symbol
+   =’ERROR= zurückgeliefert werden, das möglicherweise in einem
+   korrekten Teil der Formel eingeschachtelt erscheint.
+
+-  Machen Sie ausgiebig von lokalen Definitionen Gebrauch.
+
+[Anwendungreduce] Definieren Sie unter Verwendung von =reduce= (s.
+Vorlesung) eine Funktion =sort=, die, angewendet auf eine Liste von
+Zahlen, diese Liste absteigend sortiert.
+
+Modifizieren Sie die Funktion =sort= aus Aufgabe [Anwendungreduce] so,
+dass durch einen zusätzlichen Parameter die Sortierreihenfolge bestimmt
+werden kann.
+
+Was liefern die folgenden Ausdrücke:
+
+1. =((mapp abs) '( 4 -7 3))=
+
+2. =(define betraege (mapp abs))=
+
+3. =(betraege '(4 -7 -3))=
+
+4. =(reduce * ((mapp abs) '( 4 -7 3)) 1)=
+
+Wie lautet er?
+
+Erklären Sie die Auswertung des Ausdrucks =((mapp abs) '( 4 -7 3))=
+mithilfe des Ersetzungsmodells für Funktionsanwendungen. Vergleiche dazu
+Teil 5 der Vorlesungsfolien.
+
+1. Schreiben Sie die Funktion =sum=, die die Summe der Elemente einer
+   Liste von Zahlen berechnet, unter Benutzung einer Hilfsfunktion mit
+   akkumulierendem Parameter. Verwenden Sie die Funktiosnschablone aus
+   der Vorlesung. Formulieren Sie die Akkumulatorinvariante.
+
+2. Gegeben ist ein Weg in einem ungerichteten Graphen, dessen Knoten
+   Orte repräsentieren und dessen Kanten mit den Entfernungen zwischen
+   den Orten attributiert sind, z.B. so:
+
+   [[\figs entfernungen.pdf]]
+
+   Entwickeln Sie eine Funktion, die aus einer Liste mit relativen
+   Entfernungen eine Liste mit den absoluten Entfernungen der Orte vom
+   Ursprungsort berechnet. Für den obigen Graphen soll also aus der
+   Liste (120 90 70 65) die Liste (120 210 280 345) werden.
+
+   1. Entwickeln Sie zunächst eine Funktion (ggf. mit Hilfsfunktion)
+      nach der bekannten Methode (ohne akkumulierende Parameter).
+
+   2. Diskutieren Sie, warum eine Hilfsfunktion mit akkumulierendem
+      Parameter sinnvoll ist.
+
+   3. Entwickeln Sie eine solche.
+
+3. Definieren Sie eine Funktion =(singletons x)=, die als Argument eine
+   Liste von den Atomen =x= hat und als Ergebnis eine Liste von den
+   Atomen liefern soll, die in =x= genau einmal auftreten.
+
+4. Modifizieren die Funktion =(singletons x)= so, dass zwei
+   akkumulierende Parameter verwendet werden. Der eine soll zum
+   Akkumulieren der Atome, die genau einmal in =x= auftreten, dienen,
+   der andere zum Akkumulieren der Atome, die mehrmals in =x= auftreten.
+
+Gegeben sei folgende Racket-Funktion
+
+=    (define f=
+=      (lambda (n)=
+=        (cond=
+=          [(= n 0) 0]=
+=          [else (+ (f (- n 1))=
+=                   (/ 1 (* n (+ n 1))))])))=
+
+Zeigen Sie, dass der Aufruf =(f n)= die Zahl $$f(n)=\frac{n}{n+1}$$
+berechnet.
+
+Grundlage:
+
+=;; nimmt einen Betrag als Startkapital eines Kontos=
+=;; und erzeugt eine "belaste-Funktion"=
+=(: erzeuge-konto (number =
+=                -> (number -> (mixed number symbol))))=
+=(define erzeuge-konto=
+=  (lambda (konto)=
+=    (lambda (betrag)=
+=      (cond=
+=        [(>= konto betrag)=
+=         (begin=
+=           (set! konto (- konto betrag))=
+=           konto)]=
+=        [else ’konto-ueberzogen]))))=
+
+1. Wie sieht das Umgebungsdiagramm aus, wenn zwei Konten angelegt
+   werden?
+
+   =(define konto1 (erzeuge-konto 100))=
+   =(define konto2 (erzeuge-konto 200))=
+
+2. Stellen Sie die Auswertung von (konto2 120) dar!
+
+3. Wie sieht das Umgebungsdiagramm aus für?
+
+   = (define konto1 (erzeuge-konto 100))=
+   = (define konto2 konto1)=
+   = =
+
+1. Betrachten Sie die folgende Variante der Prozedur =erzeuge-konto=.
+   Machen Sie sich ihre Wirkungsweise klar.
+
+   =(: erzeuge-konto =
+   =   (number -> (symbol -> (number -> (mixed number symbol)))))=
+   =;; nimmt einen Betrag als Startkapital und erzeugt ein "Konto-Object"=
+   =(define erzeuge-konto=
+   =  (lambda (konto)=
+   =    (letrec=
+   =        ([;; belaste: (number -> (mixed number symbol))=
+   =          ;; Effekt: bucht vom konto betrag ab, liefert neuen =
+   =          ;; Kontostand als Resultat, falls Konto nicht ueberzogen=
+   =          belaste=
+   =          (lambda (betrag)=
+   =            (cond=
+   =              [(>= konto betrag)=
+   =               (begin=
+   =                 (set! konto (- konto betrag))=
+   =                 konto)]=
+   =              [else ’konto-ueberzogen]))]=
+   =         [;; schreibegut: (number -> number)=
+   =          ;; Effekt: schreibt konto betrag gut=
+   =          ;; liefert neuen Kontostand als Resultat=
+   =          schreibegut=
+   =          (lambda (betrag)=
+   =            (begin =
+   =              (set! konto (+ konto betrag))=
+   =              konto))]=
+   =         [;; verteile: (number -> (mixed number symbol))=
+   =          ;; verwaltet die von Konten verstandenen Nachrichten=
+   =          verteile=
+   =          (lambda (nachricht)=
+   =            (cond=
+   =              [(equal? nachricht ’belaste) belaste]=
+   =              [(equal? nachricht ’schreibegut) schreibegut]=
+   =              [else (violation "unbekannte Nachricht")]))])=
+   =      verteile)))=
+
+2. Wie sieht das Umgebungsdiagramm für die folgende Ausdruckssequenz
+   aus:
+
+   =(define konto (erzeuge-konto 200))=
+   =((konto ’schreibegut) 60)=
+   =((konto ’belaste) 120)=
+
+Welchen stack (gemäß Spezifikation aus der Vorlesung) repräsentiert der
+Term
+
+=    push( pop(push(push(createstack, c), b)), a)=
+
+1. Geben Sie eine graphische Darstellung des resultierenden stacks an.
+
+2. Formen Sie den Term durch Anwendung der Gleichungen solange um, bis
+   er nur noch die Operation =push= und =createstack= enthält.
+
+Spezifizieren Sie einen Datentyp ADTtupel. Ein Tupel sei ein Paar von
+items. Definieren Sie eine Operation für das Erzeugen eines Tupels aus
+zwei items, sowie je eine Operation für den Zugriff auf die beiden
+Komponenten.
+
+[mengenspezifikation] Geben Sie die algebraische Spezifikation für einen
+abstrakten Datentyp ADTset an, der eine Menge von Datenelementen (items)
+mit folgenden Operationen beschreibt:
+
+-  =emptyset=: liefert die leere Menge
+
+-  =makeset(i)=: liefert die Menge, deren einziges Element i ist
+
+-  =union(s, s´)=: vereinigt die Mengen s und s´
+
+-  =intersect(s, s´)=: bildet den Durchschnitt der Mengen s und s´
+
+-  =isin(s, i)=: liefert TRUE, wenn i Element von s, sonst FALSE
+
+Hinweis: In der Spezifikation von item sei eine Operation
+
+=        eqitem: item, item –> bool=
+
+spezifiziert, die zwei items auf Gleichheit prüft. Diese Operation kann
+für die Spezifikation verwendet werden.
+
+Formen Sie die folgenden Terme der Spezifikation von Aufgabe
+[mengenspezifikation] durch Anwendung der Gleichungen schrittweise um,
+bis keine Gleichung mehr anwendbar ist.
+
+1. =isin( union( union( emptyset, makeset(i)), makeset(j)), i)=
+
+2. =intersect(union(union(makeset(i1), makeset(i2)), makeset(i3)),=
+   =          union( makeset(i2), makeset(i4)))=
+
+Die Größen i, j, i1, i2, i3 und i4 seien paarweise verschiedene Elemente
+von item.
+
+Mit den folgenden Racket-Funktionen wird eine abstrakte Implementierung
+für Brüche (rationale Zahlen) vorgenommen:
+
+=    (define (add-rat x y)=
+=      (make-rat (+ (* (numer x) (denom y))=
+=                   (* (numer y) (denom x)))=
+=                (* (denom x) (denom y))))=
+=    =
+=    (define (sub-rat x y)=
+=      (make-rat (- (* (numer x) (denom y))=
+=                   (* (numer y) (denom x)))=
+=                (* (denom x) (denom y))))=
+=    =
+=    (define (mul-rat x y)=
+=      (make-rat (* (numer x) (numer y))=
+=                (* (denom x) (denom y))))=
+=    =
+=    (define (div-rat x y)=
+=      (make-rat (* (numer x) (denom y))=
+=                (* (denom x) (numer y))))=
+=    =
+=    (define (equal-rat? x y)=
+=      (= (* (numer x) (denom y))=
+=         (* (numer y) (denom x))))=
+=    =
+=    (define (make-rat numer denom)=
+=      (cons ’make-rat (cons numer (cons denom ’()))))=
+=    =
+=    (define (numer rat) =
+=      (cadr rat))=
+=    =
+=    (define (denom rat) =
+=      (caddr rat))=
+=    =
+=    (define (print-rat x)=
+=      (newline)=
+=      (display (numer x))=
+=      (display "/")=
+=      (display (denom x)))=
+
+Zum Thema abstrakte Implementierungen vergleichen Sie auch die Aufgabe
+/Aufgaben zum Datentyp =Nat=/ (Nr. 10) bzw. Vorlesung Teil 3 (Natürliche
+Zahlen als rekursive Datenstruktur).
+
+1. Machen Sie sich die Wirkungen dieser Funktionen klar. Sie können Sie
+   auch erproben. Sie finden sie in der Rubrik Beispiele in moodle.
+
+   Hinweise:
+
+   -  Zum Testen wählen Sie in DrRacket die Spracheinstellung
+      Plt-Text(MzRacket)-Kombo
+
+   -  Die Funktion =cadr= liefert das zweite, =caddr= das dritte Element
+      einer Liste.
+
+2. Ergänzen Sie das Racket-Programm so, dass Brüche durch die Funktion
+   =make-rat= bei der Erzeugung gekürzt werden.
+
+3. Schreiben Sie eine algebraische Spezifikation für rationale Zahlen.
+   Das Vorhandensein einer Spezifikation für ganze Zahlen darf dabei
+   vorausgesetzt werden
+
+Schreiben Sie für die algebraische Spezifikation für Warteschlangen aus
+dem Skript Funktionen als "'algebraische Implementierung"' nach dem
+Muster der Funktionen für den Datentyp *Nat* aus der Vorlesung bzw. nach
+dem Muster der vorangegangenen Aufgabe. Überlegen Sie sich zusätzlich,
+wie eine Funktion =print-queue= aussehen könnte, die Queues lesbar
+darzustellen erlaubt (vgl. die Funktion =print-rat=).
+
+1. Geben Sie die algebraische Spezifikation für einen abstrakten
+   Datentyp ADTset an, der eine Menge von Datenelementen (items) mit
+   folgenden Operationen beschreibt:
+
+   -  =emptyset=: liefert die leere Menge
+
+   -  =insert(i, s)=: fügt der Menge s das Element i hinzu
+
+   -  =member(i, s)=: liefert TRUE, wenn i Element von s, sonst FALSE
+
+   In der Spezifikation von item sei eine Operation
+
+   =        eqitem: item, item –> bool=
+
+   spezifiziert, die zwei items auf Gleichheit prüft. Diese Operation
+   kann für die Spezfikation verwendet werden.
+
+2. Geben Sie zwei verschiedene Terme aus aufbauenden Operationen an, die
+   insofern die gleiche Menge darstellen, als =member=, angewendet auf
+   diese Mengen, für die gleichen items true liefert.
+
+3. Welche Gleichungen müssen Sie hinzufügen, um festzuhalten, dass weder
+   die Reihenfolge der =insert=-Aufrufe noch die Existenz zu Dubletten
+   eine Rolle spielt, um zwei Mengen als gleich ansehen zu können.
+
+4. Erstellen Sie eine konkrete Implementierung für den Datentyp in
+   Racket unter Verwendung von Listen.
+
+[1] Symbole sind einfache Bezeichner mit vorangestelltem .
+
+[2] Diese Prozduren stehen zur Verfügung, wenn Sie dem Kopf Ihres
+    Programms die Zeile =(require htdp/draw)= hinzufügen.

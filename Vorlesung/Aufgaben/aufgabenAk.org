@@ -1,0 +1,1847 @@
+../Vorlesung/lstdefinelanguageclojure.tex
+
+Es soll ein Klausurenplan für eine Menge von Kursen erstellt werden, der
+für jede Klausur ein Zeitfenster (von z.B. 1 Stunde) vorsieht. Zwei
+Klausuren dürfen zeitgleich stattfinden, wenn es keinen Kursteilnehmer
+gibt, der an beiden Kursen teilgenommen hat.
+
+Wie würden Sie dieses Problem modellieren?
+
+Bilden Sie Expertengruppen zu diesem Thema und schreiben Sie Stichpunkte
+auf ein Blatt des Tafelschreibblocks (Flipchart) z.B. zu den Fragen:
+
+-  Wo ist uns im Unternehmen /Abstraktion/ begegnet?
+
+-  Inwiefern ist Abstraktion von Bedeutung?
+
+-  ...
+
+Schreiben Sie eine statische Java-Methode, die ein Array von doubles als
+Argument akzeptiert und den Durchschnitt der Zahlen liefert.
+
+#+BEGIN_EXAMPLE
+      public static double average (double[] numbers) { 
+        double sum = 0;
+        for (int i = 0; i < numbers.length; i++) { 
+          sum += numbers[i]; 
+        }
+        return sum / numbers.length;
+      }
+#+END_EXAMPLE
+
+versus
+
+#+BEGIN_EXAMPLE
+    (defn average
+      [numbers]
+      (/ (apply + numbers) (count numbers)))
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+    public class StringUtils {
+      public static boolean isBlank(String strng) {
+          int strngLen;
+          if (strng == null || (strngLen = strng.length()) == 0) {
+              return true;
+          }
+          for (int i = 0; i < strngLen; i++) {
+              if ((Character.isWhitespace(strng.charAt(i)) == false)) {
+                  return false;
+              }
+          }
+          return true;
+      }
+    }
+#+END_EXAMPLE
+
+Zum Vergleich:
+
+#+BEGIN_EXAMPLE
+    (defn blank? [strng]
+      (every? #(Character/isWhitespace %) strng))
+#+END_EXAMPLE
+
+Schreiben Sie gemäß Entwurfsvorschrift I den Vertrag, die
+Zweckbestimmung für eine Funktion auf, die den Rauminhalt eines Quaders
+berechnet, für den Länge, Breite und Höhe gegeben ist. Formulieren Sie
+drei Beispielanwendungen als Tests, die das Verhalten der Funktion
+veranschaulichen.
+
+Entwickeln Sie gemäß Entwurfsvorschrift I die folgenden Funktionen:
+
+1. Eine Funktion, die aus der Entfernung und der Geschwindigkeit zweier
+   Züge die Zeit ermittelt, nach der die Züge sich treffen, wenn Sie
+   sich auf einem gemeinsamen Streckenabschnitt von ihren jeweiligen
+   Startpunkten aus aufeinander zu bewegen.
+
+   #+BEGIN_EXAMPLE
+       ;; berechnet, wie lange es dauert bis die zwei Zuege
+       ;; sich treffen
+       (def zeit-bis-treffen
+         (fn [v-zug1 v-zug2 entfernung]
+           {:pre [(number? v-zug1) (number? v-zug2) 
+                  (number? entfernung)]
+            :post [(number? %)]}
+           (/ entfernung (+ v-zug1 v-zug2))))
+
+       (deftest test-zeit-bis-treffen 
+         (is (= 1 (zeit-bis-treffen 50 50 100)))
+         (is (= (/ 4 3) (zeit-bis-treffen 25 50 100))))
+         
+   #+END_EXAMPLE
+
+2. Eine Funktion, die aus einem gegebenen Anfangskapital, einem
+   Jahreszinssatz und einer in Monaten gemessenen Laufzeit das
+   Endkapital ermittelt. Die Zinsgutschrift erfolgt einmalig am Ende der
+   Laufzeit. Während der Laufzeit gibt es weder Einzahlungen noch
+   Abhebungen.
+
+   #+BEGIN_EXAMPLE
+       ;; compute balance with simple interest
+       (def balance
+         (fn [principal rate duration]
+           {:pre [(number? principal) (number? rate)
+                  (number? duration)]
+            :post [(number? %)]}
+           (+ principal (* principal 
+                           (/ (* rate (/ 1 100)) 12) duration))))
+
+       (deftest test-balance 
+         (is (= 1000 (balance 1000 10 0)))
+         (is (= 1100 (balance 1000 10 12))))
+           
+   #+END_EXAMPLE
+
+3. Eine Funktion, die aus der Länge und Breite eines rechteckigen
+   Fußbodens, die Anzahl der benötigten Fliesen berechnet, deren Größe
+   ebenfalls durch Länge und Breite gegeben ist.
+
+   Hinweis: Der Funktionsaufruf =(Math/ceil x)= liefert die/ kleinste
+   ganze Zahl, die größer als x ist.
+
+   #+BEGIN_EXAMPLE
+       ;; compute number of full tiles necessary for floor
+       (def tiles
+         (fn [f-length f-width t-length t-width]
+           {:pre [(number? f-length) (number? f-width) 
+                  (number? t-length) (number? t-width)]
+            :post [(number? %)]}
+           (* (Math/ceil (/ f-width t-width))
+              (Math/ceil (/ f-length t-length)))))
+
+       (deftest test-fliesen 
+         (is (= 100.0 (tiles 10 10 1 1)))
+         (is (= 400.0 (tiles 24 37 (/ 3 2) (/ 3 2)))))
+          
+   #+END_EXAMPLE
+
+Schreiben Sie ein Programm, das aus dem Bruttoeinkommen eines
+Arbeitnehmers, das sich aus der Anzahl der Arbeitsstunden und seinem
+Bruttostundenlohn ergibt, sein Nettoeinkommen durch Abzug der
+Einkommensteuer berechnet. Die Einkommensteuer wird dabei nach einem
+steuererklärungaufbierdeckelgeeigneten Tarif ermittelt, der
+folgendermaßen definiert ist:
+
+| *Einkommen*                  | *Steuersatz* [%]   |
+|------------------------------+--------------------|
+| $<= 5000$                    | 0                  |
+| $> 5000\; und \leq 10000$    | 15                 |
+| $>10000\; und \leq 100000$   | 29                 |
+| $>100000$                    | 64                 |
+
+Der Steuersatz gilt immer nur für die Einkommensanteile in dem
+jeweiligen Intervall.
+
+Die Funktion =nettoeinkommen= soll nach folgendem Schema aufrufbar sein:
+
+#+BEGIN_EXAMPLE
+          (nettoeinkommen anzahlArbeitsStunden stundenLohn)
+#+END_EXAMPLE
+
+Hier noch ein paar Testvorgaben:
+
+#+BEGIN_EXAMPLE
+    (deftest test-nettoeinkommen
+      (is (= (/ 500085 100) (nettoeinkommen 1 5001)))
+      (is (= (/ 925071 100) (nettoeinkommen 1 10001)))
+      (is (= (/ 7315036 100) (nettoeinkommen 1 100001))))
+#+END_EXAMPLE
+
+Hinweise:
+
+1. Lesen Sie den Aufgabentext aufmerksam durch. Jeder Satz bedeutet
+   etwas.
+
+2. Entwickeln Sie die Funktion gemäß Entwurfsvorschrift II. Benutzen Sie
+   Hilfsfunktionen und machen von Variablendefinitionen Gebrauch.
+
+3. Um das Rechnen mit inexakten Zahlen zu vermeiden, geben Sie
+   Steuersätze nicht als Gleitkommazahlen wie 0.29 sondern als rationale
+   Zahlen ein. In diesem Beispiel: (/ 29 100)
+
+4. Suchen Sie sich einen Abgeordneten, der Ihre Lösung in den Bundestag
+   einbringt. Wer diese Aufgabe bis zum 31.12.2013 gelöst hat, bekommt
+   in der vierten Nachklausur einen Punkt gut geschrieben.
+
+#+BEGIN_EXAMPLE
+    (def steuergrenzeI     5000)
+    (def steuergrenzeII   10000)
+    (def steuergrenzeIII 100000)
+
+    (def steuersatzI    0)
+    (def steuersatzII  15)
+    (def steuersatzIII 29)
+    (def steuersatzIV  64)
+
+    ;;=======================================================
+    ;; Ermittlung des Einkommensteuersatz
+    ;;
+    ;; Einkommen             | Steuersatz (%)
+    ;; <= 5000               |  0
+    ;; > 5000 und <= 10000   | 15
+    ;; > 10000 und <= 100000 | 29
+    ;; > 100000              | 64
+    ;;
+    ;; Eingabeparameter: Einkommen (in Euro)
+    ;; Resultat: Steuersatz (in Prozent)
+    ;;=======================================================
+    (def steuersatz
+      (fn [einkommen]
+        {:pre [(number? einkommen)]
+         :post [(number? %)]}
+        (cond
+          (and (pos? einkommen)
+               (<= einkommen steuergrenzeI) )  steuersatzI
+          (and (> einkommen steuergrenzeI)
+               (<= einkommen steuergrenzeII))  steuersatzII
+          (and (> einkommen steuergrenzeII)
+               (<= einkommen steuergrenzeIII)) steuersatzIII
+          (> einkommen steuergrenzeIII)        steuersatzIV)))
+
+    (deftest test-steuersatz
+             (is (= steuersatzI   (steuersatz 2000)))
+             (is (= steuersatzI   (steuersatz steuergrenzeI)))
+             (is (= steuersatzII  (steuersatz 7500)))
+             (is (= steuersatzII  (steuersatz steuergrenzeII)))
+             (is (= steuersatzIII (steuersatz 50000)))
+             (is (= steuersatzIII (steuersatz steuergrenzeIII)))
+             (is (= steuersatzIV  (steuersatz 1000000))))
+
+    ;;=======================================================
+    ;; Ermittlung der Einkommensteuer
+    ;; Eingabeparameter: Einkommen (in Euro)
+    ;; Resultat: Einkommensteuerbetrag (in Euro)
+    ;;=======================================================
+    (def einkommensteuer
+      (fn [einkommen]
+        {:pre [(number? einkommen)]
+         :post [(number? %)]}
+        (cond
+          (= (steuersatz einkommen) steuersatzI)
+            (/ steuersatzI 100)
+          (= (steuersatz einkommen) steuersatzII)
+            (+ (einkommensteuer steuergrenzeI)
+               (* (- einkommen steuergrenzeI)
+                 (/ steuersatzII 100)))
+          (= (steuersatz einkommen) steuersatzIII)
+            (+ (einkommensteuer steuergrenzeII)
+               (* (- einkommen steuergrenzeII)
+                 (/ steuersatzIII 100)))
+          (= (steuersatz einkommen) steuersatzIV)
+            (+ (einkommensteuer steuergrenzeIII)
+               (* (- einkommen steuergrenzeIII)
+                 (/ steuersatzIV 100))))))
+
+    (deftest test-einkommensteuer
+             (is (= 750 (einkommensteuer 10000))))
+
+    ;;=======================================================
+    ;; Berechnung des Bruttoeinkommens eines Arbeitnehmers
+    ;; Eingabeparameter: Anzahl Arbeitsstunden,
+    ;; Bruttostundenlohn (in Euro)
+    ;;=======================================================
+    (def bruttoeinkommen
+      (fn [arbeitsstunden stundenlohn]
+        {:pre [(number? arbeitsstunden) (number? stundenlohn)]
+         :post [(number? %)]}
+        (* arbeitsstunden stundenlohn)))
+
+    (deftest test-bruttoeinkommen
+             (is (= 50 (bruttoeinkommen 10 5))))
+
+    ;;=======================================================
+    ;; Berechnung des Nettolohns eines Arbeitnehmers aus
+    ;; Anzahl Arbeitsstunden und Bruttostundenlohn (in Euro)
+    ;; Resultat: Nettolohn (in Euro)
+    ;;=======================================================
+    (def nettoeinkommen
+      (fn [arbeitsstunden stundenlohn]
+        {:pre [(number? arbeitsstunden) (number? stundenlohn)]
+         :post [(number? %)]}
+        (- (bruttoeinkommen arbeitsstunden stundenlohn)
+           (einkommensteuer
+             (bruttoeinkommen arbeitsstunden stundenlohn)))))
+
+    (deftest test-nettoeinkommen
+             (is (= 500085/100  (nettoeinkommen 1  5001)))
+             (is (= 925071/100  (nettoeinkommen 1 10001)))
+             (is (= 7315036/100 (nettoeinkommen 1 100001))))
+#+END_EXAMPLE
+
+Werten Sie die folgenden Funktionsaufrufe aus:
+
+|p0.5cm|p5cm|p8cm| a) & (first '((A) B C D)) &
+
+(A)
+
+b) & (rest '((A)(B C D))) &
+
+((B C D))
+
+c) & (cons '(A B) '(A B)) &
+
+(( A B) A B)
+
+d) & (cons 'A '()) &
+
+(A)
+
+e) & (first '(((A)))) &
+
+((A))
+
+f) & (rest '(((A)))) &
+
+()
+
+g) & (cons '((A)) ()) &
+
+(((A)))
+
+h) & (= 'X1 'X2) &
+
+false
+
+i) & (= '(X1) 'X2) &
+
+false
+
+j) & (= '(X1) '(X2)) &
+
+false
+
+k) & (list? 'X1) &
+
+false
+
+l) & (list? '(X1)) &
+
+true
+
+m) & (empty? '()) &
+
+true
+
+n) & (empty? '(())) &
+
+false
+
+1. Die Funktion =sum= liefere, angewendet auf eine Liste von Zahlen =x=,
+   die Summe der Elemente.
+
+2. Die Funktion =prod= liefere, angewendet auf eine Liste von Zahlen
+   =x=, das Produkt der Elemente.
+
+3. Die Funktion =maximum= liefere, angewendet auf eine Liste von Zahlen
+   =x=, das Maximum der Elemente.
+
+4. Die Funktion =enthaelt?= beantworte, angewendet auf ein Symbol und
+   eine Liste von Symbolen, die Frage, ob das Symbol in der Liste
+   enthalten ist oder nicht
+
+#+BEGIN_EXAMPLE
+    ;; berechnet die Summe der Elemente einer Zahlenliste  
+    (def sum
+      (fn [lon]
+        {:pre [(every? number? lon)]
+         :post [(number? %)]}
+        (cond
+          (empty? lon) 0
+          :else (+ (first lon) (sum (rest lon))))))
+
+    (deftest test-sum
+      (is (= 0 (sum ())))
+      (is (= 12 (sum '(7 3 2)))))
+
+    ;; berechnet das Produkt der Elemente einer Zahlenliste  
+    (def prod
+      (fn [lon]
+        {:pre [(every? number? lon)]
+         :post [(number? %)]}
+        (cond
+          (empty? lon) 1
+          :else (* (first lon) (prod (rest lon))))))
+
+    (deftest test-prod
+     (is (= 1  (prod ()) ))
+     (is (= 60 (prod '(3 4 5)) )))
+
+    ;; Definition einer Datenstruktur fuer nicht-leere
+    ;; Zahlenlisten (nllvz):
+    ;;   Eine nllvz ist entweder
+    ;;   1. (cons z ()) mit z ist ein Zahl; oder
+    ;;   2. (cons z nl) mit z ist ein Zahl und nl eine nllvz
+
+    ;; berechnet das Maximum der Elemente einer Zahlenliste  
+    (def maximum
+      (fn [lon]
+        {:pre [(every? number? lon)]
+         :post [(number? %)]}
+        (cond
+          (empty? (rest lon)) (first lon)
+          :else (max (first lon) (maximum (rest lon))))))
+
+    (deftest test-max
+     (is (= -1  (maximum '(-1 -2)) ))
+     (is (= 5 (maximum '(3 5 1)) )))
+
+    ;; prueft, ob ein Symbol in einer Liste von Symbolen vorkommt
+    (def enthaelt?
+      (fn [liste symbol]
+        {:pre [(every? symbol? liste)]
+         :post [(or (true? %) (false? %))]}
+        (cond
+          (empty? liste) false
+          :else
+           (cond 
+             (= (first liste) symbol) true
+             :else (enthaelt? (rest liste) symbol)))))
+
+    (deftest test-enthaelt
+      (is (= false (enthaelt? () 's) ))
+      (is (= false (enthaelt? '(x y z) 's) ))
+      (is (= true (enthaelt? '(s y z) 's) ))
+      (is (= true (enthaelt? '(x y s z) 's) )))
+
+      
+#+END_EXAMPLE
+
+Schreiben Sie eine Funktion =(declist x)=, die aus einer Liste =x= von
+Zahlen eine neue Liste berechnet, deren Elemente um 1 kleiner sind, als
+die der ursprünglichen Liste:
+
+| x         | (declist x)   |
+|-----------+---------------|
+| (2 5 7)   | (1 4 6)       |
+| ()        | ()            |
+
+#+BEGIN_EXAMPLE
+    ;; nimmt eine Liste von Zahlen und erzeugt eine neue,
+    ;; deren Elemente um 1 kleiner sind, als die der 
+    ;; urspruenglichen Liste
+    (def declist
+      (fn [lon]
+        {:pre [(every? number? lon)]
+         :post [(every? number? %)]}
+        (cond
+          (empty? lon) ()
+          :else (cons (- (first lon) 1)
+                      (declist (rest lon))))))
+
+    (deftest test-declist
+      (is (= () (declist ()) ))
+      (is (= '(1 -6 16) (declist '(2 -5 17)) )))    
+      
+#+END_EXAMPLE
+
+1. Definieren Sie eine Funktion =(flatten x)=, die als Argument eine
+   Liste =x= mit beliebig tief geschachtelten Unterlisten hat und als
+   Ergebnis eine Liste von Atomen liefern soll mit der Eigenschaft, dass
+   alle Atome, die in x vorkommen auch in =(flatten x)= in derselben
+   Reihenfolge vorkommen:
+
+   | x                  | (flatten x)   |
+   |--------------------+---------------|
+   | (A (B C) D)        | (A B C D)     |
+   | (((A B) C)(D E))   | (A B C D E)   |
+   | ((((A))))          | (A)           |
+
+   **** Hinweis:
+
+   Definieren Sie zuerst in der bekannten Art und Weise eine rekursive
+   Datenstruktur für geschachtelte Listen. Leiten Sie daraus eine
+   passende *Funktionsschablone* ab.
+
+   #+BEGIN_EXAMPLE
+       ;; Definition einer beliebig tief geschachtelten Liste
+       ;; (btgl) von Atomen:
+       ;; Eine btgl ist
+       ;; - ()
+       ;; - (cons a l) mit a ist ein Atom, l ist eine btgl
+       ;; - (cons l1 l2) mit l1, l2 sind btgl
+       ;; Funktionsschablone:
+       ;(def f
+       ;  (fn [l]
+       ;    (cond
+       ;      (empty? l) ...
+       ;      (not (seq? (first l)))
+       ;       ... (first l) ... (f (rest l)) ...
+       ;      :else  ... (f (first l)) ... (f (rest l)) ...)))
+
+       ;; nimmt eine Liste von Zahlen und erzeugt eine neue,
+       ;; deren Elemente um 1 kleiner sind, als die der 
+       ;; urspruenglichen Liste
+       (def flatten
+         (fn [lst]
+           {:pre [(seq? lst)]
+            :post [(not-any? seq?  %)]}
+           (cond
+            (empty? lst) ()
+            (not (seq? (first lst)))
+              (cons (first lst) (flatten (rest lst)))
+           :else (concat (flatten (first lst)) 
+                         (flatten (rest lst))))))
+
+       (deftest test-flatten
+         (is (= (flatten ()) ()))
+         (is (= (flatten '(a (b (c (d))))) '(a b c d)))
+         (is (= (flatten '((((a) b) c) d)) '(a b c d))))
+             
+   #+END_EXAMPLE
+
+2. Schreiben Sie eine Funktion =(frequencies x)=, die aus einer Liste
+   =x= von Atomen eine Liste von zwei-elementigen Listen erzeugt: Dabei
+   ist das erste Element das Atom aus =x=, das zweite Element die
+   Häufigkeit des Auftretens in =x=. Die Reihenfolge der Strukturen in
+   der Ergebnisliste ist belanglos.
+
+   | x                 | (frequencies x)       |
+   |-------------------+-----------------------|
+   | (A B A B A C A)   | ((A 4) (B 2) (C 1))   |
+   | ()                | ()                    |
+
+   #+BEGIN_EXAMPLE
+       ;; Datenstrukturdefinitionen:
+       ;; Eine Atom-Number-Pair (anp) ist ein
+       ;; - (cons a (cons n () )) mit a ist Atom und n ist Number
+       ;;
+       ;; Eine Liste von Atomen (loa) ist 
+       ;; - () oder
+       ;; - (cons a l) mit a ist Atom und l ist loa
+       ;;
+       ;; Eine Liste von Atom-Number-Pairs (loanp) ist
+       ;; - () oder
+       ;; - (cons a l) mit a ist anp und l ist loanp
+
+       (def atom-number-pair? 
+         (fn [ap] 
+           (and (not (seq? (first ap))) 
+                (number? (first (rest ap))))))
+
+       (def atom? (fn [v] (not (seq? v))))
+
+       ;; erhoeht die number im ersten atom-mumber-pair um 1
+       (def incr-first-number 
+         (fn [aloanp]
+           {:pre [(every? atom-number-pair? aloanp)]
+            :post [(every? atom-number-pair? %)]}
+           (let
+               [firstatom (first (first aloanp))
+                firstnumber (first (rest (first aloanp)))
+                rest-anps (rest aloanp)]
+             (cons (list firstatom (+ firstnumber 1)) 
+                   rest-anps))))
+
+       (deftest test-incr-first-number
+         (is (= (incr-first-number '((a  5) (b  3) (c  4))) 
+                '((a  6) (b  3) (c  4)))))
+
+       ;; prueft, ob das Atom in der Liste vorkommt:
+       ;; - falls ja ist die number im entsprechenden pair zu 
+       ;;   inkrementieren
+       ;; - falls nein ist der Liste ein neues pair "(atom  1)"
+       ;;   hinzuzufuegen
+       (def addAtom
+         (fn [atom aloanp]
+           {:pre [(every? atom-number-pair? aloanp)]
+            :post [(every? atom-number-pair? %)]}
+           (cond
+             (empty? aloanp) (cons (list atom 1) () )
+             (= atom (first (first aloanp))) 
+               (incr-first-number aloanp)
+             :else (cons (first aloanp) 
+                         (addAtom atom (rest aloanp))))))
+
+       (deftest test-addAtom
+         (is (= (addAtom 'a () )  '((a  1))))
+         (is (= (addAtom 'a '((a  1) (b  1))) '((a  2) (b  1))))
+         (is (= (addAtom 'a '((b  1))) '((b  1) (a  1)))))
+
+       ;; Zweckbestimmung s. Aufgabenblatt
+       (def frequencies
+         (fn [aloa]
+           {:pre [(every? atom? aloa)]
+            :post [(every? atom-number-pair? %)]}
+           (cond
+             (empty? aloa) ()
+             :else (addAtom (first aloa) 
+                            (frequencies (rest aloa))))))
+
+       (deftest test-frequencies
+         (is (= (frequencies ()) ()))
+         (is (= (frequencies '(a)) '((a  1))))
+         (is (= (frequencies '(A B A B A C A)) 
+                '((A  4) (C  1) (B  2)))))
+        
+   #+END_EXAMPLE
+
+1. Werten Sie die folgenden Ausdrücke Schritt für Schritt aus:
+
+   1. =(+ (* ( / 12 8) 2/3 ) (- 20 (sqrt 4)))=
+
+      #+BEGIN_EXAMPLE
+          (+ (* (/ 12 8) 2/3) (- 20 (sqrt 4)))
+          = (+ (* 3/2 2/3) (- 20 (sqrt 4)))
+          = (+ 1 (- 20 (sqrt 4)))
+          = (+ 1 (- 20 2))
+          = (+ 1 18)
+          = 19 
+                      
+      #+END_EXAMPLE
+
+   2.  
+
+      #+BEGIN_EXAMPLE
+              (cond
+                 (= 0 0 ) false
+                 (> 0 1 ) (= 'a 'a)
+                 :else ( = (/ 1 0 ) 9))
+      #+END_EXAMPLE
+
+      #+BEGIN_EXAMPLE
+          (cond
+            (= 0 0) false
+            (> 0 1) (= 'a 'a)
+            :else (= (/ 1 0) 9))
+          = 
+          (cond 
+            true false
+            (> 0 1) (? 'a 'a)
+            :else (= (/ 1 0) 9))
+          =
+          false    
+            
+      #+END_EXAMPLE
+
+   3.  
+
+      #+BEGIN_EXAMPLE
+              (cond 
+                 (= 2 0) false
+                 (> 2 1) (= 'a 'a )
+                 :else (= ( / 1 2) 9))
+      #+END_EXAMPLE
+
+      #+BEGIN_EXAMPLE
+          (cond
+            (= 2 0) false
+            (> 2 1) (= 'a 'a)
+            :else (= (/ 1 2) 9))
+          =
+          (cond 
+            false false
+            (> 2 1) (= 'a 'a)
+            :else (= (/ 1 2) 9))
+          =
+          (cond  
+            (> 2 1) (= 'a 'a)
+            :else (= (/ 1 2) 9)])
+          =
+          (cond  
+            true (= 'a 'a)
+            :else (= (/ 1 2) 9))
+          =
+          (= 'a 'a)
+          =
+          true 
+            
+      #+END_EXAMPLE
+
+2. Gegeben sei die folgende Funktionsdefinition:
+
+   #+BEGIN_EXAMPLE
+           ;; f:  number number -> number
+           (def f
+              (fn [x y]
+                  (+ (* 3 x) (* y y))))
+   #+END_EXAMPLE
+
+   Werten Sie die folgenden Ausdrücke Schritt für Schritt aus:
+
+   1. =(+ (f 1 2) (f 2 1))=
+
+      #+BEGIN_EXAMPLE
+              (+ (f 1 2) (f 2 1))
+              = (+ ((fn [x y) (+ (* 3 x) (* y y))) 1 2)
+                   ((fn [x y) (+ (* 3 x) (* y y))) 2 1))
+              = (+ (+ (* 3 1) (* 2 2)) 
+                   (+ (* 3 2) (* 1 1)))
+              = (+ (+ 3 4) (+ 6 1))
+              = (+ 7 7)
+              = 14
+              
+      #+END_EXAMPLE
+
+   2. =(f 1 (* 2 3))=
+
+      #+BEGIN_EXAMPLE
+              (f 1 (* 2 3))
+              = ((fn [x y) (+ (* 3 x) (* y y))) 1 (* 2 3))
+              = ((fn [x y) (+ (* 3 x) (* y y))) 1 6)
+              = (+ (* 3 1) (* 6 6))
+              = (+ 3 36)
+              = 39
+              
+      #+END_EXAMPLE
+
+   3. =(f (f 1 (* 2 3)) 19)=
+
+      #+BEGIN_EXAMPLE
+              (f (f 1 (* 2 3)) 19)
+              = ((fn [x y) (+ (* 3 x) (* y y))) (f 1 (* 2 3)) 19)
+              = ((fn [x y) (+ (* 3 x) (* y y))) 
+                   ((fn [x y) (+ (* 3 x) (* y y))) 1 6) 19)
+              = ((fn [x y) (+ (* 3 x) (* y y))) 
+                   (+ (* 3 1) (* 6 6)) 19)
+              = ((fn [x y) (+ (* 3 x) (* y y))) (+ 3 36) 19)
+              = ((fn [x y) (+ (* 3 x) (* y y))) 39 19)
+              = (+ (* 3 39) (* 19 19))
+              = (+ 117 361)
+              = 478
+              
+      #+END_EXAMPLE
+
+Gegeben sei folgende Clojure-Funktion
+
+#+BEGIN_EXAMPLE
+        (def f
+          (fn [n]
+            (cond
+              (= n 0) 0
+              :else (+ (f (- n 1))
+                       (/ 1 (* n (+ n 1)))))))
+#+END_EXAMPLE
+
+Zeigen Sie, dass der Aufruf =(f n)= die Zahl $$f(n)=\frac{n}{n+1}$$
+berechnet.
+
+-  Verankerung: :: Der Aufruf =(f 0)= besitzt Rekursionstiefe 0 und
+   liefert nach Ersetzungsmodell:
+
+   #+BEGIN_EXAMPLE
+       (f 0)
+          =  (cond
+                (= 0 0) 0
+                :else (+ (f (- 0 1))
+                         (/ 1 (* 0 (+ 0 1)))))
+          = (cond
+                true 0
+                :else (+ (f (- 0 1))
+                         (/ 1 (* 0 (+ 0 1)))))
+          = 0
+          \(= \frac{0}{0+1}\)
+   #+END_EXAMPLE
+
+-  Induktionsannahme: :: Die Behauptung gilt für Rekursionstiefe
+   $k = n$, d.h. es gilt $$(f\ n) = \frac{n}{n+1}$$.
+
+-  Induktionsschluss :: Zu beweisen für $n\in 
+      \textsl{\textbf{N}}$: Die Behauptung gilt auch für einen Aufruf
+   mit Rekursionstiefe $n+1$
+   $$(f\ m) = \frac{m}{m+1} = \frac{n+1}{n+2} \textrm{ mit } m = n + 
+      1$$
+
+   #+BEGIN_EXAMPLE
+          (f m)
+          =  (cond
+                (= m 0) 0
+                :else (+ (f (- m 1))
+                         (/ 1 (* m (+ m 1)))))
+   #+END_EXAMPLE
+
+   Da $m$ eine Zahl größer als $0$ ist, liefert die Auswertung weiter:
+
+   #+BEGIN_EXAMPLE
+          =  (+ (f (- m 1)) (/ 1 (* m (+ m 1))))
+   #+END_EXAMPLE
+
+   Zwischenschritte:
+
+   (- m 1) $= m-1 = (n + 1) -1 = n$
+
+   Sei $z$ = =(/ 1 (* m (+ m 1)))=
+   $$= \frac{1}{m\cdot (m+1)} = \frac{1}{(n+1)\cdot (n+2)}$$ Die
+   Auswertung von =(f m)= liefert also =(+ (f n) z)=.
+
+   Nach Induktionsannahme liefert =(f n)= $\frac{n}{n+1}$, also folgt:
+
+   $$\begin{aligned}
+      \frac{n}{n+1} + \frac{1}{(n+1)\cdot (n+2)} & = & \frac{n\cdot 
+      (n+2)+1}{(n+1)\cdot (n+2)}  \\
+       & = & \frac{n^{2} + 2n + 1}{(n+1)\cdot (n+2)}  \\
+       & = & \frac{(n+1)^{2}}{(n+1)\cdot (n+2)}  \\
+       & = & \frac{n+1}{n+2}\end{aligned}$$
+
+Die in den folgenden Aufgaben zu entwickelnden Funktionen haben alle 2
+Listen-Parameter. Lösen Sie diese Aufgaben unter Anwendung von
+Entwurfsvorschrift III. Überlegen Sie dabei, ob für die Erstellung der
+Funktionsschablone der Zugriff auf das erste Element und die Restliste
+hinsichtlich des ersten, des zweiten oder beider Parameter vorgenommen
+werden muss.
+
+1. Schreiben Sie ein Funktion =concatenate=, die zwei Listen von
+   Symbolen aneinander hängt. Beispiel:
+   = (concatenate ’(a b c) ’(d e f)) => ’(a b c d e f)=
+
+2. Schreiben Sie eine Funktion =mult-2-num-lists=, die zwei gleich lange
+   Listen mit Zahlen zu einer Liste verarbeitet, die die Produkte der
+   korrespondierenden Elemente der Argumentlisten enthält. Beispiel:
+   =(mult-2-num-lists ’(2 3 4) ’(7 8 9)) => ’(14 24 36)=
+
+3. Entwickeln Sie eine Funktion =merge=, die 2 Listen von Zahlen
+   verarbeitet, die aufsteigend sortiert sind. Sie liefert eine
+   sortierte Liste von Zahlen, die alle Zahlen aus den beiden
+   Argumentlisten enthält. Wenn Zahlen in den Argumentliste mehrfach
+   vorkommen, sollen Sie auch in der Ergebnisliste entsprechend oft
+   auftauchen. Beispiel:
+   =(merge ’(2 5 7) ’(1 3 5 9)) => ’(1 2 3 5 5 7 9) =
+
+#+BEGIN_EXAMPLE
+    (ns zweiListen)
+    (use 'clojure.test)
+
+    ;; haengt zwei Listen von Symbolen aneinander
+    (def concat
+      (fn [lvs1 lvs2]
+        \{:pre [(every? symbol? lvs1) (every? symbol? lvs2)]
+         :post [(every? symbol? %)]\}
+        (cond 
+          (empty? lvs1) lvs2
+          :else (cons (first lvs1)  
+                      (concat (rest lvs1) lvs2)))))
+
+    (deftest test-concat
+      (is (= (concat '() '()) '()))
+      (is (= (concat '(a b c) '()) '(a b c)))
+      (is (= (concat '() '(a b c)) '(a b c)))
+      (is (= (concat '(a b c) '(x y z)) '(a b c x y z))))
+
+    ;; multipliziert korrespondierte Elemente von 2 Zahlenlisten
+    (def mult-2-num-lists
+      (fn [lvz1 lvz2]
+        \{:pre [(every? number? lvz1) (every? number? lvz2)]
+         :post [(every? number? %)]\}
+        (cond 
+          (empty? lvz1) '()
+          :else (cons (* (first lvz1) (first lvz2)) 
+                      (mult-2-num-lists (rest lvz1)
+                                        (rest lvz2))))))
+
+    (deftest test-mult-w-num-lists
+      (is (= (mult-2-num-lists '() '()) '()))
+      (is (= (mult-2-num-lists '(2 3 4) '(5 6 7)) '(10 18 28))))
+
+    ;; nimmt zwei aufsteigend sortierte Zahlenlisten und
+    ;; mischt sie zu einer sortierte Zahlenliste
+    (def merge
+      (fn [lvz1 lvz2]
+        \{:pre [(every? number? lvz1) (every? number? lvz2)]
+         :post [(every? number? %)]\}
+        (cond 
+          (empty? lvz1) lvz2
+          (empty? lvz2) lvz1
+          (< (first lvz1) (first lvz2))
+          (cons (first lvz1) (merge (rest lvz1) lvz2))
+          :else
+          (cons (first lvz2) (merge lvz1 (rest lvz2))))))
+
+    (deftest test-merge
+      (is (= (merge '() '()) '()))
+      (is (= (merge '( 2 5 7) '()) '( 2 5 7)))
+      (is (= (merge '() '( 2 5 7)) '( 2 5 7)))
+      (is (= (merge '( 2 5 7) '( 1 5 6)) '(1 2 5 5 6 7)))
+      (is (= (merge '( 2 5 7) '( 1 1 5 6)) '(1 1 2 5 5 6 7))))
+
+    (run-tests)
+#+END_EXAMPLE
+
+(/Zusatzaufgabe/)
+
+Entwerfen Sie einen Satz von Funktionen für die Mengenoperationen
+VEREINIGUNG, DURCHSCHNITT, DIFFERENZ, wobei Mengen als Listen von Atomen
+ohne Wiederholungen repräsentiert werden sollen.
+
+Es sollen Ausdrücke abgeleitet werden, die nur aus Konstanten, Variablen
+und den Operationen Addition und Multiplikation bestehen.
+
+Sei $D_x$ die partielle Ableitung einer Funktion $f$ nach $x$, dann
+gelten folgende Regeln:
+
+-  $D_x(x) = 1$
+
+-  $D_x(y) = 0$, $y\neq x$, sei $y$ eine Konstante oder Variable
+
+-  $D_x(e_1 + e_2) = D_x(e_1)+D_x(e_2)$ (Summenregel)
+
+-  $D_x(e_1\cdot e_2) = e_1\cdot D_x(e_2) + e_2\cdot D_x(e_1)$
+   (Produktregel)
+
+Repräsentation der Formeln:
+
+-  Konstante: numerisches Atom
+
+-  Variable: symbolisches Atom
+
+-  $e_1 + e_2$: (ADD $e_1$ $e_2$)
+
+-  $e_1 \cdot e_2$: (MUL $e_1$ $e_2$)
+
+*Anwendungsbeispiele:*
+
+Der Ausdruck =(diff '(add x x) x)= liefere ='(add 1 1)=
+
+oder =(diff '(mul x x) 'x)= liefere ='(add (mul x 1) (mul 1 x))=.
+
+*Hinweise*:
+
+-  Definieren Sie zur Erzeugung von Formeln geeignete Hilfsfunktionen!
+
+-  Wenn eine Formel nicht korrekt aufgebaut ist, kann das Symbol
+   =’ERROR= zurückgeliefert werden, das möglicherweise in einem
+   korrekten Teil der Formel eingeschachtelt erscheint.
+
+-  Machen Sie ausgiebig von lokalen Definitionen Gebrauch.
+
+#+BEGIN_EXAMPLE
+    (ns diff-mit-vereinfachung2)
+    (use 'clojure.test)
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; Aufgabe 16  (mit Vereinfachung der abgeleiteten Ausdruecke);;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;
+    ;; Datenstrukturdefinition fuer Formeln:
+    ;; - numerisches Atom oder
+    ;; - symbolisches Atom oder
+    ;; - (add e1 e2) mit e1, e2 sind Formeln, oder
+    ;; - (mul e1 e2) mit e1, e2 sind Formeln
+
+    ;Hilfsdefinitionen
+    (def addop 'add)
+    (def mulop 'mul)
+
+    ;ein paar Variablen
+    (def x 'x)
+    (def y 'y)
+    (def z 'z)
+
+    ;; add: exp exp -> exp
+    ;; nimmt primitive Vereinfachungen einer Summenformel vor; 
+    ;; eine Summenformel vereinfacht sich quasi selbst
+    (def add 
+      (fn [x y] 
+        (cond
+          (= x 0) y
+          (= y 0) x
+          (and (number? x) (number? y)) (+ x y) 
+          :else (list 'add x y))))
+
+    ;; mul: exp exp -> exp
+    ;; nimmt primitive Vereinfachungen einer Produktformel vor; 
+    ;; eine Produktformel vereinfacht sich quasi selbst
+    (def mul
+      (fn [x y] 
+        (cond
+          (or (= x 0) (= y 0)) 0
+          (= y 1) x
+          (= x 1) y
+          (and (number? x) (number? y)) (* x y)
+          :else (list 'mul x y))))
+
+    (def complex-formula?
+      (fn [liste]
+        (and (= (count liste) 3)
+             (or (= (first liste) addop)
+                 (= (first liste) mulop)))))
+
+    (def formula?
+      (fn [form]
+       (or (number? form) (symbol? form) (complex-formula? form))))
+
+
+    (def diff 
+      (fn [exp var]
+        {:pre [(formula? exp) (symbol? var)]
+         :post [formula? %]}
+        (let
+            [operand-1 (fn [e] (first (rest exp)))
+             operand-2 (fn [e] (first (rest (rest exp))))
+             variable? (fn [x] (symbol? x))
+             same-variable? (fn [v1 v2]
+                              (and (variable? v1) (variable? v2) 
+                                   (= v1 v2)))
+             sum? (fn [formula]
+                    ;; prueft, ob formula eine Summe ist
+                    (and (complex-formula? formula) 
+                         (= (first formula) addop)))
+             prod? (fn [formula]
+                     ;; prueft, ob formula ein Produkt ist
+                     (and (complex-formula? formula) 
+                          (= (first formula) mulop)))]
+          (cond
+           (number? exp) 0
+           (variable? exp) (if (same-variable? exp var) 1 0)
+           (sum? exp) (add (diff (operand-1 exp) var)
+                           (diff (operand-2 exp) var))
+           (prod? exp) (add
+                        (mul (operand-1 exp)
+                              (diff (operand-2 exp) var))
+                        (mul (diff (operand-1 exp) var)
+                              (operand-2 exp)))
+           :else (throw (Exception. "unknown expression type"))))))
+    ;; Tests
+    (deftest test-diff
+      (is (= (diff 1 x) 0))
+      (is (= (diff x x) 1))
+      (is (= (diff y x) 0))
+      (is (= (diff (add x x) x) 2))
+      (is (= (diff (mul x x) 'x) (add x x))))
+
+    (run-tests)
+        
+      
+#+END_EXAMPLE
+
+Implementieren Sie folgende Funktionen unter Nutzung der Funktionen
+=filter=, =reduce= und =map= aus dem Skript (Diese finden Sie in moodle
+im Themenblock Beispiele.):
+
+1. Eine Funktion, die zu allen Zahlen einer Liste jeweils 42 addiert.
+
+   #+BEGIN_EXAMPLE
+       (def plus42
+         (fn [lvz]
+           {:pre [(every? number? lvz)]
+            :post [(every? number? %)]}
+           (map lvz (fn [x] (+ x 42)))))
+         
+       (deftest test-plus42
+                (is (= '() (plus42 '())))
+                (is (= '(42) (plus42 '(0))))
+                (is (= '(30 49 100) (plus42 '(-12 7 58)))))
+   #+END_EXAMPLE
+
+2. Eine Funktion, die sich wie a) verhält, aber nur die geraden Zahlen
+   zurückgibt.
+
+   #+BEGIN_EXAMPLE
+       (def gerade-zahlen
+         (fn [lvz]
+           {:pre [(every? number? lvz)]
+            :post [(every? number? %)]}
+           (filter even? (plus42 lvz))))
+
+       (deftest test-gerade-zahlen
+                (is (= '() (gerade-zahlen '())))
+                (is (= '(42) (gerade-zahlen '(0))))
+                (is (= '(30 100) (gerade-zahlen '(-12 7 58)))))
+   #+END_EXAMPLE
+
+3. Eine Funktion, die sich wie b) verhält, aber das Produkt aller Zahlen
+   zurückgibt.
+
+   #+BEGIN_EXAMPLE
+       (def produkt
+         (fn [lvz]
+           {:pre [(every? number? lvz)]
+            :post [(number? %)]}
+           (reduce * 1 (gerade-zahlen lvz))))
+
+       (deftest test-produkt
+                (is (= 1 (produkt '())))
+                (is (= 42 (produkt '(0))))
+                (is (= 3000 (produkt '(-12 7 58)))))
+   #+END_EXAMPLE
+
+4. Eine Funktion, die aus einer Liste von Zahlen alle Zahlen streicht,
+   die nicht durch 4 oder 5 teilbar sind.
+
+   #+BEGIN_EXAMPLE
+       (def streiche45
+         (fn [lvz]
+           {:pre [(every? number? lvz)]
+            :post [(every? number? %)]}
+           (let [durch4teilbar (fn [a] (= 0 (mod a 4)))
+                 durch5teilbar (fn [a] (= 0 (mod a 5)))]
+           (filter (fn[x] (or (durch4teilbar x) 
+                              (durch5teilbar x))) lvz))))
+
+       (deftest test-streiche45
+                (is (= '() (streiche45 '())))
+                (is (= '(16) (streiche45 '(16))))
+                (is (= '() (streiche45 '(17))))
+                (is (= '(12) (streiche45 '(12 7 58)))))
+   #+END_EXAMPLE
+
+5. Eine Funktion, die die Summe der Quadrate der natürlichen Zahlen in
+   einer Liste berechnet.
+
+   #+BEGIN_EXAMPLE
+       (def summe-der-quadrate
+         (fn [lvz]
+           {:pre [(every? number? lvz)]
+            :post [(number? %)]}
+           (reduce + 0 (map lvz (fn [x] (* x x))))))
+
+       (deftest test-summe-der-quadrate
+                (is (= 0 (summe-der-quadrate '())))
+                (is (= 4 (summe-der-quadrate '(2))))
+                (is (= 78 (summe-der-quadrate '(-2 7 5)))))
+   #+END_EXAMPLE
+
+6. EineFunktion =und=, die genau dann =true= zurück liefert, wenn alle
+   Elemente einer Liste von Booleans =true= sind.
+
+   #+BEGIN_EXAMPLE
+       (def und
+         (fn [lvb]
+           {:pre [(every? (fn [b] (or (true? b) (false? b))) lvb)]
+            :post [(or (true? %) (false? %))]}
+           (reduce (fn [x y] (and x y)) true lvb)))
+
+       (deftest test-und
+                (is (= true (und '())))
+                (is (= true (und '(true))))
+                (is (= false (und '(false))))
+                (is (= true (und '(true true true))))
+                (is (= false (und '(true true false)))))
+   #+END_EXAMPLE
+
+7. Eine Funktion =partitioniere=, die ein Prädikat als Argument nimmt
+   und, angewandt auf eine Liste, zwei Listen zurückgibt, wobei erstere
+   alle Elemente enthält, die das Prädikat erfüllen, und die andere die
+   restlichen Elemente enthält.
+
+   #+BEGIN_EXAMPLE
+       (def partitioniere
+         (fn [praed? lvz]
+           {:pre [(every? number? lvz)]
+            :post [(list? %)]}
+           (list (filter praed? lvz)
+                 (filter (fn [x] (not (praed? x))) lvz))))
+
+       (deftest test-partitioniere
+                (is (= '(() ()) (partitioniere even? '())))
+                (is (= '((2) ()) (partitioniere even? '(2))))
+                (is (= '(() (3)) (partitioniere even? '(3))))
+                (is (= '((-2) (7 5)) 
+                       (partitioniere even? '(-2 7 5)))))
+   #+END_EXAMPLE
+
+8. Eine Funktion =sort=, die, angewendet auf eine Liste von Zahlen,
+   diese Liste absteigend sortiert.
+
+   #+BEGIN_EXAMPLE
+       ;; sort : (list-of number)  ->  (list-of number)
+       (def sort 
+         (fn [lst]
+           (letfn 
+               [(insert [an alon]
+                  (cond
+                     (empty? alon) (list an)
+                     (> an (first alon)) (cons an alon)
+                     :else 
+                      (cons (first alon) 
+                            (insert an (rest alon)))))]
+             (reduce insert () lst))))
+         
+   #+END_EXAMPLE
+
+9. Modifizieren Sie die Funktion =sort= aus h) so, dass durch einen
+   zusätzlichen Parameter die Sortierreihenfolge bestimmt werden kann.
+
+   #+BEGIN_EXAMPLE
+       ;; sort2: (list-of number) (number number -> boolean) 
+                  ->  (list-of number)
+       (def sort2 
+         (fn [lst updown]
+           (letfn
+               [(insert [an alon]
+                  (cond
+                   (empty? alon) (list an)
+                   (updown an (first alon)) (cons an alon)
+                   :else (cons (first alon) 
+                               (insert an (rest alon)))))]
+             (reduce insert () lst))))
+           
+         
+   #+END_EXAMPLE
+
+Definieren Sie die folgenden Funktionen höherer Ordnung rekursiv oder
+durch Verwendung von anderen Funktionen höherer Ordnung:
+
+1. Eine Funktion
+
+   #+BEGIN_EXAMPLE
+         (Number -> Number) (Number-> Number) list-of Number 
+            -> list-of Number,
+   #+END_EXAMPLE
+
+   die zwei Funktionen und eine Liste von Zahlen als Argument erhält und
+   auf jede Zahl zuerst die erste und dann die zweite Funktion anwendet.
+
+   #+BEGIN_EXAMPLE
+       (def hintereinander
+         (fn [f g lvz]
+           {:pre [(every? number? lvz)]
+            :post [(every? number? %)]}
+           (map lvz (fn [x] (g (f x))))))
+
+       (deftest test-hintereinander
+                (let [f (fn [x] (* x x))
+                      g (fn [x] (- x 2))]
+                (is (= '() (hintereinander f g '())))
+                (is (= '(7) (hintereinander f g '(3))))
+                (is (= '(14) (hintereinander f g '(4))))
+                (is (= '(2 47 23) (hintereinander f g 
+                                        '(-2 7 5))))))
+   #+END_EXAMPLE
+
+2. Eine Funktion
+
+   #+BEGIN_EXAMPLE
+          (Number -> Number) (Number -> Number) -> Number,
+   #+END_EXAMPLE
+
+   die zwei Funktionen als Argument erhält und die kleinste natürliche
+   Zahl sucht, für die diese beiden Funktionen dasselbe Ergebnis
+   liefern. Begrenzen Sie die Suche auf Zahlen bis 1000 und geben Sie
+   =nil= zurück, wenn keine passende Zahl gefunden wurde.
+
+   #+BEGIN_EXAMPLE
+       (def gleiches-ergebnis
+         (fn [f g]
+           (letfn [(ge2 [f g n]
+                       (cond
+                         (= (f n) (g n)) n
+                         (= n 1000) nil
+                         :else (ge2 f g (+ n 1))))]
+             (ge2 f g 0))))
+
+       (deftest test-gleiches-ergebnis
+                (is (= nil (gleiches-ergebnis (fn [x] (* x x))
+                                              (fn [x] (- x 2)))))
+                (is (= 0 (gleiches-ergebnis + *)))
+                (is (= 1 (gleiches-ergebnis (fn [x] (* x x)) 
+                                            (fn [x] (- 2 x)))))
+                (is (= 9 (gleiches-ergebnis (fn [x] (- 20 x)) 
+                                            (fn [x] (+ 2 x))))))
+   #+END_EXAMPLE
+
+Was liefern die folgenden Ausdrücke:
+
+1. =((mapp abs) '( 4 -7 3))=
+
+   =(4 7 3)=
+
+2. =(def betraege (mapp abs))=
+
+   Eine Funktion, die auf die Elemente einer Liste die Funktion =abs=
+   anwendet.
+
+3. =(betraege '(4 -7 -3))=
+
+   =(4 7 3)=
+
+4. =(reduce * ((mapp abs) '( 4 -7 3)) 1)=
+
+   84
+
+Wie lautet er?
+
+#+BEGIN_EXAMPLE
+        mapp: (X -> Y) -> ((listof X) -> (listof Y))
+#+END_EXAMPLE
+
+*zum Vergleich:*
+
+#+BEGIN_EXAMPLE
+        map: (listof X) (X -> Y) -> (listof Y)
+#+END_EXAMPLE
+
+Erklären Sie die Auswertung des Ausdrucks =((mapp abs) '( 4 -7 3))=
+mithilfe des Ersetzungsmodells für Funktionsanwendungen. Vergleiche dazu
+Teil 4 der Vorlesungsfolien.
+
+1. Schreiben Sie eine Funktion =repeat=, die eine natürliche Zahl
+   $n\in Nat$ (Definition des Datentyps $Nat$ s. Vorlesung) und ein
+   Symbol $s$ als Argumente nimmt und eine Liste mit dem $n$-maligen
+   Auftreten von $s$ erzeugt.
+
+2. Schreiben Sie eine Funktion =Int->Nat=, die eine beliebige positive
+   ganze Zahl in eine äquivalentes Element des Datentyps $Nat$
+   verwandelt, z.B.:
+   =(Int->Nat 3) => (succ (succ (succ zero)))=
+
+3. Schreiben Sie eine Funktion =Nat->Int=, die eine natürliche Zahl
+   $n\in Nat$ in eine normale Clojure-Number verwandelt, z.B.:
+   =(Nat->Int (succ (succ (succ zero)))) => 3=
+
+4. Schreiben Sie eine Funktion
+   =;; times: Nat Nat -> Nat=
+   , die zwei natürliche Zahlen multipliziert.
+
+#+BEGIN_EXAMPLE
+    (ns nat)
+    (use 'clojure.test)
+
+    (def zero 'zero)
+
+    ;; succ: Nat -> Nat
+    (def succ
+      (fn [n] (list 'succ n)))
+
+    (deftest test-succ
+      (is (= (succ zero) (succ zero)))
+      (is (=  (succ (succ zero)) (succ (succ zero)))))
+
+    ;; prueft, ob ihr Argument zero ist.
+    ;; =zero?: Nat -> boolean
+    (def =zero? 
+      (fn [n]
+        (= n zero))) 
+
+    (deftest test-=zero? 
+      (is (=  (=zero? zero) true))
+      (is (=  (=zero? (succ zero)) false)))
+
+    ;; liefert den Term des Vorgaengers ihres Arguments
+    ;; pred: Nat -> Nat
+    (def pred
+      (fn [n]
+        (cond
+          (=zero? n) (throw  (Exception. "zero hat keinen Vorgaenger"))
+          :else
+           (first (rest n)))))
+
+    (deftest test-pred
+      (is (=  (pred (succ zero)) zero))
+      (is (=  (pred (succ (succ zero))) (succ zero)))
+      (is (thrown? Exception (pred zero))))
+
+    ;; berechnet die Summe ihrer Argumente
+    ;; plus: Nat Nat -> Nat
+    (def plus
+      (fn [n m]
+        (cond 
+         (=zero? n) m
+         :else (succ (plus (pred n) m)))))
+
+    (deftest test-plus
+      (is (= (plus zero (succ zero))  (succ zero)))
+      (is (= (plus (succ zero) (succ zero)) 
+                  (succ (succ zero))))
+      (is (= (plus (succ zero)
+                   (plus (succ zero) (succ zero)))
+             (succ (succ (succ zero))))))
+
+    ;; zaehlt die Anzahl der Elemente ihres Arguments
+    ;; countElements: (list-of any) -> Nat
+    (def countElements
+      (fn [lst]
+        (cond
+          (empty? lst) zero
+          :else (succ (countElements (rest lst)))))) 
+
+    (deftest test-countElements
+      (is (=  (countElements () ) zero))
+      (is (=  (countElements '(19 27 36)) (succ (succ (succ zero))))))
+
+    ;; repeat erzeugt eine Liste mit dem n-maligen Auftreten von s
+    ;; repeat: Nat symbol -> (list-of symbol)
+    (def repeat
+      (fn [n s]
+        (cond
+         (=zero? n) ()
+         :else (cons s (repeat (pred n) s)))))
+
+    (deftest test-repeat
+      (is (= (repeat (succ (succ zero)) 'karl) (list 'karl 'karl)))
+      (is (= (repeat (succ zero) 'rosa) (list 'rosa)))
+      (is (= (repeat zero 'clara) ())))
+
+    ;; int->nat verwandelt eine beliebige positive ganze Zahl
+    ;; in eine aequivalentes Element des Datentyps Nat 
+    ;; int->nat: Number -> Nat
+    (def int->nat
+      (fn [int]
+         (cond
+          (= int 0) zero
+          :else (succ (int->nat (- int 1))))))
+
+    (deftest test-int->nat
+      (is (= (int->nat 0) zero))
+      (is (= (int->nat 3) (succ (succ (succ zero))))))
+
+
+    ;; nat->int, wandelt eine natuerliche Zahl aus Nat in eine
+    ;; normale Clojure-Number
+    ;; nat->int: Nat -> Number
+    (def nat->int
+      (fn [n]
+        (cond
+         (=zero? n) 0
+         :else (+ 1 (nat->int (pred n))))))
+
+    (deftest test-nat->int
+      (is (= (nat->int zero) 0))
+      (is (= (nat->int (succ (succ (succ zero)))) 3)))
+
+
+    ;; Multiplikation von zwei Nat-Zahlen aus Nat
+    ;; times: Nat Nat -> Nat
+    ;; Axiome
+    ;; n,m aus Nat
+    ;; 1. times(0,m) = 0
+    ;; 2. times(n,m) = plus(times(pred(n),m),m)
+    (def times
+      (fn [f1 f2]
+        (cond
+         (=zero? f1) zero
+         :else (plus (times (pred f1) f2) f2))))
+
+    (deftest test-times
+      (is (= (times zero zero) zero))
+      (is (= (times zero (succ zero)) zero))
+      (is (= (times (succ (succ zero)) (succ (succ zero))) (succ (succ (succ (succ zero)))))))
+
+    (run-tests)
+          
+#+END_EXAMPLE
+
+Welchen stack (gemäß Spezifikation aus der Vorlesung) repräsentiert der
+Term
+
+=    push( pop(push(push(createstack, c), b)), a)=
+
+1. Geben Sie eine graphische Darstellung des resultierenden Stacks an.
+
+   [[A22a.eps]]
+
+2. Formen Sie den Term durch Anwendung der Gleichungen solange um, bis
+   er nur noch die Operation =push= und =createstack= enthält.
+
+   Anwenden der Gleichung $pop(push(s,i))=s$:
+   $push(push(createstack, c), a)$
+
+Spezifizieren Sie einen Datentyp Tupel. Ein Tupel sei ein Paar von
+items. Definieren Sie eine Operation für das Erzeugen eines Tupels aus
+zwei items, sowie je eine Operation für den Zugriff auf die beiden
+Komponenten.
+
+#+BEGIN_EXAMPLE
+    \textbf{datatype} tupel
+       \textbf{sorts} item, tupel
+       \textbf{constructors}
+           c_tupel: item, item -> tupel
+       \textbf{operations}
+           p1: tupel -> item
+           p2: tupel -> item
+    \textbf{equations for all} i1, i2 \textbf{in} item
+        p1(c_tupel(i1, i2)) = i1
+        p2(c_tupel(i1,i2)) = i2
+    \textbf{end}
+#+END_EXAMPLE
+
+[mengenspezifikation] Geben Sie die algebraische Spezifikation für einen
+abstrakten Datentyp Set an, der eine Menge von Datenelementen (items)
+mit folgenden Operationen beschreibt:
+
+-  =emptyset=: liefert die leere Menge
+
+-  =makeset(i)=: liefert die Menge, deren einziges Element i ist
+
+-  =union(s, s´)=: vereinigt die Mengen s und s´
+
+-  =intersect(s, s´)=: bildet den Durchschnitt der Mengen s und s´
+
+-  =isin(s, i)=: liefert TRUE, wenn i Element von s, sonst FALSE
+
+Hinweis: In der Spezifikation von item sei eine Operation
+
+=        eqitem: item, item –> bool=
+
+spezifiziert, die zwei items auf Gleichheit prüft. Diese Operation kann
+für die Spezifikation verwendet werden.
+
+#+BEGIN_EXAMPLE
+    \textbf{datatype} set
+        \textbf{sorts} set, item, bool
+        \textbf{constructors}
+            emptyset: -> set
+            makeset: item -> set
+            union: set, set -> set
+        \textbf{operations}
+            intersect: set, set -> set
+            isin: set, item -> bool
+        \textbf{equations for all} i, i1, i2 \textbf{in} item; s, s1, s2 \textbf{in} set
+        \{1\} isin(emptyset, i) = false
+        \{2\} isin(makeset(i1), i2) = eqitem(i1, i2)
+        \{3\} isin(union(s1, s2), i) = if isin(s1, i) 
+                                     then true else isin(s2, i)
+        \{4\} intersect(emptyset, s) = emptyset
+        \{5\} intersect(makeset(i), s) = if isin(s, i) 
+                                       then makeset(i) else emptyset
+        \{6\} intersect(union(s1, s2), s) = union(intersect(s1, s), 
+                                                intersect(s2, s))
+        \{7\} union(s, emptyset) = s
+        \{8\} union(emptyset, s) = s
+    \textbf{end}
+      
+#+END_EXAMPLE
+
+Formen Sie die folgenden Terme der Spezifikation von Aufgabe
+[mengenspezifikation] durch Anwendung der Gleichungen schrittweise um,
+bis keine Gleichung mehr anwendbar ist.
+
+1. =isin( union( union( emptyset, makeset(i)), makeset(j)), i)=
+
+   #+BEGIN_EXAMPLE
+       isin( union( union( emptyset, makeset(i)), makeset(j)), i)
+           = isin (union(makeset(i),  makeset(j), i)
+          \{8\}
+           =  if isin( makeset(i), i) 
+              then true else isin(makeset(j), i)
+          \{3\}
+           =  if eqitem(i, i) then true else isin(makeset(j), i)
+          \{2\}
+          = true
+               
+   #+END_EXAMPLE
+
+2. =intersect(union(union(makeset(i1), makeset(i2)), makeset(i3)),=
+   =          union( makeset(i2), makeset(i4)))=
+
+   #+BEGIN_EXAMPLE
+       intersect(union(union(makeset(i1), makeset(i2)), 
+                          makeset(i3)), 
+                    union( makeset(i2), makeset(i4)))
+          =\{6\} union(intersect(union(makeset(i1), makeset(i2)),
+                              union(makeset(i2), makeset(i4)),
+                              intersect(makeset(i3), 
+                              union(makeset(i2), makeset(i4)))
+          =\{5\} union(intersect(union(makeset(i1), makeset(i2)),
+                              union(makeset(i2), makeset(i4)),
+                     if isin(union(makeset(i2), makeset(i4)), i3) 
+                     then makeset(i3) else emptyset)
+          =\{3,2\}
+           union(intersect(union(makeset(i1), makeset(i2)),
+                           union( makeset(i2), makeset(i4))),
+                   emptyset)
+          =\{7\} intersect(union(makeset(i1), makeset(i2)),
+                        union( makeset(i2), makeset(i4)))
+          =\{6\} union(intersect(makeset(i1), 
+                                 union( makeset(i2), makeset(i4))),
+                       intersect(makeset(i2), 
+                                 union(makeset(i2), makeset(i4))))
+          =\{5\} union(if isin(union(makeset(i2), makeset(i4)), i1)
+                       then makeset(i1) else emptyset,
+                       if isin(union( makeset(i2), makeset(i4)), i2) 
+                       then makeset(i2) else emptyset)
+          =\{3, 2 ,...\} makeset(i2)
+                    
+   #+END_EXAMPLE
+
+Die Größen i, j, i1, i2, i3 und i4 seien paarweise verschiedene Elemente
+von item.
+
+Mit den folgenden Clojure-Funktionen wird eine abstrakte Implementierung
+für Brüche (rationale Zahlen) vorgenommen: Clojure
+
+#+BEGIN_EXAMPLE
+    (defn numer [rat]
+      (first (rest rat)))
+
+    (defn denom [rat]
+      (first (rest (rest rat))))
+
+    (defn make-rat [numer denom]
+      (cons 'make-rat (cons numer (cons denom '()))))
+
+    (defn add-rat [x y]
+      (make-rat (+ (* (numer x) (denom y))
+                   (* (numer y) (denom x)))
+                (* (denom x) (denom y))))
+
+    (defn sub-rat [x y]
+      (make-rat (- (* (numer x) (denom y))
+                   (* (numer y) (denom x)))
+                (* (denom x) (denom y))))
+
+    (defn mul-rat [x y]
+      (make-rat (* (numer x) (numer y))
+                (* (denom x) (denom y))))
+
+    (defn div-rat [x y]
+      (make-rat (* (numer x) (denom y))
+                (* (denom x) (numer y))))
+
+    (defn equal-rat? [x y]
+      (= (* (numer x) (denom y))
+         (* (numer y) (denom x))))
+
+    (defn print-rat [x]
+      (do (newline)
+             (print (numer x))
+             (print "/")
+             (print (denom x))))
+#+END_EXAMPLE
+
+Zum Thema abstrakte Implementierungen vergleichen Sie auch die Aufgabe
+/Aufgaben zum Datentyp =Nat=/ (Nr. 22) bzw. Vorlesung Teil 6 (Natürliche
+Zahlen als rekursive Datenstruktur).
+
+1. Machen Sie sich die Wirkungen dieser Funktionen klar. Sie können Sie
+   auch erproben. Sie finden sie in der Rubrik Beispiele in moodle.
+
+2. Ergänzen Sie das Clojure-Programm so, dass Brüche durch die Funktion
+   =make-rat= bei der Erzeugung gekürzt werden.
+
+   #+BEGIN_EXAMPLE
+       (defn abs "(abs n) is the absolute value of n" [n]
+         (cond
+          (not (number? n)) (throw (IllegalArgumentException.
+                        "abs requires a number"))
+          (neg? n) (- n)
+          :else n))
+
+       (defn gcd 
+         "(gcd a b) returns the greatest common divisor of a and b" 
+         [a b]
+         (if (or (not (integer? a)) (not (integer? b)))
+           (throw (IllegalArgumentException. 
+                   "gcd requires two integers"))  
+           (loop [a (abs a) b (abs b)]
+             (if (zero? b) a,
+             (recur b (mod a b))))))
+
+       (defn make-rat [numer denom]
+         (let [kuerz (gcd numer denom)]
+           (list 'make-rat (/ numer kuerz) 
+                 (/ denom kuerz))))    
+               
+             
+   #+END_EXAMPLE
+
+3. Schreiben Sie eine algebraische Spezifikation für rationale Zahlen.
+   Das Vorhandensein einer Spezifikation für ganze Zahlen darf dabei
+   vorausgesetzt werden.
+
+   #+BEGIN_EXAMPLE
+       \textbf{datatype} rat
+         \textbf{uses} int
+         \textbf{sorts} rat, int, bool
+         \textbf{constructors}
+            make-rat:  int int -> rat
+         \textbf{Operations}
+            numer:     rat     -> int
+            denom:     rat     -> int
+            add-rat:   rat rat -> rat
+            sub-rat:   rat rat -> rat
+            mul-rat:   rat rat -> rat
+            div-rat:   rat rat -> rat
+            equal-rat: rat rat -> bool
+         \textbf{equations for all} i1, i2 \textbf{in} int; r1, r2 \textbf{in} rat
+         \{1\} numer(make-rat(i1, i2)) = i1
+         \{2\} denom(make-rat(i1, i2)) = i2
+         \{3\} add-rat(make-rat(x1, y1), make-rat(x2, y2))  
+               = make-rat(+(*(x1, y2), *(x2, y1)), *(y1, y2))
+         \{4\} sub-rat(make-rat(x1, y1), make-rat(x2, y2))  
+               = make-rat(-(*(x1, y2), *(x2, y1)), *(y1, y2))
+         \{5\} mul-rat(make-rat(x1, y1), make-rat(x2, y2))  
+               = make-rat(*(x1, x2), *(y1, y2))
+         \{6\} div-rat(make-rat(x1, y1), make-rat(x2, y2))  
+               = make-rat(*(x1, y2), *(x2, y1))
+         \{7\} equal-rat(make-rat(x1, y1), make-rat(x2, y2)) 
+                = =(*(x1, y2), *(x2, y1))
+       \textbf{end}       
+             
+   #+END_EXAMPLE
+
+Schreiben Sie für die algebraische Spezifikation für Warteschlangen aus
+dem Skript Funktionen als "'algebraische Implementierung"' nach dem
+Muster der Funktionen für den Datentyp *Nat* aus der Vorlesung bzw. nach
+dem Muster der vorangegangenen Aufgabe. Überlegen Sie sich zusätzlich,
+wie eine Funktion =print-queue= aussehen könnte, die Queues lesbar
+darzustellen erlaubt (vgl. die Funktion =print-rat=).
+
+#+BEGIN_EXAMPLE
+    (ns queues)
+
+    ;; erroritem: -> item
+    (def erroritem 'erroritem)
+
+    ;; emptyqueue: -> queue
+    (def emptyqueue 'emptyqueue)
+
+    ;; append: queue item -> queue
+    (defn append [queue item]
+      (list 'append queue item))
+
+    ;; remov: queue -> queue
+    (defn remov [queue]
+      (cond
+       (isemptyqueue? queue) emptyqueue
+       (isemptyqueue? (second queue)) emptyqueue
+       :else (append (remov (second queue)) (first (rest (rest queue))))))
+
+    ;; front: queue -> item
+    (defn front [queue]
+      (cond
+       (isemptyqueue? queue) erroritem
+       (isemptyqueue? (second queue)) (first (rest (rest queue)))
+       :else (front (second queue))))
+
+    ;; isemptyqueue?: queue -> boolean
+    (defn isemptyqueue? [queue]
+      (= queue emptyqueue))
+
+    ;; pretty-print-Funktion fuer queues
+    ;; Die Auswertung von 
+    ;;    (print-queue (append (append emptyqueue 'i1) 'i2))
+    ;; liefert: ( i1 i2 )
+    (defn print-queue [q]
+         (newline)
+         (print "(")
+         (print-items q)
+         (print " )"))
+
+    (defn print-items [q]
+         (if (not (isemptyqueue? q)) 
+             (do
+               (print " ")
+               (print (front q))
+               (print-items (remov q)))))  
+#+END_EXAMPLE
+
+1. Geben Sie die algebraische Spezifikation für einen abstrakten
+   Datentyp Set an, der eine Menge von Datenelementen (items) mit
+   folgenden Operationen beschreibt:
+
+   -  =emptyset=: liefert die leere Menge
+
+   -  =insert(i, s)=: fügt der Menge s das Element i hinzu
+
+   -  =member(i, s)=: liefert TRUE, wenn i Element von s, sonst FALSE
+
+   In der Spezifikation von item sei eine Operation
+
+   =        eqitem: item, item –> bool=
+
+   spezifiziert, die zwei items auf Gleichheit prüft. Diese Operation
+   kann für die Spezfikation verwendet werden.
+
+   #+BEGIN_EXAMPLE
+       \textbf{datatype} set
+         \textbf{sorts} set, item, bool
+         \textbf{contructors}
+            emptyset:  -> set
+            insert: item set -> set
+         \textbf{operations}
+            member: item set -> bool
+         \textbf{equations for all} I, i1, i2 \textbf{in} item; s \textbf{in} set
+         \{1\} member(i, empty) = false
+         \{2\} member(i1, insert(i2, s)) = if eqitem(i1, i2) 
+                                           then true else member(i1, s)
+       \textbf{end}
+         
+   #+END_EXAMPLE
+
+2. Geben Sie zwei verschiedene Terme aus aufbauenden Operationen an, die
+   insofern die gleiche Menge darstellen, als =member=, angewendet auf
+   diese Mengen, für die gleichen items true liefert.
+
+   Zum Beispiel repräsentieren die Terme
+   $$insert(e_{1}, insert(e_{2}, ... insert(e_{n}, empty) ...))$$ und
+   $$insert(e_{n}, insert(e_{n-1}, ... insert(e_{1}, empty) ...))$$
+   beide die Menge $\{e_{1}, e_{2},\ldots,e_{n}\}$
+
+3. Welche Gleichungen müssen Sie hinzufügen, um festzuhalten, dass weder
+   die Reihenfolge der =insert=-Aufrufe noch die Existenz zu Dubletten
+   eine Rolle spielt, um zwei Mengen als gleich ansehen zu können.
+
+   #+BEGIN_EXAMPLE
+       \{3\} insert(i1, insert(i2, s)) = insert(i2, insert(i1, s))
+           \{4\} insert(i, insert(i, s)) = insert(i, s)
+             
+   #+END_EXAMPLE
+
+*Thema*: Wozu brauchen wir objektorientierten Sprachen? Sprachen, die
+Prozeduren höherer Ordnung zulassen, genügen
+
+Die folgende Prozedur =erzeuge-konto= stellt einen „Konstuktor“ für
+Konto-Objekte dar. Machen Sie sich ihre Wirkungsweise klar. (Weitere
+Erläuterungen s.u.)
+
+#+BEGIN_EXAMPLE
+    (ns konten)
+    ;; erzeuge-konto 
+    ;;   (number -> (symbol -> (number -> (mixed number symbol)))))
+    ;; nimmt einen Betrag als Startkapital und erzeugt ein "Konto-Object"
+    (def erzeuge-konto
+      (fn [startwert]
+        (let [konto (atom startwert)
+              ;; belaste: (number -> (mixed number symbol))
+              ;; Effekt: bucht vom konto betrag ab, liefert neuen 
+              ;; Kontostand als Resultat, falls Konto nicht ueberzogen
+              belaste
+              (fn [betrag]
+                (cond
+                  (>= @konto betrag)
+                  (do
+                    (swap! konto - betrag)
+                    @konto)
+                  :else 'konto-ueberzogen))
+              ;; schreibegut: (number -> number)
+              ;; Effekt: schreibt konto betrag gut
+              ;; liefert neuen Kontostand als Resultat
+              schreibegut
+              (fn [betrag]
+                (do 
+                  (swap! konto + betrag)
+                  @konto))
+              ;; verteile: (number -> (mixed number symbol))
+              ;; verwaltet die von Konten verstandenen Nachrichten
+              verteile
+              (fn [nachricht]
+                (cond
+                  (= nachricht 'belaste) belaste
+                  (= nachricht 'schreibegut) schreibegut
+                  :else (throw (Exception. "unbekannte Nachricht"))))]
+          verteile)))
+#+END_EXAMPLE
+
+In der Prozedur wird an die lokale Variable =konto= mit dem Ausdruck
+=(atom startwert)= ein sogenanntes /Atom/ gebunden. Clojure-Atoms ähneln
+Variablen aus imperativen Programmiersprachen. D.h. sie dienen zur
+Speicherung von Zuständen. Mit =@konto= kann auf den Wert eines Atoms
+zugegriffen werden. Mit (swap! konto + 300) kann der Wert des Atoms um
+300 inkrementiert werden.
+
+Machen Sie sich die Wirkung der folgenden Ausdrücke klar:
+
+#+BEGIN_EXAMPLE
+    (def konto (erzeuge-konto 200))
+    ((konto 'schreibegut) 60)
+    ((konto 'belaste) 120)
+#+END_EXAMPLE
+

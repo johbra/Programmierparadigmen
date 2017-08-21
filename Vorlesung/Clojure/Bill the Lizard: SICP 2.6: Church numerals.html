@@ -1,0 +1,2728 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir='ltr' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+<link type='text/css' rel='stylesheet' href='https://www.blogger.com/static/v1/widgets/124887373-widget_css_bundle.css' />
+<script src='http://cdn.mathjax.org/mathjax/latest/MathJax.js' type='text/javascript'>
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] }
+       });
+    </script>
+<link href='http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css' rel='stylesheet' type='text/css'/>
+<script src='http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.js' type='text/javascript'></script>
+<script src='http://google-code-prettify.googlecode.com/svn/trunk/src/lang-lisp.js' type='text/javascript'></script>
+<meta content='VnAirCaRUbcJ1kz3bihXM2_QmfEAmii96irXp6OWJJg' name='google-site-verification'/>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+<meta content='blogger' name='generator'/>
+<link href='http://www.billthelizard.com/favicon.ico' rel='icon' type='image/x-icon'/>
+<link href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html' rel='canonical'/>
+<link rel="alternate" type="application/atom+xml" title="Bill the Lizard - Atom" href="http://www.billthelizard.com/feeds/posts/default" />
+<link rel="alternate" type="application/rss+xml" title="Bill the Lizard - RSS" href="http://www.billthelizard.com/feeds/posts/default?alt=rss" />
+<link rel="service.post" type="application/atom+xml" title="Bill the Lizard - Atom" href="https://www.blogger.com/feeds/9182705499898252496/posts/default" />
+
+<link rel="alternate" type="application/atom+xml" title="Bill the Lizard - Atom" href="http://www.billthelizard.com/feeds/7145232209765826550/comments/default" />
+<!--Can't find substitution for tag [blog.ieCssRetrofitLinks]-->
+<meta content='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html' property='og:url'/>
+<meta content='SICP 2.6: Church numerals' property='og:title'/>
+<meta content='From SICP section 2.1.3  What Is Meant by Data?   Exercise 2.6  introduces us to the idea that in a language that can manipulate procedures,...' property='og:description'/>
+<!--[if IE]> <script> (function() { var html5 = ("abbr,article,aside,audio,canvas,datalist,details," + "figure,footer,header,hgroup,mark,menu,meter,nav,output," + "progress,section,time,video").split(','); for (var i = 0; i < html5.length; i++) { document.createElement(html5[i]); } try { document.execCommand('BackgroundImageCache', false, true); } catch(e) {} })(); </script> <![endif]-->
+<title>Bill the Lizard: SICP 2.6: Church numerals</title>
+<style id='page-skin-1' type='text/css'><!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Minima
+Designer: Douglas Bowman
+URL:      www.stopdesign.com
+Date:     26 Feb 2004
+Updated by: Blogger Team
+----------------------------------------------- */
+/* removes the blogger top navbar */
+#navbar-iframe {
+display: none !important;
+}
+/* Variable definitions
+====================
+<Variable name="bgcolor" description="Page Background Color"
+type="color" default="#fff">
+<Variable name="textcolor" description="Text Color"
+type="color" default="#333">
+<Variable name="linkcolor" description="Link Color"
+type="color" default="#58a">
+<Variable name="pagetitlecolor" description="Blog Title Color"
+type="color" default="#666">
+<Variable name="descriptioncolor" description="Blog Description Color"
+type="color" default="#999">
+<Variable name="titlecolor" description="Post Title Color"
+type="color" default="#c60">
+<Variable name="bordercolor" description="Border Color"
+type="color" default="#ccc">
+<Variable name="sidebarcolor" description="Sidebar Title Color"
+type="color" default="#999">
+<Variable name="sidebartextcolor" description="Sidebar Text Color"
+type="color" default="#666">
+<Variable name="visitedlinkcolor" description="Visited Link Color"
+type="color" default="#999">
+<Variable name="bodyfont" description="Text Font"
+type="font" default="normal normal 100% Georgia, Serif">
+<Variable name="headerfont" description="Sidebar Title Font"
+type="font"
+default="normal normal 78% 'Trebuchet MS',Trebuchet,Arial,Verdana,Sans-serif">
+<Variable name="pagetitlefont" description="Blog Title Font"
+type="font"
+default="normal normal 200% Georgia, Serif">
+<Variable name="descriptionfont" description="Blog Description Font"
+type="font"
+default="normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif">
+<Variable name="postfooterfont" description="Post Footer Font"
+type="font"
+default="normal normal 78% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif">
+<Variable name="startSide" description="Side where text starts in blog language"
+type="automatic" default="left">
+<Variable name="endSide" description="Side where text ends in blog language"
+type="automatic" default="right">
+*/
+/* Use this with templates/template-twocol.html */
+body {
+background:#ffffff;
+margin:0;
+color:#333333;
+font:x-small Georgia Serif;
+font-size/* */:/**/small;
+font-size: /**/small;
+text-align: center;
+}
+a:link {
+color:#2D8930;
+text-decoration:none;
+border-bottom:1px dotted #2D8930;
+}
+a:visited {
+color:#808080;
+text-decoration:none;
+border-bottom:1px dotted #808080;
+}
+a:hover {
+color:#11593C;
+text-decoration:none;
+border-bottom:1px solid #11593C;
+}
+a img {
+border-width:0;
+}
+/* Header
+-----------------------------------------------
+*/
+#header-wrapper {
+width:870px;
+margin:0 auto 10px;
+border-bottom:1px solid #11593C;
+}
+#header-inner {
+background-position: center;
+margin-left: auto;
+margin-right: auto;
+}
+#header {
+margin: 0px;
+border: 0px solid #11593C;
+text-align: center;
+color:#11593C;
+}
+#header h1 {
+margin:0px;
+padding:15px 20px .25em;
+line-height:1.2em;
+letter-spacing:.2em;
+font: normal bold 238% Georgia, Times, serif;
+}
+#header a {
+color:#11593C;
+text-decoration:none;
+}
+#header a:hover {
+color:#11593C;
+}
+#header .description {
+margin:0 5px 5px;
+padding:0 20px 15px;
+max-width:700px;
+letter-spacing:.2em;
+line-height: 1.4em;
+font: normal normal 85% Verdana, sans-serif;
+color: #2d8930;
+}
+#header img {
+margin-left: auto;
+margin-right: auto;
+}
+/* Outer-Wrapper
+----------------------------------------------- */
+#outer-wrapper {
+width: 870px;
+margin:0 auto;
+padding:10px;
+text-align:left;
+font: normal normal 109% Arial, sans-serif;
+}
+#main-wrapper {
+width: 600px;
+float: left;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;     /* fix for long non-text content breaking IE sidebar float */
+}
+#sidebar-wrapper {
+width: 230px;
+float: right;
+word-wrap: break-word; /* fix for long text breaking sidebar float in IE */
+overflow: hidden;      /* fix for long non-text content breaking IE sidebar float */
+}
+/* Headings
+----------------------------------------------- */
+h2 {
+margin:1.5em 0 .75em;
+font:normal bold 95% 'Trebuchet MS',Trebuchet,Arial,Verdana,Sans-serif;
+line-height: 1.4em;
+letter-spacing:.2em;
+color:#11593C;
+}
+/* Posts
+-----------------------------------------------
+*/
+h2.date-header {
+margin:1.5em 0 .5em;
+font-size:85%;
+color:#666;
+}
+.post {
+margin:.5em 0 1.5em;
+border-bottom:1px dotted #11593C;
+padding-bottom:1.5em;
+}
+.post h3 {
+margin:.25em 0 0;
+padding:0 0 4px;
+font-size:170%;
+font-weight:bold;
+line-height:1.4em;
+color:#11593C;
+}
+.post h3 a, .post h3 a:visited, .post h3 strong {
+display:block;
+text-decoration:none;
+color:#11593C;
+font-weight:normal;
+}
+.post h3 strong, .post h3 a:hover {
+color:#333333;
+}
+.post-body {
+margin:0 0 .75em;
+line-height:1.6em;
+}
+.post-body blockquote {
+padding: .75em;
+line-height:1.3em;
+color: #333;
+background-color: #EEFFCC;
+border: 1px dotted #99CC66;
+}
+.post-footer {
+margin: .75em 0;
+color:#11593C;
+letter-spacing:.1em;
+font: normal normal 86% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+line-height: 1.4em;
+}
+.comment-link {
+margin-left:.6em;
+}
+.post img {
+padding:4px;
+border:1px solid #11593C;
+}
+.post blockquote {
+margin:1em 20px;
+}
+.post blockquote p {
+margin:.75em 0;
+}
+/* Tables
+----------------------------------------------- */
+table {
+border-width: thin;
+border-spacing: 1px;
+border-style: solid;
+border-color: gray;
+border-collapse: collapse;
+background-color: white;
+color: #333;
+margin-left:auto;
+margin-right:auto;
+}
+table th {
+text-align: center;
+border-width: 1px;
+padding: 7px;
+border-style: solid;
+border-color: gray;
+background-color: white;
+-moz-border-radius: 0px;
+}
+table td {
+border-width: 1px;
+padding: 5px;
+border-style: solid;
+border-color: gray;
+background-color: white;
+-moz-border-radius: 0px;
+}
+table td.numeric {
+text-align: right;
+}
+.nobrtable br { display: none }
+/* Comments
+----------------------------------------------- */
+#comments h4 {
+margin:1em 0;
+font-weight: bold;
+line-height: 1.4em;
+letter-spacing:.2em;
+color: #11593C;
+}
+#comments-block {
+margin:1em 0 1.5em;
+line-height:1.6em;
+}
+#comments-block .comment-author {
+margin:.5em 0;
+}
+#comments-block .comment-body {
+margin:.25em 0 0;
+}
+#comments-block .comment-footer {
+margin:-.25em 0 2em;
+line-height: 1.4em;
+letter-spacing:.1em;
+}
+#comments-block .comment-body p {
+margin:0 0 .75em;
+}
+.deleted-comment {
+font-style:italic;
+color:gray;
+}
+#blog-pager-newer-link {
+float: left;
+}
+#blog-pager-older-link {
+float: right;
+}
+#blog-pager {
+text-align: center;
+}
+.feed-links {
+clear: both;
+line-height: 2.5em;
+}
+/* Sidebar Content
+----------------------------------------------- */
+.sidebar {
+color: #666666;
+line-height: 1.5em;
+}
+.sidebar ul {
+list-style:none;
+margin:0 0 0;
+padding:0 0 0;
+}
+.sidebar li {
+margin:0;
+padding-top:0;
+padding-right:0;
+padding-bottom:.25em;
+padding-left:15px;
+text-indent:-15px;
+line-height:1.5em;
+}
+.sidebar .widget, .main .widget {
+border-bottom:1px solid #11593C;
+border-left:1px solid #11593C;
+margin:0 0 1.5em;
+padding:0 0 1.5em 1.5em;
+}
+.main .Blog {
+border-bottom-width: 0;
+}
+/* Profile
+----------------------------------------------- */
+.profile-img {
+float: left;
+margin-top: 0;
+margin-right: 5px;
+margin-bottom: 5px;
+margin-left: 0;
+padding: 4px;
+border: 1px solid #11593C;
+}
+.profile-data {
+margin:0;
+letter-spacing:.1em;
+font: normal normal 86% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+color: #11593C;
+font-weight: bold;
+line-height: 1.6em;
+}
+.profile-datablock {
+margin:.5em 0 .5em;
+}
+.profile-textblock {
+margin: 0.5em 0;
+line-height: 1.6em;
+}
+.profile-link {
+font: normal normal 86% 'Trebuchet MS', Trebuchet, Arial, Verdana, Sans-serif;
+text-transform: uppercase;
+letter-spacing: .1em;
+}
+/* Footer
+----------------------------------------------- */
+#footer {
+width:660px;
+clear:both;
+margin:0 auto;
+padding-top:15px;
+line-height: 1.6em;
+letter-spacing:.1em;
+text-align: center;
+}
+/* Source Code Syntax Higlighting.
+Courtesy of SyntaxHighlighter
+(http://code.google.com/p/syntaxhighlighter/)
+----------------------------------------------- */
+.dp-highlighter
+{
+font-family: "Consolas", "Monaco", "Courier New", Courier, monospace;
+font-size: 12px;
+background-color: #E7E5DC;
+width: 99%;
+overflow: auto;
+margin: 18px 0 18px 0 !important;
+padding-top: 1px; /* adds a little border on top when controls are hidden */
+}
+/* clear styles */
+.dp-highlighter ol,
+.dp-highlighter ol li,
+.dp-highlighter ol li span
+{
+margin: 0;
+padding: 0;
+border: none;
+}
+.dp-highlighter a,
+.dp-highlighter a:hover
+{
+background: none;
+border: none;
+padding: 0;
+margin: 0;
+}
+.dp-highlighter .bar
+{
+padding-left: 45px;
+}
+.dp-highlighter.collapsed .bar,
+.dp-highlighter.nogutter .bar
+{
+padding-left: 0px;
+}
+.dp-highlighter ol
+{
+list-style: decimal; /* for ie */
+background-color: #fff;
+margin: 0px 0px 1px 45px !important; /* 1px bottom margin seems to fix occasional Firefox scrolling */
+padding: 0px;
+color: #5C5C5C;
+}
+.dp-highlighter.nogutter ol,
+.dp-highlighter.nogutter ol li
+{
+list-style: none !important;
+margin-left: 0px !important;
+}
+.dp-highlighter ol li,
+.dp-highlighter .columns div
+{
+list-style: decimal-leading-zero; /* better look for others, override cascade from OL */
+list-style-position: outside !important;
+border-left: 3px solid #6CE26C;
+background-color: #F8F8F8;
+color: #5C5C5C;
+padding: 0 3px 0 10px !important;
+margin: 0 !important;
+line-height: 14px;
+}
+.dp-highlighter.nogutter ol li,
+.dp-highlighter.nogutter .columns div
+{
+border: 0;
+}
+.dp-highlighter .columns
+{
+background-color: #F8F8F8;
+color: gray;
+overflow: hidden;
+width: 100%;
+}
+.dp-highlighter .columns div
+{
+padding-bottom: 5px;
+}
+.dp-highlighter ol li.alt
+{
+background-color: #FFF;
+color: inherit;
+}
+.dp-highlighter ol li span
+{
+color: black;
+background-color: inherit;
+}
+/* Adjust some properties when collapsed */
+.dp-highlighter.collapsed ol
+{
+margin: 0px;
+}
+.dp-highlighter.collapsed ol li
+{
+display: none;
+}
+/* Additional modifications when in print-view */
+.dp-highlighter.printing
+{
+border: none;
+}
+.dp-highlighter.printing .tools
+{
+display: none !important;
+}
+.dp-highlighter.printing li
+{
+display: list-item !important;
+}
+/* Styles for the tools */
+.dp-highlighter .tools
+{
+padding: 3px 8px 3px 10px;
+font: 9px Verdana, Geneva, Arial, Helvetica, sans-serif;
+color: silver;
+background-color: #f8f8f8;
+padding-bottom: 10px;
+border-left: 3px solid #6CE26C;
+}
+.dp-highlighter.nogutter .tools
+{
+border-left: 0;
+}
+.dp-highlighter.collapsed .tools
+{
+border-bottom: 0;
+}
+.dp-highlighter .tools a
+{
+font-size: 9px;
+color: #a0a0a0;
+background-color: inherit;
+text-decoration: none;
+margin-right: 10px;
+}
+.dp-highlighter .tools a:hover
+{
+color: red;
+background-color: inherit;
+text-decoration: underline;
+}
+/* About dialog styles */
+.dp-about { background-color: #fff; color: #333; margin: 0px; padding: 0px; }
+.dp-about table { width: 100%; height: 100%; font-size: 11px; font-family: Tahoma, Verdana, Arial, sans-serif !important; }
+.dp-about td { padding: 10px; vertical-align: top; }
+.dp-about .copy { border-bottom: 1px solid #ACA899; height: 95%; }
+.dp-about .title { color: red; background-color: inherit; font-weight: bold; }
+.dp-about .para { margin: 0 0 4px 0; }
+.dp-about .footer { background-color: #ECEADB; color: #333; border-top: 1px solid #fff; text-align: right; }
+.dp-about .close { font-size: 11px; font-family: Tahoma, Verdana, Arial, sans-serif !important; background-color: #ECEADB; color: #333; width: 60px; height: 22px; }
+/* Language specific styles */
+.dp-highlighter .comment, .dp-highlighter .comments { color: #008200; background-color: inherit; }
+.dp-highlighter .string { color: blue; background-color: inherit; }
+.dp-highlighter .keyword { color: #069; font-weight: bold; background-color: inherit; }
+.dp-highlighter .preprocessor { color: gray; background-color: inherit; }
+
+--></style>
+<!-- Add-in CSS for syntax highlighting -->
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shCore.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushCpp.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushCSharp.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushCss.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushDelphi.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushJava.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushJScript.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushPhp.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushPython.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushRuby.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushSql.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushVb.js' type='text/javascript'></script>
+<script src='http://syntaxhighlighter.googlecode.com/svn/trunk/Scripts/shBrushXml.js' type='text/javascript'></script>
+<link href='http://3.bp.blogspot.com/_PnLYRqe0k9g/SZyuySrTy5I/AAAAAAAAADM/iOBqiCAucRU/s320/Lizard_sm.png' rel='shortcut icon'/>
+<link href='http://3.bp.blogspot.com/_PnLYRqe0k9g/SZyuySrTy5I/AAAAAAAAADM/iOBqiCAucRU/s320/Lizard_sm.png' rel='icon'/>
+<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'/>
+<link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=9182705499898252496&amp;zx=62c97c11-0bc7-41a8-bfff-be8056fad2cf' rel='stylesheet'/>
+</head>
+<body onload='prettyPrint()'>
+<div class='navbar section' id='navbar'><div class='widget Navbar' data-version='1' id='Navbar1'><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener('load',
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<div id="navbar-iframe-container"></div>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+<script type="text/javascript">
+      gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
+        if (gapi.iframes && gapi.iframes.getContext) {
+          gapi.iframes.getContext().openChild({
+              url: 'https://www.blogger.com/navbar.g?targetBlogID\x3d9182705499898252496\x26blogName\x3dBill+the+Lizard\x26publishMode\x3dPUBLISH_MODE_HOSTED\x26navbarType\x3dBLACK\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttp://www.billthelizard.com/search\x26blogLocale\x3den\x26v\x3d2\x26homepageUrl\x3dhttp://www.billthelizard.com/\x26targetPostID\x3d7145232209765826550\x26blogPostOrPageUrl\x3dhttp://www.billthelizard.com/2010/10/sicp-26-church-numerals.html\x26vt\x3d-7155773300228538272',
+              where: document.getElementById("navbar-iframe-container"),
+              id: "navbar-iframe"
+          });
+        }
+      });
+    </script><script type="text/javascript">
+(function() {
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//pagead2.googlesyndication.com/pagead/js/google_top_exp.js';
+var head = document.getElementsByTagName('head')[0];
+if (head) {
+head.appendChild(script);
+}})();
+</script>
+</div></div>
+<div id='outer-wrapper'><div id='wrap2'>
+<!-- skip links for text browsers -->
+<span id='skiplinks' style='display:none;'>
+<a href='#main'>skip to main </a> |
+      <a href='#sidebar'>skip to sidebar</a>
+</span>
+<div id='header-wrapper'>
+<div class='header section' id='header'><div class='widget Header' data-version='1' id='Header1'>
+<div id='header-inner'>
+<div class='titlewrapper'>
+<h1 class='title'>
+<a href='http://www.billthelizard.com/'>
+Bill the Lizard
+</a>
+</h1>
+</div>
+<div class='descriptionwrapper'>
+<p class='description'><span>"The time has come," the Walrus said,
+"To talk of many things..."</span></p>
+</div>
+</div>
+</div></div>
+</div>
+<div id='content-wrapper'>
+<div id='crosscol-wrapper' style='text-align:center'>
+<div class='crosscol no-items section' id='crosscol'></div>
+</div>
+<div id='main-wrapper'>
+<div class='main section' id='main'><div class='widget Blog' data-version='1' id='Blog1'>
+<div class='blog-posts hfeed'>
+
+          <div class="date-outer">
+        
+<h2 class='date-header'><span>Sunday, October 31, 2010</span></h2>
+
+          <div class="date-posts">
+        
+<div class='post-outer'>
+<div class='post hentry'>
+<a name='7145232209765826550'></a>
+<h3 class='post-title entry-title'>
+<a href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html'>SICP 2.6: Church numerals</a>
+</h3>
+<div class='post-header-line-1'></div>
+<div class='post-body entry-content'>
+From SICP section <a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-14.html#%_sec_2.1.3">2.1.3  What Is Meant by Data?</a><br /><br /><span style="font-weight: bold;">Exercise 2.6</span> introduces us to the idea that in a language that can manipulate procedures, we can get by without integers altogether.  The implementation of 0 and the operation of adding 1 are given as<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>(define zero (lambda (f) (lambda (x) x)))<br /><br />(define (add-1 n)<br />   (lambda (f) (lambda (x) (f ((n f) x)))))<br /></code></pre><br />This representation is known as <a href="http://en.wikipedia.org/wiki/Church_encoding">Church numerals</a>, after its inventor, <a href="http://en.wikipedia.org/wiki/Alonzo_Church">Alonzo Church</a>, the logician who invented the λ calculus.<br /><br />It's important to note that the definition for <code>zero</code> above does not <span style="font-style: italic;">evaluate</span> to the integer 0, it is just a <span style="font-style: italic;">representation</span> for 0.<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>&gt; zero<br />#&lt;procedure:zero&gt;<br /></code></pre><br />A Church numeral is a procedure that takes one argument, and that argument is itself another procedure that also takes one argument.  The procedure <code>zero</code> represents the integer 0 by returning a procedure that applies its input procedure zero times.  The Church numeral <code>one</code> should return a procedure that applies its input procedure once, <code>two</code> should return a procedure that applies its input procedure twice, and so on.  This is how Church numerals represent integers, by applying their input procedure the exact number of times that the numerals are supposed to represent.<br /><br />Our job in this exercise is to define <code>one</code> and <code>two</code> directly (not in terms of <code>zero</code> and <code>add-1</code>).  We'll do that by using substitution to evaluate <code>(add-1 zero)</code> to see what the resulting procedural definition should be.  We also need to give a direct definition for addition of two Church numerals (not in terms of repeated application of <code>add-1</code>).<br /><br />Before we begin, we'll need some method for testing Church numerals to make sure they do what we expect them to do.  We'll need a simple procedure to pass to each Church numeral as an argument so that we can see it gets evaluated the correct number of times.  The <code>inc</code> procedure should do nicely.  (You can replace <code>inc</code> with any procedure you like, just make it one that's easy to mentally calculate several repetitions of.)<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>(define (inc n)<br />   (+ n 1))<br /></code></pre><br />We can use <code>inc</code> to show that <code>zero</code> does not call its input parameter, or more precisely, it calls its input procedure zero times.<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>&gt; ((zero inc) 0)<br />0<br />&gt; ((zero inc) 1)<br />1<br />&gt; ((zero inc) 2)<br />2<br /></code></pre><br />Now let's define <code>one</code> and <code>two</code> in the way that the book warns us not to, just to make sure they behave as we expect.  I'll give the assigned implementations later.<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>&gt; (define one (add-1 zero))<br />&gt; (define two (add-1 one))<br />&gt; ((one inc) 0)<br />1<br />&gt; ((one inc) 1)<br />2<br />&gt; ((two inc) 0)<br />2<br />&gt; ((two inc) 1)<br />3<br /></code></pre><br />So we can see that the procedure returned by <code>one</code> applies <code>inc</code> one time, and the procedure returned by <code>two</code> applies it twice.  Now let's use substitution to evaluate <code>(add-1 zero)</code>, giving us the direct definition of the Church numeral <code>one</code>.<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>(add-1 zero)<br /><br />; retrieve the body of add-1 and substitute zero for its parameter n<br />(lambda (f) (lambda (x) (f ((zero f) x))))<br /><br />; retrieve the body of zero and substitute<br />(lambda (f) (lambda (x) (f ((lambda (x) x) x))))<br /><br />; simplify<br />(lambda (f) (lambda (x) (f x)))<br /></code></pre><br />So we can define <code>one</code> directly as:<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>(define one<br />   (lambda (f) (lambda (x) (f x))))<br /></code></pre><br />Next we can define <code>two</code> by evaluating <code>(add-1 one)</code> using exactly the same principles.<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>(add-1 one)<br /><br />; retrieve the body of add-1 and substitute one for its parameter n<br />(lambda (f) (lambda (x) (f ((one f) x))))<br /><br />; retrieve the body of one and substitute<br />(lambda (f) (lambda (x) (f ((lambda (x) (f x)) x))))<br /><br />; simplify<br />(lambda (f) (lambda (x) (f (f x))))<br /></code></pre><br />So <code>two</code> is defined directly as:<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>(define two<br />   (lambda (f) (lambda (x) (f (f x)))))<br /></code></pre><br />Just as was explained earlier, the Church numeral <code>one</code> takes a procedure as an argument and returns a procedure that applies the input procedure once.  The only difference in the Church numeral <code>two</code> is that it applies its input procedure twice.<br /><br />Add these definitions in the Scheme interpreter and test them out the same as before.<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>&gt; ((one inc) 0)<br />1<br />&gt; ((one inc) 5)<br />6<br />&gt; ((two inc) 3)<br />5<br />&gt; ((two inc) 7)<br />9<br /></code></pre><br /><br />Now we need to figure out how to add two Church numerals.  We can see from the definition of <code>add-1</code> that all it does is takes a Church numeral, <code>n</code>, and wraps one additional function call around it.<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>(define (add-1 n)<br />   (lambda (f) (lambda (x) (f ((n f) x)))))<br /></code></pre><br />We can implement Church numeral addition by using the same approach.  We'll take two Church numerals <code>m</code> and <code>n</code>.  Instead of wrapping <code>n</code> in one extra function call, we'll wrap it in <span style="font-style: italic;">m</span> extra calls.<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>(define (add-church m n)<br />   (lambda (f) (lambda (x) ((m f) ((n f) x)))))<br /></code></pre><br />We can now use <code>add-church</code> to define several more Church numerals for testing.<br /><pre style="font-family: Andale Mono,Lucida Console,Monaco,fixed,monospace; color: rgb(0, 0, 0); background-color: rgb(238, 238, 238); font-size: 12px; border: 1px dashed rgb(153, 153, 153); line-height: 14px; padding: 5px; overflow: auto; width: 100%;"><code>&gt; (define three (add-church one two))<br />&gt; (define four (add-church two two))<br />&gt; (define seven (add-church three four))<br />&gt; ((three inc) 0)<br />3<br />&gt; ((four inc) 0)<br />4<br />&gt; ((seven inc) 0)<br />7<br /></code></pre><br /><br /><span style="font-weight: bold;">Related:</span><br /><br />For links to all of the SICP lecture notes and exercises that I've done so far, see <a href="http://www.billthelizard.com/2009/10/sicp-challenge.html">The  SICP     Challenge</a>.
+<div style='clear: both;'></div>
+</div>
+<div class='post-footer'>
+<div class='post-footer-line post-footer-line-1'><span class='post-author vcard'>
+Posted by
+<span class='fn'>Bill the Lizard</span>
+</span>
+<span class='post-timestamp'>
+on
+<a class='timestamp-link' href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html' rel='bookmark' title='permanent link'><abbr class='published' title='2010-10-31T14:37:00-04:00'>10/31/2010</abbr></a>
+</span>
+<span class='post-comment-link'>
+</span>
+<span class='post-icons'>
+<span class='item-action'>
+<a href='https://www.blogger.com/email-post.g?blogID=9182705499898252496&postID=7145232209765826550' title='Email Post'>
+<img alt='' class='icon-action' height='13' src='http://www.blogger.com/img/icon18_email.gif' width='18'/>
+</a>
+</span>
+<span class='item-control blog-admin pid-1895812407'>
+<a href='https://www.blogger.com/post-edit.g?blogID=9182705499898252496&postID=7145232209765826550&from=pencil' title='Edit Post'>
+<img alt='' class='icon-action' height='18' src='https://resources.blogblog.com/img/icon18_edit_allbkg.gif' width='18'/>
+</a>
+</span>
+</span>
+</div>
+<div class='post-footer-line post-footer-line-2'><span class='post-labels'>
+Labels:
+<a href='http://www.billthelizard.com/search/label/programming' rel='tag'>programming</a>,
+<a href='http://www.billthelizard.com/search/label/scheme' rel='tag'>scheme</a>,
+<a href='http://www.billthelizard.com/search/label/sicp' rel='tag'>sicp</a>
+</span>
+</div>
+<div class='post-share-buttons'>
+<br/>
+<b>Share:</b>
+<a class='goog-inline-block share-button sb-email' href='https://www.blogger.com/share-post.g?blogID=9182705499898252496&postID=7145232209765826550&target=email' target='_blank' title='Email This'><span class='share-button-link-text'>Email This</span></a><a class='goog-inline-block share-button sb-blog' href='https://www.blogger.com/share-post.g?blogID=9182705499898252496&postID=7145232209765826550&target=blog' onclick='window.open(this.href, "_blank", "height=270,width=475"); return false;' target='_blank' title='BlogThis!'><span class='share-button-link-text'>BlogThis!</span></a><a class='goog-inline-block share-button sb-twitter' href='https://www.blogger.com/share-post.g?blogID=9182705499898252496&postID=7145232209765826550&target=twitter' target='_blank' title='Share to Twitter'><span class='share-button-link-text'>Share to Twitter</span></a><a class='goog-inline-block share-button sb-facebook' href='https://www.blogger.com/share-post.g?blogID=9182705499898252496&postID=7145232209765826550&target=facebook' onclick='window.open(this.href, "_blank", "height=430,width=640"); return false;' target='_blank' title='Share to Facebook'><span class='share-button-link-text'>Share to Facebook</span></a><a class='goog-inline-block share-button sb-pinterest' href='https://www.blogger.com/share-post.g?blogID=9182705499898252496&postID=7145232209765826550&target=pinterest' target='_blank' title='Share to Pinterest'><span class='share-button-link-text'>Share to Pinterest</span></a><div class='goog-inline-block google-plus-share-container'><g:plusone source='blogger:blog:plusone' href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html' size='medium' width='300' annotation='inline'/></div>
+</div>
+<div class='post-footer-line post-footer-line-3'></div>
+</div>
+</div>
+<div class='comments' id='comments'>
+<a name='comments'></a>
+<h4>8 comments:</h4>
+<div id='Blog1_comments-block-wrapper'>
+<dl class='avatar-comment-indent' id='comments-block'>
+<dt class='comment-author ' id='c1286653891324303549'>
+<a name='c1286653891324303549'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="https://www.blogger.com/profile/03197090819217016934" rel="nofollow" onclick="" class="avatar-hovercard" id="av-1286653891324303549-03197090819217016934"><img src="//lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=s35" width="35" height="35" alt="" title="Tyler Breisacher">
+
+</a></span></div>
+<a href='https://www.blogger.com/profile/03197090819217016934' rel='nofollow'>Tyler Breisacher</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-1286653891324303549'>
+<p>
+Before I read this, I had heard of Church numerals, but I didn&#39;t really *get it*, and now I think I do.<br /><br />After letting this concept bubble around in my brain for a while, I decided to try and implement Church numerals in JavaScript, just for fun.<br /><br />https://github.com/MatrixFrog/church_js<br /><br />Thanks for the inspiration!
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html?showComment=1289025011834#c1286653891324303549' title='comment permalink'>
+11/06/2010
+</a>
+<span class='item-control blog-admin pid-1468029666'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=9182705499898252496&postID=1286653891324303549' title='Delete Comment'>
+<img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author blog-author' id='c6780987063190098434'>
+<a name='c6780987063190098434'></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="https://www.blogger.com/profile/09810099093752485841" rel="nofollow" onclick="" class="avatar-hovercard" id="av-6780987063190098434-09810099093752485841"><img src="https://img1.blogblog.com/img/blank.gif" width="35" height="35" alt="" class="delayLoad" style="display: none;" longdesc="//1.bp.blogspot.com/_PnLYRqe0k9g/SaJL093x12I/AAAAAAAAADU/N2OIfJ8c7hA/S45-s35/lizard-icon.jpeg" title="Bill the Lizard">
+
+<noscript><img src="//1.bp.blogspot.com/_PnLYRqe0k9g/SaJL093x12I/AAAAAAAAADU/N2OIfJ8c7hA/S45-s35/lizard-icon.jpeg" width="35" height="35" class="photo" alt=""></noscript></a></span></div>
+<a href='https://www.blogger.com/profile/09810099093752485841' rel='nofollow'>Bill the Lizard</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-6780987063190098434'>
+<p>
+Tyler,<br /><br />Awesome!  There was a time before I started this series when I considered doing all the SICP exercises in JavaScript.  I think it was JavaScript: The Good Parts where I first read that it was a fully functional language, so this should be possible.  Once I started digging in to SICP I realized that I really wanted to learn Scheme, so I stuck with that as my language.<br /><br />Maybe someone could reach a wider audience if they took all the solutions and translated them into JavaScript.  I know I would be interested in reading that.<br /><br />Hint hint.  ;)
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html?showComment=1289053922066#c6780987063190098434' title='comment permalink'>
+11/06/2010
+</a>
+<span class='item-control blog-admin pid-1895812407'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=9182705499898252496&postID=6780987063190098434' title='Delete Comment'>
+<img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c7339318493179669475'>
+<a name='c7339318493179669475'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><img src="//img1.blogblog.com/img/blank.gif" width="35" height="35" alt="" title="Anonymous">
+
+</span></div>
+Anonymous
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-7339318493179669475'>
+<p>
+Thanks for this post. Been going through SICP and this helped me a lot.
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html?showComment=1328707893915#c7339318493179669475' title='comment permalink'>
+2/08/2012
+</a>
+<span class='item-control blog-admin pid-904092246'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=9182705499898252496&postID=7339318493179669475' title='Delete Comment'>
+<img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c3331421108464258658'>
+<a name='c3331421108464258658'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><img src="//img1.blogblog.com/img/blank.gif" width="35" height="35" alt="" title="Anonymous">
+
+</span></div>
+Anonymous
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-3331421108464258658'>
+<p>
+Hey Bill, I really appreciate you thoroughly explaining the examples in wonderful detail!  <br /><br />I am little confused, however on how you simplified from  line 3 to line 4 of:<br /><br />(add-1 zero)<br />(lambda (f) (lambda (x) (f ((zero f) x))))<br />(lambda (f) (lambda (x) (f ((lambda (x) x) x))))<br />(lambda (f) (lambda (x) (f x)))<br /><br />I don&#39;t understand why it&#39;s not:<br />(lambda (f) (lambda (x) (f (x x))))<br /><br />Basically, what happens to that last &quot;x&quot;?<br /><br />(I do understand why the representation of one and two work, but just not the derivation using add-1).<br /><br />Thanks! Dan
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html?showComment=1351255459641#c3331421108464258658' title='comment permalink'>
+10/26/2012
+</a>
+<span class='item-control blog-admin pid-9401577'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=9182705499898252496&postID=3331421108464258658' title='Delete Comment'>
+<img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c4082561227294280031'>
+<a name='c4082561227294280031'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><img src="//img1.blogblog.com/img/blank.gif" width="35" height="35" alt="" title="Anonymous">
+
+</span></div>
+Anonymous
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-4082561227294280031'>
+<p>
+It&#39;s Dan again, nevermind I answered my own question...<br /><br />I see that<br />(lambda (f) (lambda (x) (f ((lambda (x) x) x))))<br />the last lambda is the function and then it&#39;s applied with the input of x, resulting in x!  <br /><br />Anyway, thanks again!
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html?showComment=1351255650650#c4082561227294280031' title='comment permalink'>
+10/26/2012
+</a>
+<span class='item-control blog-admin pid-9401577'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=9182705499898252496&postID=4082561227294280031' title='Delete Comment'>
+<img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c3046048543127219683'>
+<a name='c3046048543127219683'></a>
+<div class="avatar-image-container vcard"><span dir="ltr"><a href="https://www.blogger.com/profile/17749170919812020234" rel="nofollow" onclick="" class="avatar-hovercard" id="av-3046048543127219683-17749170919812020234"><img src="https://img1.blogblog.com/img/blank.gif" width="35" height="35" alt="" class="delayLoad" style="display: none;" longdesc="//lh5.googleusercontent.com/-RBC5n7s4y8M/AAAAAAAAAAI/AAAAAAAAAVs/ghHyDquKOdo/s35-c/photo.jpg" title="Naomi Kyoto">
+
+<noscript><img src="//lh5.googleusercontent.com/-RBC5n7s4y8M/AAAAAAAAAAI/AAAAAAAAAVs/ghHyDquKOdo/s35-c/photo.jpg" width="35" height="35" class="photo" alt=""></noscript></a></span></div>
+<a href='https://www.blogger.com/profile/17749170919812020234' rel='nofollow'>Naomi Kyoto</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-3046048543127219683'>
+<p>
+Bill, thanks for all of your contributions.<br /><br />The following uses JavaScript&#39;s ES6 arrow functions to make this quite readable<br /><br />const zero = f =&gt; x =&gt; x<br />const add1 = x =&gt; f =&gt; y =&gt; f (x (f)) (y);<br /><br />const one = f =&gt; x =&gt; f (x);<br />const two = f =&gt; x =&gt; f (f (x));<br /><br />const inc = x =&gt; x + 1;<br /><br />console.log(zero (inc) (0)); // 0<br />console.log(one (inc) (0));  // 1<br />console.log(two (inc) (0));  // 2<br /><br />const add = (x,y) =&gt; f =&gt; z =&gt; x (f) (y (f) (z));<br />const three = add(one,two);<br />console.log(three (inc) (0)); // 3<br /><br />const four = add(two,two);<br />const seven = add(four,three);<br />console.log(four (inc) (0));  // 4<br />console.log(seven (inc) (0)); // 7
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html?showComment=1457706024341#c3046048543127219683' title='comment permalink'>
+3/11/2016
+</a>
+<span class='item-control blog-admin pid-678858451'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=9182705499898252496&postID=3046048543127219683' title='Delete Comment'>
+<img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c1157278039194467622'>
+<a name='c1157278039194467622'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="https://www.blogger.com/profile/16612367294428581381" rel="nofollow" onclick="" class="avatar-hovercard" id="av-1157278039194467622-16612367294428581381"><img src="//lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=s35" width="35" height="35" alt="" title="Patrick Ryll">
+
+</a></span></div>
+<a href='https://www.blogger.com/profile/16612367294428581381' rel='nofollow'>Patrick Ryll</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-1157278039194467622'>
+<p>
+Thanks for posting the JS code; really nice.  I was trying to learn the same stuff over at http://niltag.net/essays/church.html.  However, it seems like the author left out a few steps (namely, the incrementing part) on section 4.  Your examples filled in what was presumably implicit in his example(s).
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html?showComment=1480139230323#c1157278039194467622' title='comment permalink'>
+11/26/2016
+</a>
+<span class='item-control blog-admin pid-2063420411'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=9182705499898252496&postID=1157278039194467622' title='Delete Comment'>
+<img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+<dt class='comment-author ' id='c3101591877231674925'>
+<a name='c3101591877231674925'></a>
+<div class="avatar-image-container avatar-stock"><span dir="ltr"><a href="https://www.blogger.com/profile/13887551715180336241" rel="nofollow" onclick="" class="avatar-hovercard" id="av-3101591877231674925-13887551715180336241"><img src="//lh3.googleusercontent.com/zFdxGE77vvD2w5xHy6jkVuElKv-U9_9qLkRYK8OnbDeJPtjSZ82UPq5w6hJ-SA=s35" width="35" height="35" alt="" title="Qiao">
+
+</a></span></div>
+<a href='https://www.blogger.com/profile/13887551715180336241' rel='nofollow'>Qiao</a>
+said...
+</dt>
+<dd class='comment-body' id='Blog1_cmt-3101591877231674925'>
+<p>
+(define one<br />  (lambda (f) f))
+</p>
+</dd>
+<dd class='comment-footer'>
+<span class='comment-timestamp'>
+<a href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html?showComment=1481227543637#c3101591877231674925' title='comment permalink'>
+12/08/2016
+</a>
+<span class='item-control blog-admin pid-1766329824'>
+<a class='comment-delete' href='https://www.blogger.com/delete-comment.g?blogID=9182705499898252496&postID=3101591877231674925' title='Delete Comment'>
+<img src='https://resources.blogblog.com/img/icon_delete13.gif'/>
+</a>
+</span>
+</span>
+</dd>
+</dl>
+</div>
+<p class='comment-footer'>
+<a href='https://www.blogger.com/comment.g?blogID=9182705499898252496&postID=7145232209765826550' onclick=''>Post a Comment</a>
+</p>
+<div id='backlinks-container'>
+<div id='Blog1_backlinks-container'>
+</div>
+</div>
+</div>
+</div>
+
+        </div></div>
+      
+</div>
+<div class='blog-pager' id='blog-pager'>
+<span id='blog-pager-newer-link'>
+<a class='blog-pager-newer-link' href='http://www.billthelizard.com/2010/12/sicp-27-211-extended-exercise-interval.html' id='Blog1_blog-pager-newer-link' title='Newer Post'>Newer Post</a>
+</span>
+<span id='blog-pager-older-link'>
+<a class='blog-pager-older-link' href='http://www.billthelizard.com/2010/10/sicp-25-representing-pairs-as-product.html' id='Blog1_blog-pager-older-link' title='Older Post'>Older Post</a>
+</span>
+<a class='home-link' href='http://www.billthelizard.com/'>Home</a>
+</div>
+<div class='clear'></div>
+<div class='post-feeds'>
+<div class='feed-links'>
+Subscribe to:
+<a class='feed-link' href='http://www.billthelizard.com/feeds/7145232209765826550/comments/default' target='_blank' type='application/atom+xml'>Post Comments (Atom)</a>
+</div>
+</div>
+<script type='text/javascript'>
+    window.___gcfg = { 'lang': 'en' };
+  </script>
+</div></div>
+</div>
+<div id='sidebar-wrapper'>
+<div class='sidebar section' id='sidebar'><div class='widget HTML' data-version='1' id='HTML1'>
+<h2 class='title'>Other places to find me...</h2>
+<div class='widget-content'>
+<a href="http://twitter.com/lizardbill" title="Twitter" target="_blank" rel="nofollow"><i class="fa fa-twitter"></i> Twitter</a><br />
+
+<a href="http://github.com/BillCruise" class="author-social" target="_blank"><i class="fa fa-github"></i> Github</a><br />
+
+<a href="http://stackoverflow.com/users/1288" class="author-social" target="_blank"><i class="fa fa-stack-overflow"></i> Stack Overflow</a>
+<br />
+
+<a href="https://play.google.com/store/apps/developer?id=Bill%20Cruise&hl=en" class="author-social" target="_blank"><i class="fa fa-android"></i> Google Play</a><br /><br />
+
+<a href="http://feeds.feedburner.com/BillTheLizard"><img src="http://i.imgur.com/Ti3A3.png" height="14" width="14" border="0" /></a> <a href="http://feeds.feedburner.com/BillTheLizard">Subscribe to this blog via RSS.</a><br />
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=9182705499898252496&widgetType=HTML&widgetId=HTML1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("HTML1"));' target='configHTML1' title='Edit'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div><div class='widget LinkList' data-version='1' id='LinkList1'>
+<h2>Recommended Sites</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://android-developers.blogspot.com/'>Android Developers Blog</a></li>
+<li><a href='http://betterexplained.com/'>Better Explained</a></li>
+<li><a href='http://blossoms.mit.edu/videos'>BLOSSOMS Video Library</a></li>
+<li><a href='http://www.codinghorror.com/blog/'>Coding Horror</a></li>
+<li><a href='https://www.coursera.org/'>Coursera</a></li>
+<li><a href='http://www.daniel-lemire.com/blog/'>Daniel Lemire's blog</a></li>
+<li><a href='http://divisbyzero.com/'>Division by Zero</a></li>
+<li><a href='http://www.ericsink.com/'>Eric.Weblog()</a></li>
+<li><a href='http://evilmadscientist.com/'>Evil Mad Scientist Laboratories</a></li>
+<li><a href='http://fivethirtyeight.com/'>Five Thirty Eight</a></li>
+<li><a href='http://flowingdata.com/'>FlowingData</a></li>
+<li><a href='http://www.futilitycloset.com/'>Futility Closet</a></li>
+<li><a href='http://rjlipton.wordpress.com/'>Gödel's Lost Letter and P=NP</a></li>
+<li><a href='http://www.goodmath.org/blog/'>Good Math, Bad Math</a></li>
+<li><a href='http://blog.jgc.org/'>John Graham-Cumming</a></li>
+<li><a href='https://www.kaggle.com/'>Kaggle</a></li>
+<li><a href='http://lambda-the-ultimate.org/'>Lambda the Ultimate</a></li>
+<li><a href='http://programmingpraxis.com/'>Programming Praxis</a></li>
+<li><a href='http://www.randsinrepose.com/'>Rands In Repose</a></li>
+<li><a href='http://www.schneier.com/blog/'>Schneier on Security</a></li>
+<li><a href='http://www.grc.com/securitynow.htm'>Security Now!</a></li>
+<li><a href='http://seriousorsatire.com/'>Serious or Satire?</a></li>
+<li><a href='http://stackoverflow.com/'>Stack Overflow</a></li>
+<li><a href='https://www.ted.com/talks'>TED Talks</a></li>
+<li><a href='http://commonsware.com/blog/'>The CommonsBlog</a></li>
+<li><a href='http://www.johndcook.com/blog/'>The Endeavor</a></li>
+<li><a href='https://trello.com/'>Trello</a></li>
+<li><a href='https://www.udacity.com/'>Udacity</a></li>
+<li><a href='http://varianceexplained.org/'>Variance Explained</a></li>
+<li><a href='http://xkcd.com/'>xkcd</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=9182705499898252496&widgetType=LinkList&widgetId=LinkList1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList1"));' target='configLinkList1' title='Edit'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget LinkList' data-version='1' id='LinkList2'>
+<h2>Most Popular</h2>
+<div class='widget-content'>
+<ul>
+<li><a href='http://www.billthelizard.com/2009/07/six-visual-proofs_25.html'>Six Visual Proofs</a></li>
+<li><a href='http://www.billthelizard.com/2009/06/programming-and-logic-puzzles.html'>Programming and Logic Puzzles</a></li>
+<li><a href='http://www.billthelizard.com/2009/08/how-many-triangles.html'>How Many Triangles?</a></li>
+<li><a href='http://www.billthelizard.com/2008/12/books-programmers-dont-really-read.html'>Books Programmers Don't Really Read</a></li>
+<li><a href='http://www.billthelizard.com/2009/09/getting-fair-toss-from-biased-coin.html'>Getting a Fair Toss From a Biased Coin</a></li>
+<li><a href='http://www.billthelizard.com/2009/10/sicp-challenge.html'>The SICP Challenge</a></li>
+<li><a href='http://www.billthelizard.com/2009/11/sicp-exercise-112-pascals-triangle.html'>SICP Exercise 1.12: Pascal's Triangle</a></li>
+<li><a href='http://www.billthelizard.com/2009/12/math-visualization-x-1-2.html'>Math visualization: (x + 1)^2</a></li>
+<li><a href='http://www.billthelizard.com/2009/07/how-many-squares-are-there-on-chess.html'>How many squares are there on a chess board?</a></li>
+<li><a href='http://www.billthelizard.com/2009/09/solving-3x3-magic-square.html'>Solving a 3x3 Magic Square</a></li>
+</ul>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=9182705499898252496&widgetType=LinkList&widgetId=LinkList2&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("LinkList2"));' target='configLinkList2' title='Edit'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget BlogArchive' data-version='1' id='BlogArchive1'>
+<h2>Blog Archive</h2>
+<div class='widget-content'>
+<div id='ArchiveList'>
+<div id='BlogArchive1_ArchiveList'>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2017/'>
+2017
+</a>
+<span class='post-count' dir='ltr'>(21)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2017/05/'>
+May
+</a>
+<span class='post-count' dir='ltr'>(3)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2017/04/'>
+April
+</a>
+<span class='post-count' dir='ltr'>(5)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2017/03/'>
+March
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2017/02/'>
+February
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2017/01/'>
+January
+</a>
+<span class='post-count' dir='ltr'>(5)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2016/'>
+2016
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2016/12/'>
+December
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2016/11/'>
+November
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2016/08/'>
+August
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2015/'>
+2015
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2015/08/'>
+August
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2014/'>
+2014
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2014/01/'>
+January
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2013/'>
+2013
+</a>
+<span class='post-count' dir='ltr'>(3)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2013/12/'>
+December
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2013/04/'>
+April
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2013/03/'>
+March
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2012/'>
+2012
+</a>
+<span class='post-count' dir='ltr'>(8)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2012/09/'>
+September
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2012/07/'>
+July
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2012/05/'>
+May
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2012/04/'>
+April
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2012/03/'>
+March
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2012/02/'>
+February
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2012/01/'>
+January
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/'>
+2011
+</a>
+<span class='post-count' dir='ltr'>(23)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/12/'>
+December
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/10/'>
+October
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/09/'>
+September
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/08/'>
+August
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/07/'>
+July
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/06/'>
+June
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/05/'>
+May
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/04/'>
+April
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/03/'>
+March
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/02/'>
+February
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2011/01/'>
+January
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+
+        &#9660;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/'>
+2010
+</a>
+<span class='post-count' dir='ltr'>(52)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/12/'>
+December
+</a>
+<span class='post-count' dir='ltr'>(5)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate expanded'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy toggle-open'>
+
+        &#9660;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/10/'>
+October
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+<ul class='posts'>
+<li><a href='http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html'>SICP 2.6: Church numerals</a></li>
+<li><a href='http://www.billthelizard.com/2010/10/sicp-25-representing-pairs-as-product.html'>SICP 2.5: Representing Pairs as a Product</a></li>
+<li><a href='http://www.billthelizard.com/2010/10/sicp-24-implementing-cons-car-and-cdr.html'>SICP 2.4: Implementing cons, car, and cdr</a></li>
+<li><a href='http://www.billthelizard.com/2010/10/sicp-23-rectangles-in-plane.html'>SICP 2.3: Rectangles in a plane</a></li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/09/'>
+September
+</a>
+<span class='post-count' dir='ltr'>(3)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/08/'>
+August
+</a>
+<span class='post-count' dir='ltr'>(6)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/07/'>
+July
+</a>
+<span class='post-count' dir='ltr'>(3)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/06/'>
+June
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/05/'>
+May
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/04/'>
+April
+</a>
+<span class='post-count' dir='ltr'>(3)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/03/'>
+March
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/02/'>
+February
+</a>
+<span class='post-count' dir='ltr'>(10)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2010/01/'>
+January
+</a>
+<span class='post-count' dir='ltr'>(11)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/'>
+2009
+</a>
+<span class='post-count' dir='ltr'>(57)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/12/'>
+December
+</a>
+<span class='post-count' dir='ltr'>(5)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/11/'>
+November
+</a>
+<span class='post-count' dir='ltr'>(7)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/10/'>
+October
+</a>
+<span class='post-count' dir='ltr'>(6)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/09/'>
+September
+</a>
+<span class='post-count' dir='ltr'>(3)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/08/'>
+August
+</a>
+<span class='post-count' dir='ltr'>(7)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/07/'>
+July
+</a>
+<span class='post-count' dir='ltr'>(3)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/06/'>
+June
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/05/'>
+May
+</a>
+<span class='post-count' dir='ltr'>(4)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/04/'>
+April
+</a>
+<span class='post-count' dir='ltr'>(3)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/03/'>
+March
+</a>
+<span class='post-count' dir='ltr'>(5)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/02/'>
+February
+</a>
+<span class='post-count' dir='ltr'>(5)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2009/01/'>
+January
+</a>
+<span class='post-count' dir='ltr'>(5)</span>
+</li>
+</ul>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2008/'>
+2008
+</a>
+<span class='post-count' dir='ltr'>(22)</span>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2008/12/'>
+December
+</a>
+<span class='post-count' dir='ltr'>(9)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2008/11/'>
+November
+</a>
+<span class='post-count' dir='ltr'>(3)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2008/10/'>
+October
+</a>
+<span class='post-count' dir='ltr'>(1)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2008/09/'>
+September
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2008/08/'>
+August
+</a>
+<span class='post-count' dir='ltr'>(5)</span>
+</li>
+</ul>
+<ul class='hierarchy'>
+<li class='archivedate collapsed'>
+<a class='toggle' href='javascript:void(0)'>
+<span class='zippy'>
+
+        &#9658;&#160;
+      
+</span>
+</a>
+<a class='post-count-link' href='http://www.billthelizard.com/2008/07/'>
+July
+</a>
+<span class='post-count' dir='ltr'>(2)</span>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=9182705499898252496&widgetType=BlogArchive&widgetId=BlogArchive1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("BlogArchive1"));' target='configBlogArchive1' title='Edit'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div><div class='widget Label' data-version='1' id='Label1'>
+<h2>Tags</h2>
+<div class='widget-content cloud-label-widget-content'>
+<span class='label-size label-size-5'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/programming'>programming</a>
+<span class='label-count' dir='ltr'>(108)</span>
+</span>
+<span class='label-size label-size-5'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/scheme'>scheme</a>
+<span class='label-count' dir='ltr'>(78)</span>
+</span>
+<span class='label-size label-size-5'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/sicp'>sicp</a>
+<span class='label-count' dir='ltr'>(78)</span>
+</span>
+<span class='label-size label-size-4'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/math'>math</a>
+<span class='label-count' dir='ltr'>(38)</span>
+</span>
+<span class='label-size label-size-4'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/puzzles'>puzzles</a>
+<span class='label-count' dir='ltr'>(35)</span>
+</span>
+<span class='label-size label-size-4'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/learning'>learning</a>
+<span class='label-count' dir='ltr'>(19)</span>
+</span>
+<span class='label-size label-size-3'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/lists'>lists</a>
+<span class='label-count' dir='ltr'>(12)</span>
+</span>
+<span class='label-size label-size-3'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/java'>java</a>
+<span class='label-count' dir='ltr'>(11)</span>
+</span>
+<span class='label-size label-size-3'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/brain%20teasers'>brain teasers</a>
+<span class='label-count' dir='ltr'>(8)</span>
+</span>
+<span class='label-size label-size-3'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/numbers'>numbers</a>
+<span class='label-count' dir='ltr'>(8)</span>
+</span>
+<span class='label-size label-size-3'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/primes'>primes</a>
+<span class='label-count' dir='ltr'>(8)</span>
+</span>
+<span class='label-size label-size-3'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/data%20structures'>data structures</a>
+<span class='label-count' dir='ltr'>(6)</span>
+</span>
+<span class='label-size label-size-3'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/unsolved'>unsolved</a>
+<span class='label-count' dir='ltr'>(6)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/books'>books</a>
+<span class='label-count' dir='ltr'>(5)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/logic'>logic</a>
+<span class='label-count' dir='ltr'>(5)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/probability'>probability</a>
+<span class='label-count' dir='ltr'>(5)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/sequences'>sequences</a>
+<span class='label-count' dir='ltr'>(5)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/c%2B%2B'>c++</a>
+<span class='label-count' dir='ltr'>(4)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/logic%20puzzles'>logic puzzles</a>
+<span class='label-count' dir='ltr'>(4)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/chess'>chess</a>
+<span class='label-count' dir='ltr'>(3)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/misc'>misc</a>
+<span class='label-count' dir='ltr'>(3)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/python'>python</a>
+<span class='label-count' dir='ltr'>(3)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/snippets'>snippets</a>
+<span class='label-count' dir='ltr'>(3)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/visualization'>visualization</a>
+<span class='label-count' dir='ltr'>(3)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/24'>24</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/Stack%20Overflow'>Stack Overflow</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/Twitter'>Twitter</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/algebra'>algebra</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/calculus'>calculus</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/engineering'>engineering</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/history'>history</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/interesting'>interesting</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/languages'>languages</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/links'>links</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/perfect%20numbers'>perfect numbers</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/pi'>pi</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/productivity'>productivity</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/quotes'>quotes</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/randomness'>randomness</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/security'>security</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/software'>software</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/technology'>technology</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/time'>time</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-2'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/trees'>trees</a>
+<span class='label-count' dir='ltr'>(2)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/CSV'>CSV</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/Google%20App%20Engine'>Google App Engine</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/answers'>answers</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/benford'>benford</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/bias'>bias</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/big-o'>big-o</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/blog%20spam'>blog spam</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/blowfish'>blowfish</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/bugs'>bugs</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/c'>c</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/captcha'>captcha</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/carroll'>carroll</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/chaos'>chaos</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/coin%20toss'>coin toss</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/conway'>conway</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/cout'>cout</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/crypto'>crypto</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/css'>css</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/curiosity'>curiosity</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/data%20visualization'>data visualization</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/dataviz'>dataviz</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/derivative'>derivative</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/dodgson'>dodgson</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/dotted-tail'>dotted-tail</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/double'>double</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/dvorak'>dvorak</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/education'>education</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/equals'>equals</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/euler'>euler</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/exercises'>exercises</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/experience'>experience</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/fermat'>fermat</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/fibonacci'>fibonacci</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/films'>films</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/float'>float</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/fractals'>fractals</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/gambling'>gambling</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/gauss'>gauss</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/geography'>geography</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/geometry'>geometry</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/goldbach'>goldbach</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/golden%20ratio'>golden ratio</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/halloween'>halloween</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/hello%20world'>hello world</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/hints'>hints</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/horner'>horner</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/html'>html</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/humor'>humor</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/integral'>integral</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/letter%20frequency'>letter frequency</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/licenses'>licenses</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/map'>map</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/matrix'>matrix</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/mersenne'>mersenne</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/miller-rabin'>miller-rabin</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/movies'>movies</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/netbeans'>netbeans</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/open%20source'>open source</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/pair%20programming'>pair programming</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/pascal'>pascal</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/pmd'>pmd</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/practice'>practice</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/precision'>precision</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/programming%20language'>programming language</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/proof'>proof</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/questions'>questions</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/qwerty'>qwerty</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/r'>r</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/reading'>reading</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/riddles'>riddles</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/schneier'>schneier</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/science'>science</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/sets'>sets</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/simpson'>simpson</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/simulation'>simulation</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/smullyan'>smullyan</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/solutions'>solutions</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/statistics'>statistics</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/statitstics'>statitstics</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/table'>table</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/testing'>testing</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/threads'>threads</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/topology'>topology</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/usability'>usability</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/vectors'>vectors</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/web'>web</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<span class='label-size label-size-1'>
+<a dir='ltr' href='http://www.billthelizard.com/search/label/windows'>windows</a>
+<span class='label-count' dir='ltr'>(1)</span>
+</span>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=9182705499898252496&widgetType=Label&widgetId=Label1&action=editWidget&sectionId=sidebar' onclick='return _WidgetManager._PopupConfig(document.getElementById("Label1"));' target='configLabel1' title='Edit'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div>
+</div></div>
+</div>
+<!-- spacer for skins that want sidebar and main to be the same height-->
+<div class='clear'>&#160;</div>
+</div>
+<!-- end content-wrapper -->
+<div id='footer-wrapper'>
+<div class='footer section' id='footer'><div class='widget Text' data-version='1' id='Text1'>
+<div class='widget-content'>
+<span class="status-body"><span class="entry-content">Original code posted here is Public Domain unless otherwise noted.</span></span>
+</div>
+<div class='clear'></div>
+<span class='widget-item-control'>
+<span class='item-control blog-admin'>
+<a class='quickedit' href='//www.blogger.com/rearrange?blogID=9182705499898252496&widgetType=Text&widgetId=Text1&action=editWidget&sectionId=footer' onclick='return _WidgetManager._PopupConfig(document.getElementById("Text1"));' target='configText1' title='Edit'>
+<img alt='' height='18' src='https://resources.blogblog.com/img/icon18_wrench_allbkg.png' width='18'/>
+</a>
+</span>
+</span>
+<div class='clear'></div>
+</div></div>
+</div>
+</div></div>
+<!-- end outer-wrapper -->
+<!-- Google Analytics page tracking script -->
+<script type='text/javascript'>
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type='text/javascript'>
+try {
+var pageTracker = _gat._getTracker("UA-7097173-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<!-- Add-in Script for syntax highlighting -->
+<script language='javascript'>  
+dp.SyntaxHighlighter.BloggerMode();  
+dp.SyntaxHighlighter.HighlightAll('code');  
+</script>
+<script type='text/javascript'>
+function showHideDiv(divId) {
+    if(document.getElementById(divId).style.display == 'none') {
+        document.getElementById(divId).style.display = 'block';
+    }
+    else {
+        document.getElementById(divId).style.display = 'none';
+    }
+}
+</script>
+<script src='https://apis.google.com/js/plusone.js' type='text/javascript'></script>
+<!--Es liegt in deiner Verantwortung, deine Besucher \xfcber die in deinem Blog verwendeten Cookies zu informieren. Weitere Informationen findest du hier http://www.blogger.com/go/cookiechoices.-->
+<script defer='' src='/js/cookiechoices.js'></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function(event) {
+      window.cookieChoices && cookieChoices.showCookieConsentBar && cookieChoices.showCookieConsentBar(
+          (window.cookieOptions && cookieOptions.msg) || 'Diese Website verwendet Cookies von Google, um ihre Dienste bereitzustellen, Anzeigen zu personalisieren und Zugriffe zu analysieren. Informationen dar\xfcber, wie du die Website verwendest, werden an Google weitergegeben. Durch die Nutzung dieser Website erkl\xe4rst du dich damit einverstanden, dass sie Cookies verwendet.',
+          (window.cookieOptions && cookieOptions.close) || 'OK',
+          (window.cookieOptions && cookieOptions.learn) || 'Weitere Informationen',
+          (window.cookieOptions && cookieOptions.link) || 'https://www.blogger.com/go/blogspot-cookies');
+    });
+  </script>
+
+<script type="text/javascript" src="https://www.blogger.com/static/v1/widgets/1411214009-widgets.js"></script>
+<script type='text/javascript'>
+window['__wavt'] = 'AOuZoY6xTjyL8i7I_OvJvjg2kBxNLjnpeQ:1495574192807';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d9182705499898252496','//www.billthelizard.com/2010/10/sicp-26-church-numerals.html','9182705499898252496');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '9182705499898252496', 'title': 'Bill the Lizard', 'url': 'http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html', 'canonicalUrl': 'http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html', 'homepageUrl': 'http://www.billthelizard.com/', 'searchUrl': 'http://www.billthelizard.com/search', 'canonicalHomepageUrl': 'http://www.billthelizard.com/', 'blogspotFaviconUrl': 'http://www.billthelizard.com/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': true, 'httpsEnabled': false, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': '', 'encoding': 'UTF-8', 'locale': 'en', 'localeUnderscoreDelimited': 'en', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Bill the Lizard - Atom\x22 href\x3d\x22http://www.billthelizard.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22Bill the Lizard - RSS\x22 href\x3d\x22http://www.billthelizard.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Bill the Lizard - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/9182705499898252496/posts/default\x22 /\x3e\n\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22Bill the Lizard - Atom\x22 href\x3d\x22http://www.billthelizard.com/feeds/7145232209765826550/comments/default\x22 /\x3e\n', 'meTag': '', 'openIdOpTag': '', 'mobileHeadScript': '', 'adsenseClientId': 'ca-pub-1607715191929837', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/5a8b61d3f476b831', 'plusOneApiSrc': 'https://apis.google.com/js/plusone.js', 'sharing': {'platforms': [{'name': 'Get link', 'key': 'link', 'shareMessage': 'Get link', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': 'Share to Facebook', 'target': 'facebook'}, {'name': 'BlogThis!', 'key': 'blogThis', 'shareMessage': 'BlogThis!', 'target': 'blog'}, {'name': 'Twitter', 'key': 'twitter', 'shareMessage': 'Share to Twitter', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': 'Share to Pinterest', 'target': 'pinterest'}, {'name': 'Google+', 'key': 'googlePlus', 'shareMessage': 'Share to Google+', 'target': 'googleplus'}, {'name': 'Email', 'key': 'email', 'shareMessage': 'Email', 'target': 'email'}], 'googlePlusShareButtonWidth': 300, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27en\x27};\x3c/script\x3e'}, 'jumpLinkMessage': 'Read more &#187;', 'pageType': 'item', 'postId': '7145232209765826550', 'pageName': 'SICP 2.6: Church numerals', 'pageTitle': 'Bill the Lizard: SICP 2.6: Church numerals'}}, {'name': 'features', 'data': {'unsupported_browser_message': 'false', 'lightbox_img_parsing': 'false', 'sharing_get_link_dialog': 'false'}}, {'name': 'messages', 'data': {'linkCopiedToClipboard': 'Link copied to clipboard!', 'postLink': 'Post Link'}}, {'name': 'template', 'data': {'name': 'custom', 'localizedName': 'Custom', 'isResponsive': false, 'isAlternateRendering': false, 'isCustom': true}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': 'SICP 2.6: Church numerals', 'description': 'From SICP section 2.1.3  What Is Meant by Data?   Exercise 2.6  introduces us to the idea that in a language that can manipulate procedures,...', 'url': 'http://www.billthelizard.com/2010/10/sicp-26-church-numerals.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': false, 'isPost': true, 'isHomepage': false, 'isArchive': false, 'isLabelSearch': false, 'postId': 7145232209765826550}}]);
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar', null, document.getElementById('Navbar1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', null, document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', null, document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/4012239395-lbx.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/368954415-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar', null, document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList1', 'sidebar', null, document.getElementById('LinkList1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LinkListView', new _WidgetInfo('LinkList2', 'sidebar', null, document.getElementById('LinkList2'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar', null, document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': 'Loading\x26hellip;'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_LabelView', new _WidgetInfo('Label1', 'sidebar', null, document.getElementById('Label1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_TextView', new _WidgetInfo('Text1', 'footer', null, document.getElementById('Text1'), {}, 'displayModeFull'));
+</script>
+</body>
+</html>

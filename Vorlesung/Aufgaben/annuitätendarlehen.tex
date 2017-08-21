@@ -1,0 +1,24 @@
+\aufgabe{Annuitätendarlehen (Constraint Programming)}
+
+Die folgende Formel beschreibt für ein Annuitätendarlehen den 
+Zusammenhang zwischen der Höhe der monatliche Rückzahlungsrate $P$, 
+der Darlehenssumme $A$, des monatlichen Zinssatzes  $R$ (= Jahreszinssatz/12)
+und der Laufzeit in Monaten $N$.
+
+$$P(1+R)^{N}-P=A\cdot R(1+R)^{N}$$
+ 
+Schreiben Sie für die Formel eine Constraint-Programming-Spezifikation mit 
+Hilfe des aus der Vorlesung bekannten Constraint-propagation-Systems. 
+Die Existenz der primitiven Constraints \texttt{adder}, 
+\texttt{multiplier} und \texttt{exponent} darf vorausgesetzt werden.
+
+Gehen Sie wie folgt vor:
+\begin{enumerate}
+
+    \item  Zeichnen Sie ein \glqq Schaltbild\grqq{} für die 
+    Formel!
+
+    \item  Setzen Sie dann das Schaltbild in eine Scheme-Lösung nach 
+    dem Vorbild des Celsius-Fahrenheit-Konverters um!
+
+\end{enumerate}
