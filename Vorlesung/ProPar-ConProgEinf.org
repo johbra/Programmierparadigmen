@@ -1,5 +1,5 @@
 # +SETUPFILE: /Users/johannes/Documents/myOrg/org-html-themes/setup/theme-bigblow.setup
-# +SETUPFILE: ./theme-bigblow-local.setup
+#+SETUPFILE: ./theme-bigblow-local.setup
 #+TITLE: Constraint-Programmierung -- Intuitive Einführung
 #+SUBTITLE: Programmierparadigmen
 #+AUTHOR: Johannes Brauer
