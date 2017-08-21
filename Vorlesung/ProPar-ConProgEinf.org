@@ -1,0 +1,558 @@
+# +SETUPFILE: /Users/johannes/Documents/myOrg/org-html-themes/setup/theme-bigblow.setup
+# +SETUPFILE: ./theme-bigblow-local.setup
+#+TITLE: Constraint-Programmierung -- Intuitive Einführung
+#+SUBTITLE: Programmierparadigmen
+#+AUTHOR: Johannes Brauer
+#+OPTIONS:   H:4
+#+OPTIONS: num:nil d:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: reveal_single_file:nil
+#+Language:  de
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+# +REVEAL_ROOT: http://cdn.jsdeZustandsbehaftete Programmierung in funktionalen Sprachen]]livr.net/reveal.js/3.0.0/
+#+REVEAL_THEME: simple
+#+REVEAL_TRANS: slide
+#+REVEAL_HLEVEL: 1
+#+REVEAL_INIT_SCRIPT: dependencies: [ { src: 'plugin/menu/menu.js', async: true },
+#+REVEAL_INIT_SCRIPT:                 { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]
+#+REVEAL_MARGIN: 0.05
+#+REVEAL_EXTRA_CSS: ./mycss/myrevealstyle.css
+#+OPTIONS: reveal_control:t
+
+* Einstieg
+Darstellungen angelehnt an cite:Fruehwirth2010 und cite:Sicp1999
+
+** Begriff
+
+-  Die Constraint-Programmierung wird meist als eine Spielart der
+  logischen Programmierung angesehen.
+-  Der Begriff /constraint/ bedeutet in etwa /Bedingung/,
+   /Einschränkung/, (/Regel?/).
+-  Man könnte auch von regelbasierter Programmierung sprechen.
+-  Regeln können in verschiedenen Formen auftreten:
+
+   -  funktional orientiert: mathematische Gleichungen; Beispiel:
+      $x-y=23$
+
+   -  logik-orientiert: logische Prädikate bzw. Wenn-dann-Regeln;
+      Beispiel:
+      Gesucht ist die Zahl $x$, die ein Zahlenschloss mit den Ziffern 0
+      bis 9 öffnet. Wir wissen, dass $x$
+
+      -  $\geq 5$,
+
+      -  eine Primzahl ist
+
+   -  Regel: $x\in {0, 1, \ldots , 9} \wedge x\geq 5 
+                  \wedge prime(x)$
+
+** Prinzip
+-  In der regelbasierten Programmierung wird ein ein Satz von Regeln
+   (constraints) angegeben, denen die Lösung genügen muss.
+-  Es wird *kein* Algorithmus formuliert, der die Lösung Schritt für
+   Schritt ermittelt.
+-  Ein regelbasiertes Programmiersystem muss daher über einen
+   eingebauten Lösungsalgorithmus (Constraint-Löser) verfügen.
+-  Dieser versucht -- vereinfacht gesprochen -- einen Weltzustand zu
+   finden, in dem möglichst viele der angegebenen Regeln gleichzeitig
+   erfüllt sind.
+-  Mit der Gleichung $x-y=23$ als einziger Regel, wird der
+   Constraint-Löser wohl sagen müssen, dass die Regel durch unendlich
+   viele Belegungen von $x$ und $y$ erfüllt werden kann.
+-  Fügt man als zweite Regel $2x + 13 = y$ hinzu, gibt es nur noch eine
+   Lösung.
+
+** Anwendungen
+-  Verarbeitung natürlicher Sprachen
+-  Integrierte Schaltungen (Berechnung von Layouts),
+-  Datenbanksysteme (Konsistenzsicherung)
+-  Operations Research (Optimierungsprobleme)
+-  Ökonomie (Optionshandel)
+-  Layout-Berechnung für integrierte Schaltungen
+-  Erstellung von Stundenplänen
+-  Entscheidungsunterstützungssysteme für Planung und Konfiguration
+-  Kommerzielle Anwendungsbeispiele nach cite:Fruehwirth2010
+
+   -  Lufthansa: Short-term staff planning.
+
+   -  Renault: Short-term production planning.
+
+   -  Nokia: Software configuration for mobile phones.
+
+   -  Airbus: Cabin layout.
+
+   -  Siemens: Circuit verification.
+
+** Contstraints im Straßenverkehr 
+#+attr_html: :width 600px
+[[./Abbildungen/verkehr.png]]
+
+
+cite:Fruehwirth2010
+
+** Holy Grail of programming
+
+#+begin_quote 
+Constraint Programming represents one of the closest approaches computer
+science has yet made to the Holy Grail of programming: the user states
+the problem, the computer solves it.
+
+[E. Freuder]
+#+end_quote
+
+* Ein simples Constraint-propagation-system
+
++ Von Regelfortpflanzung (constraint propagation) wurde erstmals im
+  Programm [[https://de.wikipedia.org/wiki/Sketchpad][Sketchpad]] Gebrauch gemacht, mit dessen Hilfe 1962 erstmals
+  Grafiken auf einem Computer-Bildschirm gezeichnet werden konnten.
++ Herkömmliche Programme (Funktionen) sind eindimensional, d. h. sie
+  berechnen einen Wert in Abhängigkeit von ihre Eingangsgrößen
+  (Argumenten).
++ Regelfortpflanzung ermöglicht den Übergang von Funktionen zu Relationen.
+
+** Gleichungen
+-  Aus der Zinseszinsrechnung ist die folgende Gleichung bekannt:
+   $$\frac{K_{n}}{K_{0}}=(1+\frac{p}{100})^{n}$$
+-  Sie beschreibt einen Zusammenhang von vier Größen.
+-  Sind drei Größen gegeben, kann die vierte berechnet werden.
+-  Mit den bekannten Mitteln der Programmierung ist es aber nicht
+   möglich, die Gleichung und die Werte von drei Größen anzugeben, um
+   den Wert der vierten zu bekommen.
+-  Stattdessen muss man für die Bestimmung jeder Größe eine eigene
+   Prozedur (Funktion) schreiben.
+
+** Elementare Constraints
+-  Um mit Gleichungen (Relationen) direkt umgehen zu können, führen wir
+   als Elemente einer constraint language /primitive constraints/ ein.
+-  Jedes primitive constraint beschreibt einen Zusammenhang zwischen
+   Größen
+
+   -  =(adder x y z)= legt fest, dass für die Größen $x$, $y$ und $z$
+      die Gleichung gilt: $x+y=z$
+
+   -  Entsprechend definiert =(multiplier x y z)= die Gleichung $xy=z$.
+
+   -  Schließlich drücken wir durch =(constant 2.718 x)= aus, dass $x$
+      den Wert $2.718$ hat.
+-  Um komplexere Relationen ausdrücken zu können, können constraints
+   durch Konnektoren verbunden werden.
+-  Ein Konnektor verwaltet einen Wert, der in mehreren constraints
+   vorkommt.
+
+** Beispiel: Celsius-Fahrenheit-Konverter
+
++ Zusammenhang zwischen Fahrenheit und Celsius: $$9C=5(F-32)$$
++ Schaltbild aus Addierern, Multiplizierern und Konstanten:
+#+attr_html: :width 600px
+[[./Abbildungen/FahrenheitCelsiusKonverter.png]]
++ Die Buchstaben bezeichnen Konnektoren, die die Constraint-Elemente
+  verbinden, bzw. die Verbindung zu den externen Anschlüssen
+  herstellen.
++ Die externen Anschlüsse (hier C und F) repräsentieren die Unbekannten
+  aus der Gleichung.
++ Anmerkung: Das Netzwerk ähnelt einem Programm für einen
+  [[http://rechentechnik.foerderverein-tsd.de/endim2000/node1.html][Analogrechner]].
+
+** Berechnungsprozess
+-  Ein Konnektor erhält einen Wert (wird aktiviert) durch
+   -  den Benutzer oder
+   -  ein Constraint-Element, mit dem er verbunden ist.
+-  Wenn ein Konnektor einen Wert erhalten hat, aktiviert er alle
+   verbundenen Constraint-Elemente -- außer demjenigen, von dem er selbst
+   aktiviert wurde.
+-  Ein aktiviertes Constraint-Element prüft alle mit ihm verbundenen
+   Konnektoren daraufhin, ob genügend Informationen vorliegen, um ihm
+   einen Wert zu geben.
+-  Wenn das der Fall ist, wird der Wert gesetzt, der Konnektor aktiviert
+   usw.
+#+Reveal: split
+-  Im Celsius-Fahrenheit-Konverter erhalten die die Konnektoren w, x und
+   y Werte durch die mit Ihnen verbundenen Konstanten.
+-  Die durch sie aktivierten Multiplzierer und der Addierer können nicht
+   weiterarbeiten da ihnen Information fehlen.
+-  Erst wenn, C oder F durch den Benutzer einen Wert erhalten, wird ein
+   Wert für F bzw. C berechnet.
+
+** Der Celsius-Fahrenheit-Konverter in Clojure
+-  Der Fahrenheit-Celsius-Konverter als black box:
+#+attr_html: :width 250px
+[[./Abbildungen/FahrenheitCelsKonvBlackbox.png]]
+-  in Clojure:
+  #+BEGIN_SRC clojure
+(def C (make-connector))
+(def F (make-connector))
+(celsius-fahrenheit-converter C F) ;=> ok
+   #+END_SRC
+
+#+Reveal: split
+-  Die Prozedur =celsius-fahrenheit-converter=
+   #+BEGIN_SRC clojure 
+(def celsius-fahrenheit-converter 
+  (fn [c f]
+    (let [u (make-connector)
+          v (make-connector)
+          w (make-connector)
+          x (make-connector)
+          y (make-connector)]
+      (multiplier c w u)
+      (multiplier v x u)
+      (adder v y f)
+      (constant 9 w)
+      (constant 5 x)
+      (constant 32 y)
+      'ok)))
+   #+END_SRC
+
+** Anbringen von Messfühlern
+-  Die Verknüpfung eines Konnektors mit einem Messfühler (probe)
+   bewirkt, dass jedesmal, wenn der Konnektor einen Wert erhält, eine
+   Nachricht ausgegeben wird.
+   : (probe "Celsius temp" C)
+   : (probe "Fahrenheit temp" F)
+-  Beispiel: Die Auswertung von =(set-value! C 25 'user)=
+   führt zu folgender Ausgabe:
+   : Probe: Celsius temp = 25
+   : Probe: Fahrenheit temp = 77
+-  Der Messfühler an =C= sorgt für die Ausgabe der Celsius-Temperatur. Die
+   Wertzuweisung an den Konnektor =C= pflanzt sich durch das Netzwerk
+   fort, wodurch der Konnektor =F= den Wert 77 erhält. Der Messfühler an =F=
+   sorgt wiederum für die Ausgabe.
+
+#+Reveal: split
+- Der anschließende Versuch, einem Konnektor einen neuen Wert zu
+  geben, schlägt fehl:
+  : (set-value! F 212 'user)
+  : Unhandled java.lang.Exception Contradiction(77 212)
+-  Vorher muss der Konnektor den alten Wert vergessen. Die Auswertung
+  von =(forget-value! C 'user)= ergibt:
+   : Probe: Celsius temp = ?
+   : Probe: Fahrenheit temp = ?
+-  Jetzt kann =F= gesetzt werden:
+   : (set-value! F 212 'user)
+   : Probe: Fahrenheit temp = 212
+   : Probe: Celsius temp = 100
+-  Die Änderung an =F= pflanzt sich „rückwärts” bis zu =C= fort.
+-  Beachte: Dasselbe Netzwerk wird benutzt um =F= bei gegebenem =C= zu
+   berechnen, und umgekehrt.
+
+* Implementierung des Constraint-Systems
+
+** Struktur des =adder=
+
+#+BEGIN_SRC clojure
+(def adder
+  (fn [a1 a2 sum]
+    (letfn
+        [(process-new-value [] ...)
+         (process-forget-value [] ...)
+         (me [request]
+           (cond
+             (= request 'I-have-a-value)  (process-new-value)
+             (= request 'I-lost-my-value) (process-forget-value)
+             :else 
+             (throw (Exception. "Unknown request -- ADDER" request))))]
+      (connect a1 me)
+      (connect a2 me)
+      (connect sum me)
+      me)))
+#+END_SRC
+#+Reveal: split
+
+- =adder= ist als Prozedur mit *lokalem Zustand* definiert.
+- Sie liefert die lokale Prozedur =me= als Wert zurück.
+- Ein =adder= besitzt die Konnektoren =a1=, =a2= und =sum=.
+- =adder= besitzt zwei weitere lokale Hilfsfunktionen:
+   -  =process-new-value=
+   -  =process-forget-value=,
+   die weiter unten definiert werden.
+-  Auf den folgenden Folien werden zunächst Basisoperationen für
+   Konnektoren definiert.
+
+** Basisoperationen für Konnektoren
+
+#+BEGIN_SRC clojure 
+;; has-value?: connector -> boolean
+;; sagt, ob Konnektor einen Wert hat
+(def has-value?
+  (fn [connector]
+    (connector 'has-value?)))
+
+;; get-value: connector -> any
+;; liefert den Wert eines Konnektors
+(def get-value 
+  (fn [connector]
+    @(connector 'value)))
+#+END_SRC
+
+#+Reveal: split
+
+#+BEGIN_SRC clojure 
+;; set-value!: connector any constraint -> unspecified
+;; zeigt an, dass ein constraint den Wert eines Konnektors
+;; setzen will
+(def set-value! 
+  (fn [connector new-value informant]
+    ((connector 'set-value!) new-value informant)))
+
+;; forget-value!: connector constraint -> unspecified
+;; zeigt an, dass ein constraint den Wert eines Konnektors
+;; vergessen machen will
+(def forget-value! 
+  (fn [connector retractor]
+    ((connector 'forget) retractor)))
+
+;; connect: connector constraint -> ?
+;; verbindet einen Konnektor mit einem neuen constraint
+(def connect 
+  (fn [connector new-constraint]
+    ((connector 'connect) new-constraint)))
+#+END_SRC
+
+*** Lokale Hilfsfunktionen für =adder=
+
+#+BEGIN_SRC clojure
+(process-new-value []
+           (cond (and (has-value? a1) (has-value? a2))
+                 (set-value! sum
+                             (+ (get-value a1) (get-value a2))
+                             me)
+
+                 (and (has-value? a1) (has-value? sum))
+                 (set-value! a2
+                             (- (get-value sum) (get-value a1))
+                             me)
+
+                 (and (has-value? a2) (has-value? sum))
+                 (set-value! a1
+                             (- (get-value sum) (get-value a2))
+                             me)))
+#+END_SRC
+
+#+Reveal: split
+
+#+BEGIN_SRC clojure
+(process-forget-value []
+           (forget-value! sum me)
+           (forget-value! a1 me)
+           (forget-value! a2 me)
+           (process-new-value))
+#+END_SRC
+
+*** Struktur des =multiplier=
+
+#+BEGIN_SRC clojure
+(def multiplier
+  (fn [m1 m2 product]
+    (letfn [(process-new-value [] ...)
+            (process-forget-value [] ...)
+            (me [request]
+              (cond (= request 'I-have-a-value)  (process-new-value)
+                    (= request 'I-lost-my-value) (process-forget-value)
+                    :else
+                    (throw (Exception. "Unknown request -- MULTIPLIER" request))))]
+      (connect m1 me)
+      (connect m2 me)
+      (connect product me)
+      me)))
+#+END_SRC
+
+*** Lokale Hilfsfunktionen für =multiplier=
+
+#+BEGIN_SRC clojure
+(process-new-value []
+              (cond (or (and (has-value? m1) (= (get-value m1) 0))
+                        (and (has-value? m2) (= (get-value m2) 0)))
+                    (set-value! product 0 me)
+
+                    (and (has-value? m1) (has-value? m2))
+                    (set-value! product
+                                (* (get-value m1) (get-value m2))
+                                me)
+
+                    (and (has-value? product) (has-value? m1))
+                    (set-value! m2
+                                (/ (get-value product) (get-value m1))
+                                me)
+
+                    (and (has-value? product) (has-value? m2))
+                    (set-value! m1
+                                (/ (get-value product) (get-value m2))
+                                me)))
+#+END_SRC
+
+#+Reveal: split
+
+#+BEGIN_SRC clojure
+(process-forget-value []
+              (forget-value! product me)
+              (forget-value! m1 me)
+              (forget-value! m2 me)
+              (process-new-value))
+#+END_SRC
+
+** Der Konstantenerzeuger
+
+#+BEGIN_SRC clojure 
+(def constant 
+   (fn [value connector]
+    (letfn 
+        [(me [request]
+           (throw (Exception. "Unknown request -- CONSTANT" request)))]
+      (connect connector me)
+      (set-value! connector value me)
+      me)))        
+#+END_SRC
+- setzt den Wert des angegebenen Konnektors.
+- Nachrichten =I-have-a-value= oder =I-lost-my-value= sind unzulässig.
+
+** Der Messfühler 
+Der Messfühler gibt beim Setzen bzw. Vergessen des Wertes des mit ihm
+verbundenen Konnektors einen Text aus.
+
+#+BEGIN_SRC clojure
+(def probe
+  (fn [name connector]
+    (letfn 
+        [(print-probe [value]
+           (println "Probe: " name " = " value))
+         (process-new-value []
+           (print-probe (get-value connector)))
+         (process-forget-value []
+           (print-probe "?"))
+         (me [request]
+           (cond
+             (= request 'I-have-a-value) (process-new-value)
+             (= request 'I-lost-my-value) (process-forget-value)
+             :else (throw (Exception. "Unknown request -- PROBE" request))))]
+      (connect connector me)
+      me)))
+#+END_SRC
+
+** Konnektoren
+-  Ein Konnektor wird als Prozedur mit drei lokalen Zustandsvariablen
+  und vier lokalen Prozeduren definiert:
+   #+begin_small 
+   #+BEGIN_SRC clojure
+(def make-connector
+  (fn []
+    (let [value (atom false) informant (atom false) constraints  (atom '())]
+      (letfn [ ... ]
+        me))))
+   #+END_SRC
+   #+end_small
+   -  value :: repäsentiert den aktuellen Wert des Konnektors,
+   -  informant :: repräsentiert das Objekt, das den Wert gesetzt hat,
+   -  constraints :: enthält die Liste der Constraint-Elemente, mit
+      denen der Konnektor verbunden ist und die bei Änderungen seines
+      Wertes informiert werden müssen.
+
+*** =make-connector -- set-my-value=
+#+BEGIN_SRC clojure
+(set-my-value [newval setter]
+                (cond (not (has-value? me))
+                      (do (reset! value newval)
+                          (reset! informant setter)
+                          (for-each-except setter
+                                           inform-about-value
+                                           constraints))
+                      (not (= @value newval))
+                      (throw (Exception. (str "Contradiction" (list @value newval))))
+                      :else 'ignored))
+#+END_SRC
+-  Wird aufgerufen, wenn der Wert des Konnektors gesetzt werden soll.
+-  Wenn der Konnektor noch keinen Wert besitzt, wird er gesetzt und der
+   Informant vermerkt.
+-  In diesem Fall werden alle verbundenen Constraint-Elemente (mit
+   Ausnahme des Informanten) darüber informiert.
+
+*** =make-connector -- forget-my-value=
+
+#+begin_small
+#+BEGIN_SRC clojure
+(forget-my-value [retractor]
+                (if (= retractor @informant)
+                  (do (reset! informant false)
+                      (for-each-except retractor
+                                       inform-about-no-value
+                                       constraints))
+                  'ignored))
+#+END_SRC
+#+end_small
+-  Wird aufgerufen, wenn ein der Wert des Konnektors vergessen werden
+   soll.
+-  Hier wird geprüft, ob diese Anforderung von demselben Objekt stammt,
+   das das Setzen des Wertes angefordert hat.
+-  In diesem Fall werden alle verbundenen Constraint-Elemente (mit
+   Ausnahme des Informanten) darüber informiert.
+
+*** =make-connector -- connect=
+
+#+BEGIN_SRC clojure
+(connect [new-constraint]
+                (if (not (in? @constraints new-constraint ))
+                  (swap! constraints conj new-constraint))
+                (if (has-value? me)
+                  (inform-about-value new-constraint))
+                'done)
+#+END_SRC
+-  fügt, das neue Constraint-Element der Liste der verbundenen
+   Constraint-Elemente hinzu, falls es dort noch nicht enthalten ist.
+-  Wenn der Konnektor einen Wert besitzt, wird das neue
+   Constraint-Element darüber informiert.
+
+*** =make-connector -- me=
+
+#+BEGIN_SRC clojure
+(me [request]
+                (cond
+                  (= request 'has-value?) (if @informant true false)
+                  (= request 'value)      value
+                  (= request 'set-value!) set-my-value
+                  (= request 'forget)     forget-my-value
+                  (= request 'connect)    connect
+                  :else (throw (Exception. "Unknown operation -- CONNECTOR"
+                                           request))))
+#+END_SRC
+-  Dient als Verteiler für die anderen lokalen Prozduren.
+** Hilfsprozeduren
+-  Es fehlen jetzt noch die Prozeduren:
+   -  =for-each-except=
+   -  =inform-about-value=
+   -  =inform-about-no-value=
+
+*** Iterator =for-each-except=
+
+#+BEGIN_SRC clojure
+(def for-each-except 
+  (fn [exception procedure list]
+    (letfn
+        [(loop [items]
+           (cond
+             (empty? items) 'done
+             (= (first items) exception) (loop (rest items))
+             :else (do (procedure (first items))
+                       (loop (rest items)))))]
+      (loop @list)))
+        
+#+END_SRC
+-  Führt auf allen Elementen einer Liste die Prozedur =procedure= aus,
+   mit Ausnahme des Elements =exception=.
+
+*** =inform-about-…=
+
+#+BEGIN_SRC clojure
+(def inform-about-value
+  (fn [constraint]
+    (constraint 'I-have-a-value)))
+
+(def inform-about-no-value
+  (fn [constraint]
+    (constraint 'I-lost-my-value)))
+#+END_SRC
+-  Dienen lediglioch der besseren Lesbarkeit des Programms.
+-  „Syntaktische” Prozeduren
+
+* Literatur
+* bibliography:referenzen.bib
