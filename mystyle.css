@@ -1,0 +1,45 @@
+.reveal .slide-footer {
+    position: fixed;
+    width: 100%;
+    height: 0px;
+    left: 0%;
+    bottom: 3%;
+    font-size: 0.5em;
+    text-align: left;
+}
+
+.reveal .title {
+    font-size: 3em
+}
+
+.reveal {
+    font-size: 30px;
+}
+
+.reveal pre {
+    font-size: 20px;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+}
+
+.reveal p {
+    text-align: left;
+}
+
+.reveal .figure p {
+    text-align: center;
+}
+
+.org-src-container {
+    overflow: auto;
+    height: 400px;
+    width: 110%;
+}
+
+.small {height: 200px;}
+
+.slide-number:before{content:"Prof. Dr.-Ing. Johannes Brauer: Programmierparadigmen - ";
+		     position: fixed; left: 3%;}
+
+

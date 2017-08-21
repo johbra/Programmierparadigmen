@@ -1,0 +1,12 @@
+* This is file a.org
+  Some important notes.
+
+* Second Section
+
+* Section with a custom-id
+
+  Some text before the custom-id
+
+  <<#my-anchor>> Here we have the custom-id
+
+  Some text behind the custom-id.
