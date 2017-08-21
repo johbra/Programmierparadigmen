@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<title>Funktionale Programmierung: Ergänzungen</title>
+<meta name="author" content="(Johannes Brauer)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./mycss/myrevealstyle.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Funktionale Programmierung: Ergänzungen</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2017-08-14 Mon 22:38</p>
+</section>
+
+<section>
+<section id="slide-orge915c02">
+<h2 id="orge915c02">Datenabstraktion</h2>
+<p>
+<b>These:</b> 
+</p>
+<blockquote nil>
+<p>
+Es gibt keinen Wesensunterschied zwischen Programmen und Daten
+</p>
+</blockquote>
+<p>
+vgl. auch Kapitel <a href="ProPar-FuProAlgDat.html">Algebraische Datentypen</a>
+</p>
+</section>
+<section id="slide-orge41f1e9">
+<h3 id="orge41f1e9">1. Beispiel: Rechnen mit Punkten in der Ebene</h3>
+<div class="outline-text-3" id="text-orge41f1e9">
+</div></section>
+<section id="slide-orge573250">
+<h4 id="orge573250">Defintion von Punkten</h4>
+<ul>
+<li>Ein Punkt in der Ebene wird durch seine x- und seine y-Koordinate
+bestimmt (kartesisches Koordinatensystem).</li>
+<li><p>
+Wir tun so, als ob wir eine Funktion <code>make-point</code> zur Verfügung
+hätten, die einen Punkt erzeugt, z. B. so:
+</p>
+<pre class="example">
+(make-point 3 4)
+
+</pre></li>
+<li><p>
+Nehmen wir weiter an, es gäbe zwei Funktionen, die die x- bzw. die
+y-Koordinate eines Punkts zugänglich machen:
+</p>
+<pre class="example">
+(point-x (make-point 3 4)) ;;=&gt; 3
+(point-y (make-point 3 4)) ;;=&gt; 4
+
+</pre></li>
+
+</ul>
+</section>
+<section id="slide-orgb29f1a5">
+<h4 id="orgb29f1a5">Point-Funktionen</h4>
+<ul>
+<li><p>
+Unter diesen Voraussetzungen könnten z. B. folgende Funktionen, die
+<code>points</code> verarbeiten, definiert werden:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-clojure">  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">add-point</span>
+    <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>p1 p2<span style="color: #909183;">]</span>
+      <span style="color: #909183;">(</span>make-point
+       <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span>point-x p1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>point-x p2<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+       <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span>point-y p1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>point-y p2<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">distance-to-0</span>
+    <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>p<span style="color: #909183;">]</span>
+      <span style="color: #909183;">(</span><span style="color: #6434A3;">Math</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #ffffff;">/</span>sqrt
+       <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span><span style="color: #6434A3;">Math</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #ffffff;">/</span>pow <span style="color: #6276BA;">(</span>point-x p<span style="color: #6276BA;">)</span> 2<span style="color: #907373;">)</span>
+          <span style="color: #907373;">(</span><span style="color: #6434A3;">Math</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #ffffff;">/</span>pow <span style="color: #6276BA;">(</span>point-y p<span style="color: #6276BA;">)</span> 2<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div></li>
+
+</ul>
+</section>
+<section >
+<ul>
+<li>Diese (und weitere) Funktionen können programmiert werden, ohne
+<ul>
+<li>die Implementierung der Funktionen <code>make-point</code>, <code>point-x</code> und
+<code>point-y</code> zu kennen</li>
+<li>eine konkrete Repräsentation von Punkten angegeben zu haben.</li>
+
+</ul></li>
+<li>Frage: „Wo sind hier die Daten?”</li>
+
+</ul>
+</section>
+<section id="slide-org7a1f57f">
+<h4 id="org7a1f57f">Mögliche Implementierungen von <code>points</code></h4>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">als Datenstruktur mit defrecord</span>
+  <span style="color: #707183;">(</span><span style="color: #0000FF;">defrecord</span> <span style="color: #6434A3;">point</span> <span style="color: #7388D6;">[</span>x y<span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">make-point</span> -&gt;point<span style="color: #707183;">)</span>
+  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">point-x</span> <span style="color: #D0372D;">:x</span><span style="color: #707183;">)</span>
+  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">point-y</span> <span style="color: #D0372D;">:y</span><span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">durch Vektoren:</span>
+  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">make-point</span>
+    <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x y<span style="color: #909183;">]</span> <span style="color: #909183;">[</span>x y<span style="color: #909183;">]</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">point-x</span>
+    <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>p<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">get</span> p 0<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+  <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">point-y</span>
+    <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>p<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">get</span> p 1<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+</section>
+<section id="slide-org01c2b69">
+<h4 id="org01c2b69">Anforderungen an die Implementierung</h4>
+<ul>
+<li>Jede Implementierung, die den folgenden beiden Gleichungen genügt,
+ist hinreichend:<br />
+<code>(point-x (make-point x y))  = x</code><br />
+<code>(point-y (make-point x y))  = y</code></li>
+<li>Daten werden durch Konstruktions- und Selektionsfunktionen repräsentiert.</li>
+<li>Die oben gezeigten Implementierungen benutzen „immerhin“ in der
+Sprache eingebaute Datenstrukturen (Records bzw. Listen).</li>
+<li>Im zweiten Beispiel kommen wir ganz ohne solche Datenstrukturen aus.</li>
+<li>Dort wird gezeigt, dass nicht nur „höher wertige“ Datenstrukturen
+sondern auch elementare Daten durch Funktionen dargestellt werden können.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgd1dae5f">
+<h3 id="orgd1dae5f">2. Beispiel: Listen</h3>
+<ul>
+<li>Lisp-Sprachen stellen üblicherweise
+<ul>
+<li>eine Funktion zum Erzeugen einer Liste (<code>cons</code>) sowie</li>
+<li>zwei Funktionen zum Zugriff auf die beiden Komponenten einer
+Liste bereit:
+<dl>
+<dt><code>first</code></dt><dd>liefert &#x2013; angewendet auf eine nicht leere Liste &#x2013; das
+erste Element.</dd>
+<dt><code>rest</code></dt><dd>liefert &#x2013; angewendet auf eine nicht leere Liste &#x2013; die
+Restliste.</dd>
+
+</dl></li>
+
+</ul></li>
+<li>Der Zusammenhang zwischen <code>cons</code>, <code>first</code> und <code>rest</code> kann durch die
+folgenden Gleichungen beschrieben werden:<br />
+<code>(first (cons elem liste))  = elem</code><br />
+<code>(rest (cons elem liste))  =  liste</code></li>
+
+</ul>
+
+<p>
+(vgl. auch <a href="ProPar-FuProNatRekrsn.html#MissingReference">Symbolische Ausdrücke</a>)
+</p>
+
+</section>
+<section id="slide-org976647b">
+<h4 id="org976647b">Implementierung von Listen durch Funktionen</h4>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">ns</span> <span style="color: #6434A3;">dataasproc</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #006FE0;">use</span> '<span style="color: #6434A3;">clojure.test</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">cons</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x y<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">let</span> <span style="color: #709870;">[</span>dispatch
+          <span style="color: #907373;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #6276BA;">[</span>m<span style="color: #6276BA;">]</span>
+            <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span> <span style="color: #858580;">(</span>= m 0<span style="color: #858580;">)</span> x
+                  <span style="color: #858580;">(</span>= m 1<span style="color: #858580;">)</span> y
+                  <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #80A880;">(</span><span style="color: #6434A3;">Exception.</span> <span style="color: #008000;">"Argument not 0 or 1 -- CONS"</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+      dispatch<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">first</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>z<span style="color: #909183;">]</span> <span style="color: #909183;">(</span>z 0<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rest</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>z<span style="color: #909183;">]</span> <span style="color: #909183;">(</span>z 1<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">empty?</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>z<span style="color: #909183;">]</span> <span style="color: #909183;">(</span>= z <span style="color: #709870;">()</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+</section>
+<section id="slide-orgf50c65e">
+<h5 id="orgf50c65e">Erläuterungen</h5>
+<ul>
+<li>Die Benutzung der Funktionen hat nichts mehr mit einem intuitiven
+Verständnis von <i>Daten</i> zu tun.</li>
+<li>Es muss nur gezeigt werden, dass die Implementierung die oben
+genannten Gleichungen erfüllt:
+<ul>
+<li>Ein Ausdruck <code>(cons x y)</code> liefert die lokal definierte Funktion
+<code>dispatch</code> als Resultat, die ein Argument akzeptiert und entweder
+<code>x</code> oder <code>y</code> zurückgibt je nachdem, ob das Argument 0 oder 1 ist.</li>
+<li>Entsprechend ist der Ausdruck <code>(first z)</code> so definert, dass er die
+Funktion <code>z</code> auf 0 anwendet. D. h. wenn <code>z</code> eine durch <code>(cons x y)</code>
+erzeugte Funktion ist, dann liefert die Anwendung von <code>z</code> auf 0
+<code>x</code>. Damit ist gezeigt, dass gilt:<br />
+<code>(first (cons x y)) = x</code></li>
+<li>Eine ähnliche Argumentation kann für den Zusammenhang zwischen
+<code>cons</code> und <code>rest</code> geführt werden.</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org4993671">
+<h5 id="org4993671">Benutzung</h5>
+<p>
+Die Funktionen können wie die Clojure-Standardfunktionen benutzt werden:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Benutzung der neuen Implementierung von Listen:</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #709870;">)</span> 0
+      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>sum <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-sum</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= 0 <span style="color: #709870;">(</span>sum <span style="color: #907373;">()</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= 12 <span style="color: #709870;">(</span>sum <span style="color: #907373;">(</span><span style="color: #006FE0;">cons</span> 7 <span style="color: #6276BA;">(</span><span style="color: #006FE0;">cons</span> 3 <span style="color: #858580;">(</span><span style="color: #006FE0;">cons</span> 2 <span style="color: #80A880;">()</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</section>
+<section id="slide-org50beac3">
+<h4 id="org50beac3">Alternative Implementierung von Listen durch Funktionen</h4>
+<p>
+siehe Aufgabe 1
+</p>
+</section>
+<section id="slide-org6b46667">
+<h3 id="org6b46667">3. Beispiel: „Church-Numerals"</h3>
+<ul>
+<li>Bereits im Kapitel <a href="ProPar-FuProNatRekrsn.html">Natürliche Rekursion</a> haben wir eine <a href="ProPar-FuProNatRekrsn.html#MissingReference">Rekursive
+Definition der natürlichen Zahlen</a> kennen gelernt, die auf den
+Peano-Axiomen basiert und <i>zwei-elementige Listen</i> zur Repräsentation
+von natürlichen Zahlen benutzt.</li>
+<li>Alonzo Church, ein berühmter Logiker und Erfinder des λ-Kalküls, hat
+gezeigt, dass man die positiven ganzen Zahlen auch durch <i>Funktionen</i>
+repräsentieren kann.</li>
+<li>Für „Hartgesottene” findet sich in moodle im Themenblock
+<i>Beispiele</i> ein Clojure-Projekt zu den <i>Church numerals</i>.</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org93022da">
+<h2 id="org93022da">Verzögerte Auswertung</h2>
+<div class="outline-text-2" id="text-org93022da">
+</div></section>
+<section id="slide-orgb76a350">
+<h3 id="orgb76a350">Einführung</h3>
+<p>
+Wo und warum gibt es hier verzögerte Auswertung?
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-java"><span style="color: #0000FF;">if</span> <span style="color: #707183;">(</span>obj != <span style="color: #D0372D;">null</span> &amp;&amp; obj.isWhatiz<span style="color: #7388D6;">()</span><span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
+    ...
+<span style="color: #707183;">}</span></pre>
+</pre>
+</div>
+<p>
+Kennen Sie weitere Beispiele für verzögerte Auswertung?
+</p>
+</section>
+<section >
+<ul>
+<li>Ein wesentliches Merkmal einer Programmiersprache ist der Zeitpunkt
+der Auswertung der Teilausdrücke eines Ausdrucks.</li>
+<li>Zum Beispiel: In Clojure (und allen Lisp-Sprachen und vielen aber
+nicht allen Programmiersprachen)
+<ul>
+<li>wird eine Funktionsanwendung der Form <code>(e1 e2 ... en)</code> 
+so ausgewertet, dass die Argumente <code>e2</code> bis <code>en</code> <b>ausgewertet</b> werden,
+<b>bevor</b> die Funktion <code>e1</code> angewendet wird und</li>
+<li>der Rumpf einer Funktion <code>(fn [...] ...)</code> wird <b>nicht ausgewertet
+bevor</b>  die Funktion aufgerufen wird.</li>
+
+</ul></li>
+<li><p>
+Warum kann die Funktion
+</p>
+<pre class="example">
+(def my-if-bad (fn [x y z] (if x y z)))
+
+</pre>
+<p>
+nicht anstelle der Standardfunktion <code>if</code> benutzt werden?
+</p></li>
+
+</ul>
+</section>
+<section >
+<ul>
+<li><p>
+Was würde bei einem Aufruf der Funktion
+</p>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">factorial-wrong</span> 
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span>my-if-bad <span style="color: #709870;">(</span>= x 0<span style="color: #709870;">)</span>
+               1
+               <span style="color: #709870;">(</span>* x <span style="color: #907373;">(</span>factorial-wrong <span style="color: #6276BA;">(</span>- x 1<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div>
+<p>
+passieren?
+</p></li>
+<li><p>
+Unter Ausnutzung der Tatsache, dass der Rumpf einer Funktion nicht
+ausgewertet wird, bevor die Funktion aufgerufen wird kann man eine
+funktionierende Variante einer eigenen „if-Funktion” schreiben:
+</p>
+<pre class="example">
+(def my-if (fn [x y z] (if x (y) (z)))) 
+
+</pre>
+<p>
+Warum müsste sie dann aber so benutzt werden?:
+</p>
+<pre class="example">
+(my-if e1 (fn [] e2) (fn [] e3))
+
+</pre></li>
+
+</ul>
+</section>
+<section >
+<ul>
+<li><p>
+Die <code>factorial</code>-Funktion könnte dann so aussehen:
+</p>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">factorial</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span>my-if <span style="color: #709870;">(</span>= x 0<span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #907373;">[]</span> 1<span style="color: #709870;">)</span>
+           <span style="color: #709870;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #907373;">[]</span> <span style="color: #907373;">(</span>* x <span style="color: #6276BA;">(</span>factorial <span style="color: #858580;">(</span>- x 1<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div></li>
+<li>Es gibt keinen triftigen Grund, eine derartige <code>my-if</code>-Funktion zu
+schreiben.</li>
+<li>Parameterlose Funktion für die <i>verzögerte Auswertung</i> zu benutzen,
+ist aber ein mächtiges Konzept.</li>
+<li>In der englisch-sprachigen Fachliteratur werden solche
+parameterlosen Funktionen als <i>thunks</i> bezeichnet.</li>
+<li>Niemand weiß, warum die thunks thunks heißen.</li>
+<li>In Lisp-Sprachen besteht die Möglichkeit, Makros anstelle von Funktionen zu benutzen. Argumente eines Macro-Aufrufs
+werden nicht ausgewertet.</li>
+
+</ul>
+</section>
+<section id="slide-org6dc370d">
+<h3 id="org6dc370d">Benutzung von Delay und Force</h3>
+<dl>
+<dt>Annahme:</dt><dd>Das Resultat irgendeiner aufwändigen Berechnung \(b\) wird
+als Argument einer anderen Funktion benötigt.  Abhängig
+von anderen Argumenten wird das Resultat keinmal, einmal
+oder n-mal benötigt.</dd>
+<dt>Problem:</dt><dd>Wenn das Argument für \(b\) „gethunkt“ wird, muss das
+Ergebnis möglicherweise n-mal berechnet werden. Wird es
+nicht „gethunkt“ findet die Berechnung auch dann statt,
+wenn sie vielleicht gar nicht benötigt wird.</dd>
+<dt>Lösung:</dt><dd>Benutzung einer Technik, die als <i>verzögerte Auswertung</i>
+(engl. lazy evaluation), <i>call by need</i> oder auch
+<i>promises</i> bezeichnet wird. Für den Fall, dass die
+Auswertung (von \(b\)) tatsächlich benötigt wird, geschieht
+dies aber nur genau einmal. Der berechnete Wert wird
+(durch Benutzung von Mutation) zwischengespeichert.</dd>
+
+</dl>
+
+</section>
+<section id="slide-org4fc0830">
+<h4 id="org4fc0830">Implementierung von Delay und Force in Clojure</h4>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">my-delay</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>f<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #006FE0;">atom</span> <span style="color: #709870;">[</span><span style="color: #D0372D;">false</span> f<span style="color: #709870;">]</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">my-force</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>th<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">if</span> <span style="color: #709870;">(</span>@th 0<span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>@th 1<span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span><span style="color: #0000FF;">do</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">swap!</span> th assoc 0 <span style="color: #D0372D;">true</span> 1 <span style="color: #6276BA;">(</span><span style="color: #858580;">(</span>@th 1<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+          <span style="color: #907373;">(</span>@th 1<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</section>
+<section id="slide-org903036c">
+<h5 id="org903036c">Erläuterungen</h5>
+<ul>
+<li>Der Funktion <code>my-delay</code> wird ein thunk <code>f</code> übergeben und als zweites
+Element eines Vektors einer mutierbaren Struktur (<code>atom</code>) abgelegt.</li>
+<li>Das erste Element des Vektors bekommt den Wert <code>false</code>, der
+kennzeichnet, dass das <code>f</code> bisher nicht ausgewertet wurde.</li>
+<li>Die Funktion <code>my-force</code> wird ein (mit <code>my-delay</code> „verpackter“) thunk
+übergeben. Sie prüft, ob das erste Element des Vektors <code>@th</code> <code>true</code> ist:
+<dl>
+<dt>falls ja</dt><dd>Der Wert des zweiten Elements des Vektors <code>@th</code> wird zurückgegeben.</dd>
+<dt>falls nein</dt><dd>Der Wert des ersten Elements des Vektors <code>@th</code> wird
+auf <code>true</code> geändert und das zweite Element durch den
+ausgewerteten thunk ersetzt. Anschließend wird
+dieser Wert zurückgegeben.</dd>
+
+</dl></li>
+<li><b>Warnung</b>: Die Benutzung eines Atoms und von Mutation ist durchaus
+fehleranfällig, wenn die Auswertung des thunks Nebeneffekte erzeugt
+oder von änderbaren Daten abhängt.</li>
+
+</ul>
+
+</section>
+<section id="slide-org85bec5f">
+<h4 id="org85bec5f">Anwendung von <code>my-delay</code> und <code>my-force</code></h4>
+<p>
+Als Beispiel für eine Funktion, die die Auswertung eines ihrer
+Argumente nur unter bestimmten Bedingungen benötigt, betrachten wir
+die folgende &#x2013; zugegeben: etwas alberne &#x2013; Multiplikationsfunktion
+für positive Zahlen. Hier zunächst die Variante ohne verzögerte
+Auswertung:
+</p>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">my-mult</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x y<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> <span style="color: #709870;">(</span>= x 0<span style="color: #709870;">)</span> 0
+          <span style="color: #709870;">(</span>= x 1<span style="color: #709870;">)</span> y
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>+ y <span style="color: #907373;">(</span>my-mult <span style="color: #6276BA;">(</span>- x 1<span style="color: #6276BA;">)</span> y<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div>
+<p>
+Bei dieser Variante würde bei einem Aufruf 
+</p>
+<pre class="example">
+(my-mult 0 (factorial 100))
+
+</pre>
+<p>
+die Fakultät unnötigerweise berechnet.
+</p>
+</section>
+<section id="slide-org51dcd72">
+<h5 id="org51dcd72">Variante von <code>my-mult</code> mit <code>y</code> als thunk</h5>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">my-mult</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x y-thunk<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> <span style="color: #709870;">(</span>= x 0<span style="color: #709870;">)</span> 0
+          <span style="color: #709870;">(</span>= x 1<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>y-thunk<span style="color: #709870;">)</span>
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span>y-thunk<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>my-mult <span style="color: #6276BA;">(</span>- x 1<span style="color: #6276BA;">)</span> y-thunk<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div>
+<p>
+Jetzt würde der obige Aufruf so aussehen:
+</p>
+<pre class="example">
+(my-mult 200 (fn [] (factorial 100M)))
+
+</pre>
+<p>
+Jetzt würde die Fakultät für <code>x = 0</code> nicht, für  <code>x = 1</code> einmal, für
+<code>x = n</code> jedoch n-mal ausgewertet. Dies kann durch die Verwendung von
+<code>my-delay</code> und <code>my-force</code> vermieden werden.
+</p>
+<pre class="example">
+(my-mult n (let [x (my-delay (fn [] (factorial 100M)))] (fn [] (my-force x))))
+
+</pre>
+</section>
+<section >
+<p>
+Erläuterungen:
+</p>
+<ul>
+<li>Es wird einmalig &#x2013; vor dem Aufruf von <code>my-mult</code> &#x2013; eine verzögerte
+Berechnung erzeugt.</li>
+<li>Wenn der thunk, der als zweites Argument übergeben wird, aufgerufen
+wird, wird die Fakultät genau einmal berechnet und
+zwischengespeichert.</li>
+
+</ul>
+</section>
+<section id="slide-org09e4354">
+<h5 id="org09e4354">Weitere Variante von <code>my-mult</code></h5>
+<p>
+Die folgende Version von <code>my-mult</code> erwartet anstelle eines beliebigen
+thunks ein Resultat von <code>my-delay</code> als zweites Argument. Damit wird
+der Aufruf etwas komfortabler:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">my-mult</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x y-promise<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> <span style="color: #709870;">(</span>= x 0<span style="color: #709870;">)</span> 0
+          <span style="color: #709870;">(</span>= x 1<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>my-force y-promise<span style="color: #709870;">)</span>
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span>my-force y-promise<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>my-mult <span style="color: #6276BA;">(</span>- x 1<span style="color: #6276BA;">)</span> y-promise<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span>my-mult n <span style="color: #7388D6;">(</span>my-delay <span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[]</span> <span style="color: #709870;">(</span>factorial 100M<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org59f71e8">
+<h2 id="org59f71e8">Funktionale versus objektorientierte Programmierung</h2>
+<div class="outline-text-2" id="text-org59f71e8">
+</div></section>
+<section id="slide-org7bc9560">
+<h3 id="org7bc9560">Ein wenig Historie</h3>
+
+<div class="figure">
+<p><img src="./Abbildungen/programmierung.png" alt="programmierung.png" width="700px" />
+</p>
+</div>
+</section>
+<section id="slide-org2828834">
+<h4 id="org2828834">1936</h4>
+
+<div class="figure">
+<p><img src="./Abbildungen/alan-turing.jpg" alt="alan-turing.jpg" width="200px" />
+</p>
+</div>
+
+<div class="figure">
+<p><img src="./Abbildungen/entscheidungsproblem.png" alt="entscheidungsproblem.png" width="600px" />
+</p>
+</div>
+<ul>
+<li>Begriffe: Unterprogramm, Makro, code is data</li>
+
+</ul>
+</section>
+<section id="slide-org6961a2a">
+<h4 id="org6961a2a">1945</h4>
+<ul>
+<li>Turing schreibt Code. 
+<ul>
+<li>in Binärform</li>
+<li>benutzt Integer-Zahlen (add) und boolesche Operationen</li>
+<li>erfindet Unterprogramme einschl. Stack</li>
+<li>erfindet Gleitkommazahlen</li>
+
+</ul></li>
+<li>Anzahl der Computer weltweit: \(O(1)\).</li>
+<li>Anzahl der Programmierer weltweit: \(O(1)\).</li>
+
+</ul>
+</section>
+<section id="slide-org5bcf09c">
+<h4 id="org5bcf09c">1953 Fortran</h4>
+
+<div class="figure">
+<p><img src="./Abbildungen/Fortran.png" alt="Fortran.png" />
+</p>
+</div>
+</section>
+<section id="slide-org8ebefa9">
+<h4 id="org8ebefa9"></h4>
+
+<div class="figure">
+<p><img src="./Abbildungen/McCarthy.jpg" alt="McCarthy.jpg" />
+</p>
+</div>
+
+<p>
+Funktionale Programmierung
+</p>
+
+</section>
+<section id="slide-orgabfd627">
+<h4 id="orgabfd627">1960</h4>
+<ul>
+<li>Anzahl der Computer weltweit: \(O(1E2)\).</li>
+<li>Anzahl der Programmierer weltweit: \(O(1E3)\).</li>
+
+</ul>
+</section>
+<section id="slide-org737e75a">
+<h4 id="org737e75a">1965</h4>
+<ul>
+<li>Anzahl der Computer weltweit: \(O(1E4)\).</li>
+<li>Anzahl der Programmierer weltweit: \(O(1E5)\).</li>
+
+</ul>
+</section>
+<section id="slide-orga767c05">
+<h4 id="orga767c05">1966 Simula 1967</h4>
+<p>
+Ole-Johan Dahl, Kristen Nygard:
+</p>
+
+
+<div class="figure">
+<p><img src="./Abbildungen/simuladahlnygard.gif" alt="simuladahlnygard.gif" width="400px" />
+</p>
+</div>
+
+<p>
+Objektorientierte Programmierung
+</p>
+
+</section>
+<section id="slide-org7d8d8d7">
+<h4 id="org7d8d8d7">1968</h4>
+<p>
+Edsger Dijkstra:
+</p>
+
+<div class="nebeneinander">
+
+<div class="figure">
+<p><img src="./Abbildungen/dijkstra.jpg" alt="dijkstra.jpg" />
+</p>
+</div>
+
+</div>
+<div class="nebeneinander">
+
+<div class="figure">
+<p><img src="./Abbildungen/gotoharmfull.png" alt="gotoharmfull.png" />
+</p>
+</div>
+
+</div>
+<div class="clear">
+
+</div>
+<p>
+Strukturierte Programmierung
+</p>
+
+</section>
+<section id="slide-org910529a">
+<h3 id="org910529a">Drei Paradigmen</h3>
+<ul>
+<li>1968 &#x2013; Strukturierte Programmierung. Edsger Dijkstra zeigt, wie der
+Gebrauch von <code>GOTO</code>-Anweisungen durch <code>if/then/else</code> und <code>while</code>
+ersetzt werden kann.</li>
+
+<li>1966 &#x2013; Objektorientierte Programmierung. Ole-Johan Dahl und Kristen
+Nygaard entwickeln die erste OO-Sprache: <i>Simula-67</i>. Durch die
+Einführung der Polymorphie konnten die <code>function pointers</code>
+eliminiert werden.</li>
+
+<li>1957 &#x2013; Funktionale Programmierung. John McCarthy erfindet
+Lisp. Lisp basiert auf dem Lambda-Kalkül, entwickelt von Alonzo
+Church in den 1930ern. Ein wesentliches Merkmal: Es gibt keine Zuweisung.</li>
+
+</ul>
+
+<p>
+Drei Paradigmen, drei Einschränkungen
+</p>
+
+</section>
+<section id="slide-orgecf7eec">
+<h4 id="orgecf7eec">1970</h4>
+<ul>
+<li>Anzahl der Computer weltweit: \(O(1E5)\).</li>
+<li>Anzahl der Programmierer weltweit: \(O(1E6)\).</li>
+
+</ul>
+
+
+</section>
+<section id="slide-org16fb751">
+<h3 id="org16fb751">Was bringt die funktionale Programmierung?</h3>
+<ul>
+<li>Worin besteht der Kerngedanke der funktionalen Programmierung?</li>
+
+</ul>
+</section>
+<section id="slide-org8a47012">
+<h3 id="org8a47012">Fehlen der Mutation</h3>
+<ul>
+<li>Wie kann das „Fehlen von Etwas” ein wichtiges Feature eines
+Programmierparadigmas sein?</li>
+<li>Das Fehlen von Zuweisungen ermöglicht das Schreiben von Programmcode
+ohne befürchten zu müssen, das anderer Code den eigenen negativ
+beeinflusst.</li>
+<li>Nicht änderbare Datenstrukturen sind das wichtigste „non-feature“,
+das eine Programmiersprache haben kann.</li>
+<li>Auf einen wichtigen Vorteil soll hier besonders eingegangen werden:
+Sharing und Aliasing werden irrelevant.</li>
+
+</ul>
+
+</section>
+<section id="slide-org885c7dd">
+<h4 id="org885c7dd">Beispiel: Sortieren eines Vektors</h4>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sort-pair</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>pair<span style="color: #909183;">]</span>
+     <span style="color: #909183;">(</span><span style="color: #0000FF;">if</span> <span style="color: #709870;">(</span>&lt; <span style="color: #907373;">(</span>pair 0<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>pair 1<span style="color: #907373;">)</span><span style="color: #709870;">)</span> 
+         pair
+         <span style="color: #709870;">[</span><span style="color: #907373;">(</span>pair 1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>pair 0<span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div>
+
+<ul>
+<li>Die Funktion liefert im <code>else</code>-Fall einen neu erzeugten Vektor.</li>
+<li>Aber was passiert im <code>then</code>-Fall? 
+<ul>
+<li>Erhalten wir eine Kopie des an die Funktion übergebenen Vektors
+oder</li>
+<li>gibt die Funktion ein Alias auf denselben Vektor zurück?</li>
+
+</ul></li>
+<li>Bei Fehlen von Mutation ist die Frage irrelevant.</li>
+
+</ul>
+
+</section>
+<section id="slide-org7a31beb">
+<h4 id="org7a31beb">Beispiel: Funktion append</h4>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">append</span> 
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>xs ys<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
+      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> xs<span style="color: #709870;">)</span> ys
+      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> xs<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>append <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> xs<span style="color: #6276BA;">)</span> ys<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div>
+<ul>
+<li>Frage: Teilt die zurückgegebene Liste irgendwelche Elemente mit den
+Argumentlisten?</li>
+<li>Antwort 1: Es spielt keine Rolle, solange kein Aufrufer das
+feststellen kann.</li>
+<li>Antwort 2: Ja, die neue Liste „wiederverwendet” alle Elemente von
+<code>ys</code>. Das spart Speicherplatz und Rechenzeit.</li>
+<li>Ein Problem entstünde nur dann, wenn nachträglich die Liste <code>ys</code>
+verändert werden könnte.</li>
+<li>Unveränderliche Daten erleichtern das Schreiben eleganter
+Algorithmen erheblich.</li>
+
+</ul>
+</section>
+<section >
+<ul>
+<li>Auch die Funktion <code>rest</code> teilt „dankenswerterweise” ihr Ergebnis
+mit ihrer Argumentliste (bis auf das erste Element).</li>
+<li>In der objektorientierten Programmierung, wo intensiv von
+Verweissemantik und Mutation Gebrauch gemacht wird, muss die
+Programmiererin sich mit den Fragen beschäftigen, ob Verweise auf
+alte Objekte genutzt oder neue Objekte erzeugt werden.</li>
+
+</ul>
+
+</section>
+<section id="slide-org2cb79d4">
+<h4 id="org2cb79d4">Beispiel: Ein Java-Programm</h4>
+<ul>
+<li><p>
+Ein inzwischen behobenes Sicherheitsproblem in einer Java library:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-java">  <span style="color: #0000FF;">class</span> <span style="color: #6434A3;">ProtectedResource</span> <span style="color: #707183;">{</span>
+     <span style="color: #0000FF;">private</span> <span style="color: #6434A3;">Resource</span> <span style="color: #BA36A5;">theResource</span> = ...;
+     <span style="color: #0000FF;">private</span> <span style="color: #6434A3;">String</span><span style="color: #7388D6;">[]</span> <span style="color: #BA36A5;">allowedUsers</span> = ...;
+     <span style="color: #0000FF;">public</span> <span style="color: #6434A3;">String</span><span style="color: #7388D6;">[]</span> <span style="color: #006699;">getAllowedUsers</span><span style="color: #7388D6;">()</span> <span style="color: #7388D6;">{</span>
+        <span style="color: #0000FF;">return</span> allowedUsers;
+     <span style="color: #7388D6;">}</span>
+     <span style="color: #0000FF;">public</span> <span style="color: #6434A3;">String</span> <span style="color: #006699;">currentUser</span><span style="color: #7388D6;">()</span> <span style="color: #7388D6;">{</span> ... <span style="color: #7388D6;">}</span>
+     <span style="color: #0000FF;">public</span> <span style="color: #6434A3;">void</span> <span style="color: #006699;">useTheResource</span><span style="color: #7388D6;">()</span> <span style="color: #7388D6;">{</span>
+        <span style="color: #0000FF;">for</span><span style="color: #909183;">(</span><span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">i</span>=0; i &lt; allowedUsers.<span style="color: #6434A3;">length</span>; i++<span style="color: #909183;">)</span> <span style="color: #909183;">{</span>
+           <span style="color: #0000FF;">if</span><span style="color: #709870;">(</span>currentUser<span style="color: #907373;">()</span>.equals<span style="color: #907373;">(</span>allowedUsers<span style="color: #6276BA;">[</span>i<span style="color: #6276BA;">]</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span> <span style="color: #709870;">{</span>
+               ... <span style="color: #8D8D84;">// </span><span style="color: #8D8D84; font-style: italic;">access allowed: use it</span>
+               <span style="color: #0000FF;">return</span>; 
+           <span style="color: #709870;">}</span>
+        <span style="color: #909183;">}</span>
+        <span style="color: #0000FF;">throw</span> <span style="color: #0000FF;">new</span> <span style="color: #6434A3;">IllegalAccessException</span><span style="color: #909183;">()</span>;
+     <span style="color: #7388D6;">}</span>
+  <span style="color: #707183;">}</span></pre>
+</pre>
+</div></li>
+
+<li>Problem: <code>getAllowedUsers</code> gibt einen Verweis auf das Array
+<code>allowedUsers</code> zurück.</li>
+<li>Damit ist <code>getAllowedUsers()[0] = currentUser()</code> möglich.</li>
+<li>Abhilfe?</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgdb63ac2">
+<h2 id="orgdb63ac2">Integration von Daten und Funktionen &#x2013; Übergang zum Objektbegriff</h2>
+<div class="outline-text-2" id="text-orgdb63ac2">
+</div></section>
+<section id="slide-org5b51a0a">
+<h3 id="org5b51a0a">Funktionen mit Funktionen als Resultat</h3>
+<p>
+Beispiele aus dem letzten Semester:
+</p>
+<ul>
+<li><p>
+Was liefert der Ausdruck <code>(inc 3)</code>, wenn die Funktion <code>inc</code> wie folgt
+definiert ist?
+</p>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-scheme">   <span style="color: #707183;">(</span>def inc 
+      <span style="color: #7388D6;">(</span>fn <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span> <span style="color: #909183;">(</span>fn <span style="color: #709870;">[</span>z<span style="color: #709870;">]</span> <span style="color: #709870;">(</span>+ z n<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div></li>
+<li><p>
+Welches Resultat liefert eine Anwendung der Funktion <code>dot</code>?
+</p>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-scheme">   <span style="color: #707183;">(</span>def dot
+      <span style="color: #7388D6;">(</span>fn <span style="color: #909183;">[</span>f g<span style="color: #909183;">]</span> <span style="color: #909183;">(</span>fn <span style="color: #709870;">[</span>x<span style="color: #709870;">]</span> <span style="color: #709870;">(</span>f <span style="color: #907373;">(</span>g x<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div></li>
+
+</ul>
+</section>
+<section id="slide-orgdee803b">
+<h3 id="orgdee803b">Was ist ein Objekt?</h3>
+<ul>
+<li>Objekte im Sinne der „objektorientierten Programmierung” sind
+nichts weiter als Funktionen mit „internen” Daten.</li>
+<li><p>
+So gesehen liefert ein Ausdruck der Art
+</p>
+<pre class="example">
+(def inc-obj (inc 3))
+
+</pre>
+<p>
+ein Objekt (eine Funktion) mit dem internen Datum (Zustand) <b>3</b>.
+</p></li>
+<li>Die Funktion bezeichnet man in der objektorientierten Programmierung
+auch als <i>Methode</i>.</li>
+<li>Durch den Ausdruck <code>(inc-obj 7)</code> 
+wird die Methode aktiviert (die Funktion aufgerufen). Sie verlangt
+ein Argument.</li>
+<li><code>inc-obj</code> ist ein sehr primitives Objekt mit nur einer (unveränderlichen)
+Zustandsgrößen und einer Methode.</li>
+
+</ul>
+</section>
+<section id="slide-org75a9aa7">
+<h3 id="org75a9aa7">Ein etwas interessanteres Objekt</h3>
+<div class="org-src-container">
+
+<pre  class="src src-scheme"><span style="color: #707183;">(</span>def person
+  <span style="color: #7388D6;">(</span>fn <span style="color: #909183;">[</span>name vorname<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">let</span> <span style="color: #709870;">[</span>get-name    <span style="color: #907373;">(</span>fn <span style="color: #6276BA;">[]</span> name<span style="color: #907373;">)</span>
+          get-vorname <span style="color: #907373;">(</span>fn <span style="color: #6276BA;">[]</span>vorname<span style="color: #907373;">)</span>
+          vollname    <span style="color: #907373;">(</span>fn <span style="color: #6276BA;">[]</span> <span style="color: #6276BA;">(</span>str vorname <span style="color: #008000;">" "</span> name<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+          gruss       <span style="color: #907373;">(</span>fn <span style="color: #6276BA;">[</span>g<span style="color: #6276BA;">]</span> <span style="color: #6276BA;">(</span>str g <span style="color: #008000;">" "</span> <span style="color: #858580;">(</span>vollname<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+      <span style="color: #709870;">(</span>fn <span style="color: #907373;">[</span>nachricht<span style="color: #907373;">]</span>
+        <span style="color: #907373;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #6276BA;">(</span>= nachricht 'get-name<span style="color: #6276BA;">)</span> get-name
+          <span style="color: #6276BA;">(</span>= nachricht 'get-vorname<span style="color: #6276BA;">)</span> get-vorname
+          <span style="color: #6276BA;">(</span>= nachricht 'get-vollname<span style="color: #6276BA;">)</span> vollname
+          <span style="color: #6276BA;">(</span>= nachricht 'gruss<span style="color: #6276BA;">)</span> gruss
+          <span style="color: #006FE0;">:else</span> <span style="color: #6276BA;">(</span>throw <span style="color: #858580;">(</span>Exception. <span style="color: #008000;">"unbekannte Nachricht"</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+<ul>
+<li>Ein Aufruf der Funktion <code>person</code> liefert ein „Objekt” mit 
+<ul>
+<li>zwei Zustandsgrößen (<code>name</code>, <code>vorname</code>) und</li>
+<li>vier Methoden: <code>get-name</code>, <code>get-vorname</code>, <code>vollname</code> und <code>gruss</code></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section >
+<ul>
+<li>„In Wirklichkeit” liefert ein Aufruf der Funktion <code>person</code> eine
+Verteilfunktion, die anhand ihres Parameters <code>nachricht</code> ermittelt,
+welche der Methoden aufzurufen ist.</li>
+
+</ul>
+
+</section>
+<section id="slide-org230f508">
+<h3 id="org230f508">Anwendungen des <code>person</code>-Objekts</h3>
+<div class="org-src-container">
+
+<pre  class="src src-scheme"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Objekterzeugung:</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">define</span> <span style="color: #006699;">p1</span> <span style="color: #7388D6;">(</span>person <span style="color: #008000;">"Gans"</span> <span style="color: #008000;">"Gustav"</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #7388D6;">(</span>p1 'get-vorname<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>     <span style="color: #8D8D84;">;;</span><span style="color: #8D8D84; font-style: italic;">=&gt; "Gustav"</span>
+<span style="color: #707183;">(</span><span style="color: #7388D6;">(</span>p1 'get-name<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>        <span style="color: #8D8D84;">;;</span><span style="color: #8D8D84; font-style: italic;">=&gt; "Gans"</span>
+<span style="color: #707183;">(</span><span style="color: #7388D6;">(</span>p1 'get-vollname<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>    <span style="color: #8D8D84;">;;</span><span style="color: #8D8D84; font-style: italic;">=&gt; "Gustav Gans"</span>
+<span style="color: #707183;">(</span><span style="color: #7388D6;">(</span>p1 'gruss<span style="color: #7388D6;">)</span> <span style="color: #008000;">"hallo"</span><span style="color: #707183;">)</span>   <span style="color: #8D8D84;">;;</span><span style="color: #8D8D84; font-style: italic;">=&gt; "hallo Gustav Gans"</span>
+<span style="color: #707183;">(</span>p1 'x<span style="color: #707183;">)</span>                 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">error</span></pre>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgdd1f1b9">
+<h3 id="orgdd1f1b9">Java-Klasse <code>Person</code></h3>
+<div class="org-src-container">
+
+<pre  class="src src-java"> <span style="color: #0000FF;">public</span> <span style="color: #0000FF;">class</span> <span style="color: #6434A3;">Person</span>
+<span style="color: #707183;">{</span>
+   <span style="color: #6434A3;">String</span> <span style="color: #BA36A5;">vorname</span>, <span style="color: #BA36A5;">name</span>;
+
+    <span style="color: #0000FF;">public</span> <span style="color: #006699;">Person</span> <span style="color: #7388D6;">(</span><span style="color: #6434A3;">String</span> <span style="color: #BA36A5;">n</span>, <span style="color: #6434A3;">String</span> <span style="color: #BA36A5;">v</span><span style="color: #7388D6;">)</span>
+    <span style="color: #7388D6;">{</span>
+        vorname = v;
+        name = n;
+    <span style="color: #7388D6;">}</span>
+
+    <span style="color: #0000FF;">public</span> <span style="color: #6434A3;">String</span> <span style="color: #006699;">get_name</span><span style="color: #7388D6;">()</span>
+    <span style="color: #7388D6;">{</span>
+        <span style="color: #0000FF;">return</span> name;
+    <span style="color: #7388D6;">}</span>
+    <span style="color: #0000FF;">public</span> <span style="color: #6434A3;">String</span> <span style="color: #006699;">get_vorname</span><span style="color: #7388D6;">()</span>
+    <span style="color: #7388D6;">{</span>
+        <span style="color: #0000FF;">return</span> vorname;
+    <span style="color: #7388D6;">}</span>
+    <span style="color: #0000FF;">public</span> <span style="color: #6434A3;">String</span> <span style="color: #006699;">vollname</span><span style="color: #7388D6;">()</span>
+    <span style="color: #7388D6;">{</span>
+        <span style="color: #0000FF;">return</span> vorname + <span style="color: #008000;">" "</span> + name;
+    <span style="color: #7388D6;">}</span>
+    <span style="color: #0000FF;">public</span> <span style="color: #6434A3;">String</span> <span style="color: #006699;">gruss</span><span style="color: #7388D6;">(</span><span style="color: #6434A3;">String</span> <span style="color: #BA36A5;">gruss</span><span style="color: #7388D6;">)</span>
+    <span style="color: #7388D6;">{</span>
+        <span style="color: #0000FF;">return</span> gruss + <span style="color: #008000;">" "</span> + <span style="color: #0000FF;">this</span>.vollname<span style="color: #909183;">()</span>;
+    <span style="color: #7388D6;">}</span>
+<span style="color: #707183;">}</span></pre>
+</pre>
+</div>
+
+
+</section>
+<section id="slide-org5332573">
+<h3 id="org5332573">Zusammenfassung</h3>
+<ul>
+<li>Für die objektorientierte Programmierung bedarf es keiner speziellen
+Programmiersprachen.</li>
+<li>Objektorientierung besteht nur aus einer Reihe von Konventionen zum
+Umgang mit Daten.</li>
+<li>Diese Konventionen werden von objektorientierten Sprachen explizit
+und implizit unterstützt. Z. B. muss die Verteilfunktion nicht
+selbst programmiert werden.</li>
+<li>Objekte sind nichts weiter als
+<ul>
+<li>eine Menge von <code>Name-&gt;Wert</code>-Abbildungen</li>
+<li>eine Reihe von Funktionen, die solche Abbildungen als erstes
+Argument akzeptieren und</li>
+<li>eine Verteilfunktion, die ermittelt, welche dieser Funtkion
+aufzurufen ist.</li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'slide', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,dependencies: [ { src: 'plugin/menu/menu.js', async: true }, { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]});
+</script>
+</body>
+</html>

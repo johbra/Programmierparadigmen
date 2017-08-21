@@ -1,0 +1,441 @@
+# +SETUPFILE: /Users/johannes/Documents/myOrg/org-html-themes/setup/theme-bigblow.setup
+#+SETUPFILE: ./theme-bigblow-local.setup
+#+TITLE: Funktionale Programmierung -- Formalisierung
+#+SUBTITLE: Programmierparadigmen
+#+AUTHOR: Johannes Brauer
+#+OPTIONS:   H:4
+#+OPTIONS: num:nil d:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: reveal_single_file:nil
+#+Language:  de
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+#+REVEAL_THEME: simple
+#+REVEAL_TRANS: slide
+#+REVEAL_HLEVEL: 1
+# #+REVEAL_SLIDE_FOOTER: Prof. Dr.-Ing. Johannes Brauer: Programmierparadigmen
+#+REVEAL_THEME: simple
+#+REVEAL_TRANS: slide
+#+REVEAL_HLEVEL: 1
+#+REVEAL_INIT_SCRIPT: dependencies: [ { src: 'plugin/menu/menu.js', async: true },
+#+REVEAL_INIT_SCRIPT:                 { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]
+#+REVEAL_MARGIN: 0.05
+#+REVEAL_EXTRA_CSS: ./mycss/myrevealstyle.css
+#+OPTIONS: reveal_control:t
+
+# um Folien mit reveal.js erzeugen zu können:ml
+# M-x load-library und dann ox-reveal
+
+
+* Syntax und Semantik von Clojure
+
+** (Vereinfachte) Syntax von Clojure /(1)/
+
+#+BEGIN_VERSE
+      <def> = (*def* <var> <exp>)
+      <exp> =   <var>
+              | <con>
+              | (<prm> <exp> ... <exp>)
+              | (<var> <exp> ... <exp>)
+              | (*cond* <exp> <exp> ... <exp> <exp>)
+              | (*cond* <exp> <exp> ... *:else* <exp>)
+              | (*fn* [<var> <var> ... <var>] <exp>)
+#+END_VERSE
+-  Clojure-Programme bestehen (bisher) aus Definitionen (=<def>=) und
+   Ausdrücken (=<exp>=).
+-  Ausdrücke können sein:
+   -  Variablen (=<var>=) oder Konstanten (=<con>=)
+   -  Funktionsanwendungen (Funktionsaufrufe)
+   -  Bedingte Ausdrücke
+   -  Funktionen (aka Lambda-Ausdrücke)
+
+** (Vereinfachte) Syntax von Clojure /(2)/
+
+-  Zur Erleichterung der Kommunikation kann es sinnvoll sein,
+   syntaktischen Komponenten Namen zu geben:
+
+#+BEGIN_VERSE
+     (*cond* <frage> <antwort> ... <frage> <antwort>)
+
+     (*fn*  [<parameter> ... <parameter>] <rumpf>)
+#+END_VERSE
+-  =cond= erwartet eine beliebige Anzahl von Ausdruckspaaren, deren
+   erster Ausdruck eine Bedingung (=frage=) und deren zweiter das
+   zugehörige Ergebnis (=antwort=) darstellt.
+-  Der auf =fn= folgende Vektor von Variablen heißt der /Kopf/ (header)
+   einer Funktionsdefinition und beschreibt die Liste der /formalen
+   Parameter/.
+-  Dem Kopf folgt ein Ausdruck, der den /Rumpf/ (body) der Funktion
+   darstellt.
+
+** Semantik einer Programmiersprache
+
+-  Die Syntax beschreibt den Aufbau grammatikalisch korrekter Sätze.
+-  Die Semantik beschreibt die Bedeutung grammatikalisch korrekter
+   Sätze.
+-  Die Semantik natürlichsprachlicher Sätze wird häufig durch Sätze mit
+   einfacheren (bereits bekannten) Begriffen beschrieben.
+-  Die Semantik einer Programmiersprache...
+   -  legt fest, welche Wirkung jedes Sprachelement oder -konstrukt im
+      Programmablauf hervorruft;
+   -  wird beschrieben durch
+      -  Sätze in natürlicher Sprache (häufig anzutreffen bei gängigen
+         Programmiersprachen (z.B. C, Pascal, Java, Smalltalk); Problem:
+         Beschreibung umfangreich und nicht eindeutig;
+      -  Menge von Verhaltensregeln, die die Funktionsweise von
+         Programmen bestimmen; kann formal und damit unzweideutig
+         erfolgen.
+
+** (Vereinfachte) Semantik von Clojure /(1)/
+
+-  Es gibt verschiedene Arten, die Semantik einer Programmiersprache
+   formal zu beschreiben:
+   -  Durch Angabe eines Interpreters für eine bestimmte Maschine;
+      beschreibt wie ein Programm ausgeführt wird (operationelle
+      Semantik).
+   -  Durch Übersetzung in eine andere Sprache, deren Semantik bereits
+      definiert ist:
+      -  z.B. in mathematischen Objekten (Relationen, Funktionen)
+      -  beschreibt, was der Effekt der Ausführung eines Programms ist
+         (denotationelle Semantik).
+-  Für die Beschreibung der Semantik von Clojure greifen wir auf
+   einfache Regeln der Algebra zurück.
+
+** (Vereinfachte) Semantik von Clojure /(2)/
+
+-  Die Semantik definiert, wie Clojure-Ausdrücke ausgewertet werden.
+-  Auswertung bedeutet, dass ein Ausdruck durch Anwenden von Regeln
+   solange umgeformt wird, bis ein Wert übrig bleibt.
+-  Werte sind (bisher):
+   -  Zahlen (2, 3.5, 1/3)
+   -  boolesche Werte (=true=, =false=)
+   -  Symbole (=’Karl=, =’hallo=)
+   -  Listen, bestehend aus Zahlen, booleschen Werten, Symbolen und
+      Listen
+-  Zahlen, boolesche Werte und Symbole sind Ausdrücke, die zu sich
+   selbst ausgewertet werden (self evaluating expressions).
+
+** Semantik der Funktionsanwendung
+
+-  Funktionsanwendungen tauchen in der Syntax in zwei Formen auf:
+   1. =(<prm> <exp> ... <exp>)=
+   2. =(<var> <exp> ... <exp>)=
+-  =prm= steht dabei für eine in Clojure eingebaute Funktion
+   (Standardfunktion), wie z.B. =+=, =*= usw.
+-  =var= steht für eine benutzerdefinierte Funktion, d.h. eine Funktion,
+   die mithilfe der Pseudofunktion =def= definiert wurde.
+-  Verallgemeinert ausgedrückt, handelt es sich in beiden Fällen um
+   Ausdrücke, deren Wert eine Funktion ist.
+
+** Auswertungsregel für Standardfunktionen
+
+1. *Werte alle Ausdrücke der Funktionsanwendung aus*!
+2. *Wende die Standardfunktion, die dem Wert des ersten Ausdrucks*
+   (=<prm>=) *entspricht, auf die in Schritt 1 ausgewerteten Argumente*
+   (=<exp> …=) *an!*
+
+Man beachte die Rekursivität der Auswertungsregel.
+
+** Anwendung von Standardfunktionen -- Beispiel
+
+-  Der Ausdruck
+
+   #+BEGIN_EXAMPLE
+       (+ (* (/ 12 8) 2/3) (- 20 (Math/sqrt 4)))
+   #+END_EXAMPLE
+
+   soll Schritt für Schritt gemäß der Auswertungsregel für
+   Standardfunktionen ausgewertet werden:
+
+   #+BEGIN_EXAMPLE
+       (+ (* (/ 12 8) 2/3) (- 20 (Math/sqrt 4))) 
+           = (+ (* 3/2 2/3) (- 20 (Math/sqrt 4)))
+           = (+ 1 (- 20 (Math/sqrt 4)))
+           = (+ 1 (- 20 2.0))
+           = (+ 1 18.0)
+           = 19.0 
+   #+END_EXAMPLE
+
+-  Da die Werte von =+=, =*= usw. Folgen von Maschinenbefehlen
+   entsprechen, die die zugehörige Funktion ausführen, bleiben diese bei
+   der schrittweisen Auswertung solange stehen, bis sie auf ihre
+   Argumente angewendet werden können.
+
+** Die globale Umgebung
+
+-  Man beachte, dass Ausdrücke wie\\
+   =(+ x 2)= oder =(f 7 8)=\\
+   -- jeweils isoliert betrachtet -- nicht ausgewertet werden können, da
+   nicht klar ist, wozu =x= bzw. welche Funktion =f= ausgewertet werden
+   soll.
+-  Die Auswertung ist nur in einer /Umgebung/ möglich, in der die Werte
+   aller Variablen definiert sind.
+-  Durch die Pseudofunktion =def= wird einer Variablen ein Wert
+   zugeordnet. Diese Assoziation merkt sich der Interpreter in einem
+   Gedächtnis, das /globale Umgebung/ genannt wird.
+
+** Auswertungen in der globalen Umgebung
+
+-  In einer Umgebung können nun auch Ausdrücke ausgewertet werden, die
+   Variablen enthalten, sofern sich für sie ein Eintrag in der Umgebung
+   befindet.
+-  Dabei werden Variablen durch die ihnen assoziierten Werte ersetzt.
+-  Für den Fall, dass die anzuwendende Funktion eine benutzerdefinierte
+   ist (d.h. der Variablen ist ein ~fn~-Ausdruck zugeordnet), erweitern
+   wir die Auswertungsregel um das
+
+*Ersetzungsmodell für Funktionsanwendungen:*
+
+-  *Werte den Rumpf der Funktion aus, wobei jeder formale Parameter
+   durch das korrespondierende ausgewertete Argument ersetzt wird.*
+
+-  Formal: Mit =(def f (fn= $[x_{1} \ldots x_{n}]$ =exp))= gilt:
+   $(f v_{1} \ldots v_{n}) = exp^{x_{i}}_{v_{i}}$. Dabei bedeutet
+   $exp^{x_{i}}_{v_{i}}$, dass in =exp= jedes Auftreten eines $x_{i}$ in
+   durch $v_{i}$ ersetzt ist.
+
+** Anwendung des Ersetzungsmodells
+
+-  Gegeben seien die beiden folgenden Funktionsdefinitionen:
+#+begin_small
+   #+BEGIN_SRC clojure
+       (def summe-der-quadrate
+             (fn [x y] 
+               (+ (* x x) (* y y))))
+       (def fun
+             (fn [a] 
+               (summe-der-quadrate (+ a 1) (* a 2)))) 
+   #+END_SRC
+#+end_small
+-  Wenden wir nun das Ersetzungsmodell auf diese Funktionsanwendung an: 
+
+   ~(fun 3)~
+ 
+#+REVEAL: split
+
+#+BEGIN_VERSE 
+    (*fun* 3)
+        = ((fn [a] (summe-der-quadrate (+ a 1) (* a 2))) 3)
+        = *((fn [a] (summe-der-quadrate (+ a 1) ( * a 2))) 3)*
+        = (summe-der-quadrate (+ 3 1) (* 3 2))
+        = (summe-der-quadrate *(+ 3 1) ( * 3 2)*)
+        = (summe-der-quadrate 4 6)
+        = (*summe-der-quadrate* 4 6)
+        = ((fn [x y] (+ (* x x) (* y y))) 4 6)
+        = *((fn [x y] (+ ( * x x) ( * y y))) 4 6)*
+        = (+ (* 4 4) (* 6 6))
+        = (+ 16 36)
+        = 52
+#+END_VERSE
+
+* Auswertungsregeln für Clojure-Pseudofunktionen
+
+** Pseudofunktionen
+
+-  /Pseudofunktionen/ (in der Lisp-Terminologie auch /special forms/
+   genannt) heißen so, weil
+
+   -  für sie besondere Auswertungsregeln gelten und/oder
+
+   -  ihre Auswertung keinen Wert liefert.
+
+-  Bisher benutzte Pseudofunktionen:
+
+   -  =def=
+
+   -  =fn=
+
+   -  =cond=
+
+   -  =:else=
+
+** Auswertungsregeln für =def= und =fn=
+
+-  =def= :: Der Ausdruck =(def var exp)= liefert keinen Wert, sondern
+   hat lediglich den Effekt, dass der Variablen =var= der Wert von =exp=
+   in der globalen Umgebung zugeordnet wird.
+
+-  =fn= :: Der Ausdruck =(fn [v1 … vn] exp)= liefert als Wert eine
+   (namenlose/anonyme) Funktion mit den formalen Parametern =v1 … vn=
+   und der Berechnungsvorschrift =exp=.
+
+** Auswertungsregel für =cond= ohne =:else= 
+Zwei Fälle sind zu unterscheiden:
+1. Die erste Frage (Bedingung) ist =false=:
+   #+BEGIN_VERSE 
+       (cond
+           false $\ldots$
+           frage2 antwort2
+           $\ldots$)
+       = (cond
+            frage2 antwort2
+            $\ldots$)
+   #+END_VERSE
+   D.h. die erste Frage-Antwort-Kombination wird eliminiert.
+
+#+REVEAL: split
+
+2. [@2]Die erste Frage (Bedingung) ist =true=:
+
+   #+BEGIN_VERSE 
+       (cond
+           true exp
+           $\ldots$)
+       = exp
+   #+END_VERSE
+
+   D.h. der Wert des ganzen =cond=-Ausdrucks ist =exp=.
+
+Wenn keine Frage =true= liefert, ist das Resultat =nil=.
+
+** Auswertungsregel für =cond= mit =:else=
+
+-  Die Auswertung erfolgt wie bei =cond= ohne =:else=. Wenn dabei als
+   letzte die =:else=-Zeile übrig bleibt, gilt:
+
+   #+BEGIN_VERSE
+       (cond
+           :else exp)
+       = exp
+           
+   #+END_VERSE
+
+   D.h. der Wert des ganzen =cond=-Ausdrucks ist die Antwort hinter
+   =:else=.
+
+Bei der Auswertung von Ausdrücken beachte man folgende Daumen-
+
+*Regel für die Auswertung von Ausdrücken:*
+
+*Vereinfache immer den äußersten und am weitesten links stehenden
+Teilausdruck, der ausgewertet werden kann.*
+
+* Korrektheit rekursiver Funktionen
+
+** Beweistechniken für Programme
+
+-  Voraussetzungen:
+   -  Formalisierung der Spezifikation eines Programms
+   -  Formale Definition der Semantik der Programmiersprache
+-  Funktionale (zustandslose) Programmierung:
+   -  Semantik definiert durch Substitutionsmodell (s. o.)
+   -  Beweise durch vollständige Induktion über die Rekursionstiefe
+-  Prozedurale (objektorientierte) Programmierung:
+   -  Semantik häufig axiomatisch definiert: Für jedes Sprachkonstrukt
+      wird angegeben, was nach Ausführung gilt (Nachbedingung,
+      post-condition), wenn vorher eine Vorbedingung (pre-condition)
+      erfüllt war.
+
+#+REVEAL: split
+
+   -  Hoare-Kalkül: Axiome und Ableitungsregeln für alle Konstrukte
+      einer einfachen imperativen Programmiersprache
+   -  wp-Kalkül: Die Überprüfung der Korrektheit durch Rückwärtsanalyse
+      des Programmcodes. Ausgehend von der Nachbedingung wird geprüft,
+      ob diese durch die Vorbedingung und den Programmcode garantiert
+      wird (wp = weakest precondition).
+
+** Rekursive Induktion 
+*Beweis mittels rekursiver Induktion:*
+
+1. Formuliere die Behauptung, die für den Algorithmus gelten muss.
+2. Zeige, dass die Behauptung für einen Aufruf mit Rekursionstiefe 0
+   gilt.
+3. Zeige, dass aus der Gültigkeit der Behauptung für Aufrufe mit
+   Rekursionstiefe gleich $n$ die Gültigkeit der Behauptung für Aufrufe
+   mit Rekursionstiefe $n+1$ folgt.
+
+*Definition der Rekursionstiefe:*
+
+#+BEGIN_QUOTE
+  Findet beim Ausführen des Aufrufs kein rekursiver Aufruf statt, dann
+  ist die Rekursionstiefe 0, und sonst ist sie um 1 größer als die
+  größte Rekursionstiefe aller weiteren Aufrufe, die durch diesen Aufruf
+  verursacht werden.
+#+END_QUOTE
+
+** Beispiel: Funktion =len=
+
+#+begin_small
+#+BEGIN_SRC clojure
+    ;; berechnet die Laenge einer Liste
+    (def len
+      (fn [lst]
+        (cond
+          (empty? lst) 0
+          :else (+ 1 (len (rest lst))))))
+        
+#+END_SRC
+#+end_small
+
+-  Behauptung: :: Der Aufruf
+
+   $$(len\ '(e_{1}\ e_{2}\ \ldots\ e_{n}))$$
+
+   liefert die Anzahl $n$ der Elemente der als Argument übergebenen
+   Liste.
+
+** Beispiel: Funktion =len= (2)
+
+-  Verankerung: :: Der Aufruf =(len ’())= liefert nach Ersetzungsmodell:
+
+   #+begin_small
+   #+BEGIN_SRC clojure
+       (len '())
+               = (cond
+                     (empty? '()) 0
+                     :else (+ 1 (len (rest '()))))
+               = (cond
+                     true 0
+                     :else (+ 1 (len (rest '()))))
+               = 0
+           
+   #+END_SRC
+   #+end_small
+
+   Wenn die Rekursionstiefe $k=0$ ist, liefert die Funktion $0$, d.h.
+   die Länge der leeren Liste.
+
+-  Induktionsannahme: :: Die Behauptung gilt für Rekursionstiefe
+   $k = m$.
+
+** Beispiel: Funktion =len= (3)
+
+-  Induktionsschluss :: Wir betrachten jetzt den Aufruf
+
+   $$(len\ '(e_{1}\ e_{2}\ \ldots\ e_{m+1}))$$
+
+   Dieser Aufruf wird gemäß Ersetzungmodell ausgewertet als
+   
+\begin{eqnarray}
+   (len\ ’(e_{1}\ e_{2}\ \ldots\ e_{m+1})) & = & (\mbox{cond}\\
+    & &  (empty?\ ’(e_{1}\ e_{2}\ \ldots\ e_{m+1}))\ 0\\
+    & &  \mbox{:else}\ (+ 1 (len\ (rest\ ’(e_{1}\ e_{2}\ldots\ e_{m+1})))))\\
+    & = & (\mbox{cond}\\
+    &  &     false\ 0\\
+    &  &     \mbox{:else}\ (+\ 1\ (len (rest\ ’(e_{1}\ e_{2}\ \ldots\ e_{m+1})))))\\
+    & = & (+\ 1\ (len (rest\ ’(e_{1}\ e_{2}\ \ldots\ e_{m+1}))))\\
+    & = & (+\ 1\ (len\ ’(e_{2}\ \ldots\ e_{m+1})))
+\end{eqnarray}
+
+#+REVEAL: split
+   Der Aufruf $$(len ’(e_{2}\ \ldots\ e_{m+1}))$$ besitzt die
+   Rekursionstiefe $m$ und liefert gemäß Induktionsannahme $m$:
+   $$(+ \ 1\ (len\ ’(e_{2}\ \ldots\ e_{m+1}))) = (+ \ 1\ m) = m+1$$
+
+* Zusammenfassung
+
+** Abstraktion durch Formalisierung ... 
+... bedeutet:
+
+-  Übergang von der Einzelfallbetrachtung (Stichproben, Tests) zu
+   allgemein gültigen Aussagen
+
+-  Abstraktion durch formalisierte Spezifikation:
+
+   -  präzise Aussagen über die Semantik einer Funktion
+
+   -  Beweisbarkeit der Implementierung
+
+

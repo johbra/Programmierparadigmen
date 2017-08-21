@@ -1,0 +1,437 @@
+# +SETUPFILE: /Users/johannes/Documents/myOrg/org-html-themes/setup/theme-bigblow.setup
+# +SETUPFILE: ./theme-bigblow-local.setup
+#+TITLE: Zustandsbehaftete Programmierung in funktionalen Sprachen
+#+SUBTITLE: Programmierparadigmen
+#+AUTHOR: Johannes Brauer
+#+OPTIONS:   H:4
+#+OPTIONS: num:nil d:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: reveal_single_file:nil
+#+Language:  de
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+# +REVEAL_ROOT: http://cdn.jsdeZustandsbehaftete Programmierung in funktionalen Sprachen]]livr.net/reveal.js/3.0.0/
+#+REVEAL_THEME: simple
+#+REVEAL_TRANS: slide
+#+REVEAL_HLEVEL: 1
+#+REVEAL_INIT_SCRIPT: dependencies: [ { src: 'plugin/menu/menu.js', async: true },
+#+REVEAL_INIT_SCRIPT:                 { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]
+#+REVEAL_MARGIN: 0.05
+#+REVEAL_EXTRA_CSS: ./mycss/myrevealstyle.css
+#+OPTIONS: reveal_control:t
+
+* Zustandsbehaftete Programmierung
+** Beispiel: Ein Bankkonto
+
+-  Typisches (oder doch nicht?) Beispiel für einen zustandsbehafteten
+  Gegenstand der realen Welt: ein Bankkonto.
+-  Das Konto werde durch eine Prozedur =belaste= repräsentiert.
+-  =(belaste betrag)= reduziere den Kontostand um =betrag= und gebe den
+   neuen Kontostand als Resultat zurück.
+-  Annahme: Kontostand zu Beginn 100. Dann ist folgende Ausdruckssequenz
+   denkbar:
+
+   #+BEGIN_SRC clojure
+       > (belaste 30)
+          70
+          > (belaste 30)
+          40
+          > (belaste 50)
+          konto-ueberzogen
+          > (belaste 20)
+          20
+   #+END_SRC
+
+
+** Zustandsabhängige Resultate
+
+-  Beachte: Die gleiche Anwendung =(belaste 30)= liefert
+   *unterschiedliche* Ergebnisse!
+-  =belaste= verhält sich nicht mehr wie eine mathematische Funktion!
+-  Mögliche Implementierung des Bankkontos:
+   #+BEGIN_SRC clojure
+       ;; globlale Variable 
+       (def *konto* (atom 100))
+
+       ;; belaste: (number -> (mixed number symbol))
+       ;; Effekt: bucht vom konto betrag ab, liefert neuen
+       ;; Kontostand als Resultat, falls Konto nicht ueberzogen
+       (def belaste
+          (fn [betrag]
+            (cond
+              (>= @*konto* betrag)
+              (do
+                (swap! *konto* - betrag)
+                @*konto*)
+              :else 'konto-ueberzogen))
+   #+END_SRC
+
+
+** Semantik von =atom=, =swap!= und =do= 
+
+- =atom= :: Durch einen Ausdruck der Form =(def v (atom e))= wird ein
+     Atom (eine änderbare Speicherzelle) mit dem Anfangswert =e=
+     erzeugt und ein Verweis auf sie in =v= abgelegt. Auf den Wert von
+     =v= kann dann mit =(deref v)= oder =@v= zugegriffen werden.
+- =swap!= :: Ein Ausdruck der Form  =(swap! atom f ...)=\\ 
+  wird als =(f @atom ...)= ausgewertet. Das Resultat der Auswertung wird der neue Wert des Atoms.
+- =do= :: Ausdrücke der Form =(do= $e_{ 1}\ e_{2} \ldots e_{n}$ =)= werden wie folgt ausgewertet:
+   1. Die Ausdrücke $e_{i}$ werden in der angegebenen Reihenfolge
+      ausgewertet.
+   2. Der Wert von $e_{n}$ ist der Wert des =do=-Ausdrucks.
+
+** Vermeidung der globalen Variablen =*konto*=
+
+-  Definition einer lokalen Variablen =konto=:
+
+   #+begin_small
+   #+BEGIN_SRC clojure
+(def belaste
+  (let [konto (atom 100)]
+    (fn [betrag]
+      (cond
+        (>= @konto betrag) (do
+                             (swap! konto - betrag) @konto)
+        :else 'konto-ueberzogen))))
+   #+END_SRC
+   #+end_small
+-  Damit arbeitet =belaste= wie vorher.
+-  *Beachte:* Die Auswertung des =let=-Ausdrucks erfolgt nur einmal bei
+   der Definition der Funktion =belaste=.
+-  Warum ist das wichtig?
+-  Die neue Funktion =belaste= stellt einen ersten Ansatz dar, Daten und
+   Prozeduren zusammen zu bringen.
+
+** Erzeugung mehrerer Konten
+
+#+BEGIN_SRC clojure
+;; nimmt einen Betrag als Startkapital eines Kontos
+;; und erzeugt eine "belaste-Funktion"
+;; erzeuge-konto: (number -> (number -> (mixed number symbol)))
+(def erzeuge-konto
+  (fn [startwert]
+    (let [konto (atom startwert)]
+      (fn [betrag]
+        (cond
+          (>= @konto betrag) (do
+                               (swap! konto - betrag) @konto)
+          :else 'konto-ueberzogen)))))
+#+END_SRC
+
+
+** Benutzung mehrerer Konten
+
+#+BEGIN_SRC clojure
+(def konto1 (erzeuge-konto 500))
+(def konto2 (erzeuge-konto 600))
+(konto1 200)  ;==> 300
+(konto2 400)  ;==> 200
+(konto2 400)  ;==> konto-ueberzogen
+(konto2 100)  ;==> 100
+#+END_SRC
+
+* Auswertungsmodell für Prozeduren - Grundlagen
+
+** Ersetzungsmodell und Zuweisungen 
+
+Zur Wiederholung das Ersetzungsmodell für Funktionsanwendungen:
+
+Ein Term der Form:\\
+$$(operator\ operand_{1}\ \ldots operand_{n})$$
+wird wie folgt ausgewertet:
+1. Auswertung der Operanden des Terms
+2. Auswertung des Operators des Terms. Der Wert muss eine Funktion sein.
+   Zwei Fälle sind möglich:
+   1. Der Wert des Operators ist eine eingebaute Funktion (z.B. + oder
+      *), dann ist der Wert der Anwendung der eingebauten Funktion auf
+      die ausgewerteten Operanden der Wert des Terms.
+   2. Anderfalls muss der Operator zu einem fn-Ausdruck ausgewertet
+      werden: Anwendung der Funktion auf die Operanden ist die
+      Auswertung des Funktionsrumpfes, wobei jeder formale Parameter
+      durch den korrespondierenden ausgewerteten Operanden ersetzt wird.
+
+** Versagen des Ersetzungsmodells (1)
+-  Für das Ersetzungsmodell gilt:
+   -  Gleiches kann immer durch Gleiches ersetzt werden.
+   -  Bezeichner (Variablen) sind nur Namen für Werte.
+-  Gegenbeispiel:
+   :    (def k1 (erzeuge-konto 100))
+   :    (def k2 (erzeuge-konto 100))
+-  =k1= und =k2= sind verschiedene Bezeichner für den gleichen Wert. Die
+   folgenden Ausdrücke liefern aber unterschiedliche Werte:\\
+   :    (k1 10) ==> 90
+   :    (k1 10) ==> 80
+   :    (k2 10) ==> 90
+#+Reveal: split
+-  Was passiert hier?
+   :   (def k1 (erzeuge-konto 100))
+   :   (def k2 k1)
+   :   (k1 10)
+   :   (k2 10)  ==> ???
+** Versagen des Ersetzungsmodells (2)
+
+-  Nach dem Ersetzungsmodell würde aus
+   #+BEGIN_SRC clojure
+       ((erzeuge-konto 500) 150)
+       = (((fn [startwert]
+             (let [konto (atom startwert)]
+               (fn [betrag]
+                 (cond
+                   (>= @konto betrag)
+                   (do
+                     (swap! konto - betrag) @konto)
+                   :else 'konto-ueberzogen)))) 500) 150)
+       = ((fn [betrag]
+          (cond
+            (>= 500 betrag)
+            (do (swap! konto - betrag) 500)
+                     ;;***** hier darf =konto= offensichtlich nicht ersetzt werden!
+            :else 'konto-ueberzogen)) 150)
+   #+END_SRC
+
+** Versagen des Ersetzungsmodells (3)
+
+-  Fortsetzung der Auswertung:
+
+   #+BEGIN_SRC clojure
+       = ((fn [betrag]
+          (cond
+            (>= 500 betrag)
+            (do (swap! konto - betrag) 500)
+            :else 'konto-ueberzogen)) 150)
+       = (cond
+            (>= 500 150)
+            (do (swap! konto (- 500 150)) 500)
+            :else 'konto-ueberzogen)
+       = (do (swap! konto (- 500 150)) 500)
+       = (do (swap! konto 350) 500)
+       = 500
+   #+END_SRC
+
+-  Das ist offensichtlich unsinnig!
+
+** Das Umgebungsmodell
+
+-  Das Umgebungsmodell erlaubt mithilfe von Umgebungsdiagrammen die
+   Semantik zustandsbehafteter Prozeduren zu definieren.
+-  Durch eine Umgebung wird eine Menge von Bindungen von Variablen an
+   Werte definiert.
+-  Bereits bekannt: In der globalen Umgebung werden (mit der
+   Pseudofunktion =def=) Werte (auch Funktionen/Prozeduren) an
+   Bezeichner gebunden.
+-  In Umgebungsdiagrammen werden Variablen durch Zellen dargestellt, die
+   auf Werte verweisen.
+#+BEGIN_zweispalten
+-  Beispiel: Die Definitionen\\
+   =(def z 27)=\\
+   =(def s "Mozart")=\\
+   werden durch dieses Umgebungsdiagramm dargestellt.
+#+END_zweispalten 
+   #+attr_html: :width 250px
+   [[./Abbildungen/globaleumgebung.png]]
+
+*** Umgebungen - Rahmen
+
+-  Das auf der vorangegangen Folie dargestellte Umgebungsdiagramm
+   enthält einen /Rahmen/. Das ist der einfachste Fall einer Umgebung.
+
+-  Die Umgebung auf der vorangegangen Folie stellt einen Ausschnitt aus
+   der /globalen Umgebung/ dar. Die Definitionen der Standard-Prozeduren
+   von Clojure sind ebenfalls in der globalen Umgebung definiert.
+
+-  Eine Umgebung kann andere Umgebungen umschließen.
+
+-  In Umgebungsdiagrammen werden verschachtelte Umgebungen durch
+   verkettete Rahmen dargestellt.
+
+-  Beispiel: s. nächste Folie
+
+#+REVEAL: split
+
+#+attr_html: :width 600px
+[[./Abbildungen/umgebungen.png]]
+
+
+*** Komplexe Umgebungen
+
+-  Die Umgebung /Global/ besteht aus einem einzigen Rahmen.
+-  Die Umgebung /A/ besteht aus den Rahmen /A/ und /Global/.
+-  Die Umgebung /B/ besteht aus den Rahmen /B/ und /Global/.
+-  Die Variable =z= ist
+   -  in der Umgebung /A/ an 27,
+   -  in der Umgebung /B/ an 50 und
+   -  in der Umgebung /Global/ an 27
+   gebunden.
+-  Die Umgebung /A/ enthält folgende Bindungen:
+   -  =x= an 123
+   -  =s= an "=Brahms="
+   -  =z= an 27
+-  Mit =swap!= kann die Bindung einer Variablen (eines =atom=) verändert werden.
+
+*** Prozeduren in Umgebungsdiagrammen
+Die Prozedurdefinition
+#+begin_smaller
+#+BEGIN_SRC clojure
+    (def quadrat (fn [x] (* x x)))
+#+END_SRC
+#+end_smaller
+führt zu folgendem Umgebungsdiagramm:
+#+attr_html: :width 250px
+[[./Abbildungen/prozedurumgebungen.png]]
+
+*** Prozedurdarstellung in Umgebungsdiagrammen
+
+-  Die Darstellung einer Prozedur besteht aus drei Teilen:
+   1. Liste der formalen Parameter (hier: =x=)
+   2. Prozedurrumpf (Berechnungsvorschrift, hier: =(* x x)=)
+   #+begin_zweispalten 
+   3. [@3]Verweis auf die Umgebung, in der der Lambda-Ausdruck ausgewertet
+      wurde.
+   #+end_zweispalten
+#+attr_html: :width 180px
+[[./Abbildungen/prozedur.png]]
+-  Eine so dargestellte Prozedur bezeichnet man auch als /closure/. Die
+   Verwendung dieses Begriffes ist aber umstritten.
+-  Auswertung eines Lambda-Ausdrucks *in Bezug auf eine Umgebung*
+   resultiert also in einem Prozedurobjekt (closure) wie oben
+   dargestellt.
+
+* Auswertungsmodell für Prozeduren - Beispiele
+
+** Auswertung einer Prozeduranwendung
+
+*Regel* für die Auswertung von Prozeduranwendungen im Umgebungsmodell:
+
+1. Erzeuge einen Rahmen mit den Bindungen der formalen Parameter der
+   Prozedur an die Argumente der Prozeduranwendung
+2. Dieser Rahmen bekommt als umschließende Umgebung die Umgebung,
+   bezüglich der das Prozedurobjekt definiert ist.
+3. Werte den Prozedurrumpf bezüglich der neu erzeugten Umgebung aus.
+
+Auswertung von =(quadrat 17)=:
+#+attr_html: :width 400px
+[[./Abbildungen/auswertungquadrat.png]]
+
+
+** Ein etwas komplexeres Beispiel
+
+Mit den Definitionen
+#+begin_small
+#+BEGIN_SRC clojure
+    (def quadrat 
+       (fn [x]
+          (* x x)))
+    (def summe-der-quadrate 
+       (fn [x y]
+          (+ (quadrat x) (quadrat y))))
+    (def f 
+       (fn [a]
+          (summe-der-quadrate (+ a 1) (* a 2))))
+#+END_SRC
+#+end_small
+soll der Ausdruck =(f 3))= ausgewertet werden.
+
+*** Umgebungsdiagramm der drei Definitionen
+
+#+attr_html: :width 650px
+[[./Abbildungen/auswertung-f.png]]
+
+*** Umgebungen erzeugt durch =(f 3)=
+
+#+attr_html: :width 650px
+[[./Abbildungen/auswertung-f1.png]]
+
+** Prozeduren mit lokalem Zustand
+
+-  Wir benutzen nun das Umgebungsmodell, um die Auswertung von
+   Prozeduren mit lokalen Zustandsvariablen zu beschreiben.
+-  Wir greifen auf das Konto-Beispiel zurück:
+
+   #+begin_small
+   #+BEGIN_SRC clojure
+(def erzeuge-konto
+  (fn [startwert]
+    (let [konto (atom startwert)]
+      (fn [betrag]
+        (cond
+          (>= @konto betrag) (do (swap! konto - betrag) @konto)
+          :else 'konto-ueberzogen)))))
+   #+END_SRC
+   #+end_small
+-  ... und werten der Reihe nach die Ausdrücke
+   #+begin_smaller
+   #+BEGIN_SRC clojure 
+       (def konto1 (erzeuge-konto 100))
+       (konto1 50)
+   #+END_SRC
+   #+end_smaller
+   aus.
+
+*** Definition von =erzeuge-konto= ... 
+... in der globalen Umgebung:
+#+attr_html: :width 450px
+[[./Abbildungen/erzeugekonto1.png]]
+
+*** =(def konto1 (erzeuge-konto 100))= ...
+
+-  Für die Auswertung von diese Ausdrucks
+   sind folgende Schritte erforderlich:
+   1. Für die Auswertung von =(erzeuge-konto 100)= ist ein neuer Rahmen
+      (E1) anzulegen, in dem der formale Parameter =startwert= an 100
+      gebunden wird und die lokale Defintion des Atoms =konto= hinterlegt wird.
+   2. In Bezug auf E1 ist der Rumpf von =erzeuge-konto= -- ein
+      fn-Ausdruck -- auszuwerten. Es entsteht also ein neues
+      Prozedurobjekt mit
+      -  dem formalen Parameter =betrag=,
+      -  dem Rumpf =(cond ...= und
+      -  der Umgebung E1
+   3. Dieses Prozedurobjekt ist das Resultat der Anwendung von
+      =erzeuge-konto=, welches in der globalen Umgebung an den
+      Bezeichner =konto1= gebunden wird.
+-  Das resultierende Umgebungsdiagramm zeigt die nächste Folie.
+
+*** ... das zugehörige Umgebungsdiagramm
+=(def konto1 (erzeuge-konto 100))=
+#+attr_html: :width 700px
+[[./Abbildungen/erzeugekonto2.png]]
+
+*** Die Auswertung von =(konto1 50)= ...
+
+-  ...erfordert die Schritte:
+
+   1. Es ist ein neuer Rahmen (E2) anzulegen, in dem der formale
+      Parameter =betrag= von =konto1= an 50 gebunden wird.
+
+      *Beachte:* Die umschließende Umgebung für E2 ist E1, nicht die
+      globale Umgebung, weil E1 die Umgebung des Prozedurobjekts
+      =konto1= ist.
+
+   2. Innerhalb von E2 wird der Rumpf des Prozedurobjekts =konto1=
+      ausgewertet.
+
+      *Beachte:* Dieser Ausdruck referenziert sowohl =betrag= als auch
+      =konto=.
+      -  =betrag= wird in E2 gefunden.
+      -  =konto= wird in der umschließenden Umgebung E1 gefunden.
+-  Das resultierende Umgebungsdiagramm zeigt die nächste Folie.
+
+*** Umgebungen erzeugt durch =(konto1 50)=
+#+attr_html: :width 700px
+[[./Abbildungen/erzeugekonto3.png]]
+
+*** Die Wirkung von =(swap! konto ... )=
+#+attr_html: :width 700px
+[[./Abbildungen/erzeugekonto4.png]]
+
+*** Zusammenfassung
+
+-  Durch die Ausführung von =(swap! konto ... )= wird die Bindung von
+   =@konto= in E1 geändert.
+-  Nach Auswertung des Rumpfes von =konto1= entfällt E2, da die
+   Prozeduranwendung, die E2 erzeugt hat, beendet ist.
+-  Wenn =konto1= erneut aufgerufen würde, würde eine neue Umgebung E2
+   angelegt werden, die als umschließende Umgebung wieder E1 hätte.
+-  E1 dient also als Speicher für die lokalne Zustandsvariablen des
+   Prozedurobjekts =konto1=.
+

@@ -1,0 +1,278 @@
+# +SETUPFILE: /Users/johannes/Documents/myOrg/org-html-themes/setup/theme-bigblow.setup
+#+SETUPFILE: ./theme-bigblow-local.setup
+#+TITLE: Funktionale Programmierung -- Bedingte Funktionen
+#+SUBTITLE: Programmierparadigmen
+#+AUTHOR: Johannes Brauer
+#+OPTIONS:   H:4
+#+OPTIONS: num:nil  d:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: reveal_single_file:nil
+#+Language:  de
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+# +REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_THEME: simple
+#+REVEAL_TRANS: slide
+#+REVEAL_HLEVEL: 1
+#+REVEAL_INIT_SCRIPT: dependencies: [ { src: 'plugin/menu/menu.js', async: true },
+#+REVEAL_INIT_SCRIPT:                 { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]
+#+REVEAL_MARGIN: 0.05
+#+REVEAL_EXTRA_CSS: ./mycss/myrevealstyle.css
+#+OPTIONS: reveal_control:t
+
+# um Folien mit reveal.js erzeugen zu können:ml
+# M-x load-library und dann ox-reveal
+
+
+
+* Vergleichsausdrücke und Boolesche Ausdrücke
+
+-  Numerische Vergleichsausdrücke der Art
+
+   $a < b, x >= y$ oder $r < s < t$
+
+   werden in Clojure so aufgeschrieben:
+
+   #+BEGIN_EXAMPLE
+       (< a b) (>= x y ) (< r s t)
+               
+           
+   #+END_EXAMPLE
+
+-  Die Auswertung ergibt =true= oder =false=.
+
+-  Den Clojure-Ausdruck =(< r s t)= kann man als Abkürzung für
+
+   #+BEGIN_EXAMPLE
+       (and (< r s) (< s t))
+   #+END_EXAMPLE
+
+   betrachten.
+
+-  Neben =(and ...)= stehen =(or ...)= und =(not ...)= zur Verfügung.
+   Die Anzahl der Argumente von =and= und =or= ist dabei beliebig groß.
+
+* Entwurf bedingter Funktionen
+** Anwendungsbeispiel
+
+-  Wir nennen eine Funktion /bedingt/, wenn für die Ermittlung ihres
+   Resultats eine /Fallunterscheidung/ erforderlich ist.
+
+-  Beispiel: Ein Hersteller für Speicherchips verkauft die Chips nach
+   folgender Preisstaffel:
+
+   | *Stückzahl*               | *Stückpreis* [€]   |
+   |---------------------------+--------------------|
+   | $<= 1000$                 | 15,00              |
+   | $> 1000$ und $<= 10000$   | 12,50              |
+   | $> 10000$                 | 9,75               |
+
+   Gesucht: Funktion, die aus der Stückzahl den Stückpreis ermittelt.
+
+** Clojure-Pseudofunktion für Fallunterscheidungen
+
+   #+BEGIN_nebeneinander
+   #+begin_small
+   #+BEGIN_SRC clojure
+        (cond
+           frage antwort
+           ...
+           frage antwort)
+   #+END_SRC
+   #+end_small
+   #+END_nebeneinander
+
+# #+BEGIN_nebeneinander
+#    oder
+# #+END_nebeneinander
+
+
+   #+BEGIN_nebeneinander 
+   #+begin_small
+   #+BEGIN_SRC clojure
+        (cond
+           frage antwort
+           ...
+           :else antwort)
+   #+END_SRC
+   #+end_small
+   #+END_nebeneinander
+   #+BEGIN_clear
+   #+END_clear
+-  Jede =frage= muss ein boolescher Ausdruck sein.
+
+-  Jede =antwort= ist ein beliebiger Clojure-Ausdruck.
+
+-  Das Resultat der =cond=-Funktion ist die =antwort= der ersten =frage=,
+   deren Auswertung =true= liefert.
+
+-  In der linken Variante von =cond= muss die Auswertung mindestens einer
+   =frage= =true= liefern.
+
+** Erweiterung der Entwurfsvorschrift
+
+-  In unsere Entwurfsvorschrift fügen wir hinter die Phase 1 (Vertrag,
+   Zweckbestimmung, Funktionskopf) eine neue Phase /Datenanalyse/ ein.
+
+-  In dieser Phase sind in der Problembeschreibung alle zu
+   unterscheidenden Fälle zu identifizieren.
+
+-  In der nachfolgenden Phase /Beispiele/ ist für jeden Fall mindestens
+   ein Beispiel zu formulieren. Zusätzlich sind die Grenzfälle zu
+   beachten.
+
+-  In der Phase Funktionsrumpf wird
+
+   -  ein =cond=-Skelett mit je einer Frage-Antwort-Kombination für
+      jeden Fall formuliert,
+
+   -  für jeden Fall die Frage (Bedingung) formuliert und
+
+   -  für jeden Fall der Clojure-Ausdruck für die Berechnung der Antwort
+      ermittelt.
+
+** Funktionsskelett
+Für das Beispiel des Chipherstellers ergibt sich folgendes
+Funktionsskelett:
+
+#+BEGIN_SRC clojure 
+    ;; berechnet aus einer gegebenen Stueckzahl
+    ;; den Stueckpreis gemaess Preisstaffel
+    (def stueckpreis 
+      (fn [stueckzahl]
+        {:pre [(number? stueckzahl)]
+         :post [(number? %)]}
+          (cond
+             ... ...
+             ... ...
+             ... ...)))
+#+END_SRC
+
+** Formulierung der Fragen
+Aus der Tabelle für die Preisstaffelung ergeben sich folgende
+Bedingungen
+
+#+BEGIN_SRC clojure 
+    (def stueckpreis 
+      (fn [stueckzahl]
+        {:pre [(number? stueckzahl)]
+         :post[(number? %)]}
+        (cond
+          (and (>= stueckzahl 0)
+               (<= stueckzahl 1000))  ...
+          (and (> stueckzahl 1000)
+               (<= stueckzahl 10000)) ...
+          (> stueckzahl 10000)        ... )))
+#+END_SRC
+
+Für die Tests sollten die Grenzfälle 0, 1000 und 10000 sowie Werte aus
+dem Innern der Intervalle (z.B. 500, 2000, 20000) verwendet werden.
+
+** Formulierung der Antworten
+Die Ausdrücke für die Berechnung der Antworten ergeben sich
+direkt aus der Tabelle für die Preisstaffelung:
+
+#+BEGIN_SRC clojure 
+    ;; berechnet aus einer gegebenen Stueckzahl
+    ;; den Stueckpreis gemaess Preisstaffel
+    (def stueckpreis 
+      (fn [stueckzahl]
+        {:pre [(number? stueckzahl)]
+         :post[(number? %)]}
+        (cond
+         (and (>= stueckzahl 0)
+              (<= stueckzahl 1000))  1500
+         (and (> stueckzahl 1000) 
+              (<= stueckzahl 10000)) 1250
+         (> stueckzahl 10000)        975 )))
+#+END_SRC
+
+** Vereinfachung der Fragen 
+Nachdem die Funktion getestet wurde, können die Bedingungen
+vereinfacht werden:
+
+#+BEGIN_SRC clojure 
+    (def stueckpreis
+       (fn [stueckzahl]
+          (cond
+            (<= stueckzahl 1000) 1500
+            (<= stueckzahl 10000) 1250
+            :else 975)))
+#+END_SRC
+
+(Die vollständige Funktion =stueckpreis= steht in Moodle zur Verfügung.)
+
+* Entwurfsvorschrift II
+
+** Entwurfsvorschrift II (Bedingte Funktionen) 
+Die vier Phasen der
+Entwurfsvorschrift I werden um eine Phase /Datenanalyse/ ergänzt, der
+Phase /Funktionsrumpf/ wird eine Phase /Funktionsschablone/
+vorgeschaltet:
+
+1. Vertrag, Funktionskopf, Zweckbestimmung
+
+2. *Datenanalyse*
+
+3. Beispiele / Tests
+
+4. *Funktionsschablone*
+
+5. *Funktionsrumpf*
+
+6. Testen
+
+Es folgt die Beschreibung der neuen bzw. angepassten Phasen.
+
+** Entwurfsvorschrift II - Phasen 2 und 3
+
+*Datenanalyse*
+
+-  Ziel: Ermittlung der die durch die Funktion zu unterscheidenden Fälle
+
+-  Aktivitäten:
+
+   -  Analysiere die Problembeschreibung hinsichtlich der zu
+      unterscheidenden Fälle.
+
+   -  Zähle alle Fälle auf.
+
+*Beispiele* / *Tests*
+
+-  Ziel: Angabe eines Tests für jeden der in Phase 2 ermittelten Fälle
+
+-  Aktivitäten:
+
+   -  Formuliere mindestens ein Beispiel pro Fall.
+
+   -  Für Aufzählungen oder Intervalle sind auch die Grenzfälle zu
+      berücksichtigen.
+
+** Entwurfsvorschrift II - Phasen 4 und 5
+
+*Funktionsschablone*
+
+-  Ziel: Aufschreiben des bedingten Ausdrucks
+
+-  Aktivitäten:
+
+   -  Schreibe das Skelett eines =cond=-Ausdrucks auf mit je einer
+      Frage-Antwort-Klausel für jeden Fall.
+
+   -  Notiere für jeden Fall die Frage (Bedingung) unter Bezugnahme auf
+      die Parameter der Funktion.
+
+   -  Überprüfe, ob die Bedingungen die Beispiele korrekt
+      diskriminieren.
+
+*Funktionsrumpf*
+
+-  Ziel: Entwickeln der Antworten für alle Bedingungen
+
+-  Aktivitäten:
+
+   -  Betrachte jede Bedingung des =cond=-Ausdrucks gesondert.
+
+   -  Unter der Annahme, dass die Bedingung gilt, entwickle einen
+      Clojure-Ausdruck, der die korrekte Antwort berechnet.

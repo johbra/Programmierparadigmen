@@ -1,0 +1,617 @@
+# +SETUPFILE: /Users/johannes/Documents/myOrg/org-html-themes/setup/theme-bigblow.setup
+# +SETUPFILE: ./theme-bigblow-local.setup
+#+TITLE: Funktionale Programmierung: Ergänzungen
+#+SUBTITLE: Programmierparadigmen
+#+AUTHOR: Johannes Brauer
+#+OPTIONS:   H:4
+#+OPTIONS: num:nil d:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: reveal_single_file:nil
+#+Language:  de
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+# +REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_THEME: simple
+#+REVEAL_TRANS: slide
+#+REVEAL_HLEVEL: 1
+#+REVEAL_INIT_SCRIPT: dependencies: [ { src: 'plugin/menu/menu.js', async: true },
+#+REVEAL_INIT_SCRIPT:                 { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]
+#+REVEAL_MARGIN: 0.05
+#+REVEAL_EXTRA_CSS: ./mycss/myrevealstyle.css
+#+OPTIONS: reveal_control:t
+
+# um Folien mit reveal.js erzeugen zu können:ml
+# M-x load-library und dann ox-reveal
+
+* Datenabstraktion 
+*These:* 
+#+BEGIN_QUOTE
+Es gibt keinen Wesensunterschied zwischen Programmen und Daten
+#+END_QUOTE
+vgl. auch Kapitel [[file:ProPar-FuProAlgDat.org][Algebraische Datentypen]]
+** 1. Beispiel: Rechnen mit Punkten in der Ebene
+*** Defintion von Punkten
++ Ein Punkt in der Ebene wird durch seine x- und seine y-Koordinate
+  bestimmt (kartesisches Koordinatensystem).
++ Wir tun so, als ob wir eine Funktion =make-point= zur Verfügung
+  hätten, die einen Punkt erzeugt, z. B. so:
+  : (make-point 3 4)
++ Nehmen wir weiter an, es gäbe zwei Funktionen, die die x- bzw. die
+  y-Koordinate eines Punkts zugänglich machen:
+  : (point-x (make-point 3 4)) ;;=> 3
+  : (point-y (make-point 3 4)) ;;=> 4
+*** Point-Funktionen
++ Unter diesen Voraussetzungen könnten z. B. folgende Funktionen, die
+  =points= verarbeiten, definiert werden:
+  #+begin_src clojure
+  (def add-point
+    (fn [p1 p2]
+      (make-point
+       (+ (point-x p1) (point-x p2))
+       (+ (point-y p1) (point-y p2)))))
+
+  (def distance-to-0
+    (fn [p]
+      (Math/sqrt
+       (+ (Math/pow (point-x p) 2)
+          (Math/pow (point-y p) 2)))))
+#+end_src
+#+REVEAL: split
++ Diese (und weitere) Funktionen können programmiert werden, ohne
+  + die Implementierung der Funktionen =make-point=, =point-x= und
+    =point-y= zu kennen
+  + eine konkrete Repräsentation von Punkten angegeben zu haben.
++ Frage: „Wo sind hier die Daten?”
+*** Mögliche Implementierungen von =points= 
+#+BEGIN_SRC clojure
+;; als Datenstruktur mit defrecord
+  (defrecord point [x y])
+  (def make-point ->point)
+  (def point-x :x)
+  (def point-y :y)
+
+;; durch Vektoren:
+  (def make-point
+    (fn [x y] [x y]))
+  (def point-x
+    (fn [p] (get p 0)))
+  (def point-y
+    (fn [p] (get p 1)))
+#+END_SRC
+*** Anforderungen an die Implementierung
++ Jede Implementierung, die den folgenden beiden Gleichungen genügt,
+  ist hinreichend:\\
+  =(point-x (make-point x y))  = x=\\
+  =(point-y (make-point x y))  = y=
++ Daten werden durch Konstruktions- und Selektionsfunktionen repräsentiert.
++ Die oben gezeigten Implementierungen benutzen „immerhin“ in der
+  Sprache eingebaute Datenstrukturen (Records bzw. Listen).
++ Im zweiten Beispiel kommen wir ganz ohne solche Datenstrukturen aus.
++ Dort wird gezeigt, dass nicht nur „höher wertige“ Datenstrukturen
+  sondern auch elementare Daten durch Funktionen dargestellt werden können.
+
+** 2. Beispiel: Listen
+-  Lisp-Sprachen stellen üblicherweise
+   + eine Funktion zum Erzeugen einer Liste (=cons=) sowie
+   + zwei Funktionen zum Zugriff auf die beiden Komponenten einer
+     Liste bereit:
+     -  =first= :: liefert -- angewendet auf eine nicht leere Liste -- das
+      erste Element.
+     -  =rest= :: liefert -- angewendet auf eine nicht leere Liste -- die
+      Restliste.
+-  Der Zusammenhang zwischen =cons=, =first= und =rest= kann durch die
+   folgenden Gleichungen beschrieben werden:\\
+   =(first (cons elem liste))  = elem=\\
+   =(rest (cons elem liste))  =  liste=
+
+(vgl. auch [[file:ProPar-FuProNatRekrsn.org::*Symbolische%20Ausdr%C3%BCcke][Symbolische Ausdrücke]])
+
+*** Implementierung von Listen durch Funktionen
+#+BEGIN_SRC clojure
+(ns dataasproc)
+(use 'clojure.test)
+(def cons
+  (fn [x y]
+    (let [dispatch
+          (fn [m]
+            (cond (= m 0) x
+                  (= m 1) y
+                  :else (throw (Exception. "Argument not 0 or 1 -- CONS"))))]
+      dispatch)))
+
+(def first (fn [z] (z 0)))
+(def rest (fn [z] (z 1)))
+(def empty? (fn [z] (= z ())))
+#+END_SRC
+**** Erläuterungen
++ Die Benutzung der Funktionen hat nichts mehr mit einem intuitiven
+  Verständnis von /Daten/ zu tun.
++ Es muss nur gezeigt werden, dass die Implementierung die oben
+  genannten Gleichungen erfüllt:
+  + Ein Ausdruck =(cons x y)= liefert die lokal definierte Funktion
+    =dispatch= als Resultat, die ein Argument akzeptiert und entweder
+    =x= oder =y= zurückgibt je nachdem, ob das Argument 0 oder 1 ist.
+  + Entsprechend ist der Ausdruck =(first z)= so definert, dass er die
+    Funktion =z= auf 0 anwendet. D. h. wenn =z= eine durch =(cons x y)=
+    erzeugte Funktion ist, dann liefert die Anwendung von =z= auf 0
+    =x=. Damit ist gezeigt, dass gilt:\\
+    =(first (cons x y)) = x=
+  + Eine ähnliche Argumentation kann für den Zusammenhang zwischen
+    =cons= und =rest= geführt werden.
+**** Benutzung
+Die Funktionen können wie die Clojure-Standardfunktionen benutzt werden:
+#+BEGIN_SRC clojure
+;; Benutzung der neuen Implementierung von Listen:
+(def sum
+  (fn [lon]
+    (cond
+      (empty? lon) 0
+      :else (+ (first lon) (sum (rest lon))))))
+
+(deftest test-sum
+  (is (= 0 (sum ())))
+  (is (= 12 (sum (cons 7 (cons 3 (cons 2 ())))))))
+#+END_SRC
+
+*** Alternative Implementierung von Listen durch Funktionen
+siehe Aufgabe 1
+** 3. Beispiel: „Church-Numerals"
++ Bereits im Kapitel [[file:ProPar-FuProNatRekrsn.org][Natürliche Rekursion]] haben wir eine [[file:ProPar-FuProNatRekrsn.org::*Rekursive%20Definition%20der%20nat%C3%BCrlichen%20Zahlen][Rekursive
+  Definition der natürlichen Zahlen]] kennen gelernt, die auf den
+  Peano-Axiomen basiert und /zwei-elementige Listen/ zur Repräsentation
+  von natürlichen Zahlen benutzt.
++ Alonzo Church, ein berühmter Logiker und Erfinder des λ-Kalküls, hat
+  gezeigt, dass man die positiven ganzen Zahlen auch durch /Funktionen/
+  repräsentieren kann.
++ Für „Hartgesottene” findet sich in moodle im Themenblock
+  /Beispiele/ ein Clojure-Projekt zu den /Church numerals/.
+* Verzögerte Auswertung
+** Einführung
+Wo und warum gibt es hier verzögerte Auswertung?
+#+BEGIN_SRC java
+if (obj != null && obj.isWhatiz()) {
+    ...
+}
+#+END_SRC
+Kennen Sie weitere Beispiele für verzögerte Auswertung?
+#+REVEAL: split
++ Ein wesentliches Merkmal einer Programmiersprache ist der Zeitpunkt
+  der Auswertung der Teilausdrücke eines Ausdrucks.
++ Zum Beispiel: In Clojure (und allen Lisp-Sprachen und vielen aber
+  nicht allen Programmiersprachen)
+  + wird eine Funktionsanwendung der Form =(e1 e2 ... en)= 
+    so ausgewertet, dass die Argumente =e2= bis =en= *ausgewertet* werden,
+    *bevor* die Funktion =e1= angewendet wird und
+  + der Rumpf einer Funktion =(fn [...] ...)= wird *nicht ausgewertet
+    bevor*  die Funktion aufgerufen wird. 
++ Warum kann die Funktion
+  : (def my-if-bad (fn [x y z] (if x y z)))
+  nicht anstelle der Standardfunktion =if= benutzt werden?
+#+REVEAL: split
++ Was würde bei einem Aufruf der Funktion
+  #+begin_small
+  #+BEGIN_SRC clojure
+(def factorial-wrong 
+  (fn [x]
+    (my-if-bad (= x 0)
+               1
+               (* x (factorial-wrong (- x 1))))))
+  #+END_SRC
+  #+end_small
+  passieren?
++ Unter Ausnutzung der Tatsache, dass der Rumpf einer Funktion nicht
+  ausgewertet wird, bevor die Funktion aufgerufen wird kann man eine
+  funktionierende Variante einer eigenen „if-Funktion” schreiben:
+  : (def my-if (fn [x y z] (if x (y) (z)))) 
+  Warum müsste sie dann aber so benutzt werden?:
+  : (my-if e1 (fn [] e2) (fn [] e3))
+#+REVEAL: split
++ Die =factorial=-Funktion könnte dann so aussehen:
+  #+begin_small
+  #+BEGIN_SRC clojure
+(def factorial
+  (fn [x]
+    (my-if (= x 0)
+           (fn [] 1)
+           (fn [] (* x (factorial (- x 1)))))))
+  #+END_SRC
+  #+end_small
++ Es gibt keinen triftigen Grund, eine derartige =my-if=-Funktion zu
+  schreiben.
++ Parameterlose Funktion für die /verzögerte Auswertung/ zu benutzen,
+  ist aber ein mächtiges Konzept.
++ In der englisch-sprachigen Fachliteratur werden solche
+  parameterlosen Funktionen als /thunks/ bezeichnet.
++ Niemand weiß, warum die thunks thunks heißen.
++ In Lisp-Sprachen besteht die Möglichkeit, Makros anstelle von Funktionen zu benutzen. Argumente eines Macro-Aufrufs
+  werden nicht ausgewertet.
+** Benutzung von Delay und Force
+- Annahme: :: Das Resultat irgendeiner aufwändigen Berechnung $b$ wird
+              als Argument einer anderen Funktion benötigt.  Abhängig
+              von anderen Argumenten wird das Resultat keinmal, einmal
+              oder n-mal benötigt.
+- Problem: :: Wenn das Argument für $b$ „gethunkt“ wird, muss das
+              Ergebnis möglicherweise n-mal berechnet werden. Wird es
+              nicht „gethunkt“ findet die Berechnung auch dann statt,
+              wenn sie vielleicht gar nicht benötigt wird.
+- Lösung: :: Benutzung einer Technik, die als /verzögerte Auswertung/
+             (engl. lazy evaluation), /call by need/ oder auch
+             /promises/ bezeichnet wird. Für den Fall, dass die
+             Auswertung (von $b$) tatsächlich benötigt wird, geschieht
+             dies aber nur genau einmal. Der berechnete Wert wird
+             (durch Benutzung von Mutation) zwischengespeichert.
+
+*** Implementierung von Delay und Force in Clojure
+#+BEGIN_SRC clojure
+(def my-delay
+  (fn [f]
+    (atom [false f])))
+
+(def my-force
+  (fn [th]
+    (if (@th 0)
+      (@th 1)
+      (do (swap! th assoc 0 true 1 ((@th 1)))
+          (@th 1)))))
+#+END_SRC
+
+**** Erläuterungen
++ Der Funktion =my-delay= wird ein thunk =f= übergeben und als zweites
+  Element eines Vektors einer mutierbaren Struktur (=atom=) abgelegt.
++ Das erste Element des Vektors bekommt den Wert =false=, der
+  kennzeichnet, dass das =f= bisher nicht ausgewertet wurde.
++ Die Funktion =my-force= wird ein (mit =my-delay= „verpackter“) thunk
+  übergeben. Sie prüft, ob das erste Element des Vektors =@th= =true= ist:
+  + falls ja :: Der Wert des zweiten Elements des Vektors =@th= wird zurückgegeben.
+  + falls nein :: Der Wert des ersten Elements des Vektors =@th= wird
+                  auf =true= geändert und das zweite Element durch den
+                  ausgewerteten thunk ersetzt. Anschließend wird
+                  dieser Wert zurückgegeben.
++ *Warnung*: Die Benutzung eines Atoms und von Mutation ist durchaus
+  fehleranfällig, wenn die Auswertung des thunks Nebeneffekte erzeugt
+  oder von änderbaren Daten abhängt. 
+
+*** Anwendung von =my-delay= und =my-force=
+
+Als Beispiel für eine Funktion, die die Auswertung eines ihrer
+Argumente nur unter bestimmten Bedingungen benötigt, betrachten wir
+die folgende -- zugegeben: etwas alberne -- Multiplikationsfunktion
+für positive Zahlen. Hier zunächst die Variante ohne verzögerte
+Auswertung:
+#+begin_small
+#+BEGIN_SRC clojure
+(def my-mult
+  (fn [x y]
+    (cond (= x 0) 0
+          (= x 1) y
+          :else (+ y (my-mult (- x 1) y)))))
+#+END_SRC
+#+end_small
+Bei dieser Variante würde bei einem Aufruf 
+: (my-mult 0 (factorial 100))
+die Fakultät unnötigerweise berechnet.
+**** Variante von =my-mult= mit =y= als thunk
+#+begin_small
+#+BEGIN_SRC clojure
+(def my-mult
+  (fn [x y-thunk]
+    (cond (= x 0) 0
+          (= x 1) (y-thunk)
+          :else (+ (y-thunk) (my-mult (- x 1) y-thunk)))))
+#+END_SRC
+#+end_small
+Jetzt würde der obige Aufruf so aussehen:
+: (my-mult 200 (fn [] (factorial 100M)))
+Jetzt würde die Fakultät für =x = 0= nicht, für  =x = 1= einmal, für
+=x = n= jedoch n-mal ausgewertet. Dies kann durch die Verwendung von
+=my-delay= und =my-force= vermieden werden.
+: (my-mult n (let [x (my-delay (fn [] (factorial 100M)))] (fn [] (my-force x))))
+#+REVEAL: split
+Erläuterungen:
++ Es wird einmalig -- vor dem Aufruf von =my-mult= -- eine verzögerte
+  Berechnung erzeugt.
++ Wenn der thunk, der als zweites Argument übergeben wird, aufgerufen
+  wird, wird die Fakultät genau einmal berechnet und
+  zwischengespeichert.
+**** Weitere Variante von =my-mult=
+Die folgende Version von =my-mult= erwartet anstelle eines beliebigen
+thunks ein Resultat von =my-delay= als zweites Argument. Damit wird
+der Aufruf etwas komfortabler:
+#+BEGIN_SRC clojure
+(def my-mult
+  (fn [x y-promise]
+    (cond (= x 0) 0
+          (= x 1) (my-force y-promise)
+          :else (+ (my-force y-promise) (my-mult (- x 1) y-promise)))))
+
+(my-mult n (my-delay (fn [] (factorial 100M))))
+#+END_SRC
+# ** Streams
+# [[/Users/Shared/Dropbox/ProgrmmngLanggsCoursera/Part%20B/week%201/section5sum.pdf][StreamsInProgLang]]
+# vgl. auch Clojure-Macro =lazy-seq=
+# ... eventuell auslassen
+# ** Memoization
+# [[/Users/Shared/Dropbox/ProgrmmngLanggsCoursera/Part%20B/week%201/section5sum.pdf][StreamsInProgLang]]
+# ... eventuell auslassen
+# [[/Users/Shared/Dropbox/ProgrmmngLanggsCoursera/Part%20B/week%201/section5sum.pdf][StreamsInProgLang]]
+# ... eventuell auslassen
+# # * Continuations
+# # + ... zu sehr old school?
+# # + nette Anwendung in [[file:/Users/johannes/Box Sync/Literatur/Online-Bücher/Clojure/TheJoyofClojure.pdf][The Joy of Clojure Kap. 7.3.4]]
+# # + Eventuell auslassen
+* Funktionale versus objektorientierte Programmierung
+** Ein wenig Historie
+#+attr_html: :width 700px
+[[./Abbildungen/programmierung.png]]
+*** 1936
+#+attr_html: :width 200px
+   [[./Abbildungen/alan-turing.jpg]]
+#+attr_html: :width 600px
+   [[./Abbildungen/entscheidungsproblem.png]]
++ Begriffe: Unterprogramm, Makro, code is data
+*** 1945
++ Turing schreibt Code. 
+  + in Binärform
+  + benutzt Integer-Zahlen (add) und boolesche Operationen
+  + erfindet Unterprogramme einschl. Stack
+  + erfindet Gleitkommazahlen
++ Anzahl der Computer weltweit: $O(1)$.
++ Anzahl der Programmierer weltweit: $O(1)$.
+*** 1953 Fortran
+   [[./Abbildungen/Fortran.png]]
+*** 
+   [[./Abbildungen/McCarthy.jpg]]
+
+Funktionale Programmierung
+
+*** 1960
++ Anzahl der Computer weltweit: $O(1E2)$.
++ Anzahl der Programmierer weltweit: $O(1E3)$.
+*** 1965
++ Anzahl der Computer weltweit: $O(1E4)$.
++ Anzahl der Programmierer weltweit: $O(1E5)$.
+*** 1966 Simula 1967
+Ole-Johan Dahl, Kristen Nygard:
+
+#+attr_html: :width 400px
+   [[./Abbildungen/simuladahlnygard.gif]]
+
+Objektorientierte Programmierung
+
+*** 1968 
+Edsger Dijkstra:
+
+#+begin_nebeneinander 
+  [[./Abbildungen/dijkstra.jpg]]
+#+end_nebeneinander
+#+begin_nebeneinander 
+  [[./Abbildungen/gotoharmfull.png]]
+#+end_nebeneinander
+#+BEGIN_clear
+#+END_clear
+Strukturierte Programmierung
+
+** Drei Paradigmen
+# (vgl. http://blog.cleancoder.com/uncle-bob/2012/12/19/Three-Paradigms.html)
++ 1968 -- Strukturierte Programmierung. Edsger Dijkstra zeigt, wie der
+  Gebrauch von =GOTO=-Anweisungen durch =if/then/else= und =while=
+  ersetzt werden kann.
+
++ 1966 -- Objektorientierte Programmierung. Ole-Johan Dahl und Kristen
+  Nygaard entwickeln die erste OO-Sprache: /Simula-67/. Durch die
+  Einführung der Polymorphie konnten die =function pointers=
+  eliminiert werden.
+
++ 1957 -- Funktionale Programmierung. John McCarthy erfindet
+  Lisp. Lisp basiert auf dem Lambda-Kalkül, entwickelt von Alonzo
+  Church in den 1930ern. Ein wesentliches Merkmal: Es gibt keine Zuweisung.
+
+Drei Paradigmen, drei Einschränkungen
+
+*** 1970
++ Anzahl der Computer weltweit: $O(1E5)$.
++ Anzahl der Programmierer weltweit: $O(1E6)$.
+
+
+** Was bringt die funktionale Programmierung?
++ Worin besteht der Kerngedanke der funktionalen Programmierung?
+** Fehlen der Mutation
++ Wie kann das „Fehlen von Etwas” ein wichtiges Feature eines
+  Programmierparadigmas sein?
++ Das Fehlen von Zuweisungen ermöglicht das Schreiben von Programmcode
+  ohne befürchten zu müssen, das anderer Code den eigenen negativ
+  beeinflusst.
++ Nicht änderbare Datenstrukturen sind das wichtigste „non-feature“,
+  das eine Programmiersprache haben kann.
++ Auf einen wichtigen Vorteil soll hier besonders eingegangen werden:
+  Sharing und Aliasing werden irrelevant.
+
+*** Beispiel: Sortieren eines Vektors
+#+begin_small
+#+BEGIN_SRC clojure
+(def sort-pair
+  (fn [pair]
+     (if (< (pair 0) (pair 1)) 
+         pair
+         [(pair 1) (pair 0)])))
+#+END_SRC
+#+end_small
+
++ Die Funktion liefert im =else=-Fall einen neu erzeugten Vektor.
++ Aber was passiert im =then=-Fall? 
+  + Erhalten wir eine Kopie des an die Funktion übergebenen Vektors
+   oder
+  + gibt die Funktion ein Alias auf denselben Vektor zurück?
++ Bei Fehlen von Mutation ist die Frage irrelevant.
+
+*** Beispiel: Funktion append
+#+begin_small
+#+BEGIN_SRC clojure
+(def append 
+  (fn [xs ys]
+    (cond 
+      (empty? xs) ys
+      :else (cons (first xs) (append (rest xs) ys)))))
+#+END_SRC
+#+end_small
++ Frage: Teilt die zurückgegebene Liste irgendwelche Elemente mit den
+  Argumentlisten? 
++ Antwort 1: Es spielt keine Rolle, solange kein Aufrufer das
+  feststellen kann.
++ Antwort 2: Ja, die neue Liste „wiederverwendet” alle Elemente von
+  =ys=. Das spart Speicherplatz und Rechenzeit.
++ Ein Problem entstünde nur dann, wenn nachträglich die Liste =ys=
+  verändert werden könnte.
++ Unveränderliche Daten erleichtern das Schreiben eleganter
+  Algorithmen erheblich.
+#+REVEAL: split
++ Auch die Funktion =rest= teilt „dankenswerterweise” ihr Ergebnis
+  mit ihrer Argumentliste (bis auf das erste Element).
++ In der objektorientierten Programmierung, wo intensiv von
+  Verweissemantik und Mutation Gebrauch gemacht wird, muss die
+  Programmiererin sich mit den Fragen beschäftigen, ob Verweise auf
+  alte Objekte genutzt oder neue Objekte erzeugt werden.
+
+*** Beispiel: Ein Java-Programm
++ Ein inzwischen behobenes Sicherheitsproblem in einer Java library:
+  #+BEGIN_SRC java
+  class ProtectedResource {
+     private Resource theResource = ...;
+     private String[] allowedUsers = ...;
+     public String[] getAllowedUsers() {
+        return allowedUsers;
+     }
+     public String currentUser() { ... }
+     public void useTheResource() {
+        for(int i=0; i < allowedUsers.length; i++) {
+           if(currentUser().equals(allowedUsers[i])) {
+               ... // access allowed: use it
+               return; 
+           }
+        }
+        throw new IllegalAccessException();
+     }
+  }
+  #+END_SRC
+
++ Problem: =getAllowedUsers= gibt einen Verweis auf das Array
+  =allowedUsers= zurück.
++ Damit ist =getAllowedUsers()[0] = currentUser()= möglich. 
++ Abhilfe?
+
+* Integration von Daten und Funktionen -- Übergang zum Objektbegriff
+** Funktionen mit Funktionen als Resultat
+Beispiele aus dem letzten Semester:
+-  Was liefert der Ausdruck =(inc 3)=, wenn die Funktion =inc= wie folgt
+   definiert ist?
+   #+begin_small
+   #+begin_src scheme
+   (def inc 
+      (fn [n] (fn [z] (+ z n))))
+   #+end_src
+   #+end_small
+-  Welches Resultat liefert eine Anwendung der Funktion =dot=?
+   #+begin_small
+   #+begin_src scheme
+   (def dot
+      (fn [f g] (fn [x] (f (g x)))))
+   #+end_src
+   #+end_small
+** Was ist ein Objekt?
++ Objekte im Sinne der „objektorientierten Programmierung” sind
+  nichts weiter als Funktionen mit „internen” Daten.
++ So gesehen liefert ein Ausdruck der Art
+  : (def inc-obj (inc 3))
+  ein Objekt (eine Funktion) mit dem internen Datum (Zustand) *3*.
++ Die Funktion bezeichnet man in der objektorientierten Programmierung
+  auch als /Methode/.
++ Durch den Ausdruck =(inc-obj 7)= 
+  wird die Methode aktiviert (die Funktion aufgerufen). Sie verlangt
+  ein Argument.
++ =inc-obj= ist ein sehr primitives Objekt mit nur einer (unveränderlichen)
+  Zustandsgrößen und einer Methode.
+** Ein etwas interessanteres Objekt
+
+#+begin_src scheme
+(def person
+  (fn [name vorname]
+    (let [get-name    (fn [] name)
+          get-vorname (fn []vorname)
+          vollname    (fn [] (str vorname " " name))
+          gruss       (fn [g] (str g " " (vollname)))]
+      (fn [nachricht]
+        (cond
+          (= nachricht 'get-name) get-name
+          (= nachricht 'get-vorname) get-vorname
+          (= nachricht 'get-vollname) vollname
+          (= nachricht 'gruss) gruss
+          :else (throw (Exception. "unbekannte Nachricht")))))))
+#+end_src
++ Ein Aufruf der Funktion =person= liefert ein „Objekt” mit 
+  + zwei Zustandsgrößen (=name=, =vorname=) und
+  + vier Methoden: =get-name=, =get-vorname=, =vollname= und =gruss=
+#+Reveal: split
++ „In Wirklichkeit” liefert ein Aufruf der Funktion =person= eine
+  Verteilfunktion, die anhand ihres Parameters =nachricht= ermittelt,
+  welche der Methoden aufzurufen ist.
+
+** Anwendungen des =person=-Objekts
+#+begin_src scheme 
+;; Objekterzeugung:
+(define p1 (person "Gans" "Gustav"))
+((p1 'get-vorname))     ;;=> "Gustav"
+((p1 'get-name))        ;;=> "Gans"
+((p1 'get-vollname))    ;;=> "Gustav Gans"
+((p1 'gruss) "hallo")   ;;=> "hallo Gustav Gans"
+(p1 'x)                 ;; error
+#+end_src
+
+** Java-Klasse =Person=
+
+#+begin_src java
+ public class Person
+{
+   String vorname, name;
+
+    public Person (String n, String v)
+    {
+        vorname = v;
+        name = n;
+    }
+
+    public String get_name()
+    {
+        return name;
+    }
+    public String get_vorname()
+    {
+        return vorname;
+    }
+    public String vollname()
+    {
+        return vorname + " " + name;
+    }
+    public String gruss(String gruss)
+    {
+        return gruss + " " + this.vollname();
+    }
+}
+#+end_src
+
+
+** Zusammenfassung
++ Für die objektorientierte Programmierung bedarf es keiner speziellen
+  Programmiersprachen.
++ Objektorientierung besteht nur aus einer Reihe von Konventionen zum
+  Umgang mit Daten.
++ Diese Konventionen werden von objektorientierten Sprachen explizit
+  und implizit unterstützt. Z. B. muss die Verteilfunktion nicht
+  selbst programmiert werden.
++ Objekte sind nichts weiter als
+  + eine Menge von =Name->Wert=-Abbildungen
+  + eine Reihe von Funktionen, die solche Abbildungen als erstes
+    Argument akzeptieren und
+  + eine Verteilfunktion, die ermittelt, welche dieser Funtkion
+    aufzurufen ist.
+

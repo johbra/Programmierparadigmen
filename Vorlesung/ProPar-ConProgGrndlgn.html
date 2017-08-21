@@ -1,0 +1,1109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+<head>
+<!-- 2017-07-02 Sun 23:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Constraint-Programmierung &#x2013; Grundlagen</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Johannes Brauer" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Constraint-Programmierung &#x2013; Grundlagen
+<br>
+<span class="subtitle">Programmierparadigmen</span>
+</h1>
+
+<div id="outline-container-org7d7b7c4" class="outline-2">
+<h2 id="org7d7b7c4">Begriffe</h2>
+<div class="outline-text-2" id="text-org7d7b7c4">
+</div><div id="outline-container-orgf6121cc" class="outline-3">
+<h3 id="orgf6121cc">Einschränkung (<i>constraint</i>)</h3>
+<div class="outline-text-3" id="text-orgf6121cc">
+<ul class="org-ul">
+<li>Eine <i>Einschränkung</i> (<i>constraint</i>) stellt eine Beziehung zwischen
+verschiedenen Unbekannten (Variablen) her. Jede Variable kann Werte
+aus einem gegebenen Wertebereich (<i>domain</i>) annehmen.</li>
+
+<li>Eine Einschränkung beschreibt ggs Wissen über die Werte der
+Variablen.</li>
+
+<li>Eine Einschränkung beschreibt, welche Beziehung gelten muss, ohne
+eine Berechnungsprozedur dafür anzugeben, wie die Einhaltung der
+Beziehung erzwungen werden kann.</li>
+
+<li>Beispiel aus dem täglichen Leben: Terminabsprachen</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2677a5c" class="outline-3">
+<h3 id="org2677a5c">Erfüllbarkeit (<i>satisfiability</i>)</h3>
+<div class="outline-text-3" id="text-org2677a5c">
+<dl class="org-dl">
+<dt>erfüllbar:</dt><dd>Es existiert eine Lösung für die Einschränkungen.</dd>
+
+<dt>nicht erfüllbar:</dt><dd>Es existiert <b>keine</b> Lösung für die
+Einschränkungen.</dd>
+</dl>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">\(X \leq 3 \wedge Y = X + 1\)</td>
+<td class="org-left">erfüllbar</td>
+</tr>
+
+<tr>
+<td class="org-left">\(X \leq 3 \wedge Y = X + 1 \wedge Y \geq 6\)</td>
+<td class="org-left">nicht erfüllbar</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org158b11a" class="outline-3">
+<h3 id="org158b11a">Lösungsverfahren</h3>
+<div class="outline-text-3" id="text-org158b11a">
+<ul class="org-ul">
+<li>Zwei Lösungsstrategien
+
+<ul class="org-ul">
+<li><i>constraint satisfaction</i></li>
+
+<li><i>constraint solving</i></li>
+</ul></li>
+
+<li>Constraint-satisfaction behandelt Probleme über endlichen
+Wertemengen. Schätzungsweise mehr als 95% aller industriellen
+CP-Anwendungen benutzen endliche Domänen.</li>
+
+<li>Constraint-solving behandelt Probleme über nicht endlichen
+Wertebereichen. Vgl. z.B. den Fahrenheit-Celsius-Konverter.</li>
+
+<li>Während beim Constraint-satisfaction kombinatorische Methoden zum
+Einsatz kommen, werden beim Constraint-solving
+mathematisch-analytische Verfahren benutzt (Differentiation,
+Integration, Taylor-Reihen etc.).</li>
+</ul>
+</div>
+
+<div id="outline-container-orgf5cb0e5" class="outline-4">
+<h4 id="orgf5cb0e5">Constraint-satisfaction</h4>
+<div class="outline-text-4" id="text-orgf5cb0e5">
+</div><div id="outline-container-org6b7524b" class="outline-5">
+<h5 id="org6b7524b">Prinzip</h5>
+<div class="outline-text-5" id="text-org6b7524b">
+<ul class="org-ul">
+<li><p>
+Ein Constraint-satisfaction-Problem (CSP) wird folgendermaßen
+definiert:
+</p>
+
+<ul class="org-ul">
+<li>eine Menge von Variables \(X=\{x_{1},...,x_{n}\}\),</li>
+
+<li>für jede Variable \(x_{i}\), eine endliche Menge \(D_{i}\) möglicher
+Werte (Domäne)</li>
+
+<li>eine Menge von Einschränkungen (constraints), die Werte, die die
+Variablen gleichzeitig annehmen können, einschränken</li>
+</ul>
+<p>
+Beispiel: \[X=\{1,2\}, Y=\{1,2\}, Z=\{1,2\}\]
+\[X = Y, X \neq Z, Y > Z\]
+</p></li>
+
+<li><p>
+Lösung eines CSP: Belegung jeder Variablen mit einem Wert aus ihrer
+Menge, so dass alle Einschränkungen erfüllt sind.
+</p>
+
+<p>
+Beispiel: \[X=2, Y=2, Z=1\]
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org037602f" class="outline-5">
+<h5 id="org037602f">Systematische Suche</h5>
+<div class="outline-text-5" id="text-org037602f">
+<ul class="org-ul">
+<li>Grundsätzlich kann ein CSP durch systematisches Durchsuchen des
+Lösungsraums gelöst werden.</li>
+
+<li>Ein solches Verfahren ist simpel aber ineffizient.</li>
+
+<li>Zwei Varianten:
+
+<ul class="org-ul">
+<li><i>Generate &amp; Test</i> (GT): Eine Belegung aller Variablen wird erzeugt
+und geprüft.</li>
+
+<li><i>Backtracking</i> (BT): Schrittweise Erweiterung korrekter
+Teillösungen zur Gesamtlösung.</li>
+</ul></li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./Abbildungen/SystematischeSuche.png" alt="SystematischeSuche.png" width="400px" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org3b77d8d" class="outline-5">
+<h5 id="org3b77d8d">Generate &amp; Test</h5>
+<div class="outline-text-5" id="text-org3b77d8d">
+<ul class="org-ul">
+<li>Grundlegendes Verfahren zur Lösung von CSPs</li>
+
+<li>Algorithmus:</li>
+</ul>
+<div class="nebeneinander">
+
+<div class="figure">
+<p><img src="./Abbildungen/gt.png" alt="gt.png" width="200px" />
+</p>
+</div>
+
+</div>
+
+<div class="nebeneinander">
+<p>
+Nachteile:
+</p>
+<ul class="org-ul">
+<li>dummer Generator</li>
+<li>Nichterfüllbarkeit wird spät erkannt.</li>
+</ul>
+
+</div>
+<div class="clear">
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8a61183" class="outline-5">
+<h5 id="org8a61183">Backtracking</h5>
+<div class="outline-text-5" id="text-org8a61183">
+<ul class="org-ul">
+<li>Partielle Lösung wird schrittweise zur vollständigen erweitert.</li>
+<li>Algorithmus (vereinfacht):</li>
+</ul>
+<div class="nebeneinander">
+
+<div class="figure">
+<p><img src="./Abbildungen/bt.png" alt="bt.png" width="200px" />
+</p>
+</div>
+
+</div>
+<div class="nebeneinander">
+
+<div class="figure">
+<p><img src="./Abbildungen/BT-Beispiel.png" alt="BT-Beispiel.png" width="200px" />
+</p>
+</div>
+
+</div>
+<div class="clear">
+
+</div>
+
+<ul class="org-ul">
+<li>Nachteile:
+<ul class="org-ul">
+<li><i>thrashing,</i> d.h. wiederholte Fehlbelegung</li>
+<li>Nichterfüllbarkeit wird spät erkannt.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge78aebe" class="outline-5">
+<h5 id="orge78aebe">Anwendungsbeispiel für GT und BT</h5>
+<div class="outline-text-5" id="text-orge78aebe">
+<p>
+<b>Aufgabenstellung</b>:
+ \[X=\{1,2\}, Y=\{1,2\}, Z=\{1,2\}\]
+\[X = Y, X \neq Z, Y > Z\]
+</p>
+
+<div class="nebeneinander">
+<p>
+<b>Generate &amp; Test</b>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">X</th>
+<th scope="col" class="org-right">Y</th>
+<th scope="col" class="org-right">Z</th>
+<th scope="col" class="org-left">Prüfung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-left">fehlgeschlagen</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-left">fehlgeschlagen</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-left">fehlgeschlagen</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
+<td class="org-left">fehlgeschlagen</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-left">fehlgeschlagen</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">2</td>
+<td class="org-left">fehlgeschlagen</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-left">erfüllt</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<div class="nebeneinander">
+
+</div>
+<div class="nebeneinander">
+<p>
+<b>Backtracking</b>
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">X</th>
+<th scope="col" class="org-right">Y</th>
+<th scope="col" class="org-right">Z</th>
+<th scope="col" class="org-left">Prüfung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-right">1</td>
+<td class="org-left">fehlgeschlagen</td>
+</tr>
+
+<tr>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">2</td>
+<td class="org-left">fehlgeschlagen</td>
+</tr>
+
+<tr>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">2</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">fehlgeschlagen</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">fehlgeschlagen</td>
+</tr>
+
+<tr>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">2</td>
+<td class="org-right">1</td>
+<td class="org-left">erfüllt</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+<div class="clear">
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf6943c5" class="outline-5">
+<h5 id="orgf6943c5">Optimierungen der systematischen Suche</h5>
+<div class="outline-text-5" id="text-orgf6943c5">
+<ul class="org-ul">
+<li>Grundidee: Entfernung von inkonsistenten Werten aus der Wertemenge
+einer Variablen</li>
+<li>Repräsentation von binären und unären Einschränkungen durch Graphen:</li>
+</ul>
+<div class="nebeneinander">
+<dl class="org-dl">
+<dt>Knoten</dt><dd>Variablen</dd>
+</dl>
+
+</div>
+<div class="nebeneinander">
+<dl class="org-dl">
+<dt>Kanten</dt><dd>Einschränkungen</dd>
+</dl>
+
+</div>
+<div class="clear">
+
+</div>
+<div class="nebeneinander">
+<ul class="org-ul">
+<li>Prüfung der
+<ul class="org-ul">
+<li>Knotenkonsistenz (Entfernung von Werten im Widerspruch zu unären
+Einschränkungen)</li>
+<li>Kantenkonsistenz (dito für binäre Einschränkungen)</li>
+<li>Pfadkonsistenz</li>
+</ul></li>
+</ul>
+
+</div>
+<div class="nebeneinander">
+
+<div class="figure">
+<p><img src="./Abbildungen/csp-graph.png" alt="csp-graph.png" width="250px" />
+</p>
+</div>
+
+</div>
+<div class="clear">
+
+</div>
+<ul class="org-ul">
+<li>Optimierung der Suche nach wie vor Forschungsgegenstand</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1446918" class="outline-2">
+<h2 id="org1446918">Implementierung</h2>
+<div class="outline-text-2" id="text-org1446918">
+</div><div id="outline-container-orga13ff93" class="outline-3">
+<h3 id="orga13ff93">Sprachschnittstellen</h3>
+<div class="outline-text-3" id="text-orga13ff93">
+<ul class="org-ul">
+<li>Benutzung einer Bibliothek, die Gleichungen, Variablen etc.
+implementiert, in einer Wirtssprache</li>
+</ul>
+
+<div class="figure">
+<p><img src="./Abbildungen/einbettung-in-wirtsprache.png" alt="einbettung-in-wirtsprache.png" width="400px" />
+</p>
+</div>
+<ul class="org-ul">
+<li>Benutzung einer Sprache mit erweiterter Semantik: Variablen können zu
+anderen in Beziehung gesetzt werden und unbestimmete Werte enthalten.</li>
+</ul>
+
+<div class="figure">
+<p><img src="./Abbildungen/constraintprogramminglanguage.png" alt="constraintprogramminglanguage.png" width="350px" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org546ef0d" class="outline-3">
+<h3 id="org546ef0d">Anforderungen an CP-Sprachen</h3>
+<div class="outline-text-3" id="text-org546ef0d">
+<ul class="org-ul">
+<li>Es muss ein <i>Constraint-solver</i> zur Verfügung stehen, der Gleichungen
+löst bzw. ihre Unlösbarkeit mitteilt.</li>
+<li>Sprachmittel für die Formulierung von Gleichungen, Formeln etc.</li>
+<li>Eine Schnittstelle zum Constraint-solver, die es erlaubt,
+Einschränkungen zu übermitteln und Lösungen entgegen zu nehmen.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga5b8075" class="outline-2">
+<h2 id="orga5b8075">Beispiel: Send more money</h2>
+<div class="outline-text-2" id="text-orga5b8075">
+</div><div id="outline-container-org7bb983e" class="outline-3">
+<h3 id="org7bb983e">Mehr Geld bitte!</h3>
+<div class="outline-text-3" id="text-org7bb983e">
+<p>
+Sie senden einen Brief an Ihre Eltern mit dem Inhalt:
+</p>
+<pre class="example">
+             SEND
+            +MORE
+            -----
+            MONEY
+</pre>
+<p>
+Wieviel Geld erhalten Sie?
+</p>
+
+<p>
+Die Aufgabe besteht darin, jedem Buchstaben aus \(\{S,E,N,D,M,O,R,Y\}\)
+eine unterschiedliche Ziffer aus \(\{0,...,9\}\) zuzuordnen, so dass die
+Gleichung 
+\[SEND+MORE=MONEY\]
+erfüllt wird.
+</p>
+
+<p>
+<b>Aufgabe</b>: Lösen Sie das Problem in einer Programmiersprache Ihrer
+Wahl! Beachten Sie Nebenbedingungen.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbe45980" class="outline-3">
+<h3 id="orgbe45980">Lösungsansatz: „Rohe Gewalt“</h3>
+<div class="outline-text-3" id="text-orgbe45980">
+<ul class="org-ul">
+<li>Alles durchprobieren!</li>
+<li>Man braucht 8 ineinander geschachtelte Schleifen.</li>
+<li>Achtung: Acht Variablen (<code>S,E,N,D,M,O,R,Y</code>) können zehn verschiedene
+Werte annehmen. Ergibt \(10^{8}\) Möglichkeiten.</li>
+<li>Allerdings verringern einschränkende Bedingungen die Zahl der Möglichkeiten:
+<ul class="org-ul">
+<li><code>S</code> und <code>M</code> dürfen nicht \(0\) sein.</li>
+<li>Da <code>M</code> als Übertrag entsteht, kann <code>M</code> nur \(1\) sein.</li>
+<li>Die Werte der Variablen müssen paarweise verschieden sein.</li>
+</ul></li>
+<li>Weitere logische Überlegungen über Zusammenhänge zwischen den
+Ziffern können das Verfahren beschleunigen (s.&nbsp;u.).</li>
+<li>Lösung z.&nbsp;B. in Smalltalk:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-java">| z1 z2 z3 used |
+used := Set <span style="color: #0000FF;">new</span>.
+1 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #707183;">[</span>:s | 
+   used add: s.
+   0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #7388D6;">[</span>:e | 
+      <span style="color: #909183;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: e<span style="color: #909183;">)</span>  ifFalse: <span style="color: #909183;">[</span>
+          used add: e.
+          0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #709870;">[</span>:n | 
+             <span style="color: #907373;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: n<span style="color: #907373;">)</span>  ifFalse: <span style="color: #907373;">[</span>
+                used add: n.
+                0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #6276BA;">[</span>:d | 
+                   <span style="color: #858580;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: d<span style="color: #858580;">)</span> ifFalse: <span style="color: #858580;">[</span>
+                      used add: d.
+                      1 to: 1 <span style="color: #0000FF;">do</span>: <span style="color: #80A880;">[</span>:m |
+                         <span style="color: #887070;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: m<span style="color: #887070;">)</span>  ifFalse: <span style="color: #887070;">[</span>
+                            used add: m.
+                            0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #707183;">[</span>:o | 
+                               <span style="color: #7388D6;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: o<span style="color: #7388D6;">)</span> ifFalse: <span style="color: #7388D6;">[</span>
+                                  used add: o.
+                                  0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #909183;">[</span>:r | 
+                                     <span style="color: #709870;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: r<span style="color: #709870;">)</span> ifFalse: <span style="color: #709870;">[</span>
+                                        used add: r.
+                                        0 to: 9 <span style="color: #0000FF;">do</span>: <span style="color: #907373;">[</span>:y | 
+                                           <span style="color: #6276BA;">(</span><span style="color: #6434A3;">used</span> <span style="color: #BA36A5;">includes</span>: y<span style="color: #6276BA;">)</span> ifFalse: <span style="color: #6276BA;">[</span> 
+                                              z1 := 1000 * s + <span style="color: #858580;">(</span>100 * e<span style="color: #858580;">)</span> 
+                                                    + <span style="color: #858580;">(</span>10 * n<span style="color: #858580;">)</span> + d.
+                                              z2 := 1000 * m + <span style="color: #858580;">(</span>100 * o<span style="color: #858580;">)</span> 
+                                                    + <span style="color: #858580;">(</span>10 * r<span style="color: #858580;">)</span> + e.
+                                              z3 := 10000 * m + <span style="color: #858580;">(</span>1000 * o<span style="color: #858580;">)</span> 
+                                                    + <span style="color: #858580;">(</span>100 * n<span style="color: #858580;">)</span> 
+                                                    + <span style="color: #858580;">(</span>10 * e<span style="color: #858580;">)</span> + y.
+                                              z1 + z2 = z3 ifTrue: <span style="color: #858580;">[</span>
+                                                 Transcript 
+                                                   show: <span style="color: #008000;">'   '</span>,<span style="color: #6434A3;">z1</span> <span style="color: #BA36A5;">printString</span>; cr; 
+                                                   <span style="color: #D0372D;">show</span>: <span style="color: #008000;">'+'</span>,<span style="color: #6434A3;">z2</span> <span style="color: #BA36A5;">printString</span>; cr; 
+                                                   <span style="color: #D0372D;">show</span>: <span style="color: #008000;">'---------'</span>;cr;
+                                                   <span style="color: #D0372D;">show</span>: <span style="color: #6434A3;">z3</span> <span style="color: #BA36A5;">printString</span>; cr<span style="color: #858580;">]</span><span style="color: #6276BA;">]</span><span style="color: #907373;">]</span>.
+                                        used remove: r <span style="color: #709870;">]</span><span style="color: #909183;">]</span>.
+                                  used remove:o <span style="color: #7388D6;">]</span><span style="color: #707183;">]</span>.
+                            used remove: m <span style="color: #887070;">]</span><span style="color: #80A880;">]</span>. 
+                      used remove: d<span style="color: #858580;">]</span><span style="color: #6276BA;">]</span>.
+                used remove: n<span style="color: #907373;">]</span><span style="color: #709870;">]</span>.
+          used remove: e<span style="color: #909183;">]</span><span style="color: #7388D6;">]</span>.            
+    used remove:s<span style="color: #707183;">]</span>. </pre>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6367b0a" class="outline-3">
+<h3 id="org6367b0a">Lösungsansatz: Constraint Satisfaction</h3>
+<div class="outline-text-3" id="text-org6367b0a">
+<ul class="org-ul">
+<li>Einfaches Modell durch Spezifikation der folgenden Gleichung als Einschränkung:
+\[1000*S+100*E+10*N+D \]
+\[+ 1000*M+100*O+10*R+E \]
+\[= 10000*M+1000*O+100*N+10*E+Y\]</li>
+<li>Den Variablen \(E, N, D, O, R, Y\) wird die Domäne \(\{0 \ldots 9\}\), 
+der Variablen \(S\) die Domäne \(\{1 \ldots 9\}\) und \(M\) die Domäne 
+\(\{1\}\) zugeordnet.</li>
+<li>Außerdem muss die Einschränkung 
+\(all\_different([S,E,N,D,M,O,R,Y])\) hinzugefügt werden.</li>
+<li>Das Modell ist nicht effizient, weil alle Variablen bis auf eine
+schon belegt sein müssen, bevor die „Haupteinschränkung”
+geprüft werden kann.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb2459c7" class="outline-3">
+<h3 id="orgb2459c7">Verfeinertes CSP-Modell</h3>
+<div class="outline-text-3" id="text-orgb2459c7">
+<ul class="org-ul">
+<li><p>
+Nutzung der Überträge der Addition für die Zerlegung der „großen“
+Einschränkung in mehrere kleine:
+</p>
+ \begin{eqnarray*}
+    E+D & = & Y+10*C1  \\
+    C1+N+R & = & E+10*C2  \\
+    C2+E+O & = & N+10*C3  \\
+    C3+S+M & = & 10*M+O
+\end{eqnarray*}</li>
+<li><p>
+Die Domänen der Variablen:
+</p>
+ \begin{eqnarray*}
+    E,N,D,O,R,Y & := & \{0,\ldots,9\} \\
+            S & := & \{1,\ldots,9\} \\
+            M & := & \{1\} \\
+       C1,C2,C3 & := & \{0,1\}   
+\end{eqnarray*}</li>
+<li>Die „kleinen“ Einschränkungen werden während
+der Belegungsphase früher geprüft und damit inkonsistente Belegungen
+ausgesondert.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1985ca2" class="outline-3">
+<h3 id="org1985ca2">(Naive) Implementierung in Prolog</h3>
+<div class="outline-text-3" id="text-org1985ca2">
+<div class="org-src-container">
+<pre class="src src-prolog">            select(<span style="color: #BA36A5;">X</span>, <span style="color: #0000FF;">[</span><span style="color: #BA36A5;">X</span><span style="color: #0000FF;">|</span><span style="color: #BA36A5;">R</span><span style="color: #0000FF;">]</span>, <span style="color: #BA36A5;">R</span>).
+            select(<span style="color: #BA36A5;">X</span>, <span style="color: #0000FF;">[</span><span style="color: #BA36A5;">Y</span><span style="color: #0000FF;">|</span><span style="color: #BA36A5;">Xs</span><span style="color: #0000FF;">]</span>, <span style="color: #0000FF;">[</span><span style="color: #BA36A5;">Y</span><span style="color: #0000FF;">|</span><span style="color: #BA36A5;">Ys</span><span style="color: #0000FF;">]</span>):- select(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Xs</span>, <span style="color: #BA36A5;">Ys</span>).
+            
+            assign_digits(<span style="color: #0000FF;">[]</span>, <span style="color: #BA36A5;">_List</span>).
+            assign_digits(<span style="color: #0000FF;">[</span><span style="color: #BA36A5;">D</span><span style="color: #0000FF;">|</span><span style="color: #BA36A5;">Ds</span><span style="color: #0000FF;">]</span>, <span style="color: #BA36A5;">List</span>):-
+                    select(<span style="color: #BA36A5;">D</span>, <span style="color: #BA36A5;">List</span>, <span style="color: #BA36A5;">NewList</span>),
+                    assign_digits(<span style="color: #BA36A5;">Ds</span>, <span style="color: #BA36A5;">NewList</span>).
+            
+            smm :-  <span style="color: #BA36A5;">X</span> = <span style="color: #0000FF;">[</span><span style="color: #BA36A5;">S</span>,<span style="color: #BA36A5;">E</span>,<span style="color: #BA36A5;">N</span>,<span style="color: #BA36A5;">D</span>,<span style="color: #BA36A5;">M</span>,<span style="color: #BA36A5;">O</span>,<span style="color: #BA36A5;">R</span>,<span style="color: #BA36A5;">Y</span><span style="color: #0000FF;">]</span>,
+                    <span style="color: #BA36A5;">Digits</span> = <span style="color: #0000FF;">[</span>0,1,2,3,4,5,6,7,8,9<span style="color: #0000FF;">]</span>,
+                    assign_digits(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Digits</span>),
+                    <span style="color: #BA36A5;">M</span> = 1, 
+                    <span style="color: #BA36A5;">S</span> &gt; 0,
+                              1000*<span style="color: #BA36A5;">S</span> + 100*<span style="color: #BA36A5;">E</span> + 10*<span style="color: #BA36A5;">N</span> + <span style="color: #BA36A5;">D</span> +
+                              1000*<span style="color: #BA36A5;">M</span> + 100*<span style="color: #BA36A5;">O</span> + 10*<span style="color: #BA36A5;">R</span> + <span style="color: #BA36A5;">E</span> =:=
+                    10000*<span style="color: #BA36A5;">M</span> + 1000*<span style="color: #BA36A5;">O</span> + 100*<span style="color: #BA36A5;">N</span> + 10*<span style="color: #BA36A5;">E</span> + <span style="color: #BA36A5;">Y</span>,
+                    write(<span style="color: #BA36A5;">X</span>).        </pre>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcd6b9cc" class="outline-3">
+<h3 id="orgcd6b9cc">Implementierung in C++ (ILOG Solver)</h3>
+<div class="outline-text-3" id="text-orgcd6b9cc">
+<div class="org-src-container">
+<pre class="src src-cpp"><span style="color: #808080;">            #include</span> <span style="color: #707183;">&lt;</span><span style="color: #008000;">ilsolver/ctint.h</span><span style="color: #707183;">&gt;</span>
+            <span style="color: #6434A3;">CtInt</span> <span style="color: #BA36A5;">dummy</span> = CtInit<span style="color: #707183;">()</span>;
+            <span style="color: #6434A3;">CtIntVar</span> <span style="color: #BA36A5;">S</span><span style="color: #707183;">(</span>1, 9<span style="color: #707183;">)</span>, <span style="color: #BA36A5;">E</span><span style="color: #707183;">(</span>0, 9<span style="color: #707183;">)</span>, <span style="color: #BA36A5;">N</span><span style="color: #707183;">(</span>0, 9<span style="color: #707183;">)</span>, <span style="color: #BA36A5;">D</span><span style="color: #707183;">(</span>0, 9<span style="color: #707183;">)</span>,
+                     <span style="color: #BA36A5;">M</span><span style="color: #707183;">(</span>1, 9<span style="color: #707183;">)</span>, <span style="color: #BA36A5;">O</span><span style="color: #707183;">(</span>0, 9<span style="color: #707183;">)</span>, <span style="color: #BA36A5;">R</span><span style="color: #707183;">(</span>0, 9<span style="color: #707183;">)</span>, <span style="color: #BA36A5;">Y</span><span style="color: #707183;">(</span>0, 9<span style="color: #707183;">)</span>;
+            <span style="color: #6434A3;">CtIntVar</span>* <span style="color: #BA36A5;">AllVars</span><span style="color: #707183;">[]</span>=
+                     <span style="color: #707183;">{</span>&amp;S, &amp;E, &amp;N, &amp;D, &amp;M, &amp;O, &amp;R, &amp;Y<span style="color: #707183;">}</span>;
+            <span style="color: #6434A3;">int</span> <span style="color: #006699;">main</span><span style="color: #707183;">(</span><span style="color: #6434A3;">int</span>, <span style="color: #6434A3;">char</span>**<span style="color: #707183;">)</span> <span style="color: #707183;">{</span>
+                CtAllNeq<span style="color: #7388D6;">(</span>8, AllVars<span style="color: #7388D6;">)</span>;
+                CtEq<span style="color: #7388D6;">(</span>          1000*S + 100*E + 10*N + D
+                             + 1000*M + 100*O + 10*R + E,
+                     10000*M + 1000*O + 100*N + 10*E + Y<span style="color: #7388D6;">)</span>;
+                CtSolve<span style="color: #7388D6;">(</span>CtGenerate<span style="color: #909183;">(</span>8, AllVars<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>;
+        
+                PrintSol<span style="color: #7388D6;">(</span>CtInt, AllVars<span style="color: #7388D6;">)</span>;
+        
+                CtEnd<span style="color: #7388D6;">()</span>;
+                <span style="color: #0000FF;">return</span> 0; <span style="color: #707183;">}</span></pre>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd235951" class="outline-2">
+<h2 id="orgd235951">Constraint Logic Programming (CLP)</h2>
+<div class="outline-text-2" id="text-orgd235951">
+</div><div id="outline-container-org8689e08" class="outline-3">
+<h3 id="org8689e08">Vorbemerkungen</h3>
+<div class="outline-text-3" id="text-org8689e08">
+<ul class="org-ul">
+<li>Marriot: Programming with Constraints:
+<ul class="org-ul">
+<li>CLP vs. LP: unification wird ersetzt durch test for constraint
+satisfaction (S. 5)</li>
+</ul></li>
+<li><a href="http://www.schemeworkshop.org/2011/papers/Alvis2011.pdf">cKanren-Artikel</a>:
+<ul class="org-ul">
+<li>Traditional logic programming provides only a single constraint:
+equality over terms, which is implemented using unification.</li>
+<li>Constraint logic programming supports additional constraints, such
+as constraints over finite domains CLP(FD) and tree terms
+CLP(Tree).</li>
+</ul></li>
+<li><a href="https://cliplab.org/~vocal/public_info/seminar_notes/node6.html">What is Constraint (Logic) Programming?</a> 
+<ol class="org-ol">
+<li>Analyzing the problem to solve, in order to understand clearly
+which are its parts;</li>
+<li>determining which conditions/relationships hold among those
+parts: these relationships and conditions are key to the solving,
+for they will be used to model the problem;</li>
+<li>stating such conditions/relationships as equations; to achieve
+this step not only the right variables and relationships must be
+chosen: as we will see, C(L)P usually offers a series of
+different constraint systems, some of which are better suited
+than others for a given task;</li>
+<li>setting up these equations and solving them to produce a
+solution; this is usually transparent to the user, because the
+language itself has built-in solvers.</li>
+</ol></li>
+<li><p>
+<a href="https://cliplab.org/~vocal/public_info/seminar_notes/node8.html">Typical Applications and Approaches</a> share some general characteristics:
+</p>
+<ul class="org-ul">
+<li>No general, efficient algorithms exist (NP-completeness): specific
+techniques / heuristics must be used. These are usually problems
+with a heavy combinatorial part, and enumerating solutions is
+often impractical altogether. A fast program using usual
+programming paradigms is often too hard and complicated to
+produce, and normally it is so tied to the particular problem that
+adapting it to a related problem is not easy.</li>
+<li>The problem specification has a dynamic component: it should be
+easy to change programs rapidly to adapt. This has points in
+common with the previous item: C(L)P tools have builtin algorithms
+which have been tuned to show good behavior in a variety of
+scenarios, so updating the program to new conditions amounts to
+changing the setting up of the equations.</li>
+<li>Decision support required: either automatically in the program or
+in cooperation with the user. Many decisions can be encoded in
+mathematical formulae, which appear as rules and which are handled
+by the internal solvers, so (although, of course, not always)
+there is no need to program explicit decision trees.</li>
+</ul>
+<p>
+Among the applications with these characteristics, the following may
+be cited: planning, scheduling, resource allocation, logistics,
+circuit design and verification, finite state machines, financial
+decision making, transportation, spatial databases, etc.
+</p></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0a0c3c0" class="outline-3">
+<h3 id="org0a0c3c0">Ein CLP-Beispiel: Mortgage nach <a class='org-ref-reference' href="#Fruehwirth2010">Fruehwirth2010</a></h3>
+<div class="outline-text-3" id="text-org0a0c3c0">
+<dl class="org-dl">
+<dt>D:</dt><dd>Amount of Loan, Debt, Principal</dd>
+<dt>T:</dt><dd>Duration of loan in months</dd>
+<dt>I:</dt><dd>Interest rate per month</dd>
+<dt>R:</dt><dd>Rate of payments per month</dd>
+<dt>S:</dt><dd>Balance of debt after T</dd>
+</dl>
+
+<div class="org-src-container">
+<pre class="src src-prolog">            mortgage(<span style="color: #BA36A5;">D</span>, <span style="color: #BA36A5;">T</span>, <span style="color: #BA36A5;">I</span>, <span style="color: #BA36A5;">R</span>, <span style="color: #BA36A5;">S</span>) &lt;=&gt;
+                <span style="color: #BA36A5;">T</span> = 0,
+                <span style="color: #BA36A5;">D</span> = <span style="color: #BA36A5;">S</span>
+                <span style="color: #0000FF;">;</span>
+                <span style="color: #BA36A5;">T</span> &gt; 0,
+                <span style="color: #BA36A5;">T1</span> = <span style="color: #BA36A5;">T</span> - 1,
+                <span style="color: #BA36A5;">D1</span> = <span style="color: #BA36A5;">D</span> + <span style="color: #BA36A5;">D</span>*<span style="color: #BA36A5;">I</span> - <span style="color: #BA36A5;">R</span>,
+                mortgage(<span style="color: #BA36A5;">D1</span>, <span style="color: #BA36A5;">T1</span>, <span style="color: #BA36A5;">I</span>, <span style="color: #BA36A5;">R</span>, <span style="color: #BA36A5;">S</span>).</pre>
+</pre>
+</div>
+
+<div class="small">
+<div class="org-src-container">
+<pre class="src src-prolog">            mortgage(<span style="color: #BA36A5;">D</span>, <span style="color: #BA36A5;">T</span>, <span style="color: #BA36A5;">I</span>, <span style="color: #BA36A5;">R</span>, <span style="color: #BA36A5;">S</span>) &lt;=&gt;
+                <span style="color: #BA36A5;">T</span> = 0, <span style="color: #BA36A5;">D</span> = <span style="color: #BA36A5;">S</span>
+                   <span style="color: #0000FF;">;</span>
+                <span style="color: #BA36A5;">T</span> &gt; 0, <span style="color: #BA36A5;">T1</span> = <span style="color: #BA36A5;">T</span> - 1, <span style="color: #BA36A5;">D1</span> = <span style="color: #BA36A5;">D</span> + <span style="color: #BA36A5;">D</span>*<span style="color: #BA36A5;">I</span> - <span style="color: #BA36A5;">R</span>,
+                mortgage(<span style="color: #BA36A5;">D1</span>, <span style="color: #BA36A5;">T1</span>, <span style="color: #BA36A5;">I</span>, <span style="color: #BA36A5;">R</span>, <span style="color: #BA36A5;">S</span>).</pre>
+</pre>
+</div>
+
+</div>
+
+<ul class="org-ul">
+<li><code>mortgage(100000,360,0.01,1025,S)</code> yields <code>S=12625.90</code>).</li>
+
+<li><code>mortgage(D,360,0.01,1025,0)</code> yields <code>D=99648.79</code>.</li>
+
+<li><code>mortgage(100000,T,0.01,1025,S), S=&lt;0</code> yields <code>T=374, S=-807</code>.</li>
+
+<li><code>mortgage(D,360,0.01,R,0)</code> yields <code>R=0.0102861198*D</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdb071a7" class="outline-2">
+<h2 id="orgdb071a7">Notizen</h2>
+<div class="outline-text-2" id="text-orgdb071a7">
+<ul class="org-ul">
+<li><a href="https://cliplab.org/~vocal/public_info/seminar_notes/node12.html">Constraint-Programming Language Interfaces</a> sollte noch zitiert
+werden, wg. Bilderverwendung in &#x2026;</li>
+<li>ebenso <a href="https://cliplab.org/~vocal/public_info/seminar_notes/node13.html">die Beispiele</a></li>
+<li><a href="https://cliplab.org/~vocal/public_info/seminar_notes/node15.html">How Does a CLP System Work?</a> eventuell als Einstiegsbeispiel in
+Lösungsverfahren verwenden</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6628c10" class="outline-2">
+<h2 id="org6628c10">Literatur</h2>
+<div class="outline-text-2" id="text-org6628c10">
+<p>
+Hier verwendete und weiterführende Literatur:
+</p>
+
+<ul class="org-ul">
+<li><a class='org-ref-reference' href="#Fruehwirth2010">Fruehwirth2010</a></li>
+<li><a class='org-ref-reference' href="#Marriott1998">Marriott1998</a></li>
+<li><a class='org-ref-reference' href="#Bartak99">Bartak99</a></li>
+<li><a class='org-ref-reference' href="#sicp1999">sicp1999</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6385578" class="outline-2">
+<h2 id="org6385578"><h1 class='org-ref-bib-h1'>Bibliography</h1>
+<ul class='org-ref-bib'><li><a id="Fruehwirth2010">[Fruehwirth2010] Thom Frühwirth & Slim Abdennadher, Essentials of Constraint Programming (Cognitive Technologies), Springer (2010).</a></li>
+<li><a id="Marriott1998">[Marriott1998] Kimbal Marriott & Peter Stuckey, Programming with Constraints: An Introduction, The MIT Press (1998).</a></li>
+<li><a id="Bartak99">[Bartak99] Roman Barták, Constraint programming: In pursuit of the holy grail, 555-564, in in: In Proceedings of the Week of Doctoral Students (WDS99 -invited lecture, edited by (1999)</a></li>
+<li><a id="sicp1999">[sicp1999] Harold Abelson, Gerald Jay Sussman & Julie Sussman, Structure and interpretation of computer programs, The MIT Press (1999).</a></li>
+</ul></h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Autor: Johannes Brauer</p>
+<p class="date">Created: 2017-07-02 Sun 23:47</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

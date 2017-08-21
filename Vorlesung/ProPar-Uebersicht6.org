@@ -1,0 +1,96 @@
+#+SETUPFILE: ./theme-bigblow-local.setup
+#+TITLE: Programmierparadigmen
+#+AUTHOR: Johannes Brauer
+#+OPTIONS:   H:4
+#+OPTIONS: num:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: reveal_single_file:nil
+#+Language:  de
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+# +REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_THEME: solarized
+#+REVEAL_TRANS: slide
+#+REVEAL_HLEVEL: 1
+# #+REVEAL_SLIDE_FOOTER: Prof. Dr.-Ing. Johannes Brauer: Programmierparadigmen
+#+REVEAL_INIT_SCRIPT: dependencies: [ { src: 'plugin/menu/menu.js', async: true }]
+#+REVEAL_MARGIN: 0.05
+#+REVEAL_EXTRA_CSS: ./mycss/myrevealstyle.css
+# +REVEAL_EXTRA_CSS: file:///Users/Shared/Dropbox/Programmierparadigmen/myrevealstyle.css
+#+OPTIONS: reveal_control:t
+#+OPTIONS: menue:t
+#+REVEAL_PLUGINS: (zoom menu)
+
+# um Folien mit reveal.js erzeugen zu können:ml
+# M-x load-library und dann ox-reveal
+* Übersicht
+1. [[file:ProPar-FuProErgnzngn.org][Funktionale Programmierung: Ergänzungen]]
+2. [[file:ProPar-ZustndsbhfttPrgrmmrung.org][Zustandsbehaftete Programmierung in funktionalen Sprachen]]
+3. [[file:ProPar-RelProgUebrscht.org][Von Funktionen zu Relationen]]
+4. [[file:ProPar-ConProgEinf.org][Constraint-Programmierung -- Intuitive Einführung]]
+5. [[file:ProPar-RelLogProg.org][Relational-logische Programmierung]]
+6. [[file:ProPar-ConProgGrndlgn.org][Constraint-Programmierung -- Grundlagen]]
+
+# * Notizen
+
+# ** Logische Programme
+
+# Die /Logische Programmierung/ (auch /Prädikative Programmierung/
+# genannt) wird hier nur anhand eines einfachen Beispiels kurz erläutert.
+
+# -  Der Programmierer deklariert Fakten und Einschränkungen für ein
+#    gegebenes Problem.
+
+# -  Diese Informationen werden vom System benutzt, um eine Lösung
+#    abzuleiten.
+
+# -  Ein prädikatives Programm besteht aus:
+
+#    -  Fakten
+
+#    -  Regeln, mit denen neue Fakten abgeleitet werden können.
+
+#    -  Fragen
+
+# ** miniKanren
+
+# [[https://stackoverflow.com/questions/28467011/what-are-the-main-technical-differences-between-prolog-and-minikanren-with-resp][miniKanren-vs-prolog]]
+
+# + Es gibt eine akademische Diskussion über den Unterschied zwischen
+#   logischer und relationaler Programmierung.
+# + Relationale Programmierung als Erweiterung der logischen
+#   Programmierung umfasst auch die klassische logische Programmierung
+#   (meist assoziiert mit der Sprache Prolog).
+# + Ein deklarativer Programmierstil wird möglich: Spezifiziere das
+#   Problem und das System ermittelt das Ergebnis.
+# + Wichtige Grundlage der relationalen Programmierung: Funktionen als
+#   Werte.
+# + Als vorherrschende Sprache der relationalen Programmierung hat sich
+#   /[[http://minikanren.org][miniKanren]]/ etabliert.
+# + miniKanren wird in der Regel eingebettet in andere
+#   Programmiersprachen, z. B. Scheme, Python, Java, [[https://github.com/clojure/core.logic][Clojure]]
+
+# ** Mira Balaban: Principles of Programming Languages
+#   + Logische Programmierung wird unterteilt in
+#     + 7.1 RelationalLogicProgramming
+#     + 7.2 Logic Programming - adds an additional syntactic symbol -
+#       functor - that can represent data structures, and is more
+#       expressive than relational logic programming.
+
+
+# ** Continuations
+# ** persistent data structures
+# ** FP vs. OOP
+# ** Zustandsbehaftete Programmierung in funktionalen Sprachen
+# ** Von FP zu OOP aus EidP 
+# ** Vergleich OOP-FP am Beispiel der arithmetischen Ausdrücke
+# + eventuell erst A16
+# + s. dazu
+#   + section2sum
+#   + section3sum: Not just for numbers and lists
+#   + section6sum Implementing a Programming Language
+#   + section9sum (einschl. Java-Lösung in 142_fp_oo_decomposition.java)
+
+
+

@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+<head>
+<!-- 2017-07-07 Fri 12:48 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Relational-logische Programmierung</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Johannes Brauer" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Relational-logische Programmierung
+<br>
+<span class="subtitle">Programmierparadigmen</span>
+</h1>
+
+<div id="outline-container-org5658b20" class="outline-2">
+<h2 id="org5658b20">Einführung</h2>
+<div class="outline-text-2" id="text-org5658b20">
+<ul class="org-ul">
+<li>Relational-logische Programmierung: Programme spezifizieren
+Relationen zwischen Größen.</li>
+<li>Logische Programmierung: Programm mit Datenstrukturen: Listen,
+Binärbäume, symbolische Ausdrücke, natürliche Zahlen.</li>
+<li>Der Ursprung der logischen Programmierung: automatische Theorembeweiser.</li>
+<li>Sie verlangt eine Änderung der Denkweise:
+<ol class="org-ol">
+<li>Strukturierte logische Formeln werden als Relations- (Prozedur-)
+Spezifikationen betrachtet.</li>
+<li>Eine Frage zu einer logischen Implikation wird als Relations-
+(Prozedur-) Aufruf betrachtet.</li>
+<li>Der Beweis der Implikation ist dann die Berechnung der Antwort.</li>
+</ol></li>
+</ul>
+<ul class="org-ul">
+<li>Konkreter: Ein Axiom der Form:<br />
+<code>A if B1 and B2 ... and Bn</code><br />
+kann als Prozedur in einer Programmiersprache betrachtet werden:
+<ul class="org-ul">
+<li><code>A</code> ist der Prozedurkopf,</li>
+<li>die <code>Bis</code> bilden ihren Rumpf.</li>
+</ul></li>
+<li>Der Versuch <code>A</code> zu lösen, wird als Ausführung der Prozedur
+verstanden. Dazu muss der Ausdruck <code>B1 and B2 ... and Bn</code> gelöst
+bzw. ausgeführt werden.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7cdabd5" class="outline-2">
+<h2 id="org7cdabd5">Relationale Programmierung mit Prolog</h2>
+<div class="outline-text-2" id="text-org7cdabd5">
+<ul class="org-ul">
+<li>Prolog (Programming in Logic) wurde Anfang der 1970er Jahre von dem
+französischen Informatiker Alain Colmerauer entwickelt.</li>
+<li>Prolog hat sich als Programmiersprache über die strikte logische
+Basis hinaus entwickelt: Praktische Programmierkonstrukte wie
+arithmetische Operationen, Optimierungshilfmittel und Ein-/Ausgabe
+sind hinzugekommen.</li>
+<li>Die Darstellungen in den folgenden Abschnitten basieren auf
+<a class='org-ref-reference' href="#Bramer2013">Bramer2013</a> und  <a class='org-ref-reference' href="#Clocksin2003">Clocksin2003</a>.</li>
+</ul>
+</div>
+
+<div id="outline-container-org543ecc6" class="outline-3">
+<h3 id="org543ecc6">Syntax und Semantik relational-logischer Programme</h3>
+<div class="outline-text-3" id="text-org543ecc6">
+<ul class="org-ul">
+<li>Die Syntax basiert auf einer Teilmenge der Prädikatenkalküls. Ein
+relational-logisches Programm besteht aus einer Menge von Formeln,
+ die nach Fakten und Regel unterschieden werden. Beide beschreiben
+ bekannte Relationen auf der Problemdomäne.</li>
+<li>Die Semantik besteht in einer Menge auf Antworten auf Fragen.</li>
+<li>Ein Programm wird ausgeführt durch eine logische Aussage, die auch
+Frage oder <i>Zielausdruck</i> (oder goal oder query) genannt wird.</li>
+<li>Fragen können Variablen enthalten.</li>
+<li>Die Beantwortung von Fragen mit Variablen besteht darin,
+Variablenbindungen zu finden, die die Frage „beweisen“.</li>
+<li>Dies geschieht mithilfe zweier Techniken:
+<ul class="org-ul">
+<li>Unifikation: Belegung von Variablen in zwei Termen, so dass diese
+gleich werden.</li>
+<li>Backtracking: Suchstrategie bei der Beweisfindung.</li>
+</ul></li>
+<li>Es gibt nur eine primitive Operation: den Unifikationsoperator
+<code>=</code>.</li>
+<li>Es gibt keine Typen.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9953edc" class="outline-3">
+<h3 id="org9953edc">Einstiegsbeispiel</h3>
+<div class="outline-text-3" id="text-org9953edc">
+<ul class="org-ul">
+<li>Das „Hallo Welt“-Äquivalent für ein Prolog-Programm ist meistens
+eine Wissensdatenbank mit Verwandtschaftsverhältnissen.
+<ul class="org-ul">
+<li>Eltern: Paul, Elfriede</li>
+<li>Kinder: Klaus, Claudia, Monika</li>
+</ul></li>
+<li><p>
+Fakten in Prolog:
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog">  vater(klaus, paul).
+  vater(claudia, paul).
+  vater(monika, paul).
+  mutter(klaus, elfriede).
+  mutter(claudia, elfriede).
+  mutter(monika, elfriede).
+  verheiratet(paul, elfriede).</pre>
+</pre>
+</div></li>
+</ul>
+</div>
+
+<div id="outline-container-orgfd69d8d" class="outline-4">
+<h4 id="orgfd69d8d">Start des Prolog-Interpreters</h4>
+<div class="outline-text-4" id="text-orgfd69d8d">
+<ul class="org-ul">
+<li>Im folgenden wird <a href="http://www.swi-prolog.org">SWI-Prolog</a> benutzt.</li>
+<li>Nach dem Start des Interpreters und der Konsultation der Faktendatei
+<code>stammbaum.pl</code> können Fragen an den Interpreter gestellt werden:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #BA36A5;">Welcome</span> to <span style="color: #BA36A5;">SWI</span>-<span style="color: #BA36A5;">Prolog</span> (threaded, 64 bits, version 7.4.2)
+<span style="color: #BA36A5;">SWI</span>-<span style="color: #BA36A5;">Prolog</span> comes with <span style="color: #BA36A5;">ABSOLUTELY</span> <span style="color: #BA36A5;">NO</span> <span style="color: #BA36A5;">WARRANTY</span>. <span style="color: #BA36A5;">This</span> is free software.
+<span style="color: #BA36A5;">Please</span> run ?- license. <span style="color: #006699;">for</span> legal details.
+
+<span style="color: #BA36A5;">For</span> online help and background, visit http://www.<span style="color: #006699;">swi</span>-prolog.<span style="color: #006699;">org</span>
+<span style="color: #BA36A5;">For</span> built-in help, use ?- help(<span style="color: #BA36A5;">Topic</span>). <span style="color: #006699;">or</span> ?- apropos(<span style="color: #BA36A5;">Word</span>).
+
+1 ?- consult(<span style="color: #008000;">'stammbaum.pl'</span>).
+true.
+
+2 ?- vater(klaus, paul).
+true.
+
+3 ?- mutter(claudia, paul).
+false.</pre>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1f53641" class="outline-4">
+<h4 id="org1f53641">Weitere Beispiele für Fragen (Zielausdrücke, goals):</h4>
+<div class="outline-text-4" id="text-org1f53641">
+<p>
+Fragen können Variablen benutzen, die stets mit einem Großbuchstaben
+beginnen müssen.
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog">?-  mutter(klaus, elfriede).
+    true.
+?-  vater(claudia, <span style="color: #BA36A5;">X</span>).
+    <span style="color: #BA36A5;">X</span>=paul.
+?-  vater(peter, <span style="color: #BA36A5;">X</span>).
+    false.
+?-  vater(<span style="color: #BA36A5;">X</span>, paul).
+    <span style="color: #BA36A5;">X</span>=klaus<span style="color: #0000FF;">;</span>
+    <span style="color: #BA36A5;">X</span>=claudia<span style="color: #0000FF;">;</span>
+    <span style="color: #BA36A5;">X</span>=monika.
+?-  verheiratet(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>).
+    <span style="color: #BA36A5;">X</span>=paul<span style="color: #0000FF;">;</span>
+    <span style="color: #BA36A5;">Y</span>=elfriede.</pre>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org506b5d5" class="outline-4">
+<h4 id="org506b5d5">Regeln</h4>
+<div class="outline-text-4" id="text-org506b5d5">
+<p>
+Nehmen wir an, wir möchten auch Anfragen über die
+Schwesterbeziehung in die Datenbasis aufnehmen, um entsprechende
+Anfragen beantworten zu können. Dann hat man zwei Möglichkeiten:
+</p>
+
+<ol class="org-ol">
+<li><p>
+Neue Fakten hinzufügen:
+</p>
+<div class="small">
+<div class="org-src-container">
+<pre class="src src-prolog">   schwester(claudia, monika).
+   schwester(monika, claudia).
+   schwester(klaus, claudia).
+   schwester(klaus, monika).</pre>
+</pre>
+</div>
+
+</div></li>
+
+<li>Formulierung einer Regel: <code>Y</code> ist Schwester von <code>X</code>, falls <code>Y</code> 
+weiblich und Mutter von <code>X</code> gleich Mutter von <code>Y</code> ist und Vater von
+<code>X</code> gleich Vater von <code>Y</code>.<br />
+<br />
+Dann muss man nur noch als Fakten festhalten, welche
+Familienmitglieder weiblich sind. Die Regel erlaubt es, aus bekannten 
+Fakten neue herzuleiten!</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org953053d" class="outline-4">
+<h4 id="org953053d">Prolog-Programm mit Schwesterregel</h4>
+<div class="outline-text-4" id="text-org953053d">
+<p>
+Fakten:
+</p>
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #006699;">vater</span>(klaus, paul).
+<span style="color: #006699;">vater</span>(claudia, paul).
+<span style="color: #006699;">vater</span>(monika, paul).
+<span style="color: #006699;">mutter</span>(klaus, elfriede).
+<span style="color: #006699;">mutter</span>(claudia, elfriede).
+<span style="color: #006699;">mutter</span>(monika, elfriede).
+<span style="color: #006699;">verheiratet</span>(paul, elfriede).
+<span style="color: #006699;">weiblich</span>(claudia).
+<span style="color: #006699;">weiblich</span>(monika).
+<span style="color: #006699;">weiblich</span>(elfriede).</pre>
+</pre>
+</div>
+
+<p>
+Regeln:
+</p>
+<div class="small">
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #006699;">schwester</span>(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>):- weiblich(<span style="color: #BA36A5;">Y</span>), 
+       mutter(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Z</span>), mutter(<span style="color: #BA36A5;">Y</span>, <span style="color: #BA36A5;">Z</span>), 
+       vater(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">W</span>), vater(<span style="color: #BA36A5;">Y</span>, <span style="color: #BA36A5;">W</span>),
+       <span style="color: #BA36A5;">X</span> \== <span style="color: #BA36A5;">Y</span>.</pre>
+</pre>
+</div>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf0ef5f6" class="outline-4">
+<h4 id="orgf0ef5f6">Beispielanfragen</h4>
+<div class="outline-text-4" id="text-orgf0ef5f6">
+<div class="smaller">
+<div class="org-src-container">
+<pre class="src src-prolog">?- schwester(klaus, claudia).</pre>
+</pre>
+</div>
+
+</div>
+
+<p>
+Das Prolog-System muss
+</p>
+
+<ol class="org-ol">
+<li>prüfen, ob <code>claudia</code> weiblich ist (Faktum)</li>
+<li>erkennen, dass <code>mutter(klaus,Z)</code> und <code>mutter(claudia,Z)</code> gelten für
+<code>Z=elfriede</code></li>
+<li>erkennen, dass <code>vater(klaus,W)</code> und <code>vater(claudia,W)</code> gelten für
+<code>W=Paul</code></li>
+<li>daher <code>true</code> ausgeben</li>
+</ol>
+
+<div class="smaller">
+<div class="org-src-container">
+<pre class="src src-prolog">?- schwester(klaus, <span style="color: #BA36A5;">X</span>).</pre>
+</pre>
+</div>
+
+</div>
+
+<ul class="org-ul">
+<li>Die Frage bedeutet: Wer sind die Schwestern von Klaus?</li>
+<li>Das Prolog-System durchsucht seine Datenbank von Fakten (und Regeln)
+in fester Reihenfolge; nämlich:
+<ol class="org-ol">
+<li>von oben nach unten</li>
+<li>von links nach rechts</li>
+</ol></li>
+<li><p>
+Daher liefert die Anfrage die Antwort:
+</p>
+
+<div class="small">
+<div class="org-src-container">
+<pre class="src src-prolog">   <span style="color: #BA36A5;">X</span>=claudia<span style="color: #0000FF;">;</span>
+   <span style="color: #BA36A5;">X</span>=monika<span style="color: #0000FF;">;</span>
+   false.</pre>
+</pre>
+</div>
+
+</div></li>
+</ul>
+
+<div class="smaller">
+<div class="org-src-container">
+<pre class="src src-prolog">?- schwester(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>).</pre>
+</pre>
+</div>
+
+</div>
+
+<p>
+Es ist nicht schwer zu sehen, dass aufgrund der o.g. Auswertestrategie
+folgende Ausgabe erzeugt wird:
+</p>
+
+<div class="small">
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #BA36A5;">X</span> = klaus, <span style="color: #BA36A5;">Y</span> = claudia <span style="color: #0000FF;">;</span>
+<span style="color: #BA36A5;">X</span> = monika, <span style="color: #BA36A5;">Y</span> = claudia <span style="color: #0000FF;">;</span>
+<span style="color: #BA36A5;">X</span> = klaus, <span style="color: #BA36A5;">Y</span> = monika <span style="color: #0000FF;">;</span>
+<span style="color: #BA36A5;">X</span> = claudia, <span style="color: #BA36A5;">Y</span> = monika <span style="color: #0000FF;">;</span>
+false.</pre>
+</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf4c6a46" class="outline-3">
+<h3 id="orgf4c6a46">Basiskonzepte von Prolog</h3>
+<div class="outline-text-3" id="text-orgf4c6a46">
+</div><div id="outline-container-org65136c4" class="outline-4">
+<h4 id="org65136c4">Terme</h4>
+<div class="outline-text-4" id="text-org65136c4">
+<ul class="org-ul">
+<li>Alle Daten (einschließlich der Prolog-Programme) in Prolog werden
+durch <i>Terme</i> repräsentiert.</li>
+<li>Ein Term ist:
+<ul class="org-ul">
+<li>ein <i>Atom</i>. Beispiele sind <code>elmshorn</code>, <code>claudia</code>. Atome beginnen
+mit einem Kleinbuchstaben.</li>
+<li>eine <i>Variable</i>. Variablen beginnen mit einem Großbuchstaben oder
+dem Unterstrich. Ein singulärer Unterstrich bezeichnet die
+<i>anonyme Variable</i>, die für „irgendeinen Term” steht.</li>
+<li>eine <i>Ganzzahl</i> oder eine <i>Gleitkommazahl</i>.</li>
+<li>ein <i>zusammengesetzter Term</i> (compound term):
+<ul class="org-ul">
+<li>Wenn \(t_1, t_2, \ldots ,t_n\) Terme sind, dann ist auch \(f(t_1,
+      t_2, \ldots ,t_n)\) ein Term. \(f\) heißt Funktor und \(n\) ist die
+Stelligkeit des zusammengesetzten Terms.<br />
+Beispiele: <code>f(a)</code>, <code>g(f(X))</code>, <code>+(a, f(X))</code></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org636e8fc" class="outline-4">
+<h4 id="org636e8fc">Programme</h4>
+<div class="outline-text-4" id="text-org636e8fc">
+<ul class="org-ul">
+<li>Ein Prolog-Programm besteht aus einer Menge von Prädikaten.</li>
+<li>Prädikate beschreiben Relationen zwischen ihren Argumenten. Logisch
+betrachtet beschreibt ein Prolog-Programm, was gilt.</li>
+<li>Jedes <i>Prädikat</i>
+<ul class="org-ul">
+<li>besitzt ein Atom als Namen und beliebig viele Argumente.</li>
+<li>Jedes Argument ist ein Prolog-Term.</li>
+<li>Ein Prädikat mit dem Namen <code>Pred</code> und \(n\) Argumenten wird durch
+einen Prädikatsindikator notiert: <code>Pred/n</code>. \(n\) ist die
+Stelligkeit des Prädikats.</li>
+<li>Ein Prädikat wird durch eine Menge von <i>Klauseln</i> (s. u.) definiert.</li>
+<li>Die Klauseln, die ein Prädikat definieren, stellen logische
+Alternativen dar. Wenn eine der Klauseln wahr ist, ist das ganze
+Prädikat war.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgcd8723c" class="outline-4">
+<h4 id="orgcd8723c">Klauseln &#x2013; Regeln</h4>
+<div class="outline-text-4" id="text-orgcd8723c">
+<ul class="org-ul">
+<li>Ein Klausel ist entweder ein <i>Fakt</i> oder eine <i>Regel</i>.</li>
+<li>Eine Regel hat die Form:<br />
+<code>Kopf :- Rumpf.</code>
+<ul class="org-ul">
+<li>Die Form des <code>Kopf</code> hängt von der Zahl der Argumente des Prädikats
+ab:
+<ul class="org-ul">
+<li>Besitzt das Prädikat keine Argumente, dann besteht der <code>Kopf</code>
+nur aus dem Namen des Prädikats, ist also ein Atom.</li>
+<li>Andernfalls ist <code>Kopf</code> ein zusammengesetzter Term, z. B.:<br />
+<code>schwester(X, Y)</code></li>
+</ul></li>
+<li>Der <code>Rumpf</code> hat die Form: \(B_1,\ldots,B_n\), wobei die \(B_i\) Terme
+sind, die mit dem Komma konjunktiv verknüpft sind.</li>
+<li>Die Zeichenfolge <code>:-</code> steht für die logische Implikation,
+gerichtet vom Rumpf zum Kopf.</li>
+</ul></li>
+</ul>
+<ul class="org-ul">
+<li><p>
+Z. B. kann die Regel<br />
+</p>
+<pre class="example">
+father(Dad, Child) :- parent(Dad, Child), male(Dad).
+
+</pre>
+<p>
+wie folgt gelesen werden: <code>Dad</code> (eine Variable) ist <code>father</code> von
+<code>Child</code> (Variable), wenn <code>Dad</code> <code>parent</code> von <code>Child</code> und <code>Dad</code>
+<code>male</code> ist.
+</p></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org15d9cb1" class="outline-4">
+<h4 id="org15d9cb1">Klauseln &#x2013; Fakten</h4>
+<div class="outline-text-4" id="text-org15d9cb1">
+<ul class="org-ul">
+<li>Ein Faktum wird so aufgeschrieben:<br />
+<code>Kopf.</code></li>
+<li>Dieser Ausdruck ist äquivalent zur Regel:<br />
+<code>Kopf :- true.</code></li>
+<li>Logisch bedeutet das, dass die Regel immer wahr ist, weil das
+Standardprädikat <code>true/0</code> immer wahr ist.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgeec3636" class="outline-4">
+<h4 id="orgeec3636">Starten von Prolog-Programmen</h4>
+<div class="outline-text-4" id="text-orgeec3636">
+<ul class="org-ul">
+<li>Eingabe von Fragen/Zielausdrücken (queries) am Eingabeprompt des
+Prolog-Interpreters</li>
+<li>Ein Zielausdruck besteht aus dem Namen eines beliebigen Prädikats
+und seiner Argumente.</li>
+<li>Eine Frage kann aus der Und-Verknüpfung von mehreren Zielausdrücken
+bestehen.</li>
+<li>In einer Frage sind Variabeln existenz-quantifiziert. Eine Frage
+<code>p(X)</code> kann so gelesen werden: Existiert eine Variablenbindung für
+X, so dass <code>p(X)</code> wahr wird.</li>
+<li>Wenn eine passende Variablenbindung gefunden werden kann (the goal
+succeeds), antwortet der Interpreter mit einem logisch äquivalenten
+Zielausdruck.</li>
+<li>Wenn eine Frage mehrere Antworten hat, liefert der Interpreter die
+übrigen auf besondere Anforderung (in SWI-Prolog durch Eingabe von
+Leerzeichen oder Semikolon).</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4d8f845" class="outline-4">
+<h4 id="org4d8f845">Ausführung von Prolog-Programmen</h4>
+<div class="outline-text-4" id="text-org4d8f845">
+<p>
+Die operationale Semantik von Prolog
+</p>
+<ul class="org-ul">
+<li>Die Ausführung von Prolog-Code kann als ein Spezialfall einer
+<i>Resolution</i> betrachtet werden.</li>
+<li>Die Resolution ist ein Verfahren der formalen Logik, um die
+Gültigkeit einer logischen Formel zu prüfen. Dabei wird versucht,
+aus der Verneinung der Frage einen Widerspruch abzuleiten.</li>
+<li>Wenn ein Widerspruch gefunden wird, ist die Frage die logische
+Folgerung aus dem Programm.</li>
+<li>Ein wichtiger Schritt in diesem Prozess ist die Unifikation von
+Termen.</li>
+<li>Wird der Kopf einer Klausel für die Unifikation mit einem
+Zielausdruck ausgewählt, wird diese auf die Argumente von beiden
+Termen angewendet.</li>
+<li>Daraus folgt, dass es in Prolog keine Unterscheidung zwischen Ein-
+und Ausgabeparametern gibt.
+(Vgl. <a href="ProPar-RelProgUebrscht.html#MissingReference">Implementierung von natürlichen Zahlen</a>!)</li>
+</ul>
+<ul class="org-ul">
+<li>Sind die Köpfe mehrerer Klauseln mit einem Zielausdruck
+unifizierbar, werden die Alternativen durch <i>Backtracking</i>
+abgearbeitet.</li>
+<li>Informell kann die Ausführungsstrategie von Prolog als Tiefensuche
+(depth-first search) mit <i>chronologischem Backtracking</i> betrachtet werden.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org376c71e" class="outline-4">
+<h4 id="org376c71e">Standardprädikate</h4>
+<div class="outline-text-4" id="text-org376c71e">
+<ul class="org-ul">
+<li>Es gibt einige vordefinierte Standardprädikate, z. B.
+<ul class="org-ul">
+<li><code>=/2</code> ist wahr, wenn seine Argumente unifizierbar sind;</li>
+<li><code>true/0</code> ist immer wahr, <code>false/0</code> immer falsch;</li>
+<li><code>dif/2</code> is wahr genau dann, wenn die Argumente unterschiedliche
+Terme sind;</li>
+<li><code>,/2</code> bezeichnet die Konjunktion, <code>;/2</code> die Disjunktion.</li>
+</ul></li>
+<li>Standardprädikate für den Vergleich Zahlen (alle zweistellig):
+<ul class="org-ul">
+<li><code>=:=</code>, <code>=\=</code> numerische Gleichheit, Ungleichheit</li>
+<li><code>&lt;</code>, <code>&gt;</code>, <code>=&lt;</code>, <code>&gt;=</code></li>
+</ul></li>
+<li>Arithmetische Operationen (alle zweistellig):<br />
+<code>+ - * / // mod</code><br />
+Es gelten die üblichen Vorrangregeln.</li>
+<li>Die Standardprädikate für Zahlen können in Infixnotation geschrieben
+werden, also <code>3 + 4</code> anstatt <code>+(3, 4)</code>.</li>
+</ul>
+<ul class="org-ul">
+<li><p>
+Beachte: Der Unifikationsoperator <code>=/2</code> bewirkt keine Auswertung
+arithmetischer Ausdrücke, dafür steht der Operator <code>is/2</code> zur
+Verfügung:
+</p>
+<div class="smaller">
+<div class="org-src-container">
+<pre class="src src-prolog">  ?- <span style="color: #BA36A5;">X</span> = 3 + 4.
+  <span style="color: #BA36A5;">X</span> = 3+4.
+  ?- <span style="color: #BA36A5;">X</span> is 3+4.
+  <span style="color: #BA36A5;">X</span> = 7.</pre>
+</pre>
+</div>
+
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2c86c2e" class="outline-4">
+<h4 id="org2c86c2e">Resolution / Backtracking</h4>
+<div class="outline-text-4" id="text-org2c86c2e">
+<ul class="org-ul">
+<li>Resolution: Grundlage für eine automatische Beweisführung</li>
+<li>basiert auf dem Prinzip der Unifikation und des automatischen
+Rücksetzens (Backtracking).</li>
+<li>Prolog benutzt Tiefensuche; Reihenfolge der Klauseln entscheidend</li>
+<li>Teilziele einer Anfrage werden von links nach rechts bearbeitet.</li>
+<li>Zu jedem Teilziel wird die im Programmtext erste Klausel ausgewählt
+und versucht mit dem Teilziel zu unifizieren.</li>
+<li>Ist die Klausel eine Regel, so wird das Teilziel durch den
+Regelrumpf ersetzt und versucht zu beweisen. Andernfalls wird
+versucht das nächste Ziel der Anfrage herzuleiten.</li>
+<li>Tritt während der Resolution ein Fehler bei der Unifikation auf,
+wird also keine passende Programmklausel gefunden, so springt das
+PROLOG-System durch das eingebaute Rücksetzen auf den letzten Punkt
+zurück, an dem eine Entscheidung getroffen wurde, hebt die an dieser
+Stelle gemachten Variablenbindungen auf und wählt die nächste
+alternative Klausel aus.</li>
+</ul>
+</div>
+<div id="outline-container-org8968a3b" class="outline-5">
+<h5 id="org8968a3b">Beispiel</h5>
+<div class="outline-text-5" id="text-org8968a3b">
+<div class="org-src-container">
+<pre class="src src-prolog"><span style="color: #006699;">father</span>(abraham,isaac).
+<span style="color: #006699;">father</span>(haran,lot).
+<span style="color: #006699;">father</span>(haran,milcah).
+<span style="color: #006699;">father</span>(haran,yiscah).
+<span style="color: #006699;">male</span>(isaac).
+<span style="color: #006699;">male</span>(lot).
+<span style="color: #006699;">female</span>(milcah).
+<span style="color: #006699;">female</span>(yiscah).
+<span style="color: #006699;">son</span>(<span style="color: #BA36A5;">X</span>,<span style="color: #BA36A5;">Y</span>) :- father(<span style="color: #BA36A5;">Y</span>,<span style="color: #BA36A5;">X</span>), male(<span style="color: #BA36A5;">X</span>).
+<span style="color: #006699;">daughter</span>(<span style="color: #BA36A5;">X</span>,<span style="color: #BA36A5;">Y</span>) :- father(<span style="color: #BA36A5;">Y</span>,<span style="color: #BA36A5;">X</span>), female(<span style="color: #BA36A5;">X</span>).</pre>
+</pre>
+</div>
+<p>
+Nachfolgend wird die Resolution der Anfrage
+</p>
+<pre class="example">
+daughter(X,haran).
+
+</pre>
+<p>
+gezeigt.
+</p>
+<ol class="org-ol">
+<li>Prolog sucht passende Programmklausel<br />
+Unifikation <code>daughter(X,Y)</code> und <code>daughter(X,haran)</code> <br />
+\(\rightarrow\) Substitution <code>Y=haran</code></li>
+<li>Das ursprüngliche Ziel wird durch den Regelrumpf ersetzt<br />
+\(\rightarrow\) neue Zielanfrage: <code>father(haran,X), female(X).</code></li>
+<li>linkes Teilziel wird ausgewählt: <code>father(haran,X)</code><br />
+erste Programmklausel wird ausgewählt: <code>father(abraham,isaac).</code><br />
+\(\rightarrow\) Unifikation nicht möglich \(\rightarrow\) Backtracking</li>
+<li>nächste alternative Programmklausel wird ausgewählt: <code>father(haran,lot)</code><br />
+\(\rightarrow\) Substitution <code>X=lot</code></li>
+<li>rechtes Teilziel wird ausgewählt und Substitution angewendet: <code>female(lot)</code><br />
+\(\rightarrow\) keine passende Programmklausel vorhanden \(\rightarrow\) Backtracking</li>
+</ol>
+<ol class="org-ol">
+<li value="6">Substitution <code>X=lot</code> wird aufgehoben, nächste Klausel im
+Programmtext ausgewählt: <code>father(haran,milcah)</code> <br />
+\(\rightarrow\) Substitution <code>X=milcah</code></li>
+<li>rechtes Teilziel wird ausgewählt und Substitution angewendet:
+<code>female(milcah)</code><br />
+\(\rightarrow\) passende Programmklausel vorhanden
+\(\rightarrow\) Prolog gibt die Substitution <code>X=milcah</code> aus</li>
+<li>Durch Eingabe von <code>;</code> wird manuell Backtracking erzwungen um
+alternative Lösungen zu finden</li>
+<li>Substitution <code>X=milcah</code> wird aufgehoben, nächste Klausel im
+Programmtext ausgewählt: <code>father(haran,yiscah)</code> <br />
+\(\rightarrow\) Substitution <code>X=yiscah</code></li>
+<li>rechtes Teilziel wird ausgewählt und Substitution angewendet:<br />
+<code>female(yiscah)</code> <br />
+\(\rightarrow\) passende Programmklausel vorhanden<br />
+\(\rightarrow\) Prolog gibt die Substitution <code>X=yiscah.</code> aus und
+schließt die Beantwortung der ursprünglichen Anfrage, da
+keine Alternativen mehr vorhanden sind</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org17efdbf" class="outline-2">
+<h2 id="org17efdbf">Literatur</h2>
+</div>
+<div id="outline-container-org4be6b59" class="outline-2">
+<h2 id="org4be6b59"><h1 class='org-ref-bib-h1'>Bibliography</h1>
+<ul class='org-ref-bib'><li><a id="Bramer2013">[Bramer2013] Max Bramer, Logic Programming with Prolog, Springer (2013).</a></li>
+<li><a id="Clocksin2003">[Clocksin2003] William Clocksin & Christopher Mellish, Programming in Prolog: Using the ISO Standard, Springer (2003).</a></li>
+</ul></h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Autor: Johannes Brauer</p>
+<p class="date">Created: 2017-07-07 Fri 12:48</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
