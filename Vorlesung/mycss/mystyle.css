@@ -1,0 +1,4 @@
+.nebeneinander {display:block; width:300px; float: left;}
+.zweispalten {display:block; width:450px; float: left;}
+.clear {clear:left;}
+.section-number-2:after {content:"."};
