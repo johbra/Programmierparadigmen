@@ -1,0 +1,959 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+<head>
+<!-- 2017-08-22 Tue 22:49 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zustandsbehaftete Programmierung in funktionalen Sprachen</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Johannes Brauer" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Zustandsbehaftete Programmierung in funktionalen Sprachen
+<br />
+<span class="subtitle">Programmierparadigmen</span>
+</h1>
+
+<div id="outline-container-orge804281" class="outline-2">
+<h2 id="orge804281">Zustandsbehaftete Programmierung</h2>
+<div class="outline-text-2" id="text-orge804281">
+</div><div id="outline-container-orgb9dbf08" class="outline-3">
+<h3 id="orgb9dbf08">Beispiel: Ein Bankkonto</h3>
+<div class="outline-text-3" id="text-orgb9dbf08">
+<ul class="org-ul">
+<li>Typisches (oder doch nicht?) Beispiel für einen zustandsbehafteten
+Gegenstand der realen Welt: ein Bankkonto.</li>
+<li>Das Konto werde durch eine Prozedur <code>belaste</code> repräsentiert.</li>
+<li><code>(belaste betrag)</code> reduziere den Kontostand um <code>betrag</code> und gebe den
+neuen Kontostand als Resultat zurück.</li>
+<li><p>
+Annahme: Kontostand zu Beginn 100. Dann ist folgende Ausdruckssequenz
+denkbar:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">       &gt; <span style="color: #707183;">(</span>belaste 30<span style="color: #707183;">)</span>
+          70
+          &gt; <span style="color: #707183;">(</span>belaste 30<span style="color: #707183;">)</span>
+          40
+          &gt; <span style="color: #707183;">(</span>belaste 50<span style="color: #707183;">)</span>
+          konto-ueberzogen
+          &gt; <span style="color: #707183;">(</span>belaste 20<span style="color: #707183;">)</span>
+          20</pre>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgbdf51a9" class="outline-3">
+<h3 id="orgbdf51a9">Zustandsabhängige Resultate</h3>
+<div class="outline-text-3" id="text-orgbdf51a9">
+<ul class="org-ul">
+<li>Beachte: Die gleiche Anwendung <code>(belaste 30)</code> liefert
+<b>unterschiedliche</b> Ergebnisse!</li>
+<li><code>belaste</code> verhält sich nicht mehr wie eine mathematische Funktion!</li>
+<li><p>
+Mögliche Implementierung des Bankkontos:
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">globlale Variable </span>
+       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">*konto*</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">atom</span> 100<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">belaste: (number -&gt; (mixed number symbol))</span>
+       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Effekt: bucht vom konto betrag ab, liefert neuen</span>
+       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Kontostand als Resultat, falls Konto nicht ueberzogen</span>
+       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">belaste</span>
+          <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>betrag<span style="color: #909183;">]</span>
+            <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+              <span style="color: #709870;">(</span>&gt;= @<span style="color: #BA36A5;">*konto*</span> betrag<span style="color: #709870;">)</span>
+              <span style="color: #709870;">(</span><span style="color: #0000FF;">do</span>
+                <span style="color: #907373;">(</span><span style="color: #006FE0;">swap!</span> <span style="color: #BA36A5;">*konto*</span> - betrag<span style="color: #907373;">)</span>
+                @<span style="color: #BA36A5;">*konto*</span><span style="color: #709870;">)</span>
+              <span style="color: #D0372D;">:else</span> 'konto-ueberzogen<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span></pre>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org3c7de92" class="outline-3">
+<h3 id="org3c7de92">Semantik von <code>atom</code>, <code>swap!</code> und <code>do</code></h3>
+<div class="outline-text-3" id="text-org3c7de92">
+<dl class="org-dl">
+<dt><code>atom</code></dt><dd>Durch einen Ausdruck der Form <code>(def v (atom e))</code> wird ein
+Atom (eine änderbare Speicherzelle) mit dem Anfangswert <code>e</code>
+erzeugt und ein Verweis auf sie in <code>v</code> abgelegt. Auf den Wert von
+<code>v</code> kann dann mit <code>(deref v)</code> oder <code>@v</code> zugegriffen werden.</dd>
+<dt><code>swap!</code></dt><dd>Ein Ausdruck der Form  <code>(swap! atom f ...)</code><br />
+wird als <code>(f @atom ...)</code> ausgewertet. Das Resultat der Auswertung wird der neue Wert des Atoms.</dd>
+<dt><code>do</code></dt><dd>Ausdrücke der Form <code>(do</code> \(e_{ 1}\ e_{2} \ldots e_{n}\) <code>)</code> werden wie folgt ausgewertet:
+<ol class="org-ol">
+<li>Die Ausdrücke \(e_{i}\) werden in der angegebenen Reihenfolge
+ausgewertet.</li>
+<li>Der Wert von \(e_{n}\) ist der Wert des <code>do</code>-Ausdrucks.</li>
+</ol></dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgbe3aee7" class="outline-3">
+<h3 id="orgbe3aee7">Vermeidung der globalen Variablen <code>*konto*</code></h3>
+<div class="outline-text-3" id="text-orgbe3aee7">
+<ul class="org-ul">
+<li><p>
+Definition einer lokalen Variablen <code>konto</code>:
+</p>
+
+<div class="small">
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">belaste</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">let</span> <span style="color: #909183;">[</span>konto <span style="color: #709870;">(</span><span style="color: #006FE0;">atom</span> 100<span style="color: #709870;">)</span><span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[</span>betrag<span style="color: #709870;">]</span>
+      <span style="color: #709870;">(</span><span style="color: #0000FF;">cond</span>
+        <span style="color: #907373;">(</span>&gt;= @konto betrag<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #0000FF;">do</span>
+                             <span style="color: #6276BA;">(</span><span style="color: #006FE0;">swap!</span> konto - betrag<span style="color: #6276BA;">)</span> @konto<span style="color: #907373;">)</span>
+        <span style="color: #D0372D;">:else</span> 'konto-ueberzogen<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div></li>
+<li>Damit arbeitet <code>belaste</code> wie vorher.</li>
+<li><b>Beachte:</b> Die Auswertung des <code>let</code>-Ausdrucks erfolgt nur einmal bei
+der Definition der Funktion <code>belaste</code>.</li>
+<li>Warum ist das wichtig?</li>
+<li>Die neue Funktion <code>belaste</code> stellt einen ersten Ansatz dar, Daten und
+Prozeduren zusammen zu bringen.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org19dc0a8" class="outline-3">
+<h3 id="org19dc0a8">Erzeugung mehrerer Konten</h3>
+<div class="outline-text-3" id="text-org19dc0a8">
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">nimmt einen Betrag als Startkapital eines Kontos</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">und erzeugt eine "belaste-Funktion"</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">erzeuge-konto: (number -&gt; (number -&gt; (mixed number symbol)))</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">erzeuge-konto</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>startwert<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">let</span> <span style="color: #709870;">[</span>konto <span style="color: #907373;">(</span><span style="color: #006FE0;">atom</span> startwert<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+      <span style="color: #709870;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #907373;">[</span>betrag<span style="color: #907373;">]</span>
+        <span style="color: #907373;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #6276BA;">(</span>&gt;= @konto betrag<span style="color: #6276BA;">)</span> <span style="color: #6276BA;">(</span><span style="color: #0000FF;">do</span>
+                               <span style="color: #858580;">(</span><span style="color: #006FE0;">swap!</span> konto - betrag<span style="color: #858580;">)</span> @konto<span style="color: #6276BA;">)</span>
+          <span style="color: #D0372D;">:else</span> 'konto-ueberzogen<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org8b01a11" class="outline-3">
+<h3 id="org8b01a11">Benutzung mehrerer Konten</h3>
+<div class="outline-text-3" id="text-org8b01a11">
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">konto1</span> <span style="color: #7388D6;">(</span>erzeuge-konto 500<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">konto2</span> <span style="color: #7388D6;">(</span>erzeuge-konto 600<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span>konto1 200<span style="color: #707183;">)</span>  <span style="color: #8D8D84; font-style: italic;">;==&gt; 300</span>
+<span style="color: #707183;">(</span>konto2 400<span style="color: #707183;">)</span>  <span style="color: #8D8D84; font-style: italic;">;==&gt; 200</span>
+<span style="color: #707183;">(</span>konto2 400<span style="color: #707183;">)</span>  <span style="color: #8D8D84; font-style: italic;">;==&gt; konto-ueberzogen</span>
+<span style="color: #707183;">(</span>konto2 100<span style="color: #707183;">)</span>  <span style="color: #8D8D84; font-style: italic;">;==&gt; 100</span></pre>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org97f09fe" class="outline-2">
+<h2 id="org97f09fe">Auswertungsmodell für Prozeduren - Grundlagen</h2>
+<div class="outline-text-2" id="text-org97f09fe">
+</div><div id="outline-container-org66989c5" class="outline-3">
+<h3 id="org66989c5">Ersetzungsmodell und Zuweisungen</h3>
+<div class="outline-text-3" id="text-org66989c5">
+<p>
+Zur Wiederholung das Ersetzungsmodell für Funktionsanwendungen:
+</p>
+
+<p>
+Ein Term der Form:<br />
+\[(operator\ operand_{1}\ \ldots operand_{n})\]
+wird wie folgt ausgewertet:
+</p>
+<ol class="org-ol">
+<li>Auswertung der Operanden des Terms</li>
+<li>Auswertung des Operators des Terms. Der Wert muss eine Funktion sein.
+Zwei Fälle sind möglich:
+<ol class="org-ol">
+<li>Der Wert des Operators ist eine eingebaute Funktion (z.B. + oder
+*), dann ist der Wert der Anwendung der eingebauten Funktion auf
+die ausgewerteten Operanden der Wert des Terms.</li>
+<li>Anderfalls muss der Operator zu einem fn-Ausdruck ausgewertet
+werden: Anwendung der Funktion auf die Operanden ist die
+Auswertung des Funktionsrumpfes, wobei jeder formale Parameter
+durch den korrespondierenden ausgewerteten Operanden ersetzt wird.</li>
+</ol></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org55cf452" class="outline-3">
+<h3 id="org55cf452">Versagen des Ersetzungsmodells (1)</h3>
+<div class="outline-text-3" id="text-org55cf452">
+<ul class="org-ul">
+<li>Für das Ersetzungsmodell gilt:
+<ul class="org-ul">
+<li>Gleiches kann immer durch Gleiches ersetzt werden.</li>
+<li>Bezeichner (Variablen) sind nur Namen für Werte.</li>
+</ul></li>
+<li><p>
+Gegenbeispiel:
+</p>
+<pre class="example">
+(def k1 (erzeuge-konto 100))
+(def k2 (erzeuge-konto 100))
+
+</pre></li>
+<li><p>
+<code>k1</code> und <code>k2</code> sind verschiedene Bezeichner für den gleichen Wert. Die
+folgenden Ausdrücke liefern aber unterschiedliche Werte:<br />
+</p>
+<pre class="example">
+(k1 10) ==&gt; 90
+(k1 10) ==&gt; 80
+(k2 10) ==&gt; 90
+
+</pre></li>
+</ul>
+<ul class="org-ul">
+<li><p>
+Was passiert hier?
+</p>
+<pre class="example">
+(def k1 (erzeuge-konto 100))
+(def k2 k1)
+(k1 10)
+(k2 10)  ==&gt; ???
+
+</pre></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org96f03ee" class="outline-3">
+<h3 id="org96f03ee">Versagen des Ersetzungsmodells (2)</h3>
+<div class="outline-text-3" id="text-org96f03ee">
+<ul class="org-ul">
+<li><p>
+Nach dem Ersetzungsmodell würde aus
+</p>
+<div class="org-src-container">
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #7388D6;">(</span>erzeuge-konto 500<span style="color: #7388D6;">)</span> 150<span style="color: #707183;">)</span>
+       = <span style="color: #707183;">(</span><span style="color: #7388D6;">(</span><span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[</span>startwert<span style="color: #709870;">]</span>
+             <span style="color: #709870;">(</span><span style="color: #0000FF;">let</span> <span style="color: #907373;">[</span>konto <span style="color: #6276BA;">(</span><span style="color: #006FE0;">atom</span> startwert<span style="color: #6276BA;">)</span><span style="color: #907373;">]</span>
+               <span style="color: #907373;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #6276BA;">[</span>betrag<span style="color: #6276BA;">]</span>
+                 <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span>
+                   <span style="color: #858580;">(</span>&gt;= @konto betrag<span style="color: #858580;">)</span>
+                   <span style="color: #858580;">(</span><span style="color: #0000FF;">do</span>
+                     <span style="color: #80A880;">(</span><span style="color: #006FE0;">swap!</span> konto - betrag<span style="color: #80A880;">)</span> @konto<span style="color: #858580;">)</span>
+                   <span style="color: #D0372D;">:else</span> 'konto-ueberzogen<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span> 500<span style="color: #7388D6;">)</span> 150<span style="color: #707183;">)</span>
+       = <span style="color: #707183;">(</span><span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>betrag<span style="color: #909183;">]</span>
+          <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+            <span style="color: #709870;">(</span>&gt;= 500 betrag<span style="color: #709870;">)</span>
+            <span style="color: #709870;">(</span><span style="color: #0000FF;">do</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">swap!</span> konto - betrag<span style="color: #907373;">)</span> 500<span style="color: #709870;">)</span>
+                     <span style="color: #8D8D84;">;;</span><span style="color: #8D8D84; font-style: italic;">***** hier darf =konto= offensichtlich nicht ersetzt werden!</span>
+            <span style="color: #D0372D;">:else</span> 'konto-ueberzogen<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span> 150<span style="color: #707183;">)</span></pre>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb3d941e" class="outline-3">
+<h3 id="orgb3d941e">Versagen des Ersetzungsmodells (3)</h3>
+<div class="outline-text-3" id="text-orgb3d941e">
+<ul class="org-ul">
+<li><p>
+Fortsetzung der Auswertung:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-clojure">       = <span style="color: #707183;">(</span><span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>betrag<span style="color: #909183;">]</span>
+          <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+            <span style="color: #709870;">(</span>&gt;= 500 betrag<span style="color: #709870;">)</span>
+            <span style="color: #709870;">(</span><span style="color: #0000FF;">do</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">swap!</span> konto - betrag<span style="color: #907373;">)</span> 500<span style="color: #709870;">)</span>
+            <span style="color: #D0372D;">:else</span> 'konto-ueberzogen<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span> 150<span style="color: #707183;">)</span>
+       = <span style="color: #707183;">(</span><span style="color: #0000FF;">cond</span>
+            <span style="color: #7388D6;">(</span>&gt;= 500 150<span style="color: #7388D6;">)</span>
+            <span style="color: #7388D6;">(</span><span style="color: #0000FF;">do</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">swap!</span> konto <span style="color: #709870;">(</span>- 500 150<span style="color: #709870;">)</span><span style="color: #909183;">)</span> 500<span style="color: #7388D6;">)</span>
+            <span style="color: #D0372D;">:else</span> 'konto-ueberzogen<span style="color: #707183;">)</span>
+       = <span style="color: #707183;">(</span><span style="color: #0000FF;">do</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">swap!</span> konto <span style="color: #909183;">(</span>- 500 150<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span> 500<span style="color: #707183;">)</span>
+       = <span style="color: #707183;">(</span><span style="color: #0000FF;">do</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">swap!</span> konto 350<span style="color: #7388D6;">)</span> 500<span style="color: #707183;">)</span>
+       = 500</pre>
+</pre>
+</div></li>
+
+<li>Das ist offensichtlich unsinnig!</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7d4c9bf" class="outline-3">
+<h3 id="org7d4c9bf">Das Umgebungsmodell</h3>
+<div class="outline-text-3" id="text-org7d4c9bf">
+<ul class="org-ul">
+<li>Das Umgebungsmodell erlaubt mithilfe von Umgebungsdiagrammen die
+Semantik zustandsbehafteter Prozeduren zu definieren.</li>
+<li>Durch eine Umgebung wird eine Menge von Bindungen von Variablen an
+Werte definiert.</li>
+<li>Bereits bekannt: In der globalen Umgebung werden (mit der
+Pseudofunktion <code>def</code>) Werte (auch Funktionen/Prozeduren) an
+Bezeichner gebunden.</li>
+<li>In Umgebungsdiagrammen werden Variablen durch Zellen dargestellt, die
+auf Werte verweisen.</li>
+</ul>
+<div class="zweispalten">
+<ul class="org-ul">
+<li>Beispiel: Die Definitionen<br />
+<code>(def z 27)</code><br />
+<code>(def s "Mozart")</code><br />
+werden durch dieses Umgebungsdiagramm dargestellt.</li>
+</ul>
+
+</div>
+
+<div class="figure">
+<p><img src="./Abbildungen/globaleumgebung.png" alt="globaleumgebung.png" width="250px" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-org37c231c" class="outline-4">
+<h4 id="org37c231c">Umgebungen - Rahmen</h4>
+<div class="outline-text-4" id="text-org37c231c">
+<ul class="org-ul">
+<li>Das auf der vorangegangen Folie dargestellte Umgebungsdiagramm
+enthält einen <i>Rahmen</i>. Das ist der einfachste Fall einer Umgebung.</li>
+
+<li>Die Umgebung auf der vorangegangen Folie stellt einen Ausschnitt aus
+der <i>globalen Umgebung</i> dar. Die Definitionen der Standard-Prozeduren
+von Clojure sind ebenfalls in der globalen Umgebung definiert.</li>
+
+<li>Eine Umgebung kann andere Umgebungen umschließen.</li>
+
+<li>In Umgebungsdiagrammen werden verschachtelte Umgebungen durch
+verkettete Rahmen dargestellt.</li>
+
+<li>Beispiel: s. nächste Folie</li>
+</ul>
+
+
+<div class="figure">
+<p><img src="./Abbildungen/umgebungen.png" alt="umgebungen.png" width="600px" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org58e4c5b" class="outline-4">
+<h4 id="org58e4c5b">Komplexe Umgebungen</h4>
+<div class="outline-text-4" id="text-org58e4c5b">
+<ul class="org-ul">
+<li>Die Umgebung <i>Global</i> besteht aus einem einzigen Rahmen.</li>
+<li>Die Umgebung <i>A</i> besteht aus den Rahmen <i>A</i> und <i>Global</i>.</li>
+<li>Die Umgebung <i>B</i> besteht aus den Rahmen <i>B</i> und <i>Global</i>.</li>
+<li><p>
+Die Variable <code>z</code> ist
+</p>
+<ul class="org-ul">
+<li>in der Umgebung <i>A</i> an 27,</li>
+<li>in der Umgebung <i>B</i> an 50 und</li>
+<li>in der Umgebung <i>Global</i> an 27</li>
+</ul>
+<p>
+gebunden.
+</p></li>
+<li>Die Umgebung <i>A</i> enthält folgende Bindungen:
+<ul class="org-ul">
+<li><code>x</code> an 123</li>
+<li><code>s</code> an "<code>Brahms</code>"</li>
+<li><code>z</code> an 27</li>
+</ul></li>
+<li>Mit <code>swap!</code> kann die Bindung einer Variablen (eines <code>atom</code>) verändert werden.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org451e43d" class="outline-4">
+<h4 id="org451e43d">Prozeduren in Umgebungsdiagrammen</h4>
+<div class="outline-text-4" id="text-org451e43d">
+<p>
+Die Prozedurdefinition
+</p>
+<div class="smaller">
+<div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">quadrat</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span> <span style="color: #909183;">(</span>* x x<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div>
+<p>
+führt zu folgendem Umgebungsdiagramm:
+</p>
+
+<div class="figure">
+<p><img src="./Abbildungen/prozedurumgebungen.png" alt="prozedurumgebungen.png" width="250px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge4f55d6" class="outline-4">
+<h4 id="orge4f55d6">Prozedurdarstellung in Umgebungsdiagrammen</h4>
+<div class="outline-text-4" id="text-orge4f55d6">
+<ul class="org-ul">
+<li><p>
+Die Darstellung einer Prozedur besteht aus drei Teilen:
+</p>
+<ol class="org-ol">
+<li>Liste der formalen Parameter (hier: <code>x</code>)</li>
+<li>Prozedurrumpf (Berechnungsvorschrift, hier: <code>(* x x)</code>)</li>
+</ol>
+<div class="zweispalten">
+<ol class="org-ol">
+<li value="3">Verweis auf die Umgebung, in der der Lambda-Ausdruck ausgewertet
+wurde.</li>
+</ol>
+
+</div></li>
+</ul>
+
+<div class="figure">
+<p><img src="./Abbildungen/prozedur.png" alt="prozedur.png" width="180px" />
+</p>
+</div>
+<ul class="org-ul">
+<li>Eine so dargestellte Prozedur bezeichnet man auch als <i>closure</i>. Die
+Verwendung dieses Begriffes ist aber umstritten.</li>
+<li>Auswertung eines Lambda-Ausdrucks <b>in Bezug auf eine Umgebung</b>
+resultiert also in einem Prozedurobjekt (closure) wie oben
+dargestellt.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0f08475" class="outline-2">
+<h2 id="org0f08475">Auswertungsmodell für Prozeduren - Beispiele</h2>
+<div class="outline-text-2" id="text-org0f08475">
+</div><div id="outline-container-orgebe7038" class="outline-3">
+<h3 id="orgebe7038">Auswertung einer Prozeduranwendung</h3>
+<div class="outline-text-3" id="text-orgebe7038">
+<p>
+<b>Regel</b> für die Auswertung von Prozeduranwendungen im Umgebungsmodell:
+</p>
+
+<ol class="org-ol">
+<li>Erzeuge einen Rahmen mit den Bindungen der formalen Parameter der
+Prozedur an die Argumente der Prozeduranwendung</li>
+<li>Dieser Rahmen bekommt als umschließende Umgebung die Umgebung,
+bezüglich der das Prozedurobjekt definiert ist.</li>
+<li>Werte den Prozedurrumpf bezüglich der neu erzeugten Umgebung aus.</li>
+</ol>
+
+<p>
+Auswertung von <code>(quadrat 17)</code>:
+</p>
+
+<div class="figure">
+<p><img src="./Abbildungen/auswertungquadrat.png" alt="auswertungquadrat.png" width="400px" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgd2a5b95" class="outline-3">
+<h3 id="orgd2a5b95">Ein etwas komplexeres Beispiel</h3>
+<div class="outline-text-3" id="text-orgd2a5b95">
+<p>
+Mit den Definitionen
+</p>
+<div class="small">
+<div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">quadrat</span> 
+       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span>
+          <span style="color: #909183;">(</span>* x x<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">summe-der-quadrate</span> 
+       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x y<span style="color: #909183;">]</span>
+          <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>quadrat x<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>quadrat y<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">f</span> 
+       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>a<span style="color: #909183;">]</span>
+          <span style="color: #909183;">(</span>summe-der-quadrate <span style="color: #709870;">(</span>+ a 1<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>* a 2<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div>
+<p>
+soll der Ausdruck <code>(f 3))</code> ausgewertet werden.
+</p>
+</div>
+
+<div id="outline-container-org5159dc7" class="outline-4">
+<h4 id="org5159dc7">Umgebungsdiagramm der drei Definitionen</h4>
+<div class="outline-text-4" id="text-org5159dc7">
+
+<div class="figure">
+<p><img src="./Abbildungen/auswertung-f.png" alt="auswertung-f.png" width="650px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfe20d95" class="outline-4">
+<h4 id="orgfe20d95">Umgebungen erzeugt durch <code>(f 3)</code></h4>
+<div class="outline-text-4" id="text-orgfe20d95">
+
+<div class="figure">
+<p><img src="./Abbildungen/auswertung-f1.png" alt="auswertung-f1.png" width="650px" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge35cde1" class="outline-3">
+<h3 id="orge35cde1">Prozeduren mit lokalem Zustand</h3>
+<div class="outline-text-3" id="text-orge35cde1">
+<ul class="org-ul">
+<li>Wir benutzen nun das Umgebungsmodell, um die Auswertung von
+Prozeduren mit lokalen Zustandsvariablen zu beschreiben.</li>
+<li><p>
+Wir greifen auf das Konto-Beispiel zurück:
+</p>
+
+<div class="small">
+<div class="org-src-container">
+<pre class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">erzeuge-konto</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>startwert<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">let</span> <span style="color: #709870;">[</span>konto <span style="color: #907373;">(</span><span style="color: #006FE0;">atom</span> startwert<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+      <span style="color: #709870;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #907373;">[</span>betrag<span style="color: #907373;">]</span>
+        <span style="color: #907373;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #6276BA;">(</span>&gt;= @konto betrag<span style="color: #6276BA;">)</span> <span style="color: #6276BA;">(</span><span style="color: #0000FF;">do</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">swap!</span> konto - betrag<span style="color: #858580;">)</span> @konto<span style="color: #6276BA;">)</span>
+          <span style="color: #D0372D;">:else</span> 'konto-ueberzogen<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div></li>
+<li><p>
+&#x2026; und werten der Reihe nach die Ausdrücke
+</p>
+<div class="smaller">
+<div class="org-src-container">
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">konto1</span> <span style="color: #7388D6;">(</span>erzeuge-konto 100<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+       <span style="color: #707183;">(</span>konto1 50<span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+
+</div>
+<p>
+aus.
+</p></li>
+</ul>
+</div>
+
+<div id="outline-container-org3c1e701" class="outline-4">
+<h4 id="org3c1e701">Definition von <code>erzeuge-konto</code> &#x2026;</h4>
+<div class="outline-text-4" id="text-org3c1e701">
+<p>
+&#x2026; in der globalen Umgebung:
+</p>
+
+<div class="figure">
+<p><img src="./Abbildungen/erzeugekonto1.png" alt="erzeugekonto1.png" width="450px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgab1a1ae" class="outline-4">
+<h4 id="orgab1a1ae"><code>(def konto1 (erzeuge-konto 100))</code> &#x2026;</h4>
+<div class="outline-text-4" id="text-orgab1a1ae">
+<ul class="org-ul">
+<li>Für die Auswertung von diese Ausdrucks
+sind folgende Schritte erforderlich:
+<ol class="org-ol">
+<li>Für die Auswertung von <code>(erzeuge-konto 100)</code> ist ein neuer Rahmen
+(E1) anzulegen, in dem der formale Parameter <code>startwert</code> an 100
+gebunden wird und die lokale Defintion des Atoms <code>konto</code> hinterlegt wird.</li>
+<li>In Bezug auf E1 ist der Rumpf von <code>erzeuge-konto</code> &#x2013; ein
+fn-Ausdruck &#x2013; auszuwerten. Es entsteht also ein neues
+Prozedurobjekt mit
+<ul class="org-ul">
+<li>dem formalen Parameter <code>betrag</code>,</li>
+<li>dem Rumpf <code>(cond ...</code> und</li>
+<li>der Umgebung E1</li>
+</ul></li>
+<li>Dieses Prozedurobjekt ist das Resultat der Anwendung von
+<code>erzeuge-konto</code>, welches in der globalen Umgebung an den
+Bezeichner <code>konto1</code> gebunden wird.</li>
+</ol></li>
+<li>Das resultierende Umgebungsdiagramm zeigt die nächste Folie.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5a2af5d" class="outline-4">
+<h4 id="org5a2af5d">&#x2026; das zugehörige Umgebungsdiagramm</h4>
+<div class="outline-text-4" id="text-org5a2af5d">
+<p>
+<code>(def konto1 (erzeuge-konto 100))</code>
+</p>
+
+<div class="figure">
+<p><img src="./Abbildungen/erzeugekonto2.png" alt="erzeugekonto2.png" width="700px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf73f1ba" class="outline-4">
+<h4 id="orgf73f1ba">Die Auswertung von <code>(konto1 50)</code> &#x2026;</h4>
+<div class="outline-text-4" id="text-orgf73f1ba">
+<ul class="org-ul">
+<li>&#x2026;erfordert die Schritte:
+
+<ol class="org-ol">
+<li><p>
+Es ist ein neuer Rahmen (E2) anzulegen, in dem der formale
+Parameter <code>betrag</code> von <code>konto1</code> an 50 gebunden wird.
+</p>
+
+<p>
+<b>Beachte:</b> Die umschließende Umgebung für E2 ist E1, nicht die
+globale Umgebung, weil E1 die Umgebung des Prozedurobjekts
+<code>konto1</code> ist.
+</p></li>
+
+<li><p>
+Innerhalb von E2 wird der Rumpf des Prozedurobjekts <code>konto1</code>
+ausgewertet.
+</p>
+
+<p>
+<b>Beachte:</b> Dieser Ausdruck referenziert sowohl <code>betrag</code> als auch
+<code>konto</code>.
+</p>
+<ul class="org-ul">
+<li><code>betrag</code> wird in E2 gefunden.</li>
+<li><code>konto</code> wird in der umschließenden Umgebung E1 gefunden.</li>
+</ul></li>
+</ol></li>
+<li>Das resultierende Umgebungsdiagramm zeigt die nächste Folie.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc521187" class="outline-4">
+<h4 id="orgc521187">Umgebungen erzeugt durch <code>(konto1 50)</code></h4>
+<div class="outline-text-4" id="text-orgc521187">
+
+<div class="figure">
+<p><img src="./Abbildungen/erzeugekonto3.png" alt="erzeugekonto3.png" width="700px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org25a401b" class="outline-4">
+<h4 id="org25a401b">Die Wirkung von <code>(swap! konto ... )</code></h4>
+<div class="outline-text-4" id="text-org25a401b">
+
+<div class="figure">
+<p><img src="./Abbildungen/erzeugekonto4.png" alt="erzeugekonto4.png" width="700px" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdc26e34" class="outline-4">
+<h4 id="orgdc26e34">Zusammenfassung</h4>
+<div class="outline-text-4" id="text-orgdc26e34">
+<ul class="org-ul">
+<li>Durch die Ausführung von <code>(swap! konto ... )</code> wird die Bindung von
+<code>@konto</code> in E1 geändert.</li>
+<li>Nach Auswertung des Rumpfes von <code>konto1</code> entfällt E2, da die
+Prozeduranwendung, die E2 erzeugt hat, beendet ist.</li>
+<li>Wenn <code>konto1</code> erneut aufgerufen würde, würde eine neue Umgebung E2
+angelegt werden, die als umschließende Umgebung wieder E1 hätte.</li>
+<li>E1 dient also als Speicher für die lokalne Zustandsvariablen des
+Prozedurobjekts <code>konto1</code>.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Autor: Johannes Brauer</p>
+<p class="date">Created: 2017-08-22 Tue 22:49</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,5 +1,5 @@
 # +SETUPFILE: /Users/johannes/Documents/myOrg/org-html-themes/setup/theme-bigblow.setup
-# +SETUPFILE: ./theme-bigblow-local.setup
+#+SETUPFILE: ./theme-bigblow-local.setup
 #+TITLE: Zustandsbehaftete Programmierung in funktionalen Sprachen
 #+SUBTITLE: Programmierparadigmen
 #+AUTHOR: Johannes Brauer
