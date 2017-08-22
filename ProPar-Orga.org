@@ -61,25 +61,23 @@
 |    | - Verzögerte Auswertung                               |        |          |
 |    | - Funktionale versus objektorientierte Programmierung |     38 |          |
 |----+-------------------------------------------------------+--------+----------|
-|  2 |                                                       |        | 1 (24)   |
-|    | - Übergang zum Objektbegriff                          |        |          |
-|    | Zustandsbehaftete Programmierung - Einstieg           |        |          |
+|  2 | - Übergang zum Objektbegriff                          |        | 1 (24)   |
+|    | Zustandsbehaftete Programmierung                      |        |          |
 |----+-------------------------------------------------------+--------+----------|
-|  3 | - Auswertungsmodell für Prozeduren                    |        |          |
-|    |                                                       |        |          |
-|----+-------------------------------------------------------+--------+----------|
-|  4 | Relationale Programmierung: Übersicht                 |        |          |
+|  3 | Relationale Programmierung: Übersicht                 |        | 2        |
 |    | CP-Einführung                                         |        |          |
 |    | - Einstieg                                            |        |          |
-|    | - Ein simples Constraint-propagation-system           |        |          |
+|    | - Ein simples Constraint-propagation-system           |     17 |          |
 |----+-------------------------------------------------------+--------+----------|
-|  5 | - Implementierung des Constraint-Systems              |        |          |
+|  4 | - Implementierung des Constraint-Systems              |        | 3        |
 |    | Rechnerübung                                          |        |          |
 |----+-------------------------------------------------------+--------+----------|
-|  6 | Relational-logische Programmierung (Prolog)           |        |          |
+|  5 | Relational-logische Programmierung (Prolog)           |        |          |
 |    | Rechnerübung                                          |        |          |
 |----+-------------------------------------------------------+--------+----------|
-|  7 | Constraint-Programmierung -- Grundlagen               |        |          |
+|  6 | Constraint-Programmierung -- Grundlagen               |        |          |
+|----+-------------------------------------------------------+--------+----------|
+|  7 | ???                                                   |        |          |
 |----+-------------------------------------------------------+--------+----------|
 |  8 | Feiertag                                              |        |          |
 |----+-------------------------------------------------------+--------+----------|
