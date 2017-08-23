@@ -25,7 +25,7 @@
 # um Folien mit reveal.js erzeugen zu können:ml
 # M-x load-library und dann ox-reveal
 * Übersicht
-1. [[file:ProPar-FuProErgnzngn.org][Funktionale Programmierung: Ergänzungen]]
+1. [[file:Vorlesung/ProPar-FuProErgnzngn.org][Funktionale Programmierung: Ergänzungen]]
 2. [[file:ProPar-ZustndsbhfttPrgrmmrung.org][Zustandsbehaftete Programmierung in funktionalen Sprachen]]
 3. [[file:ProPar-RelProgUebrscht.org][Von Funktionen zu Relationen]]
 4. [[file:ProPar-ConProgEinf.org][Constraint-Programmierung -- Intuitive Einführung]]
