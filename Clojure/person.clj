@@ -18,3 +18,36 @@
 ((p1 'get-vollname))    ;;=> "Gustav Gans"
 ((p1 'gruss) "hallo")   ;;=> "hallo Gustav Gans"
 (p1 'x)                 ;; Unhandled java.lang.Exception unbekannte Nachricht
+
+
+(def mensch
+  (fn [ name ]
+    (let [get-name    (fn [] name)
+          set-name    (fn [strng] (mensch strng))]
+      (fn [nachricht]
+        (cond
+          (= nachricht 'get-name) get-name
+          (= nachricht 'set-name) set-name
+          :else (throw (Exception. "unbekannte Nachricht")))))))
+
+(def p1 (mensch "Gustav" ))
+(def p2 ((p1 'set-name) "Karla"))
+((p1 'get-name)) 
+((p2 'get-name))
+
+(def mensch
+  (fn [ n ] 
+    (let [name (atom n)
+          get-name (fn [] @name)
+          set-name (fn [strng] (mensch (swap! name (fn [a] strng))))]
+      (fn [nachricht]
+        (cond
+          (= nachricht 'get-name) get-name
+          (= nachricht 'set-name) set-name
+          :else (throw (Exception. "unbekannte Nachricht")))))))
+
+(def p1 (mensch "Gustav" ))
+(def p2 ((p1 'set-name) "Karla"))
+((p1 'get-name)) 
+((p2 'get-name))
+

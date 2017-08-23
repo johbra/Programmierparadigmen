@@ -183,3 +183,34 @@
       (connect m2 me)
       (connect product me)
       me)))
+
+(def potentiator
+  (fn [x y z]
+    (letfn
+        [(process-new-value []
+           (cond (and (has-value? x) (has-value? y))
+                 (set-value! z
+                             (Math/pow (get-value x) (get-value y))
+                             me)
+                 (and (has-value? x) (has-value? z))
+                 (set-value! y
+                             (/ (Math/log (get-value z)) (Math/log (get-value x)))
+                             me)
+                 (and (has-value? y) (has-value? z))
+                 (set-value! x
+                             (Math/pow (get-value z) (/ 1 (get-value y)))
+                             me)))
+         (process-forget-value []
+           (forget-value! z me)
+           (forget-value! x me)
+           (forget-value! y me)
+           (process-new-value))
+         (me [request]
+           (cond (= request 'I-have-a-value)  (process-new-value)
+                 (= request 'I-lost-my-value) (process-forget-value)
+                 :else
+                 (throw (Exception. "Unknown request -- potentiator" request))))]
+      (connect x me)
+      (connect y me)
+      (connect z me)
+      me)))

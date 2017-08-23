@@ -1813,7 +1813,26 @@ Gegeben sind folgende Definitionen für =cons= und =first=:
 #+END_SRC
 1. Verifizieren Sie, dass der Ausdruck =(first (cons x y))= als
    Resultat =x= liefert.
+   :student:
+   Der Ausdruck =(cons 3 4)= liefert eine Funktion, die ausgeschrieben
+   so aussieht:
+   : (fn [m] (m 3 4)) 
+   Demnach ist der Ausdruck =(first (cons 3 4))= gleich
+   : (first (fn [m] (m 3 4))).
+   Wertet man diesen Ausdruck gemäß Ersetzungsmodell aus ergeben sich
+   folgende äquivalente Ausdrücke:
+   : ((fn [z] (z (fn [p q] p))) (fn [m] (m 3 4)) )
+   : ((fn [m] (m 3 4)) (fn [p q] p))
+   : ((fn [p q] p) 3 4)
+   : 3
+   :end:
 2. Fügen Sie die passende Definition von =rest= hinzu.
+   :student:
+   #+BEGIN_SRC clojure
+   (def rest
+     (fn [z] (z (fn [p q] q))))
+   #+END_SRC
+   :end:
 
 ** Aufgabe (verzögerte Auswertung - Streams)
 *** Streams
@@ -1987,13 +2006,26 @@ Beispielanwendung:
 
       =(def konto1 (erzeuge-konto 100))=\\
       =(def konto2 (erzeuge-konto 200))=
+      :student:
+#+attr_html: :width 600px
+      [[./erzeuge2konten.png]]
+      :end:
 
    2. Stellen Sie die Auswertung von =(konto2 120)= dar!
+      :student:
+#+attr_html: :width 600px
+      [[./konto2-120.png]]
+      Nach der Auswertung des Ausdrucks verschwindet die Umgebung E3 wieder.
+      :end:
 
    3. Wie sieht das Umgebungsdiagramm aus für?
 
       =(def konto1 (erzeuge-konto 100))=\\
       =(def konto2 konto1)=
+      :student:
+#+attr_html: :width 600px
+      [[./definekonto2konto1.png]]
+      :end:
 
 2. Betrachten Sie die folgende Variante der Prozedur =erzeuge-konto=.
    Machen Sie sich ihre Wirkungsweise klar.
@@ -2042,8 +2074,20 @@ Beispielanwendung:
    Wie sieht das Umgebungsdiagramm für die folgende Ausdruckssequenz
    aus:
 
-   =(def konto (erzeuge-konto 200))=\\
+   =(def konto (erzeuge-konto 200))=
+   :student:
+#+attr_html: :width 600px
+   [[./defkontoerzeugekonto200.png]]
+   :end:
+
    =((konto 'schreibegut) 60)=\\
+   :student:
+#+attr_html: :width 600px
+   [[./schreibegut60.png]]
+   :end:
+   Nach der Auswertung des Ausdrucks verschwinden die Umgebungen E2 und E3
+   wieder.
+
    =((konto 'belaste) 120)=
 
 ** Aufgabe (Constraint Propagation)

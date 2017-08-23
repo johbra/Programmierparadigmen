@@ -55,23 +55,25 @@
 ** Planung SS 2017
 | Sw | Inhalt                                                | bis Fl | Aufgaben |
 |----+-------------------------------------------------------+--------+----------|
-|  1 | Was ist FP? Wdh. 5. Semester                          |        |          |
+|  1 | Was ist FP? Wdh. 5. Semester (Quiz)                   |        |          |
 |    | FP-Ergänzungen:                                       |        |          |
 |    | - Datenabstraktion                                    |        |          |
 |    | - Verzögerte Auswertung                               |        |          |
 |    | - Funktionale versus objektorientierte Programmierung |     38 |          |
 |----+-------------------------------------------------------+--------+----------|
-|  2 | - Übergang zum Objektbegriff                          |        | 1 (24)   |
+|  2 | - Übergang zum Objektbegriff                          |        |   1 (24) |
 |    | Zustandsbehaftete Programmierung                      |        |          |
+|    |                                                       |        |          |
 |----+-------------------------------------------------------+--------+----------|
-|  3 | Relationale Programmierung: Übersicht                 |        | 2        |
+|  3 | Relationale Programmierung: Übersicht                 |        |        2 |
 |    | CP-Einführung                                         |        |          |
 |    | - Einstieg                                            |        |          |
 |    | - Ein simples Constraint-propagation-system           |     17 |          |
 |----+-------------------------------------------------------+--------+----------|
-|  4 | - Implementierung des Constraint-Systems              |        | 3        |
-|    | Rechnerübung                                          |        |          |
+|    | Zweites Quiz                                          |        |          |
+|  4 | - Implementierung des Constraint-Systems              |     23 |        3 |
 |----+-------------------------------------------------------+--------+----------|
+|    | - Implementierung des Constraint-Systems              |        |          |
 |  5 | Relational-logische Programmierung (Prolog)           |        |          |
 |    | Rechnerübung                                          |        |          |
 |----+-------------------------------------------------------+--------+----------|
