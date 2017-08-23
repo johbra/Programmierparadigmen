@@ -1,5 +1,6 @@
 #+SETUPFILE: ./theme-bigblow-local.setup
 #+TITLE: Programmierparadigmen
+#+SUBTITLE: Übersicht 6. Semester
 #+AUTHOR: Johannes Brauer
 #+OPTIONS:   H:4
 #+OPTIONS: num:nil
@@ -24,13 +25,14 @@
 
 # um Folien mit reveal.js erzeugen zu können:ml
 # M-x load-library und dann ox-reveal
-* Übersicht
+# * Übersicht
+*  
 1. [[file:Vorlesung/ProPar-FuProErgnzngn.org][Funktionale Programmierung: Ergänzungen]]
-2. [[file:ProPar-ZustndsbhfttPrgrmmrung.org][Zustandsbehaftete Programmierung in funktionalen Sprachen]]
-3. [[file:ProPar-RelProgUebrscht.org][Von Funktionen zu Relationen]]
-4. [[file:ProPar-ConProgEinf.org][Constraint-Programmierung -- Intuitive Einführung]]
-5. [[file:ProPar-RelLogProg.org][Relational-logische Programmierung]]
-6. [[file:ProPar-ConProgGrndlgn.org][Constraint-Programmierung -- Grundlagen]]
+2. [[file:Vorlesung/ProPar-ZustndsbhfttPrgrmmrung.org][Zustandsbehaftete Programmierung in funktionalen Sprachen]]
+3. [[file:Vorlesung/ProPar-RelProgUebrscht.org][Von Funktionen zu Relationen]]
+4. [[file:Vorlesung/ProPar-ConProgEinf.org][Constraint-Programmierung -- Intuitive Einführung]]
+5. [[file:Vorlesung/ProPar-RelLogProg.org][Relational-logische Programmierung]]
+6. [[file:Vorlesung/ProPar-ConProgGrndlgn.org][Constraint-Programmierung -- Grundlagen]]
 
 # * Notizen
 

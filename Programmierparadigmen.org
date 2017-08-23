@@ -67,3 +67,4 @@
   + Prolog
 *** Erweiterung der prädikativen Programmierung 
   + Constraint-Programmierung
+* [[https://moodle2.nordakademie.de/course/view.php?id=1175][moodle]]
