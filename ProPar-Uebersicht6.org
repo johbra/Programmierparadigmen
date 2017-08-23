@@ -31,8 +31,8 @@
 2. [[file:Vorlesung/ProPar-ZustndsbhfttPrgrmmrung.org][Zustandsbehaftete Programmierung in funktionalen Sprachen]]
 3. [[file:Vorlesung/ProPar-RelProgUebrscht.org][Von Funktionen zu Relationen]]
 4. [[file:Vorlesung/ProPar-ConProgEinf.org][Constraint-Programmierung -- Intuitive Einführung]]
-5. [[file:Vorlesung/ProPar-RelLogProg.org][Relational-logische Programmierung]]
-6. [[file:Vorlesung/ProPar-ConProgGrndlgn.org][Constraint-Programmierung -- Grundlagen]]
+5. Relational-logische Programmierung
+6. Constraint-Programmierung -- Grundlagen
 
 # * Notizen
 
