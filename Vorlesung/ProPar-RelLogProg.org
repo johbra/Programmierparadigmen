@@ -58,7 +58,7 @@
  relational-logisches Programm besteht aus einer Menge von Formeln,
   die nach Fakten und Regel unterschieden werden. Beide beschreiben
   bekannte Relationen auf der Problemdomäne.
-+ Die Semantik besteht in einer Menge auf Antworten auf Fragen.
++ Die Semantik besteht in einer Menge von Antworten auf Fragen.
 + Ein Programm wird ausgeführt durch eine logische Aussage, die auch
   Frage oder /Zielausdruck/ (oder goal oder query) genannt wird.
 + Fragen können Variablen enthalten.

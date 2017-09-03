@@ -74,8 +74,8 @@
 |  4 | - Implementierung des Constraint-Systems              |     23 |        3 |
 |----+-------------------------------------------------------+--------+----------|
 |    | - Implementierung des Constraint-Systems              |        |          |
-|  5 | Relational-logische Programmierung (Prolog)           |        |          |
-|    | Rechnerübung                                          |        |          |
+|  5 | - Rechnerübung                                        |        |          |
+|    | Relational-logische Programmierung (Prolog)           |        |          |
 |----+-------------------------------------------------------+--------+----------|
 |  6 | Constraint-Programmierung -- Grundlagen               |        |          |
 |----+-------------------------------------------------------+--------+----------|
