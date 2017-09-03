@@ -1,5 +1,5 @@
 # +SETUPFILE: /Users/johannes/Documents/myOrg/org-html-themes/setup/theme-bigblow.setup
-# +SETUPFILE: ./theme-bigblow-local.setup
+#+SETUPFILE: ./theme-bigblow-local.setup
 #+TITLE: Relational-logische Programmierung
 #+SUBTITLE: Programmierparadigmen
 #+AUTHOR: Johannes Brauer
@@ -11,7 +11,6 @@
 #+STARTUP: latexpreview
 #+STARTUP: inlineimages
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
-# +REVEAL_ROOT: http://cdn.jsdeZustandsbehaftete Programmierung in funktionalen Sprachen]]livr.net/reveal.js/3.0.0/
 #+REVEAL_THEME: simple
 #+REVEAL_TRANS: slide
 #+REVEAL_HLEVEL: 1
@@ -33,7 +32,9 @@
   2. Eine Frage zu einer logischen Implikation wird als Relations-
      (Prozedur-) Aufruf betrachtet.
   3. Der Beweis der Implikation ist dann die Berechnung der Antwort.
+
 #+Reveal: split
+
 + Konkreter: Ein Axiom der Form:\\
   =A if B1 and B2 ... and Bn=\\
   kann als Prozedur in einer Programmiersprache betrachtet werden:
