@@ -28,14 +28,11 @@
 -  Eine /Einschränkung/ (/constraint/) stellt eine Beziehung zwischen
    verschiedenen Unbekannten (Variablen) her. Jede Variable kann Werte
    aus einem gegebenen Wertebereich (/domain/) annehmen.
-
--  Eine Einschränkung beschreibt ggs Wissen über die Werte der
+-  Eine Einschränkung beschreibt gegebenes Wissen über die Werte der
    Variablen.
-
 -  Eine Einschränkung beschreibt, welche Beziehung gelten muss, ohne
    eine Berechnungsprozedur dafür anzugeben, wie die Einhaltung der
    Beziehung erzwungen werden kann.
-
 -  Beispiel aus dem täglichen Leben: Terminabsprachen
 
 ** Erfüllbarkeit (/satisfiability/)
@@ -45,24 +42,19 @@
 -  nicht erfüllbar: :: Es existiert *keine* Lösung für die
    Einschränkungen.
 
-| $X \leq 3 \wedge Y = X + 1$                   | erfüllbar         |
-| $X \leq 3 \wedge Y = X + 1 \wedge Y \geq 6$   | nicht erfüllbar   |
+| $X \leq 3 \wedge Y = X + 1$                 | erfüllbar       |
+| $X \leq 3 \wedge Y = X + 1 \wedge Y \geq 6$ | nicht erfüllbar |
 
 ** Lösungsverfahren
 
 -  Zwei Lösungsstrategien
-
    -  /constraint satisfaction/
-
    -  /constraint solving/
-
 -  Constraint-satisfaction behandelt Probleme über endlichen
    Wertemengen. Schätzungsweise mehr als 95% aller industriellen
    CP-Anwendungen benutzen endliche Domänen.
-
 -  Constraint-solving behandelt Probleme über nicht endlichen
    Wertebereichen. Vgl. z.B. den Fahrenheit-Celsius-Konverter.
-
 -  Während beim Constraint-satisfaction kombinatorische Methoden zum
    Einsatz kommen, werden beim Constraint-solving
    mathematisch-analytische Verfahren benutzt (Differentiation,
@@ -72,14 +64,11 @@
 
 **** Prinzip
 
--  Ein Constraint-satisfaction-Problem (CSP) wird folgendermaßen
-   definiert:
-
-   -  eine Menge von Variables $X=\{x_{1},...,x_{n}\}$,
-
+-  Ein Constraint-satisfaction-Problem (CSP) wird 
+   definiert durch:
+   -  eine Menge von Variable $X=\{x_{1},...,x_{n}\}$,
    -  für jede Variable $x_{i}$, eine endliche Menge $D_{i}$ möglicher
       Werte (Domäne)
-
    -  eine Menge von Einschränkungen (constraints), die Werte, die die
       Variablen gleichzeitig annehmen können, einschränken
 
@@ -92,23 +81,17 @@
    Beispiel: $$X=2, Y=2, Z=1$$
 
 **** Systematische Suche
-
 -  Grundsätzlich kann ein CSP durch systematisches Durchsuchen des
    Lösungsraums gelöst werden.
-
 -  Ein solches Verfahren ist simpel aber ineffizient.
-
 -  Zwei Varianten:
-
    -  /Generate & Test/ (GT): Eine Belegung aller Variablen wird erzeugt
       und geprüft.
-
    -  /Backtracking/ (BT): Schrittweise Erweiterung korrekter
       Teillösungen zur Gesamtlösung.
 
 #+attr_html: :width 400px
 [[./Abbildungen/SystematischeSuche.png]]
-
 
 **** Generate & Test
 

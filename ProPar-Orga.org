@@ -73,18 +73,18 @@
 |    | Zweites Quiz                                          |        |          |
 |  4 | - Implementierung des Constraint-Systems              |     23 |        3 |
 |----+-------------------------------------------------------+--------+----------|
-|    | - Implementierung des Constraint-Systems              |        |          |
-|  5 | - Rechnerübung                                        |        |          |
-|    | Relational-logische Programmierung (Prolog)           |        |          |
+|    | - Implementierung des Constraint-Systems              |   Rest |          |
+|  5 | - Rechnerübung                                        |        |        4 |
 |----+-------------------------------------------------------+--------+----------|
-|  6 | Constraint-Programmierung -- Grundlagen               |        |          |
+|  6 | Relational-logische Programmierung (Prolog)           |        |          |
+|    | - Rechnerübung                                        |        |          |
 |----+-------------------------------------------------------+--------+----------|
-|  7 | ???                                                   |        |          |
-|----+-------------------------------------------------------+--------+----------|
-|  8 | Feiertag                                              |        |          |
+|  7 | Constraint-Programmierung -- Grundlagen               |        |          |
 |----+-------------------------------------------------------+--------+----------|
 |  9 | Constraint-Programmierung -- Grundlagen               |        |          |
 |    | Klausurvorbereitung                                   |        |          |
+|----+-------------------------------------------------------+--------+----------|
+|  8 | Feiertag                                              |        |          |
 
 
 ** Inhaltsideen

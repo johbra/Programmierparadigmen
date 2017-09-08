@@ -2192,7 +2192,22 @@ Beispielanwendung:
    + Eine Kuh und ein Tiger sind beide Lebewesen (Konjunktion zweier Ziele).
    + Ein Löwe ist ein Lebewesen und Fleichfresser.
    + Ein Kuh ist ein Lebewesen und Fleichfresser.
-2. Gegeben sei die folgende Faktenbasis über Reisemöglichkeiten:
+2. Gegeben seien die folgenden biblischen Verwandtschaftsverhältnisse:
+   #+BEGIN_SRC prolog
+   father(abraham,isaac).
+   father(haran,lot).
+   father(haran,milcah).
+   father(haran,yiscah).
+   male(isaac).
+   male(lot).
+   female(milcah).
+   female(yiscah).
+   son(X,Y) :- father(Y,X), male(X).
+   daughter(X,Y) :- father(Y,X), female(X).
+   #+END_SRC
+   Fügen Sie die Prädikate =sister/2=, =brother/2= und =siblings/2= hinzu.
+
+3. Gegeben sei die folgende Faktenbasis über Reisemöglichkeiten:
    #+BEGIN_SRC prolog
    byCar(auckland,hamilton).
    byCar(hamilton,raglan).
