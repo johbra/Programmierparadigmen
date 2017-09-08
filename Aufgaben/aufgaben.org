@@ -2175,12 +2175,95 @@ Beispielanwendung:
    1. Erweitern Sie das Constraint-Programming-System um einen
       =exponentiator= (in Anlehnung an =adder= bzw. =multiplier=, der die
       Gleichung \(z = x^y\) löst!
+      :student:
+      #+BEGIN_SRC clojure
+      (def potentiator
+        (fn [x y z]
+          (letfn
+              [(process-new-value []
+                 (cond (and (has-value? x) (has-value? y))
+                       (set-value! z
+                                   (Math/pow (get-value x) (get-value y))
+                                   me)
+                       (and (has-value? x) (has-value? z))
+                       (set-value! y
+                                   (/ (Math/log (get-value z)) (Math/log (get-value x)))
+                                   me)
+                       (and (has-value? y) (has-value? z))
+                       (set-value! x
+                                   (Math/pow (get-value z) (/ 1 (get-value y)))
+                                   me)))
+               (process-forget-value []
+                 (forget-value! z me)
+                 (forget-value! x me)
+                 (forget-value! y me)
+                 (process-new-value))
+               (me [request]
+                 (cond (= request 'I-have-a-value)  (process-new-value)
+                       (= request 'I-lost-my-value) (process-forget-value)
+                       :else
+                       (throw (Exception. "Unknown request -- potentiator" request))))]
+            (connect x me)
+            (connect y me)
+            (connect z me)
+            me)))
+      #+END_SRC
+      :end:
    2. Zeichnen Sie ein \glqq Schaltbild\grqq{} für die 
        Zinseszins-Formel!
    3. Setzen Sie dann das Schaltbild in eine Clojure-Lösung nach dem
       Vorbild des Celsius-Fahrenheit-Konverters um!
    4. Testen Sie Ihre Lösung, indem Sie Werte für jeweils 3 von 4 Größen
       der Formel vorgeben.
+   
+   :student:
+   #+BEGIN_SRC clojure
+   (ns sicp-cps.zinseszins
+     (:require [sicp-cps.core :refer :all]
+               ))
+
+   (def zinseszins 
+     (fn [kn k0 p n]
+       (let [a (make-connector)
+             b (make-connector)
+             c (make-connector)
+             eins (make-connector)
+             hundert (make-connector)]
+         (multiplier k0 a kn)
+         (adder eins b c)
+         (multiplier hundert b p)
+         (potentiator c n a)
+         (constant 1 eins)
+         (constant 100 hundert)
+         'ok)))
+
+    (def KN (make-connector))
+    (def K0 (make-connector))
+    (def P (make-connector))
+    (def N (make-connector))
+    (zinseszins KN K0 P N)
+    (probe "KN" KN)
+    (probe "K0" K0)
+    (probe "P" P)
+    (probe "N" N)
+
+   ;; (set-value! N 50.93048347119194 'user)
+   ;; (set-value! P 5 'user)
+   ;; (set-value! K0 1000 'user)
+
+   ;; (set-value! N 50.93048347119194 'user)
+   ;; (set-value! P 5 'user)
+   ;; (set-value! KN 12000 'user) 
+
+   ;; (set-value! N 50.93048347119194 'user)
+   ;; (set-value! KN 12000 'user)
+   ;; (set-value! K0 1000 'user)
+
+   ;; (set-value! KN 12000 'user)
+   ;; (set-value! P 5 'user)
+   ;; (set-value! K0 1000 'user)
+   #+END_SRC
+   :end:
 
 ** Aufgabe (Prolog)
 1. Schreiben Sie ein Prolog-Programm, dass festhält:
