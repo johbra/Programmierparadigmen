@@ -2275,6 +2275,31 @@ Beispielanwendung:
    + Eine Kuh und ein Tiger sind beide Lebewesen (Konjunktion zweier Ziele).
    + Ein Löwe ist ein Lebewesen und Fleichfresser.
    + Ein Kuh ist ein Lebewesen und Fleichfresser.
+   :student:
+#+BEGIN_SRC prolog
+lebewesen(loewe).
+lebewesen(kuh).
+lebewesen(tiger).
+fleischfresser(loewe).
+fleischfresser(tiger).
+
+?- % Es gibt ein Lebewesen Tiger in der Datenbank:
+|    lebewesen(X).
+X = loewe 
+
+?- % Eine Kuh und ein Tiger sind beide Lebewesen:
+|    lebewesen(kuh), lebewesen(tiger).
+true.
+
+?- %Ein Löwe ist ein Lebewesen und Fleichfresser:
+|    lebewesen(loewe), fleischfresser(loewe).
+true.
+
+ % Ein Kuh ist ein Lebewesen und Fleichfresser:
+|    lebewesen(kuh), fleischfresser(kuh).
+false.
+#+END_SRC
+   :end:
 2. Gegeben seien die folgenden biblischen Verwandtschaftsverhältnisse:
    #+BEGIN_SRC prolog
    father(abraham,isaac).
@@ -2288,7 +2313,16 @@ Beispielanwendung:
    son(X,Y) :- father(Y,X), male(X).
    daughter(X,Y) :- father(Y,X), female(X).
    #+END_SRC
-   Fügen Sie die Prädikate =sister/2=, =brother/2= und =siblings/2= hinzu.
+   Fügen Sie die Prädikate =sister/2=, =brother/2= und =siblings/2=
+   hinzu.
+   :student:
+#+BEGIN_SRC prolog
+sister(X, Y) :- father(Z, X), father(Z, Y), female(X).
+brother(X, Y) :- father(Z, X), father(Z, Y), male(X).
+siblings(X, Y) :- father(Z, X), father(Z, Y).
+
+#+END_SRC
+   :end:
 
 3. Gegeben sei die folgende Faktenbasis über Reisemöglichkeiten:
    #+BEGIN_SRC prolog
@@ -2379,3 +2413,67 @@ Beispielanwendung:
       :END:
 
 # Link:       [[http://cs.union.edu/~striegnk/courses/esslli04prolog/practical.day2.php?s=practical.day2.node6][   AufgabenUndLoesungen]]
+** Aufgabe (Prolog - Bauklötze)
+Gegeben ist eine Welt von Bauklötzen, wie sie in der folgenden
+Abbildung zusehen ist:
+
+[[./baukloetze.png]]
+
+Die folgenden Prädikate dienen zur Modellierung dieser Bauklotzwelt:
+
+- =am_boden(K)= :: K liegt auf dem Boden.
+- =auf(K1, K2)= :: K1 liegt direkt auf K2.
+- =links_von(K1, K2)= :: K1 und K2 liegen auf dem Boden und K1 liegt
+     direkt links von K2.
+
+Bearbeiten Sie die folgenden Aufgaben:
+1. Formulieren Sie die Fakten, die die Bauklotzwelt aus der Abbildung
+   modelliert.
+2. Unter ausschließlicher Verwendung dieser Fakten, schreiben Sie die
+   folgenden Prädikate:
+   + =basis(K1, K2)= :: K2 ist die Basis des Turms, der K1
+        enthält. Z. B. ist /j/ die Basis von /h/ in der Abbildung.
+   + =basis_rechts(K1, K2)= :: K1 und K2 liegen beide auf dem Boden
+        und K2 liegt rechts (nicht notwendig direkt benachbart) von K1.
+   + =objekt_rechts(K1, K2)= :: K2 befindet sich in einem Turm auf der
+        rechten Seite (nicht notwendig direkt benachbart) des Turms,
+        der K1 enthält.
+   Die drei Prädikate müssen für jede Welt funktionieren, die mittels
+   der Fakten =am_boden/1=, =auf/2= und =links_von/2=.
+
+3. Nun werden die „Bauklötze” verallgemeinert, indem verschiedene
+   Arten eingeführt werden, die -- abhängig von ihrer äußeren Form --
+   aufeinander stapelbar sind oder nicht. Es gibt /Würfel/, /Kugeln/,
+   /Pyramiden/ und /Reifen/. Es soll ein Prädikat entwickelt werden,
+   das die Frage beantwortet, ob ein Turm, gebaut aus diesen
+   „Bauklötzen”, gemäß der folgenden Regeln stabil ist:
+   + Ein Reifen kann auf jeden Bauklotz gestapelt werden.
+   + Ein Reifen ist der einzige Bauklotz, der auf eine Pyramide
+     gestapelt werden kann. In diesem Fall ragt die Spitze der
+     Pyramide aber aus dem Reifen heraus, sodass auf diese
+     „Konstruktion” nur ein weiterer Reifen gestapelt werden
+     dürfte. Auf diesen zweiten Reifen könnte dann jedes beliebige
+     Objekt gestapelt werden.
+   + Eine Kugel darf nur auf einen Reifen gestapelt werden, sie darf
+     auch nicht auf dem Boden liegen.
+
+   Bearbeiten Sie die folgenden Teilaufgaben:
+   1. [@1]Schreiben Sie ein Prädikat, das jedem Bauklotz einen Typ gemäß
+      der folgenden Tabelle zuordnet: 
+      | Klotz | Typ      |
+      |-------+----------|
+      | a     | Pyramide |
+      | b     | Reifen   |
+      | c     | Würfel   |
+      | d     | Kugel    |
+      | e     | Würfel   |
+      | f     | Reifen   |
+      | g     | Reifen   |
+      | h     | Kugel    |
+      | i     | Reifen   |
+      | j     | Pyramide |
+   2. Unter der Benutzung der Klotztypen und der Prädikate, die sich
+      auf die Position der Klötze beziehen (s. o.) schreiben Sie das
+      folgende Prädikat:
+      + =instabil(K)= :: Das Objekt K kann nicht stabil auf seine
+                         Basis in der gegebenen Konfiguration gestapelt werden.
