@@ -2477,3 +2477,105 @@ Bearbeiten Sie die folgenden Aufgaben:
       folgende Prädikat:
       + =instabil(K)= :: Das Objekt K kann nicht stabil auf seine
                          Basis in der gegebenen Konfiguration gestapelt werden.
+** Aufgabe (Arbeitsweise eines CLP-Systems)
+Wie löst ein Constraint-Logic-Programming-System Gleichungen? Das
+Verfahren unterscheidet sich grundsätzlich von denjenigen zur Lösung
+linearer Gleichungssysteme (z. B. Gauß-Elimination). In einem
+CLP-Programm werden Gleichungen nur aufgeschrieben und dann in einer
+speziell codierten Form an einen internen Gleichungslöser
+übergeben. Der versucht Werte für die Variablen zu finden, die die
+Gleichungen lösen.
+
+Um ein besseres Verständnis für die Arbeitsweise von CLP-Systemen zu
+erlangen, übernehmen Sie in der folgenden Aufgabe die Rolle eines
+Gleichungslösers.
+
+*** Modellierung des Problems
+Gegeben sei der folgende Netzplan (vereinfacht) eines Projekts:
+[[./netzplan.png]]
+Die Aktivitäten sind durch Buchstaben und die Dauer deren Dauer durch
+ganze Zahlen dargestellt.
+
+Unter der Annahme, dass das Projekt nach spätestens 10 Zeiteinheiten
+beendet sein muss und wir je eine Variable (mit endlichem
+Wertebereich) zur Definition des Zeitpunkts, an dem die zugehörige
+Aktivität starten kann, verwenden, kann das Problem wie folgt
+modelliert werden:
+$$a, b, c, d, e, f, g \in \{0, \ldots , 10\} \\
+a \leq b, c, d \\
+b + 1 \leq e \\
+c + 2 \leq e \\
+c + 2 \leq f \\
+d + 3 \leq f \\
+e + 4 \leq g \\
+f + 1 \leq g $$
+
+Der Wert jeder Variablen -- eine Menge, initialisiert mit
+$\{0,\ldots,10\}$ -- beschreibt die Zeitpunkt, zu denen die zugehörige
+Aktivität gestartet werden kann.
+
+*** Aufgabe 1
+
+In der folgenden Tabelle werden die Wertebereiche der Variablen
+dargestellt. Diese Wertebereiche sind Schritt für Schritt durch
+Anwenden der obigen Ungleichungen zu verkleinern. Schritt 0 zeigt die
+Initialisierung der Variablen mit dem Wertebereich $\{0, \ldots ,10\}$.
+
+  | Schritt |     a |     b |     c |     d |     e |     f |     g |
+  |---------+-------+-------+-------+-------+-------+-------+-------|
+  |       0 | 0..10 | 0..10 | 0..10 | 0..10 | 0..10 | 0..10 | 0..10 |
+  |       1 |       |  0..9 |       |       | 1..10 |       |       |
+  |       2 |       |       |  0..8 |       | 2..10 |       |       |
+  |       3 |       |       |       |       |       |       |       |
+  |       4 |       |       |       |       |       |       |       |
+  |       5 |       |       |       |       |       |       |       |
+  |       6 |       |       |       |       |       |       |       |
+  |       7 |       |       |       |       |       |       |       |
+  |       8 |       |       |       |       |       |       |       |
+  |       9 |       |       |       |       |       |       |       |
+  |      10 |       |       |       |       |       |       |       |
+  |      11 |       |       |       |       |       |       |       |
+In Schritt 1 wurde die Ungleichung $b + 1 \leq e$ angewendet. Da zuvor
+$b \in \{0..10\}$ und  $e \in \{0..10\}$ galt, kann leicht abgeleitet
+werden, dass $b$ nun als höchsten Wert $9$ und $e$ als minimalen Wert
+$1$ haben kann. Durch Anwenden der Ungleichung werden die Wertebereiche von
+$b$ und $e$ auf $\{0..9\}$ bzw. $\{1..10\}$ verkleinert. Schritt 2
+zeigt eine ähnliche Überlegung für die Ungleichung $c + 2 \leq e$.
+
+Vervollständigen Sie die Tabelle, indem Sie weitere Ungleichungen
+anwenden, bis ein Fixpunkt, an dem keine weiteren Änderungen der
+Wertebereiche vorgenommen werden können, erreicht ist.
+
+:student:
+  | Schritt |     a |     b |     c |     d |     e |     f |     g |
+  |---------+-------+-------+-------+-------+-------+-------+-------|
+  |       0 | 0..10 | 0..10 | 0..10 | 0..10 | 0..10 | 0..10 | 0..10 |
+  |       1 |       |  0..9 |       |       | 1..10 |       |       |
+  |       2 |       |       |  0..8 |       | 2..10 |       |       |
+  |       3 |       |       |       |       |       | 2..10 |       |
+  |       4 |       |       |       |  0..7 |       | 3..10 |       |
+  |       5 |       |       |       |       |  2..6 |       | 6..10 |
+  |       6 |       |       |       |       |       |  3..9 |       |
+  |       7 |  0..7 |       |       |       |       |       |       |
+  |       8 |       |  0..5 |       |       |       |       |       |
+  |       9 |       |       |  0..4 |       |       |       |       |
+  |      10 |       |       |       |  0..6 |       |       |       |
+  |      11 |  0..4 |       |       |       |       |       |       |
+:end:
+
+*** Aufgabe 2
+Lösen Sie das Problem für den Fall, dass das Projekt nach 6
+Zeiteinheiten beendet sein muss. Fügen Sie dazu das Constraint 
+$g \in \{ 6 \}$ hinzu und ergänzen Sie obige Tabelle um weitere Schritte.
+
+:student:
+|     Schritt | a |    b |    c |    d | e |    f | g |
+|          12 |   |      |      |      |   |      | 6 |
+|          13 |   |      |      |      | 2 | 3..5 |   |
+|          14 |   |      | 0..3 | 0..2 |   |      |   |
+|          15 |   | 0..1 |    0 |      |   |      |   |
+|          16 | 0 |      |      |      |   |      |   |
+| Endergebnis | 0 | 0..1 |    0 | 0..2 | 2 | 3..5 | 6 |
+:end:
+
+
