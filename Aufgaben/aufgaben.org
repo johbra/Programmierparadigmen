@@ -2317,9 +2317,9 @@ false.
    hinzu.
    :student:
 #+BEGIN_SRC prolog
-sister(X, Y) :- father(Z, X), father(Z, Y), female(X).
-brother(X, Y) :- father(Z, X), father(Z, Y), male(X).
-siblings(X, Y) :- father(Z, X), father(Z, Y).
+sister(X, Y) :- father(Z, X), father(Z, Y), female(X), X \= Y.
+brother(X, Y) :- father(Z, X), father(Z, Y), male(X), X \= Y.
+siblings(X, Y) :- father(Z, X), father(Z, Y), X \= Y.
 
 #+END_SRC
    :end:
@@ -2346,7 +2346,12 @@ siblings(X, Y) :- father(Z, X), father(Z, Y).
       möglich ist, von einem Ort zu einem anderen zu reisen, indem
       der Reiseweg aus den in der Faktenbasis gegebenen Direktverbindungen verkettet
       wird. Z. B. sollte die Frage
-      =travel(valmont,raglan).= als Resultat =true= liefern.
+      =travel(valmont,raglan).= als Resultat =true= liefern. 
+
+      *Hinweis*: Es könnte hilfreich sein, ein Prädikat =onestep/2= zu definieren,
+      das die Möglichkeiten zusammenfasst, welche Direktverbindungen
+      aufgrund der gegebenen Fakten existieren.
+      
       :student:
       #+BEGIN_SRC prolog
       travel(X,Y) :- onestep(X,Y).

@@ -30,7 +30,6 @@ onestep(X,Y) :- byPlane(X,Y).
 travel(X,Y,go(X,Y,Transport)) :- onestep(X,Y,Transport).
 travel(X,Y,go(X,Z,Transport,Path)) :- onestep(X,Z,Transport),
         travel(Z,Y,Path).
-
 onestep(X,Y,byCar) :- byCar(X,Y).
 onestep(X,Y,byTrain) :- byTrain(X,Y).
 onestep(X,Y,byPlane) :- byPlane(X,Y).

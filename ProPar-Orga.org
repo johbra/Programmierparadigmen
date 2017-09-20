@@ -82,9 +82,9 @@
 |  7 | Lösung zur ersten Prolog-Aufgabe erl. (insbes. travel) |        |        6 |
 |    | Zehnziffer-Zahl-Rätsel diskutieren                     |        |          |
 |    | send+more+money - Lösungen diskutieren                 |        |          |
-|    | Constraint-Programmierung -- Grundlagen                |        |        7 |
+|    | Constraint-Programmierung -- Grundlagen                |     29 |          |
 |----+--------------------------------------------------------+--------+----------|
-|  8 | Constraint-Programmierung -- Grundlagen                |        |          |
+|  8 | Constraint-Programmierung -- Grundlagen                |   Rest |        7 |
 |    | Klausurvorbereitung                                    |        |          |
 |----+--------------------------------------------------------+--------+----------|
 |  9 | Feiertag                                               |        |          |
