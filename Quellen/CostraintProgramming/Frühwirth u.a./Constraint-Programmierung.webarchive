@@ -1,0 +1,253 @@
+bplist00Ò_WebMainResource_WebSubresourcesÕ	
+_WebResourceData_WebResourceMIMEType_WebResourceTextEncodingName^WebResourceURL_WebResourceFrameNameO$
+<html><head>
+   <title>
+       Constraint-Programmierung
+   </title>
+</head>
+
+<body>
+
+<table cellpadding="10" cellspacing="0">
+
+<tbody><tr>
+<td>
+
+<h1>
+   Constraint-Programmierung
+</h1>
+
+<h3>
+<a href="http://www.springeronline.com/sgw/cda/frontpage/0,11855,5-156-22-1480352-0,00.html" target="_parent">Lehrbuch, Springer Verlag</a>,
+165 S., 34 Abb., Brosch. ISBN 978-3540606703, 1997 </h3>
+
+<h3><a href="index.html" target="_parent"> 
+             Thom FrÃ¼hwirth</a> 
+und
+         <a href="http://met.guc.edu.eg/staff/slim_abdennadher.aspx" target="_parent"> 
+             Slim Abdennadher</a> </h3>
+
+</td><td valign="top">
+
+<a href="http://www.amazon.de/exec/obidos/ASIN/354060670X/" target="_parent"><img border="0" src="Images/buch.jpg"></a>
+
+</td></tr></tbody></table> 
+<br clear="all"> 
+
+<p>
+
+Video Vortrag (Talk in German):
+<a href="http://www.youtube.com/watch?v=umjPNWW3EF0" target="_blank">Computer knacken harte Nuesse: Von Sudoku ueber den Aktienhandel zum Robotersegeln</a>,
+also at <a href="https://itunes.apple.com/de/itunes-u/computer-knacken-harte-nusse/id631976356?i=143499758" target="_blank">iTunes U</a>, Thom Fruehwirth, 2013.
+<br>
+Video Vortrag (Talk in German):
+<a href="http://www.informatik.uni-ulm.de/pm/fileadmin/pm/home/fruehwirth/Constraint-Programmierung-Fruehwirth/Constraint-Programmierung-Fruehwirth.html" target="_blank">Einfuehrung in die Constraint-Programmierung</a>, also at <a href="https://itunes.apple.com/us/itunes-u/constraint-programmierung/id578143046" target="_blank">iTunes U</a>, Thom Fruehwirth, 2012.
+
+</p><p>
+
+<b>Stichworte:</b> Deklarative Programmierung, 
+KÃ¼nstliche Intelligenz, Logik,
+Mathematik; fÃ¼r Studierende und Wissenschaftler
+</p><p>
+
+In Wirtschaft und Technik zÃ¤hlen Produktions- und Personalplanung,
+Transportoptimierung sowie Konfiguration von Maschinen oder Software
+zum Alltag. EntscheidungsunterstÃ¼tzungssysteme tragen immer hÃ¤ufiger
+zur LÃ¶sung dieser komplexen kombinatorischen Probleme mit Hilfe des
+Computers bei.
+</p><p>
+Mit der Constraint-Programmierung lassen sich diese Probleme auf der
+soliden Basis der mathematischen Logik durch eine Verbindung von
+ConstraintlÃ¶sen und Suchverfahren effizient und deklarativ modellieren
+und behandeln. Man gibt dabei die Constraints (Bedingungen,
+Einschrankungen) an, die von einer LÃ¶sung erfÃ¼llt werden mÃ¼ssen,
+und kombiniert diese Constraints, um den LÃ¶sungsraum
+einzuschrÃ¤nken, bevor man durch einen Suchschritt Alternativen      
+erprobt.
+</p><p>
+
+Das Lehrbuch "Constraint-Programmierung" 
+gibt einen kompakten, aber umfassenden Ãœberblick Ã¼ber das
+ProblemlÃ¶sen und Programmieren mit "Constraints"
+(Randbedingungen). Diese aktuelle Programmiermethodik ermÃ¶glicht es,
+Aufgaben direkt zu formulieren und effizient zu lÃ¶sen. Sie gewinnt
+zusehends Bedeutung in Anwendungsbereichen wie Kombinatorische
+Suchprobleme (z.B. Zeitplanen, Layout-Optimierung), Berechnungen
+(Finanzanalyse), Simulation (Hardware-Verifikation) oder allgemein
+Schliessen und Rechnen mit ungenauer oder unvollstÃ¤ndiger Information
+(z.B. KostenschÃ¤tzung). Die theoretisch fundierte Darstellung mit
+Aufgaben und Anwendungsbeispielen aus der Praxis ist in der Lehre
+erprobt, aber auch fÃ¼r Forscher von Nutzen.
+</p><p>
+
+<b>InhaltsÃ¼bersicht:</b> 
+Einleitung.- 
+PrÃ¤dikatenlogik und KalkÃ¼le.- 
+Logikprogrammierung.-
+Constraint-Logikprogrammierung.- 
+Constrainterweiterungen.-
+NebenlÃ¤ufige Constraint-Logikprogrammierung.-
+Constraint Handling Rules.-
+Constraintsysteme.-
+Kommerzielle Anwendungen.-
+Ãœbungsaufgaben und LÃ¶sungsvorschlÃ¤ge.-
+Literaturverzeichnis.-
+Abbildungsverzeichnis.-
+Index.
+</p><p>
+
+<b><a href="clpv/lehrbuch-intro.ps.Z">Das erste Kapitel des Buches (ps.Z)</a></b><br>
+</p><p>
+
+
+</p><h2>
+     Kommentierte Overhead-Folien und Links zum Buch
+</h2>
+
+<ul>
+  <li><b>Einleitung, Ãœberblick und Motivation</b><br>
+<a href="clpv/gi-final.ps.Z">
+          Anwendungen der Constraint-Logikprogrammierung (ps.Z)</a>,
+GI Jahrestagung Informatik 97, Aachen, September 1997. 
+       <br>
+<a href="clpv/clp-intro.ps.gz">Folien Constraint-Logikprogrammierung Ãœberblick (ps.gz)</a>
+       <br>
+<a href="Papers/aachen-o.ps.gz">Folien Constraint-Programmierung: Grundlagen und Anwendungen (ps.gz)</a>
+  </li>
+  <li><b>PrÃ¤dikatenlogik und KalkÃ¼le</b><br>
+<a href="clpv99/logik00.ps.gz">
+          Folien Logik und KalkÃ¼le (ps.gz) (Juli 2000)<br>
+       </a>
+  </li>
+  <li><b>Logikprogrammierung</b><br>
+<a href="clpv/lp.ps.Z">
+          Folien Logikprogrammierung (ps.Z)  </a><br>
+  </li>
+  <li><b>Constraint-Logikprogrammierung</b><br>
+<a href="clpv/clp.ps.Z">
+          Folien Constraint-Logikprogrammierung (aufbauend auf Logikprogrammierung) (ps.Z)  
+       </a> <br>
+<a href="clpv01/lpclp99.ps.gz">
+	  Folien Constraint-Logikprogrammierung (Variante ohne vorherige Logikprogrammierung) (ps.gz)  
+       </a> <br>
+<!--
+<a href="http://www.sics.se/isl/sicstuswww/site/index.html" target="_parent">Sicstus Prolog </a><BR> 
+<A HREF="clpv/sicstus-intro.ps.Z">Kurzbeschreibung Sictus Prolog (ps.Z)</A><BR>
+-->
+<a href="clpv01/modellierung99.ps.gz">Folien Wie modelliert man ein Constraint-Problem? (ps.gz)</a><br>
+  </li><li>
+  <b>Constrainterweiterungen</b><br><a href="clpv/erweiter.ps.Z">
+          Folien Constrainterweiterungen (ps.Z) 
+       </a>
+  </li><li>
+  <b>NebenlÃ¤ufige Constraint-Logikprogrammierung</b><br><a href="clpv01/nclp99.ps.gz">
+          Folien NebenlÃ¤ufige Constraint-Logikprogrammierung (ps.gz) 
+       </a>
+  </li><li>
+  <b>Constraint Handling Rules</b><br>
+<a href="drafts/chr-intro-folien.ps.Z">Folien Constraint Handling Rules und Constraint-Programmierung (Ãœberblick) (ps.Z)</a><br>
+<a href="clpv01/chr99.ps.gz">
+          Folien Constraint Handling Rules (CHR) (ps.gz)
+       </a><br>
+<!--
+<A HREF="clpv/beschreibung.ps.gz">Kurzbeschreibung CHR in Sicstus Prolog (ps.gz)</A><BR>
+<a href="clpv/chr-manual.ps.Z">CHR User Manual for Sicstus Prolog (ps.Z)</a><br>
+<A HREF="eclipse4/node67.html">CHR User Manual for Eclipse Prolog </A><BR>
+-->
+<a href="http://constraint-handling-rules.org">Constraint Handling Rules</a><br>
+<i><a href="http://chr.informatik.uni-ulm.de/~webchr/">Test-Drive CHR. Run CHR online now!</a></i>
+ </li><li>
+ <b>Constraintsysteme</b><br>
+<a href="clpv99/cscl99.ps.Z">Constraintsysteme  
+und ConstraintlÃ¶ser</a><br>
+<a href="clpv99/term99.ps.Z">Constraintsystem  
+Rationale BÃ¤ume</a><br>
+<a href="clpv99/bool99.ps.Z">Boolesches Constraintsystem</a><br>
+<a href="clpv99/findom00.ps.gz">Endliche Bereiche (ps.gz) (Juli 2000)</a><br>
+<a href="clpv01/lin.ps.gz">Lineare Gleichungssysteme (ps.gz)</a><br>
+<a href="clpv99/nonlinear.ps.Z">Nicht-Lineare Gleichungssysteme</a><br>
+<a href="clpv99/feature99.ps.Z">Feature-Terme, Terminologien, Beschreibungs-Logiken</a><br>
+<a href="http://chr.informatik.uni-ulm.de/~webchr/">ConstraintlÃ¶ser, in CHR geschrieben (mit Demo)</a>
+  </li><li>
+  <b>Anwendungen</b><br>
+<a href="clpv99/markt99.ps.Z">
+          Kommerzielle Anwendungen, Fallbeispiel Planung drahtloser Kommunikationssysteme (POPULAR) (ps.Z)
+       </a><br>
+<a href="Papers/phone-folien.ps.Z">Fallbeispiel POPULAR, Farbfolien (ps.Z)</a><br>
+<a href="phone-demo.html">Fallbeispiel POPULAR </a><br>
+<a href="miet-demo.html">Fallbeispiel MÃ¼chner Mietspiegel </a><br>
+<a href="clpv98/stundenplan.ps.Z">Anwendung Stundenplanung</a><br>
+  </li>
+</ul> 
+
+Folien zuletzt aktualisiert 1999, wenn nicht anders angegeben.
+
+<h3>ÃœbungsblÃ¤tter</h3>
+
+<ol>
+<li><a href="pisa/u01.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u02.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u03.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u04.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u05.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u06.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u07.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u08.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u09.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u10.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u11.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u12.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="pisa/u13.ps.gz">Ãœbungsblatt</a>
+</li></ol>
+Stand 2005.
+
+<ol>
+<li><a href="clpv/u01.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="clpv/u02.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="clpv/u03.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="clpv/u04.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="clpv/u05.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="clpv/u06.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="clpv/u07.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="clpv/u08.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="clpv/u09.ps.gz">Ãœbungsblatt</a>
+</li><li><a href="clpv/u10.ps.gz">Ãœbungsblatt</a>
+</li></ol>
+Stand 2003.
+
+
+ <h3><a href="pisa/index.html" target="right">English book and course in constraint programming</a></h3>
+
+Aktuellere Informationen zur Constraint Programmierung in Englisch.
+<p>
+
+<b>Thom FrÃ¼hwirth and Slim Abdennadher,
+<a href="http://www.informatik.uni-ulm.de/pm/fileadmin/pm/home/fruehwirth/pisa/index.html" target="right">Essentials of Constraint Programming</a>,
+Textbook, Springer Verlag, 2003.</b>
+
+</p><p>
+
+<font size="-1">Thom FrÃ¼hwirth, updated October 7, 2014</font>
+
+
+
+</p><style>[href^="http://www.amazon.co.uk/exec/obidos/external-search?"]
+{display:none !important;}</style></body></html>Ytext/htmlUUTF-8_Jhttp://www.informatik.uni-ulm.de/pm/fileadmin/pm/home/fruehwirth/buch.htmlP¡Ô_WebResourceResponseOŒbplist00ÔjkX$versionX$objectsY$archiverT$top † ¯#)*0123MNOPQRSTUVWXYZ[\]^_`aeU$nullİ	
+ !"R$6S$10R$2R$7R$3S$11R$8V$classR$4R$9R$0R$5R$1€	€€€ €€€€Ó$%'(WNS.base[NS.relative€ €€_Phttp://www.informatik.uni-ulm.de/pm/fileadmin/pm/home/fruehwirth/Images/buch.jpgÒ+,-.Z$classnameX$classesUNSURL¢-/XNSObject#A¿l=c»²î ÈÓ456ALWNS.keysZNS.objectsª789:;<=>?@€	€
+€€€€€€€€ªBDEFGHIJK€€€€€€€€€€€VServer\Content-TypeTEtag]Last-Modified_Strict-Transport-Security]Accept-RangesTDate^Content-LengthZKeep-AliveZConnection_Apache/2.4.7 (Ubuntu)Zimage/jpeg_"16bc-3aff6248a7000"_Thu, 21 Nov 2002 16:37:20 GMT_max-age=15768000Ubytes_Fri, 15 Sep 2017 13:53:43 GMTT5820_timeout=5, max=99ZKeep-AliveÒ+,bc_NSMutableDictionary£bd/\NSDictionaryÒ+,fg_NSHTTPURLResponse£hi/_NSHTTPURLResponse]NSURLResponse_NSKeyedArchiverÑlm_WebResourceResponse€    # - 2 7 Y _ z }  „ ‡ Š  ‘ ˜ ›  ¡ ¤ § © « ­ ¯ ± ² ´ ¶ ¸ º ¼ ¾ À Ç Ï Û İ ß á49DMSV_hjls{†‘“•—™›Ÿ¡£¥°²´¶¸º¼¾ÀÂÄÆÍÚßí	+6AYd{›®´ÔÙíøı$)=AUcux             n              O¼ÿØÿà JFIF      ÿÛ C 	!"$"$ÿÛ CÿÀ  ´ q" ÿÄ           	
+ÿÄ µ   } !1AQa"q2‘¡#B±ÁRÑğ$3br‚	
+%&'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚáâãäåæçèéêñòóôõö÷øùúÿÄ        	
+ÿÄ µ  w !1AQaq"2B‘¡±Á	#3RğbrÑ
+$4á%ñ&'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz‚ƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚâãäåæçèéêòóôõö÷øùúÿÚ   ? ù|îÓ>•+ğßÃMí]GˆwßRÂ÷ÿ d‰¦†K²Ä­µ¾âıÚÚÓõ+ß·ÙÁ+“k¾Ò…~ïÿ eT>K·G¹DÀú-uâdÛ<k"¯ª×ÖåØª©7©ñØ¼ÁĞÆË™lË:–³¦Ş\Æg…~Ä³*²üßìíªö´Õ`ó­%X •ÛòîVşÏ—D°v–KIš7rº™~j‚a©XÙ‹kx^{5lKå·ÌWøZ½7J2·#5Áæ‘Š“‹×ÏB;ÍSÑàƒ§ho/æoÿ cüTDÂÂ)şH[næÿ f¤³Ô®$»kVq%ªÇ½Xÿ z¶n¯´»É y c‰±ªË&ï—æ¥ÏR3»Ôìª°õ0êVzş˜v×y•%ÿ UnÜ7û5sR{wWfEòÚ
+‡îÕÅĞ#ÔDÑ[Éˆ6°Vÿ gøk
+ÿ LÔ?±‹\ª¬ ,ªío•[ïRúÊqw9±:U ©3ÆÀâzrt©À.kóãëİÿ 36ßöi­ÛéS ;m¤#æ¤.bøÿ ß4S¹¢‚®]}Û©?à?5ĞËZ…V6ÁO3³moá®ÖBİ…ô•«ğ¾….«§MqmtRh¥Ùåü¬¬¿/ğıêê´û]B"‘\@Û×øÑ·/ıòÕó¸œŞ4j¸ólyxÜ¯ÛûÆ”zŒR6Éâx_ı¥­;fPD‘¾O¯Z£ctÛ"FëüU±fäy~e±ÿ kî×^Œc‡ŞGÍWÉjıCp\‚…«<øj	-§†Öé£·Ÿ–‰¿…«kû2ê1ò”³HªÂO2¾ã,âL&5o©Á7Á´švFâ_éÆ$	)´_•Êß»MúfƒSµ`ífÊÒÂïıæ¾Zë£–HÆAWå`õgRĞÆ± Ïy–²î_áùU«ÙÄF*Ö¨õr¼Ûë8–ç£ÿ #å‘÷WéJ:ÓcûƒéK’|öc…!ëFO4…© œQLİşÍÊ[ø	ÔÒHàõ+ùÓD«»ï'ıô)s"O ÿ g}"ÏTğ&¢/-£˜.ªÊ¥—îşæ:í.<ÍœÍ·øR_™köXV“À™PXk·*3ÿ ,c¯^7_ùdÿ ÷É¯ÊóÙ·©nç¥C—Ù£ËçğìĞ;ıªÎFŞO›ÿ ²¦.šQ7G'˜ï^»©•¹…¿ï“X¾+Óàw}œçŞ3^XÕKšúRŒ;sî¤û­÷¾îï–µmfÂnWıïÿ f³ï·ÆÏ°mÿ ke2	¤K9$¼»¿v¼®ß›ıßøzejñ¨¹#*qN6Ğ¯kœ¥Ìl­œWYâWÁ2Y£0H-]¦Çñ~í¿öjÈĞÑ§½‰<¯½&æù+¯ŠUo-ÄeÂDÛ˜û5úÎ]™béÂ9;µ«>z†')m}?SáÅu*>aùÒå¼?:ú™t/hÎcÿ €‘ÿ ñ4¿Ù_ı,¿ğ?ş&º9°öGËA‰ä`Ó»?Œ°Åmã»˜­í¢‚?³Ãû¸•U~ï÷V¸·?ìÕòÙ‹E3û«EHVxIµšhCZ[ŸâlÄµé1é¶=¦ÂÏşü¯ÿ \÷€­B¢ïëµk³xşJü¢:´âÛê,%¹™¿iæki±X³Ú!ÒÕÊ@|¥fó$ù¶­y#ê7ÂM§QºÏ§øªõ¯Ú¸0ø¥ü¿ó_ı=girA/Ã
+h­«İYÿ kjsÛËi¢‘x­q
+üÓË=ªÍ·åzı(§‚§Ìº-fÏ5şÒÔƒq©^ÿ àCÿ ñUš†¢W'P»ôæw¯T´ğöˆÓ‹=0^Geq©ë6-ö´¶b¶zz²È²4?»ÜÏ#m_¹òlùÓ}OªøsÂúıæ•%ëê3Ç†´ûÙÒæ?%ÒóNEWUòş_)£›æmû›îW¡ìéÿ (ùdxóŞŞÍİÉÇı5jkŞßúäúîßüU{‡şiúf¹á{™¯o¢º—QÒ¬$Ç’M¾£$ì×íhÙYbWï.ıÿ r±¼;áÿ @úpÔ´½[P’óÂš†±püqF¯W0°¶6ù,Û›ø™~_“ç^ÎŸòDá|/|Ş&ÒGÛ®‰7ğ/·_1Ú¯¦µ.…áY&É“ÿ ì×xÓIÑîüoªB—ÖÚ¶• hóMÂùG(òÂùjªÊËò·™»ûß-yÈÕub:¥ùÈÆ>Ó'Íÿ U$U¢‡GªêŞZãU¿è?åæJxÕõ\ÿ ÈVÿ ÿ dÿ âª€ëN=jŒ›d·3ÜO/™s<³Iıùdfj…?ø©‡ë@…üh¦ÿ À¨«³¼9¨$ neù«µ´¿†hÂ±Zğ·Ô¦²ÜÈßîÖÅŠ^
+ZE5ñØüDµâ`1Ö8¿ÚÉAøƒ¦a¿æş¼òÃLñÏ„®<Ckw"éŞ¹Œªùì­“2üĞ¯ûŞ^æÿ i+§ı 5Ô¼[§Î~mšbÇÿ ‘$¤ğÿ ‰¼9cà¨|'t£¿°ÔšşìùŸè×S©]«òÉÿ ¶»æÛ»ıúú±[	NÇ³¦îsúµÏŒ|!{y£¦»¨À—Ş\÷ÒâD†å¥…[ıÍ¶M­TõëoY[éñİß_Lu[(/ ò3¤vòOm‘½…öÿ q+ÔÏü?©gqsâi5g»Ódµ„[Ì±ÚŞÆXd›k.ßõ²«m~ı»¾ıVÓ<s¥éégx¢ÆûZµÑ--Æ¯~º€·ia¾¸™¡f‡lûYdÔíÚŞPV®îceÜògÖüHeMGû[T.ºƒj	9šL­ãsçîÿ ­·ï³L±ÔüIiªé×6Wº¤7ö‘l$Fo28¾lÇû?4Ÿ/ûM]õß,®|.úDº£GlşhM„i2ÚÇzÚÇÚp±ÿ ×ºßİù7V¦©ã_k¾"ëPñ-Ô’E®ë—zl·Ş$bÖÛì«#Cûå¶ËòGó¹º%æy¿‡ãñˆîäÑíõ)ö=›	DÓIåù6±´Ëù‡Êm«ıê¥âïC½ŠÚğÆşe­½ÊºòÊÍS*îeûÛeMÕì7^;ğëk:¥Õ—ŠÆŸg.£¬\ÜÛ¤ı©ö«ã…¶¢áŠÈ­ş³nİÛ—vê¥¥ü@ĞRîÄjz´×ºuŒş’ÖÙã–D·û5‹GtÑ¯EÛ+.ï»¿øwR¸ìxóA:HÑ¼R¬ŠpêÈÜ»¾jf3^¥âÍ7†uı2=oN{Ë¨të5—Ikâ·–Ñ›¦•d’ç÷®}°àÚ¿Ã^^nª‰”Õ†0õÛHGÃRòÓ\0éL”EşÕïšŠ’®}š]ÛwmmËUİ–T}ß,{¾_øÚÔ…<Ù¦ˆÉ¾H¤ÚØ]´]YKÄ­µUó‹m}+-vØü¦14•úUñM™¼Cl»f?ôd•ÒÍ¢øSÃü=­ê^k¾.âÒi/ŞôáùIµcÿ Y&çó|¿Ã\çÅX]<En®¸o±½şô•»á­_â"ü)»ÒáğT^"ğ¬?h{kûÍ®¿²Ù¿ÖÉo*ÿ ªlå¿Ùoš¾~t½—ºº¤e2ö˜hÉïca¿gÍGûoMÒ ñ~—=ÄÚ©Ò5"–òÄ¾ğÛ5Ò¡İş±v¨]Ë˜ıjµ‡Àyµ-^ÖŞËÆ6WzEÆŠúÂ_Úé·Jê’ˆdHíU|Ù
+±ıÓTæøùãÙ5m'Thô¹Ó¯´e1X˜Æ¡wö³ù×;–òÉ_“bÖN‡ñ{ÄZ<ÚÄz?†ï'ğı“Úi“]YÈÍo™YüÁûÅıîOo—oğÒ´O÷GK¦üÑ<A¡ü:Ãş0?Û¾-‚öi¢ºµB‚wm¿/ÊªÉå¶íûÙ·§ËX±ü—Qøâ/øÄñj¶š*\L[û&æ. ‹!äŠâEØÏÁm•_@øÑâí-%–ƒws Ïw5íÍ“ùøºY<ävY÷{¦fÛıåJ§£üZñ&—ğ÷şˆtíK!¦]é	y-£Äµº}òF$FÚyù¾ïoâ©´Š\‡£x«à2êß5»k]k@ğµ¼ZÅ®ke72Å%Ì–1Î«rß6æİ»îÆ¹-áq|=ğUşƒ}w«ø¯_¸¾‚M"ƒı™Ùdò›oü³ÚÁ·7Ï»äùV ¾øñã[½uõ‰lô?´É¯[kŒ¢ŞP¿i‚Ùm‘Öÿ «Ø¿2õüuƒ©xÇÄ9Ğt>“¦Ş:j³Üi©b[·-$å¶ùm$›¶íİò§ÍÀ¤®9rt9;ëK›ë›èd¶»µ™¢¸ŠEù£‘[k+Àªº§ÔlnôÍJçLÔ-^ÖòÒY ûÑº¶ÖVÿ TV¨ä`KµMzwšß'ûÔQ¹¿Úÿ ¾h ®´MC«j7L±É4±³ÛÅî_ök)a˜è/ªÇ2´~¡‘¿Ö?û?ıh%û[iöWs#I8UZ¶İßğ*µáûˆæ¸¿†gY®7,»Ú5ş*ûÙûHÁ¹+ŸákbhÔµı¡íšÓÆÖ
+W´¸İGı¶’»O
+xûMğÀjËg.¡¬-Ş±¤|İZ@½Âmf‘@`U~_»ø×ûHÏçøÛN%yM&4ÿ ¾fš¼·s€2zu¯‹ÆBõÏ·ÂÔå…Ñôä:w„&×ì<?£øGÁ·Å¯!Ô´¸®"f§©ÍK¶PÌ±»*©e¿‰İë¤ğ§„ş]üDÖl|7¡x?XÅvö×¶·’Ç"ZX}‰dsj®ß7úfäÂç¦Í»G²Ær¤.ÓÉ®‹Á¾:ñ?ƒcŸş»ûk)%ÉóşÃ·1VMÑI$léò3/ÊË\nêvB´z£ÜtmÂ÷rü7Ğ­4?	Åw¨A¨_^ÜO§EqqrĞ<ë¸¤XË0sµ[ÉSet£Aøu¦xÛ^ºğ¤ĞÜ^ø^8í.a†H­~Ù#Euå…;WäËaYÔ2ï¯Ù# ©PA tô¦l^È?ïšN`«.ÇÖz¦ğño¬õ<'á_*ÓOñdÙb>Tÿ Ù÷
+– İ¹¤ÙÕ³½·“ŸKÚ?€uJĞCáéRZk¼ØB°´†ö@.#o›X~í|†V=¿u{vô¤Õ®~”ryÛ.ÇÕ>"ğ×ÃøşøÇS±ğõ¶¥p·ºğ¾¸µŠ›N¹åşÆ|Æ¸V5WäD“ÌVo¡»âx;\ñÿ ÄøÁş³ŸH±ÓgÓZ ‘´É#Á=Üc£lrù†¾M™o#¡ÇJpHÎ*ídûhö>ÊĞ<'ğå¼ew£Ïàï\Ûê^9¾Ò3%¸ŞÌip2°Ø|ÄùOQ¹¶ã5ÇGáO7ì÷u©éğõôPø9/[Z.ı5FŸ1‘»pU6ü¿&ÚÅ|ÊcLcje†>èé]Hñ×ˆSÁRx>Ş[M*uD¹X4ø"šéüÄÎ«½ÕX–ù›¹£•÷)U‹ès{‡ûTS0}g-Ï©.4c'nÁòÕÛ[=Qî·®^/—oİ¬†“9§ı¥¼±ÜWêÓ§ucñZU'Ió-Ï&øÔï/Š ’F,íf·×I+„ş/»]ÏÆ‰üOnÍó¡'şŒ’¸‡ÛÚ¿;Í?ŞêzŸ«dïıŠ•û>ìÓ¥?5DçïWé‘9Á4Ölµ9ù¦µœ€µ ?:Ğü
+…ÿ YL²ÀíKòæ…--3!j6éO5Š¢“åÿ +EHì}6F)ùjo”Ôm€+õÃñÏ%øÄ?â¥¶ÿ ¯Dÿ Ñ\Kµ]·ÅŞ|Mıy§ş„õÆ=~ošÿ ½Ôõ?ZÊ?Ü©zÏŞ¦8â¦=j6Æ?û*óOHúÓHÁ©¸ß·jÔD.O,Ñ1ŸÃÅ óOû«M_½òıÚe“›ïPŞÔ€®Úy
+~Z…Škf#õ¦IıóE&O÷…%ØúiœÔR7hg¨$zıpüZ<ÇâÓ/ü$×ªèO\c•ÍvOüT×ªèO\cıêüß5ÿ |©ê~­”¯öJ~ƒ\üÔÇ–œ~õF»^ièÄkŸ½LÏ?zœôÌ{Ô³D&yïŠR[A-ÅÄpAK4²,q¢.æfoº´·–—67’Z^ÛMmqË$SGå²ÿ ÀZ‘V<T›€¨ÓıÚpâš2c‹SÑI'4Á!7}h¦QR]¤‰éLv•åGâ&»ÿ <l¿ïÓñTÓñ\ï—ıúoş*¾ÿ ıbÂyıÇçk†q_y/Åsÿ şSÿ B’¸ç,Z´µí^çZ½[«¡ºÇå®ÅÚ»w7ÿ Ygï5|~>¼+b%8ìÏ¶ÀĞthFœ·H›šc59¾õ1«ŒìBQçæ¥ldüµÛšƒXÄë¾è÷ÚÇŠ­Ö8ä	ãQ*îVó>UÚo›o÷vÖ÷ÇŞø{WÀ/goq7˜ÊÒG¹¤efdUM­óªíşæÏà¨>øª_øêÖHm¡¹{‰#ÛÃªÆÌ¥¾]Ì­†eiÚeşt®“öñ’kQiZµ›ÁmoiEç3y*Ò7ïª²|ÍòÅü
+‰ıú¦¶V<’öŞêÂqı´ÖrYLmoºÛZ›:Éoq$3ÆĞË4rG"íeeûÊË]í÷ÄÛÙôqZ]š_I-Ù¸¸13q,+n¬Í¹¥_Ş7šÿ ?İÿ o}ËŠ‘”¾—QğŞ—ö†i%´H-WÊFŞÑIæ7ú­Ê¿"ÿ yÿ c¡vedy ôÒšÙñOˆn¼AwÍÔğyQìT…0¿33nÿ {æ¬f>™ª"ÂsE7sQ@ì]nõçQZ˜¢U¦§ŞŠ*@hj7<QE‘5FÄî4QPÍ §åÇj’g’I÷M+ÊíÕœäÑEI}M+±ÏZ(¦d8zÒQE2FooZ(¢™gÿÙZimage/jpeg_Phttp://www.informatik.uni-ulm.de/pm/fileadmin/pm/home/fruehwirth/Images/buch.jpg    1 < N d ‚ ‘ ¨$¶$À$Æ%%%%%5)Å@…@                           @ã
