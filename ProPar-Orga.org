@@ -84,8 +84,12 @@
 |    | send+more+money - Lösungen diskutieren                 |        |          |
 |    | Constraint-Programmierung -- Grundlagen                |     29 |          |
 |----+--------------------------------------------------------+--------+----------|
-|  8 | Constraint-Programmierung -- Grundlagen                |   Rest |        7 |
-|    | Klausurvorbereitung                                    |        |          |
+|  8 | Smalltalk well loved ...                               |        |     6, 7 |
+|    | Aufgabe 6 besprechen                                   |        |          |
+|    | Was ist ein Annuitätendarlehen?                        |        |          |
+|    | Constraint-Programmierung -- Grundlagen                |    F30 |          |
+|    | darlehen.pl zeigen                                     |        |          |
+|    | Aufgabe 7 bearbeiten                                   |        |          |
 |----+--------------------------------------------------------+--------+----------|
 |  9 | Feiertag                                               |        |          |
 |----+--------------------------------------------------------+--------+----------|
