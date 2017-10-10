@@ -1,4 +1,4 @@
-# +SETUPFILE: /Users/johannes/Documents/myOrg/org-html-themes/setup/theme-bigblow.setup
+# +SETUPFILE: /Users/johannes/Documents/gmyOrg/org-html-themes/setup/theme-bigblow.setup
 #+SETUPFILE: ./theme-bigblow-local.setup
 #+TITLE: Funktionale Programmierung -- Grundlagen
 #+SUBTITLE: Programmierparadigmen
