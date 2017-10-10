@@ -1,57 +1,291 @@
-<!DOCTYPE html>
-<html lang="de">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
 <head>
-<meta charset="utf-8"/>
+<!-- 2017-10-10 Tue 21:59 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Funktionale Programmierung &#x2013; Techniken</title>
-<meta name="author" content="(Johannes Brauer)"/>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Johannes Brauer" />
 <style type="text/css">
-.underline { text-decoration: underline; }
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
 </style>
-<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
 
-<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
 
-<link rel="stylesheet" href="./mycss/myrevealstyle.css"/>
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
 
-<!-- If the query includes 'print-pdf', include the PDF print sheet -->
-<script>
-    if( window.location.search.match( /print-pdf/gi ) ) {
-        var link = document.createElement( 'link' );
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = './reveal.js/css/print/pdf.css';
-        document.getElementsByTagName( 'head' )[0].appendChild( link );
-    }
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
 </script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div class="reveal">
-<div class="slides">
-<section id="sec-title-slide"><h1 class="title">Funktionale Programmierung &#x2013; Techniken</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2016-11-29 Tue 10:46</p>
-</section>
+<div id="content">
+<h1 class="title">Funktionale Programmierung &#x2013; Techniken
+<br />
+<span class="subtitle">Programmierparadigmen</span>
+</h1>
 
-<section>
-<section id="slide-orgheadline5">
-<h2 id="orgheadline5">Anwendung von Entwurfsvorschrift V auf zwei Listen</h2>
-<div class="outline-text-2" id="text-orgheadline5">
-</div></section>
-<section id="slide-orgheadline1">
-<h3 id="orgheadline1">Drei Fälle</h3>
-<ol>
+<div id="outline-container-org6a44fae" class="outline-2">
+<h2 id="org6a44fae">Anwendung von Entwurfsvorschrift V auf zwei Listen</h2>
+<div class="outline-text-2" id="text-org6a44fae">
+</div><div id="outline-container-orgca1b47d" class="outline-3">
+<h3 id="orgca1b47d">Drei Fälle</h3>
+<div class="outline-text-3" id="text-orgca1b47d">
+<ol class="org-ol">
 <li>Ein Argument kann atomar behandelt werden, d.h. eine Liste muss nicht
 zerlegt werden.</li>
 <li>Beide Listen sind im Gleichschritt zu verarbeiten.</li>
 <li>Bei beiden Listen ist für die Ermittlung des Resultats der Zugriff
 auf das erste Element und die Restliste notwendig.</li>
-
 </ol>
 
 <p>
 Behandlung der drei Fälle:
 </p>
 
-<ol>
+<ol class="org-ol">
 <li>EV V wird wörtlich angewendet, weil das zweite Argument nicht
 zerlegt werden muss. Beispiel: append (concatenate).</li>
 <li><p>
@@ -64,15 +298,15 @@ Argumentlisten notwendig.
 <p>
 Das führt zur folgenden angepassten Funktionsschablone:
 </p></li>
-
 </ol>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline2">
-<h3 id="orgheadline2">Funktionsschablone für Fall 2</h3>
+<div id="outline-container-org6a3e1b8" class="outline-3">
+<h3 id="org6a3e1b8">Funktionsschablone für Fall 2</h3>
+<div class="outline-text-3" id="text-org6a3e1b8">
 <div class="org-src-container">
-
-<pre  class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">listen-funktion</span>
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">listen-funktion</span>
        <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst1 lst2<span style="color: #909183;">]</span>
           <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
              <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lst1<span style="color: #709870;">)</span> ...
@@ -80,13 +314,15 @@ Das führt zur folgenden angepassten Funktionsschablone:
 <span style="color: #8D8D84;">;;                                      </span><span style="color: #8D8D84; font-style: italic;">===========  </span>
                  ... <span style="color: #709870;">(</span>listen-funktion 
                       <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lst1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lst2<span style="color: #907373;">)</span><span style="color: #709870;">)</span> ...<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #8D8D84;">;;                                </span><span style="color: #8D8D84; font-style: italic;">===========</span>
+<span style="color: #8D8D84;">;;                                </span><span style="color: #8D8D84; font-style: italic;">===========</span></pre>
 </pre>
 </div>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline3">
-<h3 id="orgheadline3">Behandlung von Fall 3</h3>
+<div id="outline-container-org33ece30" class="outline-3">
+<h3 id="org33ece30">Behandlung von Fall 3</h3>
+<div class="outline-text-3" id="text-org33ece30">
 <p>
 Es gibt keine nutzbare Abhängigkeit
 der beiden Parameter. Hier müssen grundsätzlich alle (vier) Fälle
@@ -94,24 +330,25 @@ berücksichtigt werden:
 </p>
 
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">listen-funktion</span>
-   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst1 lst2<span style="color: #909183;">]</span>
-      <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
-         <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">empty?</span> lst1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">empty?</span> lst2<span style="color: #907373;">)</span><span style="color: #709870;">)</span> ...
-         <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span>pair? lst1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">empty?</span> lst2<span style="color: #907373;">)</span><span style="color: #709870;">)</span> 
-          ... <span style="color: #709870;">(</span><span style="color: #006FE0;">first</span> lst1<span style="color: #709870;">)</span> ... <span style="color: #709870;">(</span><span style="color: #006FE0;">rest</span> lst1<span style="color: #709870;">)</span> ...
-         <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">empty?</span> lst1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>pair? lst2<span style="color: #907373;">)</span><span style="color: #709870;">)</span> 
-          ... <span style="color: #709870;">(</span><span style="color: #006FE0;">first</span> lst2<span style="color: #709870;">)</span> ... <span style="color: #709870;">(</span><span style="color: #006FE0;">rest</span> lst2<span style="color: #709870;">)</span> ...
-         <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span>pair? lst1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>pair? lst2<span style="color: #907373;">)</span>
-          ... <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lst1<span style="color: #907373;">)</span> ... <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lst2<span style="color: #907373;">)</span> ...
-          ... <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lst1<span style="color: #907373;">)</span>  ... <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lst2<span style="color: #907373;">)</span><span style="color: #709870;">)</span> ...<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">listen-funktion</span>
+       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst1 lst2<span style="color: #909183;">]</span>
+          <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
+             <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">empty?</span> lst1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">empty?</span> lst2<span style="color: #907373;">)</span><span style="color: #709870;">)</span> ...
+             <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span>pair? lst1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">empty?</span> lst2<span style="color: #907373;">)</span><span style="color: #709870;">)</span> 
+              ... <span style="color: #709870;">(</span><span style="color: #006FE0;">first</span> lst1<span style="color: #709870;">)</span> ... <span style="color: #709870;">(</span><span style="color: #006FE0;">rest</span> lst1<span style="color: #709870;">)</span> ...
+             <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">empty?</span> lst1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>pair? lst2<span style="color: #907373;">)</span><span style="color: #709870;">)</span> 
+              ... <span style="color: #709870;">(</span><span style="color: #006FE0;">first</span> lst2<span style="color: #709870;">)</span> ... <span style="color: #709870;">(</span><span style="color: #006FE0;">rest</span> lst2<span style="color: #709870;">)</span> ...
+             <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span>pair? lst1<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>pair? lst2<span style="color: #907373;">)</span>
+              ... <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lst1<span style="color: #907373;">)</span> ... <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lst2<span style="color: #907373;">)</span> ...
+              ... <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lst1<span style="color: #907373;">)</span>  ... <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lst2<span style="color: #907373;">)</span><span style="color: #709870;">)</span> ...<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline4">
-<h3 id="orgheadline4">Drei mögliche Rekursionsschemata</h3>
+<div id="outline-container-org4c188c6" class="outline-3">
+<h3 id="org4c188c6">Drei mögliche Rekursionsschemata</h3>
+<div class="outline-text-3" id="text-org4c188c6">
 <p>
 Man beachte, dass die Schablone noch keine rekursiven Aufrufe
 enthält. Nur für den Fall, dass beide Argumente nicht leer sind, ist
@@ -124,10 +361,10 @@ Hier sind aber drei Varianten denkbar:
 
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span>listen-funktion lst1 <span style="color: #7388D6;">(</span><span style="color: #006FE0;">rest</span> lst2<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-    <span style="color: #707183;">(</span>listen-funktion <span style="color: #7388D6;">(</span><span style="color: #006FE0;">rest</span> lst1<span style="color: #7388D6;">)</span> lst2<span style="color: #707183;">)</span>
-    <span style="color: #707183;">(</span>listen-funktion <span style="color: #7388D6;">(</span><span style="color: #006FE0;">rest</span> lst1<span style="color: #7388D6;">)</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">rest</span> lst2<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #707183;">(</span>listen-funktion lst1 <span style="color: #7388D6;">(</span><span style="color: #006FE0;">rest</span> lst2<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+        <span style="color: #707183;">(</span>listen-funktion <span style="color: #7388D6;">(</span><span style="color: #006FE0;">rest</span> lst1<span style="color: #7388D6;">)</span> lst2<span style="color: #707183;">)</span>
+        <span style="color: #707183;">(</span>listen-funktion <span style="color: #7388D6;">(</span><span style="color: #006FE0;">rest</span> lst1<span style="color: #7388D6;">)</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">rest</span> lst2<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+        </pre>
 </pre>
 </div>
 
@@ -137,45 +374,45 @@ Hier sind aber drei Varianten denkbar:
 Welche in Betracht kommt, kann nur nach weiterer Problemanalyse
 entschieden werden.
 </p>
+</div>
+</div>
+</div>
 
-</section>
-</section>
-<section>
-<section id="slide-orgheadline14">
-<h2 id="orgheadline14">Lokale Definitionen</h2>
-<div class="outline-text-2" id="text-orgheadline14">
-</div></section>
-<section id="slide-orgheadline6">
-<h3 id="orgheadline6">Ineffiziente Funktion <code>sumprod</code></h3>
+<div id="outline-container-org346870d" class="outline-2">
+<h2 id="org346870d">Lokale Definitionen</h2>
+<div class="outline-text-2" id="text-org346870d">
+</div><div id="outline-container-org9b80cb3" class="outline-3">
+<h3 id="org9b80cb3">Ineffiziente Funktion <code>sumprod</code></h3>
+<div class="outline-text-3" id="text-org9b80cb3">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet eine zweielementige Liste bestehend </span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">aus der Summe und dem Produkt der Elemente der </span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Zahlenliste  </span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
-    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? lon<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
-     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #709870;">)</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">list</span> 0 1<span style="color: #709870;">)</span>
-      <span style="color: #D0372D;">:else</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">list</span> 
-       <span style="color: #907373;">(</span>+ <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #6276BA;">)</span> 
-          <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> <span style="color: #858580;">(</span>sumprod <span style="color: #80A880;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
-       <span style="color: #907373;">(</span>* <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #6276BA;">)</span> 
-          <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">rest</span> <span style="color: #80A880;">(</span>sumprod <span style="color: #887070;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet eine zweielementige Liste bestehend </span>
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">aus der Summe und dem Produkt der Elemente der </span>
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Zahlenliste  </span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
+        <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? lon<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+         <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #709870;">)</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">list</span> 0 1<span style="color: #709870;">)</span>
+          <span style="color: #D0372D;">:else</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">list</span> 
+           <span style="color: #907373;">(</span>+ <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #6276BA;">)</span> 
+              <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> <span style="color: #858580;">(</span>sumprod <span style="color: #80A880;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+           <span style="color: #907373;">(</span>* <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #6276BA;">)</span> 
+              <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">rest</span> <span style="color: #80A880;">(</span>sumprod <span style="color: #887070;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 <p>
 <b>Warum ist die Funktion ineffizient?</b>
 </p>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline7">
-<h3 id="orgheadline7">Verwendung einer <i>lokalen Definition</i></h3>
+<div id="outline-container-org5767726" class="outline-3">
+<h3 id="org5767726">Verwendung einer <i>lokalen Definition</i></h3>
+<div class="outline-text-3" id="text-org5767726">
 <div class="org-src-container">
-
-<pre  class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet ... </span>
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet ... </span>
     <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span> 
       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span> 
         <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? lon<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
@@ -190,18 +427,20 @@ entschieden werden.
 <span style="color: #8D8D84;">;;                           </span><span style="color: #8D8D84; font-style: italic;">==</span>
                    <span style="color: #6276BA;">(</span>* <span style="color: #858580;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #858580;">)</span> 
                       <span style="color: #858580;">(</span><span style="color: #006FE0;">first</span> <span style="color: #80A880;">(</span><span style="color: #006FE0;">rest</span> sp<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #8D8D84;">;;                                 </span><span style="color: #8D8D84; font-style: italic;">==</span>
+<span style="color: #8D8D84;">;;                                 </span><span style="color: #8D8D84; font-style: italic;">==</span></pre>
 </pre>
 </div>
 <p>
 Lokale Definitionen dienen (u.a.) zur Benennung des Wertes eines
 Ausdrucks zum Zweck der Vermeidung von Mehrfachberechnungen.
 </p>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline8">
-<h3 id="orgheadline8">Syntax und Semantik von <code>let</code></h3>
-<ul>
+<div id="outline-container-orgae92ccd" class="outline-3">
+<h3 id="orgae92ccd">Syntax und Semantik von <code>let</code></h3>
+<div class="outline-text-3" id="text-orgae92ccd">
+<ul class="org-ul">
 <li><p>
 Die Syntax der Anwendung der Pseudofunktion <code>let</code>, ein sogenannter
 <code>let</code>-Ausdruck, hat die folgende Form:
@@ -212,34 +451,31 @@ Die Syntax der Anwendung der Pseudofunktion <code>let</code>, ein sogenannter
 </p></li>
 
 <li>Dabei sind
-<ul>
+<ul class="org-ul">
 <li>die \(v_{i}\) Variablenbezeichner,</li>
 <li>die \(e_{i}\) Ausdrücke sowie</li>
 <li>\(exp\), der <i>Rumpf</i> des <code>let</code>-Ausdrucks, ebenfalls ein Ausdruck.</li>
-
 </ul></li>
 <li>Semantik informell: Der Wert eines <code>let</code>-Ausdrucks ist der Wert, der
 sich aus der Auswertung seines Rumpfes ergibt, wenn alle darin
 vorkommenden \(v_{i}\) durch die Werte der korrespondierenden \(e_{i}\)
 ersetzt werden.</li>
-
 </ul>
-</section>
-<section>
-<ul>
+<ul class="org-ul">
 <li>Für die formale Definition der Semantik genügt es hier festzuhalten,
-dass der Ausdruck<br  />
-<code>(let</code> \([v_{1}\ e_{1}\ldots v_{n}\ e_{n}]\) <code>exp)</code><br  />
-durch den folgenden <code>fn</code>-Ausdruck ersetzt werden kann:<br  />
+dass der Ausdruck<br />
+<code>(let</code> \([v_{1}\ e_{1}\ldots v_{n}\ e_{n}]\) <code>exp)</code><br />
+durch den folgenden <code>fn</code>-Ausdruck ersetzt werden kann:<br />
 <code>((fn</code> \([v_{1}\ \ldots\ v_{n}]\) <code>exp)</code> \(e_{1} \ldots e_{n})\)</li>
 <li><code>let</code> ist „syntaktischer Zucker”.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline9">
-<h3 id="orgheadline9">Pragmatik von <code>let</code></h3>
-<ul>
+<div id="outline-container-org6107483" class="outline-3">
+<h3 id="org6107483">Pragmatik von <code>let</code></h3>
+<div class="outline-text-3" id="text-org6107483">
+<ul class="org-ul">
 <li>Einen Anwendungszweck von <code>let</code> haben wir in der Funktion <code>sumprod</code>
 bereits gesehen: Benennung eines Zwischenergebnisses zur Vermeidung
 von Mehrfachberechnungen.</li>
@@ -247,29 +483,29 @@ von Mehrfachberechnungen.</li>
 Die Benennung von Werten kann ein Programm besser lesbar machen:
 </p>
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet \ldots  </span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
-    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? lon<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
-     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #709870;">)</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">list</span> 0 1<span style="color: #709870;">)</span>
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #0000FF;">let</span> <span style="color: #907373;">[</span>sp          <span style="color: #6276BA;">(</span>sumprod <span style="color: #858580;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span>
-                  restsumme   <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> sp<span style="color: #6276BA;">)</span>
-                  restprodukt <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">rest</span> sp<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">]</span>
-              <span style="color: #907373;">(</span><span style="color: #006FE0;">list</span> 
-               <span style="color: #6276BA;">(</span>+ <span style="color: #858580;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #858580;">)</span> restsumme<span style="color: #6276BA;">)</span>
-               <span style="color: #6276BA;">(</span>* <span style="color: #858580;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #858580;">)</span> restprodukt<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet \ldots  </span>
+       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span>
+         <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
+           <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? lon<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+            <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+           <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+             <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #709870;">)</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">list</span> 0 1<span style="color: #709870;">)</span>
+             <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #0000FF;">let</span> <span style="color: #907373;">[</span>sp          <span style="color: #6276BA;">(</span>sumprod <span style="color: #858580;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span>
+                         restsumme   <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> sp<span style="color: #6276BA;">)</span>
+                         restprodukt <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">rest</span> sp<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">]</span>
+                     <span style="color: #907373;">(</span><span style="color: #006FE0;">list</span> 
+                      <span style="color: #6276BA;">(</span>+ <span style="color: #858580;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #858580;">)</span> restsumme<span style="color: #6276BA;">)</span>
+                      <span style="color: #6276BA;">(</span>* <span style="color: #858580;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #858580;">)</span> restprodukt<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline10">
-<h3 id="orgheadline10">Gültigkeitsbereich der durch <code>let</code> definierten Bezeichner</h3>
-<ul>
+<div id="outline-container-org038ae99" class="outline-3">
+<h3 id="org038ae99">Gültigkeitsbereich der durch <code>let</code> definierten Bezeichner</h3>
+<div class="outline-text-3" id="text-org038ae99">
+<ul class="org-ul">
 <li><p>
 Die Variablen \(v_{i}\) in einem <code>let</code>-Ausdruck
 </p>
@@ -290,71 +526,72 @@ sind im Rumpf \(exp\) sichtbar.
 werden.</li>
 
 <li>Für diesen Zweck existiert die Pseudofunktion <code>letfn</code> (s. u.).</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline11">
-<h3 id="orgheadline11">Pragmatik von <code>let</code> <i>(2)</i></h3>
-<ul>
+<div id="outline-container-org909fbf8" class="outline-3">
+<h3 id="org909fbf8">Pragmatik von <code>let</code> <i>(2)</i></h3>
+<div class="outline-text-3" id="text-org909fbf8">
+<ul class="org-ul">
 <li>Wenn Hilfsfunktionen nur reinen Hilfscharakter haben, d.h. nur im
 Kontext der Hauptfunktion sinnvoll sind, kann es &#x2013; schon zur
 Vermeidung von Namenskonflikten in der globalen Umgebung &#x2013;
 zweckmäßig sein, Hilfsfunktionen lokal zu definieren.</li>
 <li>Betrachten wir dazu eine weitere Variante von <code>sumprod</code> mit zwei
 Hilfsfunktionen.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline12">
-<h3 id="orgheadline12"><code>sumprod</code> mit Hilfsfunktionen</h3>
+<div id="outline-container-org1d55ee8" class="outline-3">
+<h3 id="org1d55ee8"><code>sumprod</code> mit Hilfsfunktionen</h3>
+<div class="outline-text-3" id="text-org1d55ee8">
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
-    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? lon<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
-     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
-    <span style="color: #909183;">(</span><span style="color: #006FE0;">list</span> <span style="color: #709870;">(</span>sum lon<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>prod lon<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
+        <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? lon<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+         <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+        <span style="color: #909183;">(</span><span style="color: #006FE0;">list</span> <span style="color: #709870;">(</span>sum lon<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>prod lon<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 </div>
 <div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #709870;">)</span> 0
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>sum <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #709870;">)</span> 0
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>sum <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">prod</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #709870;">)</span> 1
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>* <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>prod <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">prod</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #709870;">)</span> 1
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>* <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>prod <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline13">
-<h3 id="orgheadline13"><code>sumprod</code> mit lokalen Hilfsfunktionen</h3>
+<div id="outline-container-org8226a98" class="outline-3">
+<h3 id="org8226a98"><code>sumprod</code> mit lokalen Hilfsfunktionen</h3>
+<div class="outline-text-3" id="text-org8226a98">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span>
-        <span style="color: #709870;">[</span><span style="color: #907373;">(</span>sum <span style="color: #6276BA;">[</span>lon<span style="color: #6276BA;">]</span>
-           <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span>
-            <span style="color: #858580;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #858580;">)</span> 0
-            <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span>+ <span style="color: #80A880;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #80A880;">)</span> <span style="color: #80A880;">(</span>sum <span style="color: #887070;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
-         <span style="color: #907373;">(</span>prod <span style="color: #6276BA;">[</span>lon<span style="color: #6276BA;">]</span>
-           <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span>
-            <span style="color: #858580;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #858580;">)</span> 1
-            <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span>* <span style="color: #80A880;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #80A880;">)</span> 
-                     <span style="color: #80A880;">(</span>prod <span style="color: #887070;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">list</span> <span style="color: #907373;">(</span>sum lon<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>prod lon<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span>
+            <span style="color: #709870;">[</span><span style="color: #907373;">(</span>sum <span style="color: #6276BA;">[</span>lon<span style="color: #6276BA;">]</span>
+               <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span>
+                <span style="color: #858580;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #858580;">)</span> 0
+                <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span>+ <span style="color: #80A880;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #80A880;">)</span> <span style="color: #80A880;">(</span>sum <span style="color: #887070;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+             <span style="color: #907373;">(</span>prod <span style="color: #6276BA;">[</span>lon<span style="color: #6276BA;">]</span>
+               <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span>
+                <span style="color: #858580;">(</span><span style="color: #006FE0;">empty?</span> lon<span style="color: #858580;">)</span> 1
+                <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span>* <span style="color: #80A880;">(</span><span style="color: #006FE0;">first</span> lon<span style="color: #80A880;">)</span> 
+                         <span style="color: #80A880;">(</span>prod <span style="color: #887070;">(</span><span style="color: #006FE0;">rest</span> lon<span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">list</span> <span style="color: #907373;">(</span>sum lon<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>prod lon<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
@@ -362,49 +599,49 @@ Hilfsfunktionen.</li>
 <b>Man beachte</b>, dass hier für die <code>rekursiven</code> lokalen Hilfsfunktionen
 die Pseudofunktion <code>letfn</code> verwendet werden muss.
 </p>
-</section>
-</section>
-<section>
-<section id="slide-orgheadline23">
-<h2 id="orgheadline23">Funktionen höherer Ordnung (1)</h2>
-<div class="outline-text-2" id="text-orgheadline23">
-</div></section>
-<section id="slide-orgheadline15">
-<h3 id="orgheadline15">Entwurfsvorschriften bewirken ähnliche Funktionen</h3>
+</div>
+</div>
+</div>
+<div id="outline-container-org3a5aec5" class="outline-2">
+<h2 id="org3a5aec5">Funktionen höherer Ordnung (1)</h2>
+<div class="outline-text-2" id="text-org3a5aec5">
+</div><div id="outline-container-orgaf72b32" class="outline-3">
+<h3 id="orgaf72b32">Entwurfsvorschriften bewirken ähnliche Funktionen</h3>
+<div class="outline-text-3" id="text-orgaf72b32">
 <p>
 Zum Beispiel
 </p>
 
 <div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span>
+       <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+         <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> x<span style="color: #709870;">)</span> 0
+         <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> x<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>sum <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> x<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span>
-   <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-     <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> x<span style="color: #709870;">)</span> 0
-     <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> x<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>sum <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> x<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">prod</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span> 
-   <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
-     <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> x<span style="color: #709870;">)</span> 1
-     <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>* <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> x<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>prod <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> x<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">prod</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span> 
+       <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
+         <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> x<span style="color: #709870;">)</span> 1
+         <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>* <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> x<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>prod <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> x<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 <p>
 Worin unterscheiden sich die beiden Funktionen?
 </p>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline16">
-<h3 id="orgheadline16">Entwurfsvorschriften bewirken ähnliche Funktionen</h3>
+<div id="outline-container-orga237419" class="outline-3">
+<h3 id="orga237419">Entwurfsvorschriften bewirken ähnliche Funktionen</h3>
+<div class="outline-text-3" id="text-orga237419">
 <p>
 Hier:
 </p>
 
 <div class="org-src-container">
-
-<pre  class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span>
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span>
       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span>
        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> x<span style="color: #709870;">)</span> 0
@@ -417,40 +654,43 @@ Hier:
          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> x<span style="color: #709870;">)</span> 1
 <span style="color: #8D8D84;">;;                  </span><span style="color: #8D8D84; font-style: italic;">=</span>
          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>* <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> x<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>prod <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> x<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #8D8D84;">;;              </span><span style="color: #8D8D84; font-style: italic;">=</span>
+<span style="color: #8D8D84;">;;              </span><span style="color: #8D8D84; font-style: italic;">=</span></pre>
 </pre>
 </div>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline17">
-<h3 id="orgheadline17">Noch zwei ähnliche Funktionen</h3>
+<div id="outline-container-org761915f" class="outline-3">
+<h3 id="org761915f">Noch zwei ähnliche Funktionen</h3>
+<div class="outline-text-3" id="text-org761915f">
 <p>
 Beispiel: Aus einer ungeordneten Liste von Zahlen werden alle unterhalb/oberhalb eines
 Schwellwerts heraus gefiltert:
 </p>
 
 <div class="org-src-container">
-
-<pre  class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span>  <span style="color: #BA36A5;">unterhalb/oberhalb</span> 
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span>  <span style="color: #BA36A5;">unterhalb/oberhalb</span> 
       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvz schwelle<span style="color: #909183;">]</span>
         <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? lvz<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> schwelle<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
          <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
         <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
           <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvz <span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
-          <span style="color: #709870;">(</span><span style="color: #6434A3;">&lt;</span><span style="color: #000000; background-color: #FFFFFF;">/</span>&gt; <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span>
+          <span style="color: #709870;">(</span><span style="color: #6434A3;">&lt;</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #ffffff;">/</span>&gt; <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span>
 <span style="color: #8D8D84;">;;         </span><span style="color: #8D8D84; font-style: italic;">===</span>
           <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span>
-                <span style="color: #907373;">(</span><span style="color: #6434A3;">unterhalb</span><span style="color: #000000; background-color: #FFFFFF;">/</span>oberhalb
+                <span style="color: #907373;">(</span><span style="color: #6434A3;">unterhalb</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #ffffff;">/</span>oberhalb
                    <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #6276BA;">)</span> schwelle<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #6434A3;">unterhalb</span><span style="color: #000000; background-color: #FFFFFF;">/</span>oberhalb
-                   <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #6434A3;">unterhalb</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #ffffff;">/</span>oberhalb
+                   <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline18">
-<h3 id="orgheadline18">Ähnliche Funktionen vermeiden</h3>
-<ul>
+<div id="outline-container-org63479a4" class="outline-3">
+<h3 id="org63479a4">Ähnliche Funktionen vermeiden</h3>
+<div class="outline-text-3" id="text-org63479a4">
+<ul class="org-ul">
 <li>Die beiden Funktionen <code>unterhalb</code> und <code>oberhalb</code> unterscheiden sich
 &#x2013; abgesehen von ihrem Namen &#x2013; nur in dem Vergleichsoperator.</li>
 <li>Die Funktion <code>oberhalb</code> erzeugt man wahrscheinlich durch Kopieren und
@@ -462,44 +702,45 @@ Eine allgemein verwendbare Filterfunktion, der die Art der
 Vergleichsoperation als Argument mitgegeben wird.</li>
 <li>Wir brauchen eine Funktion, die eine Funktion als Argument
 akzeptiert: <i>Funktion höherer Ordnung</i> (Typ 1).</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline19">
-<h3 id="orgheadline19">Eine Filterfunktion</h3>
+<div id="outline-container-orgc49b07c" class="outline-3">
+<h3 id="orgc49b07c">Eine Filterfunktion</h3>
+<div class="outline-text-3" id="text-orgc49b07c">
 <div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">filtere: (number number -&gt; boolean) </span>
+    <span style="color: #8D8D84;">;;            </span><span style="color: #8D8D84; font-style: italic;">(list-of number) number </span>
+    <span style="color: #8D8D84;">;;          </span><span style="color: #8D8D84; font-style: italic;">-&gt;  (list-of number)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">filtere</span> 
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>vglfkt lvz schwelle<span style="color: #909183;">]</span>
+    <span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">======       </span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvz<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
 
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">filtere: (number number -&gt; boolean) </span>
-<span style="color: #8D8D84;">;;            </span><span style="color: #8D8D84; font-style: italic;">(list-of number) number </span>
-<span style="color: #8D8D84;">;;          </span><span style="color: #8D8D84; font-style: italic;">-&gt;  (list-of number)</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">filtere</span> 
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>vglfkt lvz schwelle<span style="color: #909183;">]</span>
-<span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">======       </span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvz<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
+          <span style="color: #709870;">(</span>vglfkt <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span>
+                <span style="color: #907373;">(</span>filtere vglfkt
+                         <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #6276BA;">)</span> schwelle<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
 
-      <span style="color: #709870;">(</span>vglfkt <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span>
-            <span style="color: #907373;">(</span>filtere vglfkt
-                     <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #6276BA;">)</span> schwelle<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>filtere vglfkt
-                <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>filtere vglfkt
+                    <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
-<ul>
-<li>Um unterhalb zu realisieren, ruft man z.B. <code>filtere</code> so auf:<br  />
+<ul class="org-ul">
+<li>Um unterhalb zu realisieren, ruft man z.B. <code>filtere</code> so auf:<br />
 <code>(filtere &lt; ’(3 4 5 6) 5) ;=&gt; (3 4)</code></li>
 <li>Man beachte den Vertrag der Funktion (informelle Vertragsnotation)!</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline20">
-<h3 id="orgheadline20">Funktionen sind Werte erster Ordnung</h3>
-<ul>
+<div id="outline-container-orgaa7d124" class="outline-3">
+<h3 id="orgaa7d124">Funktionen sind Werte erster Ordnung</h3>
+<div class="outline-text-3" id="text-orgaa7d124">
+<ul class="org-ul">
 <li><p>
 Die Möglichkeit, Funktionen zu bauen, die andere Funktionen als
 Argument erwarten, beruht auf einem ebenso einfachen wie
@@ -517,22 +758,17 @@ Werte verwendet werden dürfen, ebenfalls benutzt werden können.
 <p>
 Sie dürfen daher als
 </p>
-<ul>
+<ul class="org-ul">
 <li>Argumente von Funktionen benutzt,</li>
 <li>als Resultate von Funktionen geliefert und</li>
-<li>in Datenstrukturen verpackt<br  /></li>
-
+<li>in Datenstrukturen verpackt<br /></li>
 </ul>
 <p>
 werden.
 </p></li>
-
 </ul>
 
-</section>
-<section>
-
-<ul>
+<ul class="org-ul">
 <li>Das Prinzip eröffnet eine breite Palette an Programmiertechniken.</li>
 
 <li>Hingegen schränken viele populäre Programmiersprachen die Verwendung
@@ -540,12 +776,13 @@ von Funktionen <b>willkürlich</b> ein!</li>
 
 <li>Anmerkung: Funktionen mit Funktionen als Parameter gingen sogar
 „schon” in Pascal.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline21">
-<h3 id="orgheadline21">Verallgemeinerung der Filterfunktion</h3>
+<div id="outline-container-org92c64e6" class="outline-3">
+<h3 id="org92c64e6">Verallgemeinerung der Filterfunktion</h3>
+<div class="outline-text-3" id="text-org92c64e6">
 <p>
 Die Funktion <code>filter</code> wendet auf jedes Element der Zahlenliste das Prädikat <code>praed?</code>
 an. In die Ergebnisliste werden die Elemente aufgenommen, für die das
@@ -553,30 +790,31 @@ Prädikat <code>true</code> liefert.
 </p>
 
 <div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">filter: (number -&gt; boolean) (list-of number)  </span>
+    <span style="color: #8D8D84;">;;         </span><span style="color: #8D8D84; font-style: italic;">-&gt;  (list-of number)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">filter</span> 
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>praed? lvz<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvz<span style="color: #709870;">)</span> <span style="color: #709870;">()</span> 
 
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">filter: (number -&gt; boolean) (list-of number)  </span>
-<span style="color: #8D8D84;">;;         </span><span style="color: #8D8D84; font-style: italic;">-&gt;  (list-of number)</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">filter</span> 
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>praed? lvz<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvz<span style="color: #709870;">)</span> <span style="color: #709870;">()</span> 
+          <span style="color: #709870;">(</span>praed? <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">filter</span> praed? <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lvz<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
 
-      <span style="color: #709870;">(</span>praed? <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">filter</span> praed? <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lvz<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">filter</span> praed? <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">filter</span> praed? <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-
-<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-filter</span>
-  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span><span style="color: #006FE0;">filter</span> <span style="color: #907373;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #6276BA;">[</span>x<span style="color: #6276BA;">]</span> <span style="color: #6276BA;">(</span>&lt; x 5<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span> 
-                 '<span style="color: #907373;">(</span>3 4 5 6 <span style="color: #907373;">)</span><span style="color: #709870;">)</span> '<span style="color: #709870;">(</span>3 4<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
-  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span><span style="color: #006FE0;">filter</span> odd? '<span style="color: #907373;">(</span>3 4 5 6 <span style="color: #907373;">)</span><span style="color: #709870;">)</span> '<span style="color: #709870;">(</span>3 5<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-filter</span>
+      <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span><span style="color: #006FE0;">filter</span> <span style="color: #907373;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #6276BA;">[</span>x<span style="color: #6276BA;">]</span> <span style="color: #6276BA;">(</span>&lt; x 5<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span> 
+                     '<span style="color: #907373;">(</span>3 4 5 6 <span style="color: #907373;">)</span><span style="color: #709870;">)</span> '<span style="color: #709870;">(</span>3 4<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+      <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span><span style="color: #006FE0;">filter</span> odd? '<span style="color: #907373;">(</span>3 4 5 6 <span style="color: #907373;">)</span><span style="color: #709870;">)</span> '<span style="color: #709870;">(</span>3 5<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline22">
-<h3 id="orgheadline22">Eine Abstraktion für <code>sum</code> und <code>prod</code></h3>
-<ul>
+<div id="outline-container-org928c247" class="outline-3">
+<h3 id="org928c247">Eine Abstraktion für <code>sum</code> und <code>prod</code></h3>
+<div class="outline-text-3" id="text-org928c247">
+<ul class="org-ul">
 <li>Es kommt häufiger vor, dass man z.B. eine Liste von Zahlen zu einem
 Wert zusammenfalten will.</li>
 <li>Die verschiedenen Faltungsarten unterscheiden sich meist nur in dem
@@ -588,82 +826,75 @@ Man beachte auch hier wieder den Vertrag der Funktion!
 </p>
 
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">falte: (number number -&gt; number) </span>
-<span style="color: #8D8D84;">;;        </span><span style="color: #8D8D84; font-style: italic;">number (list-of number)  -&gt; number</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">falte</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>fltfkt basis lvz<span style="color: #909183;">]</span>
-<span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">====== =====</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-     <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvz<span style="color: #709870;">)</span> basis
-<span style="color: #8D8D84;">;;                </span><span style="color: #8D8D84; font-style: italic;">=====</span>
-     <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>fltfkt <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span>
-<span style="color: #8D8D84;">;;          </span><span style="color: #8D8D84; font-style: italic;">======</span>
-                   <span style="color: #907373;">(</span>falte fltfkt basis
-                          <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lvz<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">falte: (number number -&gt; number) </span>
+       <span style="color: #8D8D84;">;;        </span><span style="color: #8D8D84; font-style: italic;">number (list-of number)  -&gt; number</span>
+       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">falte</span>
+         <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>fltfkt basis lvz<span style="color: #909183;">]</span>
+       <span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">====== =====</span>
+           <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+            <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvz<span style="color: #709870;">)</span> basis
+       <span style="color: #8D8D84;">;;                </span><span style="color: #8D8D84; font-style: italic;">=====</span>
+            <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>fltfkt <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span>
+       <span style="color: #8D8D84;">;;          </span><span style="color: #8D8D84; font-style: italic;">======</span>
+                          <span style="color: #907373;">(</span>falte fltfkt basis
+                                 <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lvz<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-
 </ul>
+</div>
+</div>
+</div>
 
-</section>
-</section>
-<section>
-<section id="slide-orgheadline27">
-<h2 id="orgheadline27">Systematisierung der Ableitung von Funktionen höherer Ordnung</h2>
-<div class="outline-text-2" id="text-orgheadline27">
-</div></section>
-<section id="slide-orgheadline24">
-<h3 id="orgheadline24">Zunächst zwei Beispiele</h3>
-<ol>
+<div id="outline-container-org72c621e" class="outline-2">
+<h2 id="org72c621e">Systematisierung der Ableitung von Funktionen höherer Ordnung</h2>
+<div class="outline-text-2" id="text-org72c621e">
+</div><div id="outline-container-orgb48e8e9" class="outline-3">
+<h3 id="orgb48e8e9">Zunächst zwei Beispiele</h3>
+<div class="outline-text-3" id="text-orgb48e8e9">
+<ol class="org-ol">
 <li>Quadrieren einer Liste von Zahlen</li>
-
 </ol>
 
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">quadrieren: (list-of number) -&gt; (list-of number)</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">quadrieren</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvz<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvz<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #6276BA;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #858580;">[</span>x<span style="color: #858580;">]</span> <span style="color: #858580;">(</span>* x x<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
-                  <span style="color: #907373;">(</span>quadrieren <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lvz<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">quadrieren: (list-of number) -&gt; (list-of number)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">quadrieren</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvz<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvz<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #6276BA;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #858580;">[</span>x<span style="color: #858580;">]</span> <span style="color: #858580;">(</span>* x x<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+                      <span style="color: #907373;">(</span>quadrieren <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lvz<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
-</section>
-<section>
-
-<ol>
+<ol class="org-ol">
 <li value="2">Extrahieren der Produktnamen aus einer Preisliste</li>
-
 </ol>
 
 <div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #8D8D84; font-style: italic;">; Ein Produkt ist ein Record</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">defrecord</span> <span style="color: #6434A3;">Produkt</span> <span style="color: #7388D6;">[</span>name preis<span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
 
-<pre  class="src src-clojure"><span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">Ein Produkt ist ein Record</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">defrecord</span> <span style="color: #6434A3;">Produkt</span> <span style="color: #7388D6;">[</span>name preis<span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+    <span style="color: #8D8D84; font-style: italic;">; Eine Preisliste (pl) ist</span>
+    <span style="color: #8D8D84; font-style: italic;">; () oder</span>
+    <span style="color: #8D8D84; font-style: italic;">; (cons p pl), wobei p ein Produkt</span>
+    <span style="color: #8D8D84; font-style: italic;">;   und pl eine Preisliste ist.</span>
 
-<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">Eine Preisliste (pl) ist</span>
-<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">() oder</span>
-<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">(cons p pl), wobei p ein Produkt</span>
-<span style="color: #8D8D84;">;   </span><span style="color: #8D8D84; font-style: italic;">und pl eine Preisliste ist.</span>
-
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">produkt-namen: pl -&gt; (list-of symbol)</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">produkt-namen</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>pl<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> pl<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #D0372D;">:name</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> pl<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
-             <span style="color: #907373;">(</span>produkt-namen <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> pl<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">produkt-namen: pl -&gt; (list-of symbol)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">produkt-namen</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>pl<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> pl<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #D0372D;">:name</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> pl<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+                 <span style="color: #907373;">(</span>produkt-namen <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> pl<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline25">
-<h3 id="orgheadline25">„Abstraktionsvorschrift“</h3>
-<ul>
+<div id="outline-container-orgbb381a4" class="outline-3">
+<h3 id="orgbb381a4">„Abstraktionsvorschrift“</h3>
+<div class="outline-text-3" id="text-orgbb381a4">
+<ul class="org-ul">
 <li>Die beiden Funktionen <code>quadrieren</code> und <code>produkt-namen</code> unterscheiden
 sich &#x2013; abgesehen von ihren Namen &#x2013; nur in der Funktion, die auf das
 erste Listenelement angewendet wird.</li>
@@ -671,7 +902,7 @@ erste Listenelement angewendet wird.</li>
 <li>Wann immer zwei (oder mehr) dieser Art ähnliche Funktionen auftreten,
 gehe man folgendermaßen vor:
 
-<ol>
+<ol class="org-ol">
 <li>Markiere die Stellen in den Funktionen, wo sie sich unterscheiden.
 Wenn sie sich nur in Werten (auch Funktionen sind Werte)
 unterscheiden, ist eine Abstraktion möglich.</li>
@@ -684,38 +915,36 @@ in ihrem Namen übereinstimmen.</li>
 
 <li>Schließlich ersetzen wir die Funktionsnamen durch den Namen einer
 neuen abstrakten Funktion.</li>
-
 </ol></li>
 
 <li>So entsteht aus <code>quadrieren</code> und <code>produkt-namen</code> formal die Funktion
 <code>map</code> (siehe nächste Folie).</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline26">
-<h3 id="orgheadline26">Die Funktion <code>map</code></h3>
+<div id="outline-container-org50781ee" class="outline-3">
+<h3 id="org50781ee">Die Funktion <code>map</code></h3>
+<div class="outline-text-3" id="text-org50781ee">
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">map: (listOf X) (X -&gt; Y) -&gt; (list-of Y)</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">map</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst fun<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lst<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span>fun <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> lst<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
-                  <span style="color: #907373;">(</span><span style="color: #006FE0;">map</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lst<span style="color: #6276BA;">)</span> fun<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">map: (listOf X) (X -&gt; Y) -&gt; (list-of Y)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">map</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst fun<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lst<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span>fun <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> lst<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+                      <span style="color: #907373;">(</span><span style="color: #006FE0;">map</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lst<span style="color: #6276BA;">)</span> fun<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 </div>
 
-<ul>
+<ul class="org-ul">
 <li>Weitere Umbenennungen:
 
-<ul>
+<ul class="org-ul">
 <li>Aus den Parameternamen <code>pl</code> bzw. <code>lvz</code> wurde <code>lst</code>.</li>
-
 </ul></li>
 
 <li>Man beachte wieder den Vertrag der Funktion! X und Y sind sogenannte
@@ -723,19 +952,18 @@ Typparameter.</li>
 
 <li>Als letzten Schritt des Abstraktionsprozesses definiert man die
 Originalfunktionen mithilfe der neuen abstrahierten Funktion.</li>
-
 </ul>
+</div>
+</div>
+</div>
 
-</section>
-</section>
-<section>
-<section id="slide-orgheadline33">
-<h2 id="orgheadline33">Noch einmal: Falten</h2>
-<div class="outline-text-2" id="text-orgheadline33">
-</div></section>
-<section id="slide-orgheadline28">
-<h3 id="orgheadline28">Ein anderes Verständnis für <code>falte</code></h3>
-<ul>
+<div id="outline-container-org2a006b6" class="outline-2">
+<h2 id="org2a006b6">Noch einmal: Falten</h2>
+<div class="outline-text-2" id="text-org2a006b6">
+</div><div id="outline-container-org441a9ab" class="outline-3">
+<h3 id="org441a9ab">Ein anderes Verständnis für <code>falte</code></h3>
+<div class="outline-text-3" id="text-org441a9ab">
+<ul class="org-ul">
 <li>Die Reduktion einer Liste zu einem Wert ist eine häufig vorkommende
 Aufgabe.</li>
 
@@ -744,53 +972,51 @@ Standard-Repertoire funktionaler Programmiersysteme.</li>
 
 <li>häufig verwendete Bezeichner: fold, reduce &#x2026;</li>
 
-<li>Die Wirkung von <code>(falte + 0 '(11 17 5))</code><br  />
+<li>Die Wirkung von <code>(falte + 0 '(11 17 5))</code><br />
 kann man sich, wie folgt, veranschaulichen:
-<ul>
-<li><code>falte</code> ersetzt in der Argumentliste, die dem Ausdruck<br  />
-<code>(cons 11 (cons 17 (cons 5 ())))</code><br  />
+<ul class="org-ul">
+<li><code>falte</code> ersetzt in der Argumentliste, die dem Ausdruck<br />
+<code>(cons 11 (cons 17 (cons 5 ())))</code><br />
 entspricht, jedes Auftreten von <code>cons</code> durch <code>+</code> und jedes Auftreten
-von <code>()</code> durch 0:<br  />
+von <code>()</code> durch 0:<br />
 <code>(+ 11 (+ 17 (+ 5 0)))</code></li>
 <li>Verallgemeinert: Jedes Auftreten von <code>cons</code> wird durch die
 Faltungsfunktion (fltfkt) und jedes Auftreten von <code>()</code> durch den
 Basiswert ersetzt.</li>
-
 </ul></li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline29">
-<h3 id="orgheadline29">Weitere Anwendungen von <code>falte</code></h3>
-<ul>
+<div id="outline-container-org453dbaf" class="outline-3">
+<h3 id="org453dbaf">Weitere Anwendungen von <code>falte</code></h3>
+<div class="outline-text-3" id="text-org453dbaf">
+<ul class="org-ul">
 <li>Was liefern die Ausdrücke
 
-<ol>
+<ol class="org-ol">
 <li>(falte cons () '(a b c)) ?</li>
 
 <li>(falte cons '(x y z) '(a b c)) ?</li>
-
 </ol></li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline30">
-<h3 id="orgheadline30">Ein generisches <code>falte</code>: <code>reduce</code></h3>
-<ul>
+<div id="outline-container-org843035b" class="outline-3">
+<h3 id="org843035b">Ein generisches <code>falte</code>: <code>reduce</code></h3>
+<div class="outline-text-3" id="text-org843035b">
+<ul class="org-ul">
 <li>Wir abstrahieren die Funktion <code>falte</code> bezüglich des Typs der
 Listenelemente.</li>
 
 <li>Aus dem Vertrag</li>
-
 </ul>
 
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">falte: (number number -&gt; number) number </span>
-<span style="color: #8D8D84;">;;        </span><span style="color: #8D8D84; font-style: italic;">(list-of number) -&gt; number</span>
+<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">falte: (number number -&gt; number) number </span>
+       <span style="color: #8D8D84;">;;        </span><span style="color: #8D8D84; font-style: italic;">(list-of number) -&gt; number</span></pre>
 </pre>
 </div>
 
@@ -801,77 +1027,77 @@ wird:
 </p>
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">reduce: (X Y -&gt; Y) Y (list-of X) -&gt; Y</span>
+<pre class="src src-clojure">   <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">reduce: (X Y -&gt; Y) Y (list-of X) -&gt; Y</span></pre>
 </pre>
 </div>
 
 </div>
+</div>
+</div>
 
 
-</section>
-<section id="slide-orgheadline31">
-<h3 id="orgheadline31">Die Funktionsdefinition für <code>reduce</code></h3>
+<div id="outline-container-org6341bd1" class="outline-3">
+<h3 id="org6341bd1">Die Funktionsdefinition für <code>reduce</code></h3>
+<div class="outline-text-3" id="text-org6341bd1">
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">reduce: (X Y -&gt; Y) Y (list-of X) -&gt; Y</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">reduce</span> 
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>combine base l<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> l<span style="color: #709870;">)</span> base
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>combine 
-              <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> l<span style="color: #907373;">)</span>
-              <span style="color: #907373;">(</span><span style="color: #006FE0;">reduce</span> combine base <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> l<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">reduce: (X Y -&gt; Y) Y (list-of X) -&gt; Y</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">reduce</span> 
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>combine base l<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> l<span style="color: #709870;">)</span> base
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>combine 
+                  <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> l<span style="color: #907373;">)</span>
+                  <span style="color: #907373;">(</span><span style="color: #006FE0;">reduce</span> combine base <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> l<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 </div>
 
-<ul>
+<ul class="org-ul">
 <li>Der Parameter <code>base</code> steht für den Funktionswert im Fall der leeren
 Liste.</li>
 
 <li>Der Parameter <code>combine</code> ist die Funktion, die aus dem Zugriff auf das
 erste Element der Liste und der Restliste den Funktionswert
 ermittelt, falls die Liste <code>l</code> nicht leer ist.</li>
-
 </ul>
-
-</section>
-<section id="slide-orgheadline32">
-<h3 id="orgheadline32">Anwendungen von <code>reduce</code></h3>
-<div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">sum: (list-of number)  -&gt;  number</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>list<span style="background-color: #FFDCDC; text-decoration: underline;">)</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">reduce</span> + 0 list<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">product: (list-of number)  -&gt;  number</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">product</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>list<span style="background-color: #FFDCDC; text-decoration: underline;">)</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">reduce</span> * 1 list<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">erzeugt eine Liste aus all den Elemente von alox,</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">fuer die praedikat? gilt </span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">filterr: (X  -&gt;  boolean) (list-of X) </span>
-<span style="color: #8D8D84;">;;           </span><span style="color: #8D8D84; font-style: italic;">-&gt; (list-of X)</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">filterr</span> 
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>praedikat? alox<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">let</span> <span style="color: #709870;">[</span>cp <span style="color: #907373;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #6276BA;">[</span>x y<span style="color: #6276BA;">]</span> 
-               <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span> <span style="color: #858580;">(</span>praedikat? x<span style="color: #858580;">)</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">cons</span> x y<span style="color: #858580;">)</span> 
-                     <span style="color: #D0372D;">:else</span> y<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">reduce</span> cp <span style="color: #907373;">()</span> alox<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-</pre>
+</div>
 </div>
 
-</section>
-</section>
-<section>
-<section id="slide-orgheadline38">
-<h2 id="orgheadline38">Funktionen höherer Ordnung (2)</h2>
-<div class="outline-text-2" id="text-orgheadline38">
-</div></section>
-<section id="slide-orgheadline34">
-<h3 id="orgheadline34">Funktionen mit Funktionen als Resultat</h3>
-<ul>
+<div id="outline-container-org6ec69ad" class="outline-3">
+<h3 id="org6ec69ad">Anwendungen von <code>reduce</code></h3>
+<div class="outline-text-3" id="text-org6ec69ad">
+<div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">sum: (list-of number)  -&gt;  number</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>list<span style="background-color: #FFDCDC; text-decoration: underline;">)</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">reduce</span> + 0 list<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">product: (list-of number)  -&gt;  number</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">product</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>list<span style="background-color: #FFDCDC; text-decoration: underline;">)</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">reduce</span> * 1 list<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+      
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">erzeugt eine Liste aus all den Elemente von alox,</span>
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">fuer die praedikat? gilt </span>
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">filterr: (X  -&gt;  boolean) (list-of X) </span>
+    <span style="color: #8D8D84;">;;           </span><span style="color: #8D8D84; font-style: italic;">-&gt; (list-of X)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">filterr</span> 
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>praedikat? alox<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">let</span> <span style="color: #709870;">[</span>cp <span style="color: #907373;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #6276BA;">[</span>x y<span style="color: #6276BA;">]</span> 
+                   <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span> <span style="color: #858580;">(</span>praedikat? x<span style="color: #858580;">)</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">cons</span> x y<span style="color: #858580;">)</span> 
+                         <span style="color: #D0372D;">:else</span> y<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">reduce</span> cp <span style="color: #907373;">()</span> alox<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org97dbecf" class="outline-2">
+<h2 id="org97dbecf">Funktionen höherer Ordnung (2)</h2>
+<div class="outline-text-2" id="text-org97dbecf">
+</div><div id="outline-container-org427df52" class="outline-3">
+<h3 id="org427df52">Funktionen mit Funktionen als Resultat</h3>
+<div class="outline-text-3" id="text-org427df52">
+<ul class="org-ul">
 <li><p>
 Was liefert der Ausdruck <code>(inc 3)</code>, wenn die Funktion <code>inc</code> wie folgt
 definiert ist?
@@ -879,54 +1105,48 @@ definiert ist?
 
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">inc</span> 
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[</span>z<span style="color: #709870;">]</span> <span style="color: #709870;">(</span>+ z n<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">inc</span> 
+         <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[</span>z<span style="color: #709870;">]</span> <span style="color: #709870;">(</span>+ z n<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 </div></li>
 
 <li>Welches Resultat liefert eine Anwendung der Funktion <code>dot</code>?</li>
-
 </ul>
 
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dot</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>f g<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[</span>x<span style="color: #709870;">]</span> <span style="color: #709870;">(</span>f <span style="color: #907373;">(</span>g x<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dot</span>
+         <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>f g<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #709870;">[</span>x<span style="color: #709870;">]</span> <span style="color: #709870;">(</span>f <span style="color: #907373;">(</span>g x<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 </div>
 
-</section>
-<section>
-
-<ul>
+<ul class="org-ul">
 <li><p>
 Anwendung von <code>inc</code> und <code>dot</code>:
 </p>
 
 <div class="org-src-container">
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">inclist</span> 
+         <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">map</span> x <span style="color: #709870;">(</span><span style="color: #006FE0;">inc</span> 1<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">inclist</span> 
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">map</span> x <span style="color: #709870;">(</span><span style="color: #006FE0;">inc</span> 1<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">increv</span> 
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>dot inclist reverse<span style="color: #709870;">)</span> x<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>  
-
-<span style="color: #707183;">(</span>increv '<span style="color: #7388D6;">(</span>3 13 23 33<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; (34 24 14 4)</span>
+       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">increv</span> 
+         <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #709870;">(</span>dot inclist reverse<span style="color: #709870;">)</span> x<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>  
+        
+       <span style="color: #707183;">(</span>increv '<span style="color: #7388D6;">(</span>3 13 23 33<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; (34 24 14 4)</span></pre>
 </pre>
 </div></li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline35">
-<h3 id="orgheadline35">Ableitung einer <code>map</code>-Alternative</h3>
-<ul>
+<div id="outline-container-org2131424" class="outline-3">
+<h3 id="org2131424">Ableitung einer <code>map</code>-Alternative</h3>
+<div class="outline-text-3" id="text-org2131424">
+<ul class="org-ul">
 <li>Die Anwendung der „Abstraktionsvorschrift” aus dem Abschnitt
 <i>Systematisierung der Ableitung von Funktionen höherer Ordnung</i> auf
 die Funktionen <code>quadrieren</code> und <code>produkt-namen</code> führte zur Definition
@@ -941,35 +1161,31 @@ geschieht dann unter Verwendung von <code>map</code>:
 
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">produkt-namen</span>
-    <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>pl<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">map</span> pl produkt-name<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">produkt-namen</span>
+           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>pl<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">map</span> pl produkt-name<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>        </pre>
 </pre>
 </div>
 
 </div></li>
-
 </ul>
 
-</section>
-<section>
-
-<ul>
+<ul class="org-ul">
 <li>Mit einer Funktion höherer Ordnung vom Typ 2 ist es nun aber auch
 möglich, eine Funktion &#x2013; nennen wir sie <code>mapp</code> &#x2013; zu definieren, die
 als Argument eine Funktion <code>f</code> erwartet und eine Funktion als
 Resultat liefert, die <code>f</code> auf jedes Element einer Liste anwendet.</li>
-
 </ul>
+</div>
+</div>
 
 
-</section>
-<section id="slide-orgheadline36">
-<h3 id="orgheadline36">Modifikation der Abstraktionsvorschrift</h3>
-<ul>
+<div id="outline-container-orgacfd863" class="outline-3">
+<h3 id="orgacfd863">Modifikation der Abstraktionsvorschrift</h3>
+<div class="outline-text-3" id="text-orgacfd863">
+<ul class="org-ul">
 <li><p>
 Setzen wir die Existenz von <code>mapp</code> voraus, können wir <code>produkt-namen</code>
-   wiederum so definieren:
+wiederum so definieren:
 </p>
 
 <p>
@@ -986,13 +1202,14 @@ Setzen wir die Existenz von <code>mapp</code> voraus, können wir <code>produkt-
 
 <li>Wir können <code>mapp</code> durch eine modifizierte Abstraktionsvorschrift
 (vgl. Folie <b>Abstraktionsvorschrift</b>) gewinnen.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline37">
-<h3 id="orgheadline37">Modifizierte Abstraktionsvorschrift</h3>
-<ul>
+<div id="outline-container-org0b5751f" class="outline-3">
+<h3 id="org0b5751f">Modifizierte Abstraktionsvorschrift</h3>
+<div class="outline-text-3" id="text-org0b5751f">
+<ul class="org-ul">
 <li>Ausgangspunkt sind wieder zwei ähnliche Funktionen wie z.B.
 <code>quadrieren</code> und <code>produkt-namen</code></li>
 <li>Wir markieren wieder die Stellen in den Funktionen, wo sie sich
@@ -1004,25 +1221,20 @@ Funktion <code>produkt-namen</code> so aus:
 </p>
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">produkt-namen</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>pl<span style="color: #909183;">]</span>
-   <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-     <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> pl<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
-     <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span>fun <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> pl<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
-                      <span style="color: #907373;">(</span>produkt-namen <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> pl<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">produkt-namen</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>pl<span style="color: #909183;">]</span>
+          <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+            <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> pl<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
+            <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span>fun <span style="color: #6276BA;">(</span><span style="color: #006FE0;">first</span> pl<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+                             <span style="color: #907373;">(</span>produkt-namen <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> pl<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 </div></li>
 
 <li>In dieser Definition tritt <code>fun</code> als freie Variable auf.</li>
-
 </ul>
 
-</section>
-<section>
-
-<ul>
+<ul class="org-ul">
 <li>Um dies zu beseitigen, nehmen wir <code>fun</code> nicht &#x2013; wie in der ersten
 Abstraktionsvorschrift &#x2013; in die Parameterliste auf, sondern
 definieren <code>produkt-namen</code> lokal innerhalb einer Funktion <code>mapp</code> mit
@@ -1032,29 +1244,24 @@ definieren <code>produkt-namen</code> lokal innerhalb einer Funktion <code>mapp<
 </p>
 
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">mapp</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>fun<span style="color: #909183;">]</span>
-<span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">===</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span> 
-       <span style="color: #709870;">[</span><span style="color: #907373;">(</span>maplocal <span style="color: #6276BA;">[</span>lst<span style="color: #6276BA;">]</span>
-<span style="color: #8D8D84;">;;       </span><span style="color: #8D8D84; font-style: italic;">========</span>
-          <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span>
-           <span style="color: #858580;">(</span><span style="color: #006FE0;">empty?</span> list<span style="color: #858580;">)</span> <span style="color: #858580;">()</span>
-           <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #80A880;">(</span>fun <span style="color: #887070;">(</span><span style="color: #006FE0;">first</span> lst<span style="color: #887070;">)</span><span style="color: #80A880;">)</span>
-                       <span style="color: #80A880;">(</span>maplocal <span style="color: #887070;">(</span><span style="color: #006FE0;">rest</span> lst<span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
-<span style="color: #8D8D84;">;;                      </span><span style="color: #8D8D84; font-style: italic;">========</span>
-     maplocal<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">========</span>
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">mapp</span>
+         <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>fun<span style="color: #909183;">]</span>
+       <span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">===</span>
+           <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span> 
+              <span style="color: #709870;">[</span><span style="color: #907373;">(</span>maplocal <span style="color: #6276BA;">[</span>lst<span style="color: #6276BA;">]</span>
+       <span style="color: #8D8D84;">;;       </span><span style="color: #8D8D84; font-style: italic;">========</span>
+                 <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span>
+                  <span style="color: #858580;">(</span><span style="color: #006FE0;">empty?</span> list<span style="color: #858580;">)</span> <span style="color: #858580;">()</span>
+                  <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #80A880;">(</span>fun <span style="color: #887070;">(</span><span style="color: #006FE0;">first</span> lst<span style="color: #887070;">)</span><span style="color: #80A880;">)</span>
+                              <span style="color: #80A880;">(</span>maplocal <span style="color: #887070;">(</span><span style="color: #006FE0;">rest</span> lst<span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+       <span style="color: #8D8D84;">;;                      </span><span style="color: #8D8D84; font-style: italic;">========</span>
+            maplocal<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+       <span style="color: #8D8D84;">;;   </span><span style="color: #8D8D84; font-style: italic;">========</span></pre>
 </pre>
 </div></li>
-
 </ul>
 
-</section>
-<section>
-
-<ul>
+<ul class="org-ul">
 <li>Der in der abstrahierten Funktion nun bedeutungslos gewordene
 Bezeichner <code>produkt-namen</code> ist hier durch den generischen Bezeichner
 <code>maplocal</code> ersetzt worden.</li>
@@ -1073,18 +1280,17 @@ die, angewendet auf eine Liste (von Zahlen), jedes Element quadriert.
 </p></li>
 
 <li><b>Frage: Wie lautet der Vertrag von <code>mapp</code>?</b> (Antwort als Aufgabe)</li>
-
 </ul>
+</div>
+</div>
+</div>
 
-</section>
-</section>
-<section>
-<section id="slide-orgheadline46">
-<h2 id="orgheadline46">Rekursive und iterative Prozesse</h2>
-<div class="outline-text-2" id="text-orgheadline46">
-</div></section>
-<section id="slide-orgheadline39">
-<h3 id="orgheadline39">Fakultät rekursiv</h3>
+<div id="outline-container-org84204d7" class="outline-2">
+<h2 id="org84204d7">Rekursive und iterative Prozesse</h2>
+<div class="outline-text-2" id="text-org84204d7">
+</div><div id="outline-container-org3ec59a5" class="outline-3">
+<h3 id="org3ec59a5">Fakultät rekursiv</h3>
+<div class="outline-text-3" id="text-org3ec59a5">
 <p>
 Ausgehend von der mathematischen 
 efinition:
@@ -1101,12 +1307,11 @@ kann folgende rekursive Funktionsdefinition gegeben werden:
 
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">factorial</span>
-   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span>
-      <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
-         <span style="color: #709870;">(</span>= n 1<span style="color: #709870;">)</span> 1
-         <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>* n <span style="color: #907373;">(</span>factorial <span style="color: #6276BA;">(</span>- n 1<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">factorial</span>
+       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span>
+          <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
+             <span style="color: #709870;">(</span>= n 1<span style="color: #709870;">)</span> 1
+             <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>* n <span style="color: #907373;">(</span>factorial <span style="color: #6276BA;">(</span>- n 1<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
@@ -1116,10 +1321,12 @@ kann folgende rekursive Funktionsdefinition gegeben werden:
 Die Anwendung <code>(factorial 6)</code> führt zu einem rekursiven
 Abarbeitungsprozess, siehe nächste Folie.
 </p>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline40">
-<h3 id="orgheadline40">rekursive Abarbeitung der Fakultät</h3>
+<div id="outline-container-org0465c3f" class="outline-3">
+<h3 id="org0465c3f">rekursive Abarbeitung der Fakultät</h3>
+<div class="outline-text-3" id="text-org0465c3f">
 
 <div class="figure">
 <p><img src="./Abbildungen/faktreku.png" alt="faktreku.png" width="600px" />
@@ -1129,10 +1336,12 @@ Abarbeitungsprozess, siehe nächste Folie.
 <p>
  
 </p>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline41">
-<h3 id="orgheadline41">Fakultät iterativ</h3>
+<div id="outline-container-orga9fa06e" class="outline-3">
+<h3 id="orga9fa06e">Fakultät iterativ</h3>
+<div class="outline-text-3" id="text-orga9fa06e">
 <p>
 \(n! = 1  \cdot 2 \cdot\cdot\cdot (n-1) \cdot n\)
 </p>
@@ -1154,35 +1363,38 @@ Berechnung der Fakultät im „Vorwärtsgang” mit zwei Hilfsvariablen:
 </p>
 
 <div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">factorial</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span>fact-iter 1 1 n<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">factorial</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span>fact-iter 1 1 n<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">fact-iter</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>product counter max-counter<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
-      <span style="color: #709870;">(</span>&gt; counter max-counter<span style="color: #709870;">)</span> product
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>fact-iter <span style="color: #907373;">(</span>* product counter<span style="color: #907373;">)</span> 
-                       <span style="color: #907373;">(</span>+ counter 1<span style="color: #907373;">)</span>
-                       max-counter<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">fact-iter</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>product counter max-counter<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
+          <span style="color: #709870;">(</span>&gt; counter max-counter<span style="color: #709870;">)</span> product
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>fact-iter <span style="color: #907373;">(</span>* product counter<span style="color: #907373;">)</span> 
+                           <span style="color: #907373;">(</span>+ counter 1<span style="color: #907373;">)</span>
+                           max-counter<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline42">
-<h3 id="orgheadline42">iterative Abarbeitung der Fakultät</h3>
+<div id="outline-container-org3775524" class="outline-3">
+<h3 id="org3775524">iterative Abarbeitung der Fakultät</h3>
+<div class="outline-text-3" id="text-org3775524">
 
 <div class="figure">
 <p><img src="./Abbildungen/faktiter.png" alt="faktiter.png" width="500px" />
 </p>
 </div>
+</div>
+</div>
 
 
-</section>
-<section id="slide-orgheadline43">
-<h3 id="orgheadline43">Fakultät iterativ mit lokaler Hilfsfunktion</h3>
-<ul>
+<div id="outline-container-orge3dea61" class="outline-3">
+<h3 id="orge3dea61">Fakultät iterativ mit lokaler Hilfsfunktion</h3>
+<div class="outline-text-3" id="text-orge3dea61">
+<ul class="org-ul">
 <li>Die Funktion <code>fact-iter</code> hat einen reinen Hilfscharakter, d.h. sollte
 nur von <code>factorial</code> aufgerufen werden.</li>
 
@@ -1191,51 +1403,52 @@ Konsequenz: Funktion <code>fact-iter</code> lokal definieren:
 </p>
 
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">factorial</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span> 
-        <span style="color: #709870;">[</span><span style="color: #907373;">(</span>fact-iter <span style="color: #6276BA;">[</span>product counter<span style="color: #6276BA;">]</span>
-           <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span> 
-            <span style="color: #858580;">(</span>&gt; counter n<span style="color: #858580;">)</span> product
-            <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span>fact-iter <span style="color: #80A880;">(</span>* product counter<span style="color: #80A880;">)</span> 
-                             <span style="color: #80A880;">(</span>+ counter 1<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
-      <span style="color: #709870;">(</span>fact-iter 1 1<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">factorial</span>
+         <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span>
+           <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span> 
+               <span style="color: #709870;">[</span><span style="color: #907373;">(</span>fact-iter <span style="color: #6276BA;">[</span>product counter<span style="color: #6276BA;">]</span>
+                  <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span> 
+                   <span style="color: #858580;">(</span>&gt; counter n<span style="color: #858580;">)</span> product
+                   <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span>fact-iter <span style="color: #80A880;">(</span>* product counter<span style="color: #80A880;">)</span> 
+                                    <span style="color: #80A880;">(</span>+ counter 1<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+             <span style="color: #709870;">(</span>fact-iter 1 1<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
 
 <li>Beachte: Das dritte Argument für <code>fact-iter</code> ist überflüssig
 geworden.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline44">
-<h3 id="orgheadline44">loop/recur in Clojure</h3>
-<ul>
+<div id="outline-container-org146fa60" class="outline-3">
+<h3 id="org146fa60">loop/recur in Clojure</h3>
+<div class="outline-text-3" id="text-org146fa60">
+<ul class="org-ul">
 <li>Clojure erlaubt wegen der Java-Aufrufkonventionen keine
 Endrekursionsoptimierung.</li>
 
 <li>Ersatzweise existiert die loop/recur-Konstruktion:</li>
-
 </ul>
 
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">factorial</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">loop</span> <span style="color: #709870;">[</span>product 1 counter 1<span style="color: #709870;">]</span> 
-      <span style="color: #709870;">(</span><span style="color: #0000FF;">cond</span> 
-       <span style="color: #907373;">(</span>&gt; counter n<span style="color: #907373;">)</span> product
-       <span style="color: #D0372D;">:else</span> <span style="color: #907373;">(</span><span style="color: #0000FF;">recur</span> <span style="color: #6276BA;">(</span>* product counter<span style="color: #6276BA;">)</span> 
-                    <span style="color: #6276BA;">(</span>+ counter 1<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">factorial</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">loop</span> <span style="color: #709870;">[</span>product 1 counter 1<span style="color: #709870;">]</span> 
+          <span style="color: #709870;">(</span><span style="color: #0000FF;">cond</span> 
+           <span style="color: #907373;">(</span>&gt; counter n<span style="color: #907373;">)</span> product
+           <span style="color: #D0372D;">:else</span> <span style="color: #907373;">(</span><span style="color: #0000FF;">recur</span> <span style="color: #6276BA;">(</span>* product counter<span style="color: #6276BA;">)</span> 
+                        <span style="color: #6276BA;">(</span>+ counter 1<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>    
+      </pre>
 </pre>
 </div>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline45">
-<h3 id="orgheadline45">Akkumulierende Parameter</h3>
-<ul>
+<div id="outline-container-org86a8f3a" class="outline-3">
+<h3 id="org86a8f3a">Akkumulierende Parameter</h3>
+<div class="outline-text-3" id="text-org86a8f3a">
+<ul class="org-ul">
 <li>Ein <i>rekursiver Prozess</i> ist durch eine Folge von verzögerten
 Operationen gekennzeichnet.</li>
 
@@ -1252,47 +1465,47 @@ Speicherbedarf für die Werte von <code>product</code>, <code>counter</code>
 rekursiver Funktionen.</li>
 
 <li>Akkumulierende Parameter führen oft zu effizienteren Funktionen.</li>
-
 </ul>
+</div>
+</div>
+</div>
 
-</section>
-</section>
-<section>
-<section id="slide-orgheadline54">
-<h2 id="orgheadline54">Akkumulierende Parameter</h2>
-<div class="outline-text-2" id="text-orgheadline54">
-</div></section>
-<section id="slide-orgheadline47">
-<h3 id="orgheadline47">Invertieren einer Liste</h3>
+<div id="outline-container-org002d4bd" class="outline-2">
+<h2 id="org002d4bd">Akkumulierende Parameter</h2>
+<div class="outline-text-2" id="text-org002d4bd">
+</div><div id="outline-container-orgffe84c8" class="outline-3">
+<h3 id="orgffe84c8">Invertieren einer Liste</h3>
+<div class="outline-text-3" id="text-orgffe84c8">
 <div class="large">
 <div class="org-src-container">
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">kehrt die Reihenfolge der Symbole einer Liste um</span>
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">rev-list: (list-of symbol) -&gt; (list-of symbol)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rev-list</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lst<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>putatend <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lst<span style="color: #907373;">)</span> 
+                          <span style="color: #907373;">(</span>rev-lst <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lst<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">kehrt die Reihenfolge der Symbole einer Liste um</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">rev-list: (list-of symbol) -&gt; (list-of symbol)</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rev-list</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lst<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>putatend <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lst<span style="color: #907373;">)</span> 
-                      <span style="color: #907373;">(</span>rev-lst <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lst<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">stellt das Symbol an das Ende der Lste</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">putatend: symbol (list-of symbol) -&gt; (list-of symbol)</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">putatend</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>symbl lst<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lst<span style="color: #709870;">)</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> symbl <span style="color: #907373;">()</span> <span style="color: #709870;">)</span>
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lst<span style="color: #907373;">)</span> 
-                  <span style="color: #907373;">(</span>putatend symbl <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lst<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">stellt das Symbol an das Ende der Lste</span>
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">putatend: symbol (list-of symbol) -&gt; (list-of symbol)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">putatend</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>symbl lst<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lst<span style="color: #709870;">)</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> symbl <span style="color: #907373;">()</span> <span style="color: #709870;">)</span>
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lst<span style="color: #907373;">)</span> 
+                      <span style="color: #907373;">(</span>putatend symbl <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lst<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 </div>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline48">
-<h3 id="orgheadline48">Effizienzbetrachtung:</h3>
-<ul>
+<div id="outline-container-orgf5f2157" class="outline-3">
+<h3 id="orgf5f2157">Effizienzbetrachtung:</h3>
+<div class="outline-text-3" id="text-orgf5f2157">
+<ul class="org-ul">
 <li>Vorbemerkung: Beide Funktionen entstehen durch Anwendung der
 bekannten Entwurfsvorschriften.</li>
 
@@ -1316,58 +1529,59 @@ Arguments \(n-1, n-2\ldots 1, 0\).</li>
 erfordern.</li>
 
 <li>Lösung: Hilfsfunktion mit akkumulierendem Parameter</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline49">
-<h3 id="orgheadline49">Invertieren einer Liste</h3>
+<div id="outline-container-org17e383c" class="outline-3">
+<h3 id="org17e383c">Invertieren einer Liste</h3>
+<div class="outline-text-3" id="text-org17e383c">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">kehrt die Reihenfolge der Symbole einer Liste um</span>
-<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">rev-list: (list-of symbol) -&gt; (list-of symbol)</span>
- <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rev-list</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">loop</span> <span style="color: #709870;">[</span>list-x lst list-y <span style="color: #907373;">()</span><span style="color: #709870;">]</span>
-            <span style="color: #709870;">(</span><span style="color: #0000FF;">cond</span> 
-              <span style="color: #907373;">(</span><span style="color: #006FE0;">empty?</span> list-x<span style="color: #907373;">)</span> list-y
-              <span style="color: #D0372D;">:else</span> <span style="color: #907373;">(</span><span style="color: #0000FF;">recur</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> list-x<span style="color: #6276BA;">)</span> 
-                           <span style="color: #6276BA;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">first</span> list-x<span style="color: #858580;">)</span> 
-                                 list-y<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">kehrt die Reihenfolge der Symbole einer Liste um</span>
+    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">rev-list: (list-of symbol) -&gt; (list-of symbol)</span>
+     <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rev-list</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">loop</span> <span style="color: #709870;">[</span>list-x lst list-y <span style="color: #907373;">()</span><span style="color: #709870;">]</span>
+                <span style="color: #709870;">(</span><span style="color: #0000FF;">cond</span> 
+                  <span style="color: #907373;">(</span><span style="color: #006FE0;">empty?</span> list-x<span style="color: #907373;">)</span> list-y
+                  <span style="color: #D0372D;">:else</span> <span style="color: #907373;">(</span><span style="color: #0000FF;">recur</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> list-x<span style="color: #6276BA;">)</span> 
+                               <span style="color: #6276BA;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #858580;">(</span><span style="color: #006FE0;">first</span> list-x<span style="color: #858580;">)</span> 
+                                     list-y<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
-<ul>
+<ul class="org-ul">
 <li>Die Anzahl der <code>cons</code>-Aufrufe in <code>rev</code> wächst linear mit der Länge
 der Liste.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline50">
-<h3 id="orgheadline50">Einsatz von akkumulierenden Parametern</h3>
-<ul>
+<div id="outline-container-org9b44113" class="outline-3">
+<h3 id="org9b44113">Einsatz von akkumulierenden Parametern</h3>
+<div class="outline-text-3" id="text-org9b44113">
+<ul class="org-ul">
 <li>Im Zusammenhang mit akkumulierenden Parametern sind zwei Fragen
 interessant:
 
-<ol>
+<ol class="org-ol">
 <li>Woran erkennt man, dass eine Funktion von akkumulierenden
 Parametern profitieren kann?</li>
 
 <li>Was muss ggf. in einem akkumulierenden Parameter eigentlich
 akkumuliert werden?</li>
-
 </ol></li>
 
 <li>Schwierigkeit beim Entwurf einer solchen Hilfsfunktion: Die bekannten
 Entwurfsvorschriften sind nicht ohne weiteres anwendbar.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline51">
-<h3 id="orgheadline51">Vorgehensweise beim Entwurf</h3>
-<ul>
+<div id="outline-container-org187edba" class="outline-3">
+<h3 id="org187edba">Vorgehensweise beim Entwurf</h3>
+<div class="outline-text-3" id="text-org187edba">
+<ul class="org-ul">
 <li>Da war zunächst die Frage, ob eine Funktion mit akkumulierendem
 Parameter zweckmäßig ist.</li>
 
@@ -1385,7 +1599,7 @@ Hilfsfunktion, die die Liste ebenfalls rekursiv abarbeitet.</li>
 <li>Der Entwurf einer Hilfsfunktion mit akkumulierendem Parameter
 vollzieht sich dann in zwei Schritten:
 
-<ol>
+<ol class="org-ol">
 <li>Man schreibt zunächst eine Funktionsschablone für die Funktion
 samt lokaler Hilfsfunktion mit akkumulierendem Parameter auf.
 Siehe nächste Folie!</li>
@@ -1393,44 +1607,44 @@ Siehe nächste Folie!</li>
 <li>Man beschreibt präzise die Aufgabe des akkumulierenden Parameters
 durch eine sogenannte <i>Akkumulatorinvariante</i>. Siehe übernächste
 Folie!</li>
-
 </ol></li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline52">
-<h3 id="orgheadline52">Funktionsschablone für <code>rev-list</code> mit <code>rev</code></h3>
+<div id="outline-container-orgcd885c6" class="outline-3">
+<h3 id="orgcd885c6">Funktionsschablone für <code>rev-list</code> mit <code>rev</code></h3>
+<div class="outline-text-3" id="text-orgcd885c6">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rev-list</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span>
-      <span style="color: #709870;">(</span>rev <span style="color: #907373;">[</span><span style="color: #808080;">listX</span> akku<span style="color: #907373;">]</span>
-       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Akkumulator ...</span>
-        <span style="color: #907373;">(</span><span style="color: #0000FF;">cond</span> 
-          <span style="color: #6276BA;">(</span><span style="color: #006FE0;">empty?</span> <span style="color: #808080;">listX</span><span style="color: #6276BA;">)</span> ... akku ...
-          <span style="color: #D0372D;">:else</span> ... <span style="color: #6276BA;">(</span>rev <span style="color: #858580;">(</span><span style="color: #006FE0;">rest</span> <span style="color: #808080;">listX</span><span style="color: #858580;">)</span> 
-                         ... <span style="color: #858580;">(</span><span style="color: #006FE0;">first</span> <span style="color: #808080;">listX</span><span style="color: #858580;">)</span> ... akku<span style="color: #6276BA;">)</span>
-<span style="color: #8D8D84;">;;                       </span><span style="color: #8D8D84; font-style: italic;">==========================     </span>
-                        <span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-      <span style="color: #709870;">(</span>rev lst ...<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rev-list</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span>
+          <span style="color: #709870;">(</span>rev <span style="color: #907373;">[</span><span style="color: #808080;">listX</span> akku<span style="color: #907373;">]</span>
+           <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Akkumulator ...</span>
+            <span style="color: #907373;">(</span><span style="color: #0000FF;">cond</span> 
+              <span style="color: #6276BA;">(</span><span style="color: #006FE0;">empty?</span> <span style="color: #808080;">listX</span><span style="color: #6276BA;">)</span> ... akku ...
+              <span style="color: #D0372D;">:else</span> ... <span style="color: #6276BA;">(</span>rev <span style="color: #858580;">(</span><span style="color: #006FE0;">rest</span> <span style="color: #808080;">listX</span><span style="color: #858580;">)</span> 
+                             ... <span style="color: #858580;">(</span><span style="color: #006FE0;">first</span> <span style="color: #808080;">listX</span><span style="color: #858580;">)</span> ... akku<span style="color: #6276BA;">)</span>
+    <span style="color: #8D8D84;">;;                       </span><span style="color: #8D8D84; font-style: italic;">==========================     </span>
+                            <span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+          <span style="color: #709870;">(</span>rev lst ...<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span></pre>
 </pre>
 </div>
 
-<ul>
+<ul class="org-ul">
 <li>Das Argument für den akkumulierenden Parameter im rekursiven Aufruf
 der lokalen Hilfsfunktion <code>rev</code> ist hier unterstrichen.</li>
 
 <li>Es muss so bestimmt werden, dass die noch zu definierende
 Akkumulatorinvariante gültig bleibt.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline53">
-<h3 id="orgheadline53">Akkumulatorinvariante für <code>rev</code></h3>
-<ul>
+<div id="outline-container-org379d693" class="outline-3">
+<h3 id="org379d693">Akkumulatorinvariante für <code>rev</code></h3>
+<div class="outline-text-3" id="text-org379d693">
+<ul class="org-ul">
 <li>Eine Akkumulatorinvariante ist eine Aussage über das Argument der
 Hauptfunktion (hier: <code>lst</code>), das entsprechende Argument der
 Hilfsfunktion (hier: <code>listX</code>) und den Akkumulator, die vor und nach
@@ -1451,13 +1665,9 @@ hinzukommen, kann die Schablone hier so ergänzt werden:
 <code>listX</code> wegenommen wird, muss <code>(first listX)</code> an den Anfang der Liste
 <code>akku</code> gestellt werden. Damit ergibt sich für den unterstrichenen Teil der
 Schablone: <code>(cons (first listX) akku))</code>.</li>
-
 </ul>
 
-</section>
-<section>
-
-<ul>
+<ul class="org-ul">
 <li>Akkumulatorinvariante: <code>akku</code> ist eine Liste mit denjenigen Elementen
 von <code>lst</code> in umgekehrter Reihenfolge, die denen von <code>listX</code>
 vorangehen.</li>
@@ -1468,34 +1678,33 @@ Damit ergibt sich für <code>rev-list</code> mit <code>rev</code>:
 
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rev-list</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span>
-      <span style="color: #709870;">[</span><span style="color: #907373;">(</span>rev <span style="color: #6276BA;">[</span><span style="color: #808080;">listX</span> akku<span style="color: #6276BA;">]</span>
-        <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span> 
-          <span style="color: #858580;">(</span><span style="color: #006FE0;">empty?</span> <span style="color: #808080;">listX</span><span style="color: #858580;">)</span> akku 
-          <span style="color: #D0372D;">:else</span>  <span style="color: #858580;">(</span>rev <span style="color: #80A880;">(</span><span style="color: #006FE0;">rest</span> <span style="color: #808080;">listX</span><span style="color: #80A880;">)</span> 
-                      <span style="color: #80A880;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #887070;">(</span><span style="color: #006FE0;">first</span> <span style="color: #808080;">listX</span><span style="color: #887070;">)</span> akku<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
-      <span style="color: #709870;">(</span>rev lst <span style="color: #907373;">()</span> <span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rev-list</span>
+         <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
+           <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span>
+             <span style="color: #709870;">[</span><span style="color: #907373;">(</span>rev <span style="color: #6276BA;">[</span><span style="color: #808080;">listX</span> akku<span style="color: #6276BA;">]</span>
+               <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span> 
+                 <span style="color: #858580;">(</span><span style="color: #006FE0;">empty?</span> <span style="color: #808080;">listX</span><span style="color: #858580;">)</span> akku 
+                 <span style="color: #D0372D;">:else</span>  <span style="color: #858580;">(</span>rev <span style="color: #80A880;">(</span><span style="color: #006FE0;">rest</span> <span style="color: #808080;">listX</span><span style="color: #80A880;">)</span> 
+                             <span style="color: #80A880;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #887070;">(</span><span style="color: #006FE0;">first</span> <span style="color: #808080;">listX</span><span style="color: #887070;">)</span> akku<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+             <span style="color: #709870;">(</span>rev lst <span style="color: #907373;">()</span> <span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 </div></li>
-
 </ul>
 
 <p>
 Da die Funktion <code>rev</code> end-rekursiv ist, sollte in <b>Clojure</b> das
 <code>loop/recur</code>-Konstrukt &#x2013; wie oben gezeigt &#x2013; verwendet werden.
 </p>
+</div>
+</div>
+</div>
 
-</section>
-</section>
-<section>
-<section id="slide-orgheadline55">
-<h2 id="orgheadline55">Zusammenfassung</h2>
-<ul>
+<div id="outline-container-org4299aba" class="outline-2">
+<h2 id="org4299aba">Zusammenfassung</h2>
+<div class="outline-text-2" id="text-org4299aba">
+<ul class="org-ul">
 <li>Funktionen sind Werte erster Ordnung.</li>
 
 <li>Funktionen höherer Ordnung erfordern weder syntaktische noch
@@ -1506,58 +1715,24 @@ bereit: „iterative“ Abstraktion.</li>
 
 <li>Die „klassischen” Funktionen höherer Ordnung:
 
-<ul>
+<ul class="org-ul">
 <li>reduce</li>
 
 <li>filter</li>
 
 <li>map</li>
-
 </ul></li>
 
 <li>Lokale Definitionen und akkumulierende Parameter sind häufig benutzte
 funktionale Ausdrucksmittel bzw. Programmiertechniken.</li>
-
 </ul>
-</section>
-</section>
 </div>
 </div>
-<script src="./reveal.js/lib/js/head.min.js"></script>
-<script src="./reveal.js/js/reveal.js"></script>
-
-<script>
-// Full list of configuration options available here:
-// https://github.com/hakimel/reveal.js#configuration
-Reveal.initialize({
-
-controls: true,
-progress: true,
-history: false,
-center: true,
-slideNumber: 'c',
-rollingLinks: false,
-keyboard: true,
-overview: true,
-margin: 0.05,
-
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'slide', // default/cube/page/concave/zoom/linear/fade/none
-transitionSpeed: 'default',
-multiplex: {
-    secret: '', // null if client
-    id: '', // id, obtained from socket.io server
-    url: '' // Location of socket.io server
-},
-
-// Optional libraries used to extend on reveal.js
-dependencies: [
- { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
- { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
-,dependencies: [ { src: 'plugin/menu/menu.js', async: true }, { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]});
-</script>
+</div>
+<div id="postamble" class="status">
+<p class="author">Autor: Johannes Brauer</p>
+<p class="date">Created: 2017-10-10 Tue 21:59</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
 </body>
 </html>
