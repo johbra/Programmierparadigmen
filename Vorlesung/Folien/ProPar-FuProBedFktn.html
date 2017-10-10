@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<title>Funktionale Programmierung &#x2013; Bedingte Funktionen</title>
+<meta name="author" content="(Johannes Brauer)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./mycss/myrevealstyle.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Funktionale Programmierung &#x2013; Bedingte Funktionen</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2016-10-27 Thu 16:50</p>
+</section>
+
+<section>
+<section id="slide-orgheadline1">
+<h2 id="orgheadline1">Vergleichsausdrücke und Boolesche Ausdrücke</h2>
+<ul>
+<li><p>
+Numerische Vergleichsausdrücke der Art
+</p>
+
+<p>
+\(a < b, x >= y\) oder \(r < s < t\)
+</p>
+
+<p>
+werden in Clojure so aufgeschrieben:
+</p>
+
+<pre class="example">
+(&lt; a b) (&gt;= x y ) (&lt; r s t)
+</pre></li>
+
+<li>Die Auswertung ergibt <code>true</code> oder <code>false</code>.</li>
+
+<li><p>
+Den Clojure-Ausdruck <code>(&lt; r s t)</code> kann man als Abkürzung für
+</p>
+
+<pre class="example">
+(and (&lt; r s) (&lt; s t))
+</pre>
+
+<p>
+betrachten.
+</p></li>
+
+<li>Neben <code>(and ...)</code> stehen <code>(or ...)</code> und <code>(not ...)</code> zur Verfügung.
+Die Anzahl der Argumente von <code>and</code> und <code>or</code> ist dabei beliebig groß.</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline9">
+<h2 id="orgheadline9">Entwurf bedingter Funktionen</h2>
+<div class="outline-text-2" id="text-orgheadline9">
+</div></section>
+<section id="slide-orgheadline2">
+<h3 id="orgheadline2">Anwendungsbeispiel</h3>
+<ul>
+<li>Wir nennen eine Funktion <i>bedingt</i>, wenn für die Ermittlung ihres
+Resultats eine <i>Fallunterscheidung</i> erforderlich ist.</li>
+
+<li><p>
+Beispiel: Ein Hersteller für Speicherchips verkauft die Chips nach
+folgender Preisstaffel:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left"><b>Stückzahl</b></th>
+<th scope="col" class="org-left"><b>Stückpreis</b> [€]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(<= 1000\)</td>
+<td class="org-left">15,00</td>
+</tr>
+
+<tr>
+<td class="org-left">\(> 1000\) und \(<= 10000\)</td>
+<td class="org-left">12,50</td>
+</tr>
+
+<tr>
+<td class="org-left">\(> 10000\)</td>
+<td class="org-left">9,75</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Gesucht: Funktion, die aus der Stückzahl den Stückpreis ermittelt.
+</p></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline3">
+<h3 id="orgheadline3">Clojure-Pseudofunktion für Fallunterscheidungen</h3>
+<div class="nebeneinander">
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">cond</span>
+   frage antwort
+   ...
+   frage antwort<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</div>
+
+</div>
+
+<div class="nebeneinander">
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">cond</span>
+   frage antwort
+   ...
+   <span style="color: #D0372D;">:else</span> antwort<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</div>
+
+</div>
+<div class="clear">
+
+</div>
+<ul>
+<li>Jede <code>frage</code> muss ein boolescher Ausdruck sein.</li>
+
+<li>Jede <code>antwort</code> ist ein beliebiger Clojure-Ausdruck.</li>
+
+<li>Das Resultat der <code>cond</code>-Funktion ist die <code>antwort</code> der ersten <code>frage</code>,
+deren Auswertung <code>true</code> liefert.</li>
+
+<li>In der linken Variante von <code>cond</code> muss die Auswertung mindestens einer
+<code>frage</code> <code>true</code> liefern.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline4">
+<h3 id="orgheadline4">Erweiterung der Entwurfsvorschrift</h3>
+<ul>
+<li>In unsere Entwurfsvorschrift fügen wir hinter die Phase 1 (Vertrag,
+Zweckbestimmung, Funktionskopf) eine neue Phase <i>Datenanalyse</i> ein.</li>
+
+<li>In dieser Phase sind in der Problembeschreibung alle zu
+unterscheidenden Fälle zu identifizieren.</li>
+
+<li>In der nachfolgenden Phase <i>Beispiele</i> ist für jeden Fall mindestens
+ein Beispiel zu formulieren. Zusätzlich sind die Grenzfälle zu
+beachten.</li>
+
+<li>In der Phase Funktionsrumpf wird
+
+<ul>
+<li>ein <code>cond</code>-Skelett mit je einer Frage-Antwort-Kombination für
+jeden Fall formuliert,</li>
+
+<li>für jeden Fall die Frage (Bedingung) formuliert und</li>
+
+<li>für jeden Fall der Clojure-Ausdruck für die Berechnung der Antwort
+ermittelt.</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline5">
+<h3 id="orgheadline5">Funktionsskelett</h3>
+<p>
+Für das Beispiel des Chipherstellers ergibt sich folgendes
+Funktionsskelett:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet aus einer gegebenen Stueckzahl</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">den Stueckpreis gemaess Preisstaffel</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">stueckpreis</span> 
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>stueckzahl<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> stueckzahl<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+      <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+         ... ...
+         ... ...
+         ... ...<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline6">
+<h3 id="orgheadline6">Formulierung der Fragen</h3>
+<p>
+Aus der Tabelle für die Preisstaffelung ergeben sich folgende
+Bedingungen
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">stueckpreis</span> 
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>stueckzahl<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> stueckzahl<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span><span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+      <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span>&gt;= stueckzahl 0<span style="color: #907373;">)</span>
+           <span style="color: #907373;">(</span>&lt;= stueckzahl 1000<span style="color: #907373;">)</span><span style="color: #709870;">)</span>  ...
+      <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span>&gt; stueckzahl 1000<span style="color: #907373;">)</span>
+           <span style="color: #907373;">(</span>&lt;= stueckzahl 10000<span style="color: #907373;">)</span><span style="color: #709870;">)</span> ...
+      <span style="color: #709870;">(</span>&gt; stueckzahl 10000<span style="color: #709870;">)</span>        ... <span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+Für die Tests sollten die Grenzfälle 0, 1000 und 10000 sowie Werte aus
+dem Innern der Intervalle (z.B. 500, 2000, 20000) verwendet werden.
+</p>
+
+</section>
+<section id="slide-orgheadline7">
+<h3 id="orgheadline7">Formulierung der Antworten</h3>
+<p>
+Die Ausdrücke für die Berechnung der Antworten ergeben sich
+direkt aus der Tabelle für die Preisstaffelung:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet aus einer gegebenen Stueckzahl</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">den Stueckpreis gemaess Preisstaffel</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">stueckpreis</span> 
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>stueckzahl<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> stueckzahl<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span><span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+     <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span>&gt;= stueckzahl 0<span style="color: #907373;">)</span>
+          <span style="color: #907373;">(</span>&lt;= stueckzahl 1000<span style="color: #907373;">)</span><span style="color: #709870;">)</span>  1500
+     <span style="color: #709870;">(</span><span style="color: #0000FF;">and</span> <span style="color: #907373;">(</span>&gt; stueckzahl 1000<span style="color: #907373;">)</span> 
+          <span style="color: #907373;">(</span>&lt;= stueckzahl 10000<span style="color: #907373;">)</span><span style="color: #709870;">)</span> 1250
+     <span style="color: #709870;">(</span>&gt; stueckzahl 10000<span style="color: #709870;">)</span>        975 <span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline8">
+<h3 id="orgheadline8">Vereinfachung der Fragen</h3>
+<p>
+Nachdem die Funktion getestet wurde, können die Bedingungen
+vereinfacht werden:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">stueckpreis</span>
+   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>stueckzahl<span style="color: #909183;">]</span>
+      <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+        <span style="color: #709870;">(</span>&lt;= stueckzahl 1000<span style="color: #709870;">)</span> 1500
+        <span style="color: #709870;">(</span>&lt;= stueckzahl 10000<span style="color: #709870;">)</span> 1250
+        <span style="color: #D0372D;">:else</span> 975<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+<p>
+(Die vollständige Funktion <code>stueckpreis</code> steht in Moodle zur Verfügung.)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline13">
+<h2 id="orgheadline13">Entwurfsvorschrift II</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+</div></section>
+<section id="slide-orgheadline10">
+<h3 id="orgheadline10">Entwurfsvorschrift II (Bedingte Funktionen)</h3>
+<p>
+Die vier Phasen der
+Entwurfsvorschrift I werden um eine Phase <i>Datenanalyse</i> ergänzt, der
+Phase <i>Funktionsrumpf</i> wird eine Phase <i>Funktionsschablone</i>
+vorgeschaltet:
+</p>
+
+<ol>
+<li>Vertrag, Funktionskopf, Zweckbestimmung</li>
+
+<li><b>Datenanalyse</b></li>
+
+<li>Beispiele / Tests</li>
+
+<li><b>Funktionsschablone</b></li>
+
+<li><b>Funktionsrumpf</b></li>
+
+<li>Testen</li>
+
+</ol>
+
+<p>
+Es folgt die Beschreibung der neuen bzw. angepassten Phasen.
+</p>
+
+</section>
+<section id="slide-orgheadline11">
+<h3 id="orgheadline11">Entwurfsvorschrift II - Phasen 2 und 3</h3>
+<p>
+<b>Datenanalyse</b>
+</p>
+
+<ul>
+<li>Ziel: Ermittlung der die durch die Funktion zu unterscheidenden Fälle</li>
+
+<li>Aktivitäten:
+
+<ul>
+<li>Analysiere die Problembeschreibung hinsichtlich der zu
+unterscheidenden Fälle.</li>
+
+<li>Zähle alle Fälle auf.</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+<b>Beispiele</b> / <b>Tests</b>
+</p>
+
+<ul>
+<li>Ziel: Angabe eines Tests für jeden der in Phase 2 ermittelten Fälle</li>
+
+<li>Aktivitäten:
+
+<ul>
+<li>Formuliere mindestens ein Beispiel pro Fall.</li>
+
+<li>Für Aufzählungen oder Intervalle sind auch die Grenzfälle zu
+berücksichtigen.</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12">Entwurfsvorschrift II - Phasen 4 und 5</h3>
+<p>
+<b>Funktionsschablone</b>
+</p>
+
+<ul>
+<li>Ziel: Aufschreiben des bedingten Ausdrucks</li>
+
+<li>Aktivitäten:
+
+<ul>
+<li>Schreibe das Skelett eines <code>cond</code>-Ausdrucks auf mit je einer
+Frage-Antwort-Klausel für jeden Fall.</li>
+
+<li>Notiere für jeden Fall die Frage (Bedingung) unter Bezugnahme auf
+die Parameter der Funktion.</li>
+
+<li>Überprüfe, ob die Bedingungen die Beispiele korrekt
+diskriminieren.</li>
+
+</ul></li>
+
+</ul>
+
+<p>
+<b>Funktionsrumpf</b>
+</p>
+
+<ul>
+<li>Ziel: Entwickeln der Antworten für alle Bedingungen</li>
+
+<li>Aktivitäten:
+
+<ul>
+<li>Betrachte jede Bedingung des <code>cond</code>-Ausdrucks gesondert.</li>
+
+<li>Unter der Annahme, dass die Bedingung gilt, entwickle einen
+Clojure-Ausdruck, der die korrekte Antwort berechnet.</li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'slide', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,dependencies: [ { src: 'plugin/menu/menu.js', async: true }, { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]});
+</script>
+</body>
+</html>
