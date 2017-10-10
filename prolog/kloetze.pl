@@ -58,7 +58,7 @@ convex(O):-                       % Reifen direkt auf einer Pyramide
         auf(O, O1),
         typ_von(O1, pyramide).
 
-instabil(O):-                   % instabl sind Kugeln auf dem Boden,
+instabil(O):-                   % instabil sind Kugeln auf dem Boden,
         typ_von(O, kugel),
         am_boden(O).
 instabil(O):-                   % eine Kugel auf einem Würfel
