@@ -1,82 +1,317 @@
-<!DOCTYPE html>
-<html lang="de">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
 <head>
-<meta charset="utf-8"/>
+<!-- 2017-10-10 Tue 21:40 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Funktionale Programmierung &#x2013; Formalisierung</title>
-<meta name="author" content="(Johannes Brauer)"/>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Johannes Brauer" />
 <style type="text/css">
-.underline { text-decoration: underline; }
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
 </style>
-<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
+<script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
 
-<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
 
-<link rel="stylesheet" href="./mycss/myrevealstyle.css"/>
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
 
-<!-- If the query includes 'print-pdf', include the PDF print sheet -->
-<script>
-    if( window.location.search.match( /print-pdf/gi ) ) {
-        var link = document.createElement( 'link' );
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = './reveal.js/css/print/pdf.css';
-        document.getElementsByTagName( 'head' )[0].appendChild( link );
-    }
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
 </script>
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div class="reveal">
-<div class="slides">
-<section id="sec-title-slide"><h1 class="title">Funktionale Programmierung &#x2013; Formalisierung</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2016-11-29 Tue 23:27</p>
-</section>
+<div id="content">
+<h1 class="title">Funktionale Programmierung &#x2013; Formalisierung
+<br />
+<span class="subtitle">Programmierparadigmen</span>
+</h1>
 
-<section>
-<section id="slide-orgheadline12">
-<h2 id="orgheadline12">Syntax und Semantik von Clojure</h2>
-<div class="outline-text-2" id="text-orgheadline12">
-</div></section>
-<section id="slide-orgheadline1">
-<h3 id="orgheadline1">(Vereinfachte) Syntax von Clojure <i>(1)</i></h3>
+
+<div id="outline-container-orgbe6f4cc" class="outline-2">
+<h2 id="orgbe6f4cc">Syntax und Semantik von Clojure</h2>
+<div class="outline-text-2" id="text-orgbe6f4cc">
+</div><div id="outline-container-org4e75cdc" class="outline-3">
+<h3 id="org4e75cdc">(Vereinfachte) Syntax von Clojure <i>(1)</i></h3>
+<div class="outline-text-3" id="text-org4e75cdc">
 <p class="verse">
-&lt;def&gt; = (<b>def</b> &lt;var&gt; &lt;exp&gt;)<br  />
-&lt;exp&gt; =   &lt;var&gt;<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| &lt;con&gt;<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| (&lt;prm&gt; &lt;exp&gt; &#x2026; &lt;exp&gt;)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| (&lt;var&gt; &lt;exp&gt; &#x2026; &lt;exp&gt;)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| (<b>cond</b> &lt;exp&gt; &lt;exp&gt; &#x2026; &lt;exp&gt; &lt;exp&gt;)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| (<b>cond</b> &lt;exp&gt; &lt;exp&gt; &#x2026; <b>:else</b> &lt;exp&gt;)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| (<b>fn</b> [&lt;var&gt; &lt;var&gt; &#x2026; &lt;var&gt;] &lt;exp&gt;)<br  />
+&lt;def&gt; = (<b>def</b> &lt;var&gt; &lt;exp&gt;)<br />
+&lt;exp&gt; =   &lt;var&gt;<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| &lt;con&gt;<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| (&lt;prm&gt; &lt;exp&gt; &#x2026; &lt;exp&gt;)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| (&lt;var&gt; &lt;exp&gt; &#x2026; &lt;exp&gt;)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| (<b>cond</b> &lt;exp&gt; &lt;exp&gt; &#x2026; &lt;exp&gt; &lt;exp&gt;)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| (<b>cond</b> &lt;exp&gt; &lt;exp&gt; &#x2026; <b>:else</b> &lt;exp&gt;)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;| (<b>fn</b> [&lt;var&gt; &lt;var&gt; &#x2026; &lt;var&gt;] &lt;exp&gt;)<br />
 </p>
-<ul>
+<ul class="org-ul">
 <li>Clojure-Programme bestehen (bisher) aus Definitionen (<code>&lt;def&gt;</code>) und
 Ausdrücken (<code>&lt;exp&gt;</code>).</li>
 <li>Ausdrücke können sein:
-<ul>
+<ul class="org-ul">
 <li>Variablen (<code>&lt;var&gt;</code>) oder Konstanten (<code>&lt;con&gt;</code>)</li>
 <li>Funktionsanwendungen (Funktionsaufrufe)</li>
 <li>Bedingte Ausdrücke</li>
 <li>Funktionen (aka Lambda-Ausdrücke)</li>
-
 </ul></li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline2">
-<h3 id="orgheadline2">(Vereinfachte) Syntax von Clojure <i>(2)</i></h3>
-<ul>
+<div id="outline-container-orgc9c6335" class="outline-3">
+<h3 id="orgc9c6335">(Vereinfachte) Syntax von Clojure <i>(2)</i></h3>
+<div class="outline-text-3" id="text-orgc9c6335">
+<ul class="org-ul">
 <li>Zur Erleichterung der Kommunikation kann es sinnvoll sein,
 syntaktischen Komponenten Namen zu geben:</li>
-
 </ul>
 
 <p class="verse">
-(<b>cond</b> &lt;frage&gt; &lt;antwort&gt; &#x2026; &lt;frage&gt; &lt;antwort&gt;)<br  />
-<br  />
-(<b>fn</b>  [&lt;parameter&gt; &#x2026; &lt;parameter&gt;] &lt;rumpf&gt;)<br  />
+(<b>cond</b> &lt;frage&gt; &lt;antwort&gt; &#x2026; &lt;frage&gt; &lt;antwort&gt;)<br />
+<br />
+(<b>fn</b>  [&lt;parameter&gt; &#x2026; &lt;parameter&gt;] &lt;rumpf&gt;)<br />
 </p>
-<ul>
+<ul class="org-ul">
 <li><code>cond</code> erwartet eine beliebige Anzahl von Ausdruckspaaren, deren
 erster Ausdruck eine Bedingung (<code>frage</code>) und deren zweiter das
 zugehörige Ergebnis (<code>antwort</code>) darstellt.</li>
@@ -85,92 +320,90 @@ einer Funktionsdefinition und beschreibt die Liste der <i>formalen
 Parameter</i>.</li>
 <li>Dem Kopf folgt ein Ausdruck, der den <i>Rumpf</i> (body) der Funktion
 darstellt.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline3">
-<h3 id="orgheadline3">Semantik einer Programmiersprache</h3>
-<ul>
+<div id="outline-container-org0f80a37" class="outline-3">
+<h3 id="org0f80a37">Semantik einer Programmiersprache</h3>
+<div class="outline-text-3" id="text-org0f80a37">
+<ul class="org-ul">
 <li>Die Syntax beschreibt den Aufbau grammatikalisch korrekter Sätze.</li>
 <li>Die Semantik beschreibt die Bedeutung grammatikalisch korrekter
 Sätze.</li>
 <li>Die Semantik natürlichsprachlicher Sätze wird häufig durch Sätze mit
 einfacheren (bereits bekannten) Begriffen beschrieben.</li>
 <li>Die Semantik einer Programmiersprache&#x2026;
-<ul>
+<ul class="org-ul">
 <li>legt fest, welche Wirkung jedes Sprachelement oder -konstrukt im
 Programmablauf hervorruft;</li>
 <li>wird beschrieben durch
-<ul>
+<ul class="org-ul">
 <li>Sätze in natürlicher Sprache (häufig anzutreffen bei gängigen
 Programmiersprachen (z.B. C, Pascal, Java, Smalltalk); Problem:
 Beschreibung umfangreich und nicht eindeutig;</li>
 <li>Menge von Verhaltensregeln, die die Funktionsweise von
 Programmen bestimmen; kann formal und damit unzweideutig
 erfolgen.</li>
-
 </ul></li>
-
 </ul></li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline4">
-<h3 id="orgheadline4">(Vereinfachte) Semantik von Clojure <i>(1)</i></h3>
-<ul>
+<div id="outline-container-orgd10f95a" class="outline-3">
+<h3 id="orgd10f95a">(Vereinfachte) Semantik von Clojure <i>(1)</i></h3>
+<div class="outline-text-3" id="text-orgd10f95a">
+<ul class="org-ul">
 <li>Es gibt verschiedene Arten, die Semantik einer Programmiersprache
 formal zu beschreiben:
-<ul>
+<ul class="org-ul">
 <li>Durch Angabe eines Interpreters für eine bestimmte Maschine;
 beschreibt wie ein Programm ausgeführt wird (operationelle
 Semantik).</li>
 <li>Durch Übersetzung in eine andere Sprache, deren Semantik bereits
 definiert ist:
-<ul>
+<ul class="org-ul">
 <li>z.B. in mathematischen Objekten (Relationen, Funktionen)</li>
 <li>beschreibt, was der Effekt der Ausführung eines Programms ist
 (denotationelle Semantik).</li>
-
 </ul></li>
-
 </ul></li>
 <li>Für die Beschreibung der Semantik von Clojure greifen wir auf
 einfache Regeln der Algebra zurück.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline5">
-<h3 id="orgheadline5">(Vereinfachte) Semantik von Clojure <i>(2)</i></h3>
-<ul>
+<div id="outline-container-orgf0b8770" class="outline-3">
+<h3 id="orgf0b8770">(Vereinfachte) Semantik von Clojure <i>(2)</i></h3>
+<div class="outline-text-3" id="text-orgf0b8770">
+<ul class="org-ul">
 <li>Die Semantik definiert, wie Clojure-Ausdrücke ausgewertet werden.</li>
 <li>Auswertung bedeutet, dass ein Ausdruck durch Anwenden von Regeln
 solange umgeformt wird, bis ein Wert übrig bleibt.</li>
 <li>Werte sind (bisher):
-<ul>
+<ul class="org-ul">
 <li>Zahlen (2, 3.5, 1/3)</li>
 <li>boolesche Werte (<code>true</code>, <code>false</code>)</li>
 <li>Symbole (<code>’Karl</code>, <code>’hallo</code>)</li>
 <li>Listen, bestehend aus Zahlen, booleschen Werten, Symbolen und
 Listen</li>
-
 </ul></li>
 <li>Zahlen, boolesche Werte und Symbole sind Ausdrücke, die zu sich
 selbst ausgewertet werden (self evaluating expressions).</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline6">
-<h3 id="orgheadline6">Semantik der Funktionsanwendung</h3>
-<ul>
+<div id="outline-container-orgb8a3568" class="outline-3">
+<h3 id="orgb8a3568">Semantik der Funktionsanwendung</h3>
+<div class="outline-text-3" id="text-orgb8a3568">
+<ul class="org-ul">
 <li>Funktionsanwendungen tauchen in der Syntax in zwei Formen auf:
-<ol>
+<ol class="org-ol">
 <li><code>(&lt;prm&gt; &lt;exp&gt; ... &lt;exp&gt;)</code></li>
 <li><code>(&lt;var&gt; &lt;exp&gt; ... &lt;exp&gt;)</code></li>
-
 </ol></li>
 <li><code>prm</code> steht dabei für eine in Clojure eingebaute Funktion
 (Standardfunktion), wie z.B. <code>+</code>, <code>*</code> usw.</li>
@@ -178,34 +411,36 @@ selbst ausgewertet werden (self evaluating expressions).</li>
 die mithilfe der Pseudofunktion <code>def</code> definiert wurde.</li>
 <li>Verallgemeinert ausgedrückt, handelt es sich in beiden Fällen um
 Ausdrücke, deren Wert eine Funktion ist.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline7">
-<h3 id="orgheadline7">Auswertungsregel für Standardfunktionen</h3>
-<ol>
+<div id="outline-container-orgbdc925e" class="outline-3">
+<h3 id="orgbdc925e">Auswertungsregel für Standardfunktionen</h3>
+<div class="outline-text-3" id="text-orgbdc925e">
+<ol class="org-ol">
 <li><b>Werte alle Ausdrücke der Funktionsanwendung aus</b>!</li>
 <li><b>Wende die Standardfunktion, die dem Wert des ersten Ausdrucks</b>
-   (<code>&lt;prm&gt;</code>) <b>entspricht, auf die in Schritt 1 ausgewerteten Argumente</b>
-   (<code>&lt;exp&gt; …</code>) <b>an!</b></li>
-
+(<code>&lt;prm&gt;</code>) <b>entspricht, auf die in Schritt 1 ausgewerteten Argumente</b>
+(<code>&lt;exp&gt; …</code>) <b>an!</b></li>
 </ol>
 
 <p>
 Man beachte die Rekursivität der Auswertungsregel.
 </p>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline8">
-<h3 id="orgheadline8">Anwendung von Standardfunktionen &#x2013; Beispiel</h3>
-<ul>
+<div id="outline-container-org658bcf4" class="outline-3">
+<h3 id="org658bcf4">Anwendung von Standardfunktionen &#x2013; Beispiel</h3>
+<div class="outline-text-3" id="text-org658bcf4">
+<ul class="org-ul">
 <li><p>
 Der Ausdruck
 </p>
 
 <pre class="example">
-(+ (* (/ 12 8) 2/3) (- 20 (Math/sqrt 4)))
+       (+ (* (/ 12 8) 2/3) (- 20 (Math/sqrt 4)))
 </pre>
 
 <p>
@@ -214,27 +449,28 @@ Standardfunktionen ausgewertet werden:
 </p>
 
 <pre class="example">
-(+ (* (/ 12 8) 2/3) (- 20 (Math/sqrt 4))) 
-    = (+ (* 3/2 2/3) (- 20 (Math/sqrt 4)))
-    = (+ 1 (- 20 (Math/sqrt 4)))
-    = (+ 1 (- 20 2.0))
-    = (+ 1 18.0)
-    = 19.0
+       (+ (* (/ 12 8) 2/3) (- 20 (Math/sqrt 4))) 
+           = (+ (* 3/2 2/3) (- 20 (Math/sqrt 4)))
+           = (+ 1 (- 20 (Math/sqrt 4)))
+           = (+ 1 (- 20 2.0))
+           = (+ 1 18.0)
+           = 19.0 
 </pre></li>
 
 <li>Da die Werte von <code>+</code>, <code>*</code> usw. Folgen von Maschinenbefehlen
 entsprechen, die die zugehörige Funktion ausführen, bleiben diese bei
 der schrittweisen Auswertung solange stehen, bis sie auf ihre
 Argumente angewendet werden können.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline9">
-<h3 id="orgheadline9">Die globale Umgebung</h3>
-<ul>
-<li>Man beachte, dass Ausdrücke wie<br  />
-<code>(+ x 2)</code> oder <code>(f 7 8)</code><br  />
+<div id="outline-container-org4f9216e" class="outline-3">
+<h3 id="org4f9216e">Die globale Umgebung</h3>
+<div class="outline-text-3" id="text-org4f9216e">
+<ul class="org-ul">
+<li>Man beachte, dass Ausdrücke wie<br />
+<code>(+ x 2)</code> oder <code>(f 7 8)</code><br />
 &#x2013; jeweils isoliert betrachtet &#x2013; nicht ausgewertet werden können, da
 nicht klar ist, wozu <code>x</code> bzw. welche Funktion <code>f</code> ausgewertet werden
 soll.</li>
@@ -243,13 +479,14 @@ aller Variablen definiert sind.</li>
 <li>Durch die Pseudofunktion <code>def</code> wird einer Variablen ein Wert
 zugeordnet. Diese Assoziation merkt sich der Interpreter in einem
 Gedächtnis, das <i>globale Umgebung</i> genannt wird.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline10">
-<h3 id="orgheadline10">Auswertungen in der globalen Umgebung</h3>
-<ul>
+<div id="outline-container-orgf788dd2" class="outline-3">
+<h3 id="orgf788dd2">Auswertungen in der globalen Umgebung</h3>
+<div class="outline-text-3" id="text-orgf788dd2">
+<ul class="org-ul">
 <li>In einer Umgebung können nun auch Ausdrücke ausgewertet werden, die
 Variablen enthalten, sofern sich für sie ein Eintrag in der Umgebung
 befindet.</li>
@@ -257,14 +494,13 @@ befindet.</li>
 <li>Für den Fall, dass die anzuwendende Funktion eine benutzerdefinierte
 ist (d.h. der Variablen ist ein <code>fn</code>-Ausdruck zugeordnet), erweitern
 wir die Auswertungsregel um das</li>
-
 </ul>
 
 <p>
 <b>Ersetzungsmodell für Funktionsanwendungen:</b>
 </p>
 
-<ul>
+<ul class="org-ul">
 <li><b>Werte den Rumpf der Funktion aus, wobei jeder formale Parameter
 durch das korrespondierende ausgewertete Argument ersetzt wird.</b></li>
 
@@ -272,30 +508,29 @@ durch das korrespondierende ausgewertete Argument ersetzt wird.</b></li>
 \((f v_{1} \ldots v_{n}) = exp^{x_{i}}_{v_{i}}\). Dabei bedeutet
 \(exp^{x_{i}}_{v_{i}}\), dass in <code>exp</code> jedes Auftreten eines \(x_{i}\) in
 durch \(v_{i}\) ersetzt ist.</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline11">
-<h3 id="orgheadline11">Anwendung des Ersetzungsmodells</h3>
-<ul>
+<div id="outline-container-org45feefd" class="outline-3">
+<h3 id="org45feefd">Anwendung des Ersetzungsmodells</h3>
+<div class="outline-text-3" id="text-org45feefd">
+<ul class="org-ul">
 <li>Gegeben seien die beiden folgenden Funktionsdefinitionen:</li>
-
 </ul>
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">summe-der-quadrate</span>
-      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x y<span style="color: #909183;">]</span> 
-        <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>* x x<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>* y y<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">fun</span>
-      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>a<span style="color: #909183;">]</span> 
-        <span style="color: #909183;">(</span>summe-der-quadrate <span style="color: #709870;">(</span>+ a 1<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>* a 2<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">summe-der-quadrate</span>
+             <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x y<span style="color: #909183;">]</span> 
+               <span style="color: #909183;">(</span>+ <span style="color: #709870;">(</span>* x x<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>* y y<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">fun</span>
+             <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>a<span style="color: #909183;">]</span> 
+               <span style="color: #909183;">(</span>summe-der-quadrate <span style="color: #709870;">(</span>+ a 1<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>* a 2<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> </pre>
 </pre>
 </div>
 
 </div>
-<ul>
+<ul class="org-ul">
 <li><p>
 Wenden wir nun das Ersetzungsmodell auf diese Funktionsanwendung an: 
 </p>
@@ -303,50 +538,45 @@ Wenden wir nun das Ersetzungsmodell auf diese Funktionsanwendung an:
 <p>
 <code>(fun 3)</code>
 </p></li>
-
 </ul>
 
-</section>
-<section>
-
 <p class="verse">
-(<b>fun</b> 3)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= ((fn [a] (summe-der-quadrate (+ a 1) (* a 2))) 3)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= <b>((fn [a] (summe-der-quadrate (+ a 1) ( * a 2))) 3)</b><br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= (summe-der-quadrate (+ 3 1) (* 3 2))<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= (summe-der-quadrate <b>(+ 3 1) ( * 3 2)</b>)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= (summe-der-quadrate 4 6)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= (<b>summe-der-quadrate</b> 4 6)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= ((fn [x y] (+ (* x x) (* y y))) 4 6)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= <b>((fn [x y] (+ ( * x x) ( * y y))) 4 6)</b><br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= (+ (* 4 4) (* 6 6))<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= (+ 16 36)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;= 52<br  />
+(<b>fun</b> 3)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;= ((fn [a] (summe-der-quadrate (+ a 1) (* a 2))) 3)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;= <b>((fn [a] (summe-der-quadrate (+ a 1) ( * a 2))) 3)</b><br />
+&#xa0;&#xa0;&#xa0;&#xa0;= (summe-der-quadrate (+ 3 1) (* 3 2))<br />
+&#xa0;&#xa0;&#xa0;&#xa0;= (summe-der-quadrate <b>(+ 3 1) ( * 3 2)</b>)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;= (summe-der-quadrate 4 6)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;= (<b>summe-der-quadrate</b> 4 6)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;= ((fn [x y] (+ (* x x) (* y y))) 4 6)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;= <b>((fn [x y] (+ ( * x x) ( * y y))) 4 6)</b><br />
+&#xa0;&#xa0;&#xa0;&#xa0;= (+ (* 4 4) (* 6 6))<br />
+&#xa0;&#xa0;&#xa0;&#xa0;= (+ 16 36)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;= 52<br />
 </p>
+</div>
+</div>
+</div>
 
-</section>
-</section>
-<section>
-<section id="slide-orgheadline17">
-<h2 id="orgheadline17">Auswertungsregeln für Clojure-Pseudofunktionen</h2>
-<div class="outline-text-2" id="text-orgheadline17">
-</div></section>
-<section id="slide-orgheadline13">
-<h3 id="orgheadline13">Pseudofunktionen</h3>
-<ul>
+<div id="outline-container-orge876699" class="outline-2">
+<h2 id="orge876699">Auswertungsregeln für Clojure-Pseudofunktionen</h2>
+<div class="outline-text-2" id="text-orge876699">
+</div><div id="outline-container-orgeb36c6e" class="outline-3">
+<h3 id="orgeb36c6e">Pseudofunktionen</h3>
+<div class="outline-text-3" id="text-orgeb36c6e">
+<ul class="org-ul">
 <li><i>Pseudofunktionen</i> (in der Lisp-Terminologie auch <i>special forms</i>
-   genannt) heißen so, weil
+genannt) heißen so, weil
 
-<ul>
+<ul class="org-ul">
 <li>für sie besondere Auswertungsregeln gelten und/oder</li>
 
 <li>ihre Auswertung keinen Wert liefert.</li>
-
 </ul></li>
 
 <li>Bisher benutzte Pseudofunktionen:
 
-<ul>
+<ul class="org-ul">
 <li><code>def</code></li>
 
 <li><code>fn</code></li>
@@ -354,15 +584,15 @@ Wenden wir nun das Ersetzungsmodell auf diese Funktionsanwendung an:
 <li><code>cond</code></li>
 
 <li><code>:else</code></li>
-
 </ul></li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline14">
-<h3 id="orgheadline14">Auswertungsregeln für <code>def</code> und <code>fn</code></h3>
-<dl>
+<div id="outline-container-org6942e42" class="outline-3">
+<h3 id="org6942e42">Auswertungsregeln für <code>def</code> und <code>fn</code></h3>
+<div class="outline-text-3" id="text-org6942e42">
+<dl class="org-dl">
 <dt><code>def</code></dt><dd>Der Ausdruck <code>(def var exp)</code> liefert keinen Wert, sondern
 hat lediglich den Effekt, dass der Variablen <code>var</code> der Wert von <code>exp</code>
 in der globalen Umgebung zugeordnet wird.</dd>
@@ -370,80 +600,77 @@ in der globalen Umgebung zugeordnet wird.</dd>
 <dt><code>fn</code></dt><dd>Der Ausdruck <code>(fn [v1 … vn] exp)</code> liefert als Wert eine
 (namenlose/anonyme) Funktion mit den formalen Parametern <code>v1 … vn</code>
 und der Berechnungsvorschrift <code>exp</code>.</dd>
-
 </dl>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline15">
-<h3 id="orgheadline15">Auswertungsregel für <code>cond</code> ohne <code>:else</code></h3>
+<div id="outline-container-orgdbbc0a4" class="outline-3">
+<h3 id="orgdbbc0a4">Auswertungsregel für <code>cond</code> ohne <code>:else</code></h3>
+<div class="outline-text-3" id="text-orgdbbc0a4">
 <p>
 Zwei Fälle sind zu unterscheiden:
 </p>
-<ol>
+<ol class="org-ol">
 <li><p>
 Die erste Frage (Bedingung) ist <code>false</code>:
 </p>
 <p class="verse">
-(cond<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;false \(\ldots\)<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;frage2 antwort2<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;\(\ldots\))<br  />
-= (cond<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;frage2 antwort2<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;\(\ldots\))<br  />
+(cond<br />
+&#xa0;&#xa0;&#xa0;&#xa0;false \(\ldots\)<br />
+&#xa0;&#xa0;&#xa0;&#xa0;frage2 antwort2<br />
+&#xa0;&#xa0;&#xa0;&#xa0;\(\ldots\))<br />
+= (cond<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;frage2 antwort2<br />
+&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;\(\ldots\))<br />
 </p>
 <p>
 D.h. die erste Frage-Antwort-Kombination wird eliminiert.
 </p></li>
-
 </ol>
 
-</section>
-<section>
-
-<ol>
+<ol class="org-ol">
 <li value="2"><p>
 Die erste Frage (Bedingung) ist <code>true</code>:
 </p>
 
 <p class="verse">
-(cond<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;true exp<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;\(\ldots\))<br  />
-= exp<br  />
+(cond<br />
+&#xa0;&#xa0;&#xa0;&#xa0;true exp<br />
+&#xa0;&#xa0;&#xa0;&#xa0;\(\ldots\))<br />
+= exp<br />
 </p>
 
 <p>
 D.h. der Wert des ganzen <code>cond</code>-Ausdrucks ist <code>exp</code>.
 </p></li>
-
 </ol>
 
 <p>
 Wenn keine Frage <code>true</code> liefert, ist das Resultat <code>nil</code>.
 </p>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline16">
-<h3 id="orgheadline16">Auswertungsregel für <code>cond</code> mit <code>:else</code></h3>
-<ul>
+<div id="outline-container-org366446a" class="outline-3">
+<h3 id="org366446a">Auswertungsregel für <code>cond</code> mit <code>:else</code></h3>
+<div class="outline-text-3" id="text-org366446a">
+<ul class="org-ul">
 <li><p>
 Die Auswertung erfolgt wie bei <code>cond</code> ohne <code>:else</code>. Wenn dabei als
 letzte die <code>:else</code>-Zeile übrig bleibt, gilt:
 </p>
 
 <p class="verse">
-(cond<br  />
-&#xa0;&#xa0;&#xa0;&#xa0;:else exp)<br  />
-= exp<br  />
-<br  />
+(cond<br />
+&#xa0;&#xa0;&#xa0;&#xa0;:else exp)<br />
+= exp<br />
+<br />
 </p>
 
 <p>
 D.h. der Wert des ganzen <code>cond</code>-Ausdrucks ist die Antwort hinter
 <code>:else</code>.
 </p></li>
-
 </ul>
 
 <p>
@@ -458,75 +685,68 @@ Bei der Auswertung von Ausdrücken beachte man folgende Daumen-
 <b>Vereinfache immer den äußersten und am weitesten links stehenden
 Teilausdruck, der ausgewertet werden kann.</b>
 </p>
+</div>
+</div>
+</div>
 
-</section>
-</section>
-<section>
-<section id="slide-orgheadline23">
-<h2 id="orgheadline23">Korrektheit rekursiver Funktionen</h2>
-<div class="outline-text-2" id="text-orgheadline23">
-</div></section>
-<section id="slide-orgheadline18">
-<h3 id="orgheadline18">Beweistechniken für Programme</h3>
-<ul>
+<div id="outline-container-org739535a" class="outline-2">
+<h2 id="org739535a">Korrektheit rekursiver Funktionen</h2>
+<div class="outline-text-2" id="text-org739535a">
+</div><div id="outline-container-org2beb05c" class="outline-3">
+<h3 id="org2beb05c">Beweistechniken für Programme</h3>
+<div class="outline-text-3" id="text-org2beb05c">
+<ul class="org-ul">
 <li>Voraussetzungen:
-<ul>
+<ul class="org-ul">
 <li>Formalisierung der Spezifikation eines Programms</li>
 <li>Formale Definition der Semantik der Programmiersprache</li>
-
 </ul></li>
 <li>Funktionale (zustandslose) Programmierung:
-<ul>
+<ul class="org-ul">
 <li>Semantik definiert durch Substitutionsmodell (s. o.)</li>
 <li>Beweise durch vollständige Induktion über die Rekursionstiefe</li>
-
 </ul></li>
 <li>Prozedurale (objektorientierte) Programmierung:
-<ul>
+<ul class="org-ul">
 <li>Semantik häufig axiomatisch definiert: Für jedes Sprachkonstrukt
 wird angegeben, was nach Ausführung gilt (Nachbedingung,
 post-condition), wenn vorher eine Vorbedingung (pre-condition)
 erfüllt war.</li>
-
 </ul></li>
-
 </ul>
 
-</section>
-<section>
-
-<ul>
+<ul class="org-ul">
 <li>Hoare-Kalkül: Axiome und Ableitungsregeln für alle Konstrukte
 einer einfachen imperativen Programmiersprache</li>
 <li>wp-Kalkül: Die Überprüfung der Korrektheit durch Rückwärtsanalyse
 des Programmcodes. Ausgehend von der Nachbedingung wird geprüft,
 ob diese durch die Vorbedingung und den Programmcode garantiert
 wird (wp = weakest precondition).</li>
-
 </ul>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline19">
-<h3 id="orgheadline19">Rekursive Induktion</h3>
+<div id="outline-container-org6a0e039" class="outline-3">
+<h3 id="org6a0e039">Rekursive Induktion</h3>
+<div class="outline-text-3" id="text-org6a0e039">
 <p>
 <b>Beweis mittels rekursiver Induktion:</b>
 </p>
 
-<ol>
+<ol class="org-ol">
 <li>Formuliere die Behauptung, die für den Algorithmus gelten muss.</li>
 <li>Zeige, dass die Behauptung für einen Aufruf mit Rekursionstiefe 0
 gilt.</li>
 <li>Zeige, dass aus der Gültigkeit der Behauptung für Aufrufe mit
 Rekursionstiefe gleich \(n\) die Gültigkeit der Behauptung für Aufrufe
 mit Rekursionstiefe \(n+1\) folgt.</li>
-
 </ol>
 
 <p>
 <b>Definition der Rekursionstiefe:</b>
 </p>
 
-<blockquote nil>
+<blockquote>
 <p>
 Findet beim Ausführen des Aufrufs kein rekursiver Aufruf statt, dann
 ist die Rekursionstiefe 0, und sonst ist sie um 1 größer als die
@@ -534,25 +754,27 @@ größte Rekursionstiefe aller weiteren Aufrufe, die durch diesen Aufruf
 verursacht werden.
 </p>
 </blockquote>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline20">
-<h3 id="orgheadline20">Beispiel: Funktion <code>len</code></h3>
+<div id="outline-container-orgd544350" class="outline-3">
+<h3 id="orgd544350">Beispiel: Funktion <code>len</code></h3>
+<div class="outline-text-3" id="text-orgd544350">
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Laenge einer Liste</span>
-<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">len</span>
-  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
-      <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lst<span style="color: #709870;">)</span> 0
-      <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>+ 1 <span style="color: #907373;">(</span>len <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lst<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Laenge einer Liste</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">len</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+          <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lst<span style="color: #709870;">)</span> 0
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span>+ 1 <span style="color: #907373;">(</span>len <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lst<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+        </pre>
 </pre>
 </div>
 
 </div>
 
-<dl>
+<dl class="org-dl">
 <dt>Behauptung:</dt><dd><p>
 Der Aufruf
 </p>
@@ -565,28 +787,29 @@ Der Aufruf
 liefert die Anzahl \(n\) der Elemente der als Argument übergebenen
 Liste.
 </p></dd>
-
 </dl>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline21">
-<h3 id="orgheadline21">Beispiel: Funktion <code>len</code> (2)</h3>
-<dl>
+<div id="outline-container-orgdf3b3a6" class="outline-3">
+<h3 id="orgdf3b3a6">Beispiel: Funktion <code>len</code> (2)</h3>
+<div class="outline-text-3" id="text-orgdf3b3a6">
+<dl class="org-dl">
 <dt>Verankerung:</dt><dd><p>
 Der Aufruf <code>(len ’())</code> liefert nach Ersetzungsmodell:
 </p>
 
 <div class="small">
 <div class="org-src-container">
-
-<pre  class="src src-clojure"><span style="color: #707183;">(</span>len '<span style="color: #7388D6;">()</span><span style="color: #707183;">)</span>
-        = <span style="color: #707183;">(</span><span style="color: #0000FF;">cond</span>
-              <span style="color: #7388D6;">(</span><span style="color: #006FE0;">empty?</span> '<span style="color: #909183;">()</span><span style="color: #7388D6;">)</span> 0
-              <span style="color: #D0372D;">:else</span> <span style="color: #7388D6;">(</span>+ 1 <span style="color: #909183;">(</span>len <span style="color: #709870;">(</span><span style="color: #006FE0;">rest</span> '<span style="color: #907373;">()</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-        = <span style="color: #707183;">(</span><span style="color: #0000FF;">cond</span>
-              <span style="color: #D0372D;">true</span> 0
-              <span style="color: #D0372D;">:else</span> <span style="color: #7388D6;">(</span>+ 1 <span style="color: #909183;">(</span>len <span style="color: #709870;">(</span><span style="color: #006FE0;">rest</span> '<span style="color: #907373;">()</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-        = 0
+<pre class="src src-clojure">       <span style="color: #707183;">(</span>len '<span style="color: #7388D6;">()</span><span style="color: #707183;">)</span>
+               = <span style="color: #707183;">(</span><span style="color: #0000FF;">cond</span>
+                     <span style="color: #7388D6;">(</span><span style="color: #006FE0;">empty?</span> '<span style="color: #909183;">()</span><span style="color: #7388D6;">)</span> 0
+                     <span style="color: #D0372D;">:else</span> <span style="color: #7388D6;">(</span>+ 1 <span style="color: #909183;">(</span>len <span style="color: #709870;">(</span><span style="color: #006FE0;">rest</span> '<span style="color: #907373;">()</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+               = <span style="color: #707183;">(</span><span style="color: #0000FF;">cond</span>
+                     <span style="color: #D0372D;">true</span> 0
+                     <span style="color: #D0372D;">:else</span> <span style="color: #7388D6;">(</span>+ 1 <span style="color: #909183;">(</span>len <span style="color: #709870;">(</span><span style="color: #006FE0;">rest</span> '<span style="color: #907373;">()</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+               = 0
+           </pre>
 </pre>
 </div>
 
@@ -599,13 +822,14 @@ die Länge der leeren Liste.
 
 <dt>Induktionsannahme:</dt><dd>Die Behauptung gilt für Rekursionstiefe
 \(k = m\).</dd>
-
 </dl>
+</div>
+</div>
 
-</section>
-<section id="slide-orgheadline22">
-<h3 id="orgheadline22">Beispiel: Funktion <code>len</code> (3)</h3>
-<dl>
+<div id="outline-container-orga0a67f5" class="outline-3">
+<h3 id="orga0a67f5">Beispiel: Funktion <code>len</code> (3)</h3>
+<div class="outline-text-3" id="text-orga0a67f5">
+<dl class="org-dl">
 <dt>Induktionsschluss</dt><dd><p>
 Wir betrachten jetzt den Aufruf
 </p>
@@ -617,10 +841,8 @@ Wir betrachten jetzt den Aufruf
 <p>
 Dieser Aufruf wird gemäß Ersetzungmodell ausgewertet als
 </p></dd>
-
 </dl>
 
-<div>
 \begin{eqnarray}
    (len\ ’(e_{1}\ e_{2}\ \ldots\ e_{m+1})) & = & (\mbox{cond}\\
     & &  (empty?\ ’(e_{1}\ e_{2}\ \ldots\ e_{m+1}))\ 0\\
@@ -632,82 +854,45 @@ Dieser Aufruf wird gemäß Ersetzungmodell ausgewertet als
     & = & (+\ 1\ (len\ ’(e_{2}\ \ldots\ e_{m+1})))
 \end{eqnarray}
 
-</div>
-
-</section>
-<section>
 <p>
 Der Aufruf \[(len ’(e_{2}\ \ldots\ e_{m+1}))\] besitzt die
 Rekursionstiefe \(m\) und liefert gemäß Induktionsannahme \(m\):
 \[(+ \ 1\ (len\ ’(e_{2}\ \ldots\ e_{m+1}))) = (+ \ 1\ m) = m+1\]
 </p>
+</div>
+</div>
+</div>
 
-</section>
-</section>
-<section>
-<section id="slide-orgheadline25">
-<h2 id="orgheadline25">Zusammenfassung</h2>
-<div class="outline-text-2" id="text-orgheadline25">
-</div></section>
-<section id="slide-orgheadline24">
-<h3 id="orgheadline24">Abstraktion durch Formalisierung &#x2026;</h3>
+<div id="outline-container-org41b1cca" class="outline-2">
+<h2 id="org41b1cca">Zusammenfassung</h2>
+<div class="outline-text-2" id="text-org41b1cca">
+</div><div id="outline-container-org74e434d" class="outline-3">
+<h3 id="org74e434d">Abstraktion durch Formalisierung &#x2026;</h3>
+<div class="outline-text-3" id="text-org74e434d">
 <p>
 &#x2026; bedeutet:
 </p>
 
-<ul>
+<ul class="org-ul">
 <li>Übergang von der Einzelfallbetrachtung (Stichproben, Tests) zu
 allgemein gültigen Aussagen</li>
 
 <li>Abstraktion durch formalisierte Spezifikation:
 
-<ul>
+<ul class="org-ul">
 <li>präzise Aussagen über die Semantik einer Funktion</li>
 
 <li>Beweisbarkeit der Implementierung</li>
-
 </ul></li>
-
 </ul>
-</section>
-</section>
 </div>
 </div>
-<script src="./reveal.js/lib/js/head.min.js"></script>
-<script src="./reveal.js/js/reveal.js"></script>
-
-<script>
-// Full list of configuration options available here:
-// https://github.com/hakimel/reveal.js#configuration
-Reveal.initialize({
-
-controls: true,
-progress: true,
-history: false,
-center: true,
-slideNumber: 'c',
-rollingLinks: false,
-keyboard: true,
-overview: true,
-margin: 0.05,
-
-theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-transition: Reveal.getQueryHash().transition || 'slide', // default/cube/page/concave/zoom/linear/fade/none
-transitionSpeed: 'default',
-multiplex: {
-    secret: '', // null if client
-    id: '', // id, obtained from socket.io server
-    url: '' // Location of socket.io server
-},
-
-// Optional libraries used to extend on reveal.js
-dependencies: [
- { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
- { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
- { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
- { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
-,dependencies: [ { src: 'plugin/menu/menu.js', async: true }, { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]});
-</script>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Autor: Johannes Brauer</p>
+<p class="date">Created: 2017-10-10 Tue 21:40</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
 </body>
 </html>
