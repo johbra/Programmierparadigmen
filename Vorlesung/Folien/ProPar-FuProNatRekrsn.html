@@ -1,280 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+<!DOCTYPE html>
+<html lang="de">
 <head>
-<!-- 2017-10-10 Tue 21:32 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8"/>
 <title>Funktionale Programmierung &#x2013; Natürliche Rekursion</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Johannes Brauer" />
+<meta name="author" content="(Johannes Brauer)"/>
 <style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+.underline { text-decoration: underline; }
 </style>
-<link rel="stylesheet" type="text/css" href="styles/bigblow/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="styles/bigblow/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="styles/bigblow/css/hideshow.css"/>
-<script type="text/javascript" src="styles/bigblow/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="styles/bigblow/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
-<script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
-<script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./mycss/myrevealstyle.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
-<script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
-<!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
-</script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
-<div id="content">
-<h1 class="title">Funktionale Programmierung &#x2013; Natürliche Rekursion
-<br />
-<span class="subtitle">Programmierparadigmen</span>
-</h1>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Funktionale Programmierung &#x2013; Natürliche Rekursion</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2017-10-10 Tue 21:31</p>
+</section>
 
 
-<div id="outline-container-org8889d55" class="outline-2">
-<h2 id="org8889d55">Symbolische Ausdrücke</h2>
-<div class="outline-text-2" id="text-org8889d55">
-</div><div id="outline-container-org0e82678" class="outline-3">
-<h3 id="org0e82678">Symbole</h3>
-<div class="outline-text-3" id="text-org0e82678">
-<ul class="org-ul">
+<section>
+<section id="slide-orgbb3621a">
+<h2 id="orgbb3621a">Symbolische Ausdrücke</h2>
+<div class="outline-text-2" id="text-orgbb3621a">
+</div></section>
+<section id="slide-org2f9829f">
+<h3 id="org2f9829f">Symbole</h3>
+<ul>
 <li><i>Symbole</i> sind eine einfache Möglichkeit für die Repräsentation
 nicht-numerischer Daten.</li>
 <li>Symbole sind aufgebaut wie Variablennamen; damit sie nicht als solche
@@ -288,30 +54,33 @@ Leerzeichen!) enthalten.</li>
 <li>Einzige Operation auf symbolischen Atomen ist die Prüfung auf
 Gleichheit: <code>=</code> erwartet zwei Symbole als Argumente und liefert
 <code>true</code> dann und nur dann, wenn sie identisch sind:</li>
+
 </ul>
 
+</section>
+<section >
+
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #707183;">(</span>= '<span style="color: #6434A3;">Hallo</span> '<span style="color: #6434A3;">Hallo</span><span style="color: #707183;">)</span> ==&gt; <span style="color: #D0372D;">true</span> 
+
+<pre  class="src src-clojure">       <span style="color: #707183;">(</span>= '<span style="color: #6434A3;">Hallo</span> '<span style="color: #6434A3;">Hallo</span><span style="color: #707183;">)</span> ==&gt; <span style="color: #D0372D;">true</span> 
        <span style="color: #707183;">(</span>= '<span style="color: #6434A3;">Karl</span> '<span style="color: #6434A3;">Rosa</span><span style="color: #707183;">)</span>   ==&gt; <span style="color: #D0372D;">false</span>
        <span style="color: #707183;">(</span>= '<span style="color: #6434A3;">Hallo</span> hallo<span style="color: #707183;">)</span>  ==&gt; <span style="color: #D0372D;">true</span>
        <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">(wenn hallo f&#252;r &#8217;Hallo steht)</span></pre>
 </pre>
 </div>
-</div>
-</div>
 
 
-<div id="outline-container-org18807a9" class="outline-3">
-<h3 id="org18807a9">S-Ausdrücke</h3>
-<div class="outline-text-3" id="text-org18807a9">
-<ul class="org-ul">
+</section>
+<section id="slide-orgbc90a2a">
+<h3 id="orgbc90a2a">S-Ausdrücke</h3>
+<ul>
 <li><i>Symbolische Ausdrücke</i> (kurz: S-Ausdrücke) wurden erfunden von
 McCarthy für LISP.</li>
 
 <li><b>Definition:</b> (vorläufig)<br />
 Ein S-Ausdruck ist
 
-<ul class="org-ul">
+<ul>
 <li>ein Atom, z.B. <code>27</code>, <code>’Karl</code>, <code>’ist</code></li>
 
 <li>eine Folge von S-Ausdrücken, eingeschlossen in (), z.B.<br />
@@ -319,17 +88,17 @@ Ein S-Ausdruck ist
 <code>’((Dies ist) (eine Liste) (mit 3 Elementen))</code><br />
 Solche S-Ausdrücke heißen <i>Listen</i>.
 (Man beachte die Rekursivität dieser Definition!)</li>
+
 </ul></li>
 
 <li>Atome sind entweder numerisch, boolesch oder symbolisch.</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-orga3347d1" class="outline-3">
-<h3 id="orga3347d1">Darstellung von Formeln als S-Ausdrücke</h3>
-<div class="outline-text-3" id="text-orga3347d1">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org27fb0b8">
+<h3 id="org27fb0b8">Darstellung von Formeln als S-Ausdrücke</h3>
+<ul>
 <li><p>
 Bestandteile einer Formel: Konstanten, Variablen und duale Operatoren
 </p>
@@ -392,54 +161,60 @@ Bestandteile einer Formel: Konstanten, Variablen und duale Operatoren
 <p>
 \(p\) und \(q\) stehen für Teile einer Formel
 </p></li>
+
 </ul>
-</div>
-<div id="outline-container-org8a82783" class="outline-4">
-<h4 id="org8a82783">Beispiel-Formel</h4>
-<div class="outline-text-4" id="text-org8a82783">
-<ul class="org-ul">
+</section>
+<section id="slide-orga9d27ff">
+<h4 id="orga9d27ff">Beispiel-Formel</h4>
+<ul>
 <li>Die Formel \(x^2+3y-5\) wird durch den S-Ausdruck<br />
 <code>’(ADD (EXP x 2) (SUB (MUL 3 y ) 5))</code><br />
 dargestellt.</li>
-</ul>
-</div>
-</div>
-</div>
 
-<div id="outline-container-org89aefed" class="outline-3">
-<h3 id="org89aefed">Konstruktion von Listen</h3>
-<div class="outline-text-3" id="text-org89aefed">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org73eb199">
+<h3 id="org73eb199">Konstruktion von Listen</h3>
+<ul>
 <li>Ausgangspunkt für die Konstruktion einer Liste ist die leere Liste,
 die durch<br />
 <code>’()</code><br />
 repräsentiert wird. (Clojure akzeptiert fast überall auch <code>()</code>.)</li>
 <li>Mit der Funktion <code>cons</code> kann ein Element als neues erstes Element
 einer Liste hinzugefügt werden.<br /></li>
+
 </ul>
 <div class="small">
 <div class="org-src-container">
-<pre class="src src-clojure">   <span style="color: #707183;">(</span><span style="color: #006FE0;">cons</span> &#8217;<span style="color: #6434A3;">Karl</span> <span style="color: #7388D6;">()</span> <span style="color: #707183;">)</span>                            ==&gt; <span style="color: #707183;">(</span><span style="color: #6434A3;">Karl</span><span style="color: #707183;">)</span>
+
+<pre  class="src src-clojure">   <span style="color: #707183;">(</span><span style="color: #006FE0;">cons</span> &#8217;<span style="color: #6434A3;">Karl</span> <span style="color: #7388D6;">()</span> <span style="color: #707183;">)</span>                            ==&gt; <span style="color: #707183;">(</span><span style="color: #6434A3;">Karl</span><span style="color: #707183;">)</span>
    <span style="color: #707183;">(</span><span style="color: #006FE0;">cons</span> &#8217;<span style="color: #6434A3;">Rosa</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">cons</span> &#8217;<span style="color: #6434A3;">Karl</span> <span style="color: #909183;">()</span> <span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>               ==&gt; <span style="color: #707183;">(</span><span style="color: #6434A3;">Rosa</span> <span style="color: #6434A3;">Karl</span><span style="color: #707183;">)</span>
    <span style="color: #707183;">(</span><span style="color: #006FE0;">cons</span> &#8217;<span style="color: #6434A3;">Klara</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">cons</span> &#8217;<span style="color: #6434A3;">Rosa</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">cons</span> &#8217;<span style="color: #6434A3;">Karl</span> <span style="color: #709870;">()</span> <span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> ==&gt; <span style="color: #707183;">(</span><span style="color: #6434A3;">Klara</span> <span style="color: #6434A3;">Rosa</span> <span style="color: #6434A3;">Karl</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 </div>
-<ul class="org-ul">
+<ul>
 <li>Die Standardfunktion <code>cons</code> erwartet zwei Argumente:
-<ul class="org-ul">
+<ul>
 <li>ein neues erstes Element und</li>
 <li>eine Liste</li>
+
 </ul></li>
+
 </ul>
-<ul class="org-ul">
+</section>
+<section >
+<ul>
 <li>Jede Liste kann man sich aus zwei Teilen bestehend vorstellen:
-<ul class="org-ul">
+<ul>
 <li>das erste Element und</li>
 <li>die Restliste.</li>
+
 </ul></li>
 <li>Die drei obigen Listen können dann so veranschaulicht werden:</li>
+
 </ul>
 
 <div class="figure">
@@ -456,28 +231,28 @@ einer Liste hinzugefügt werden.<br /></li>
 <p><img src="./Abbildungen/Listen3.png" alt="Listen3.png" width="250px" />
 </p>
 </div>
-<ul class="org-ul">
+<ul>
 <li>eine andere gebräuchliche Darstellung für Listen:</li>
+
 </ul>
 
 <div class="figure">
 <p><img src="./Abbildungen/Listen4.png" alt="Listen4.png" width="350px" />
 </p>
 </div>
-</div>
-</div>
 
-<div id="outline-container-org2547384" class="outline-3">
-<h3 id="org2547384">Zerlegung von Listen</h3>
-<div class="outline-text-3" id="text-org2547384">
-<ul class="org-ul">
+</section>
+<section id="slide-org0243dc3">
+<h3 id="org0243dc3">Zerlegung von Listen</h3>
+<ul>
 <li>Clojure stellt zwei Funktionen bereit zum Zugriff auf die beiden
 Komponenten einer Liste:
-<ul class="org-ul">
+<ul>
 <li><code>first</code> liefert &#x2013; angewendet auf eine nicht leere Liste &#x2013; das
 erste Element.</li>
 <li><code>rest</code> liefert &#x2013; angewendet auf eine nicht leere Liste &#x2013; die
 Restliste.</li>
+
 </ul></li>
 <li><p>
 Der Zusammenhang zwischen <code>cons</code>, <code>first</code> und <code>rest</code> kann durch die
@@ -493,47 +268,49 @@ folgenden Gleichungen beschrieben werden:
 Beispiele:
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #006FE0;">first</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">cons</span> 1 <span style="color: #909183;">(</span><span style="color: #006FE0;">cons</span> 2 <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> 3 <span style="color: #907373;">()</span> <span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> ==&gt; 1
+
+<pre  class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #006FE0;">first</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">cons</span> 1 <span style="color: #909183;">(</span><span style="color: #006FE0;">cons</span> 2 <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> 3 <span style="color: #907373;">()</span> <span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> ==&gt; 1
        <span style="color: #707183;">(</span><span style="color: #006FE0;">first</span> <span style="color: #7388D6;">(</span><span style="color: #006FE0;">rest</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">cons</span> 1 <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> 2 <span style="color: #907373;">(</span><span style="color: #006FE0;">cons</span> 3 <span style="color: #6276BA;">()</span> <span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span> ==&gt; 2
        <span style="color: #707183;">(</span><span style="color: #006FE0;">first</span> <span style="color: #7388D6;">()</span> <span style="color: #707183;">)</span> ==&gt; <span style="color: #D0372D;">nil</span>
        <span style="color: #707183;">(</span><span style="color: #006FE0;">rest</span> <span style="color: #7388D6;">()</span> <span style="color: #707183;">)</span>  ==&gt; <span style="color: #707183;">()</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
-</div>
 
-<div id="outline-container-orga0b6eb5" class="outline-2">
-<h2 id="orga0b6eb5">Funktionen für die Verarbeitung rekursiv definierter Datenstrukturen</h2>
-<div class="outline-text-2" id="text-orga0b6eb5">
-</div><div id="outline-container-org3304a8e" class="outline-3">
-<h3 id="org3304a8e">Rekursive Datenstrukturen</h3>
-<div class="outline-text-3" id="text-org3304a8e">
-<ul class="org-ul">
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgdb20575">
+<h2 id="orgdb20575">Funktionen für die Verarbeitung rekursiv definierter Datenstrukturen</h2>
+<div class="outline-text-2" id="text-orgdb20575">
+</div></section>
+<section id="slide-org6d52554">
+<h3 id="org6d52554">Rekursive Datenstrukturen</h3>
+<ul>
 <li>Für einen Gebrauchtwagenhändler repräsentieren wir die Menge der im
 Angebot befindlichen Automarken in einer Liste von Symbolen, z.B. so:<br />
 <code>(’VW ’Opel ’Toyota)</code></li>
 <li>Listen können beliebig lang werden (vgl. Definition des S-Ausdrucks).
 Eine <i>Liste-von-Symbolen (lvs)</i> kann als Datenstruktur wie folgt
 rekursiv definiert werden: Eine <i>Liste-von-Symbolen</i> ist entweder
-<ol class="org-ol">
+<ol>
 <li>die leere Liste: <code>()</code> oder</li>
 <li><code>(cons s lvs)</code>, wobei <code>s</code> ein Symbol und <code>lvs</code> eine
 <i>Liste-von-Symbolen</i> ist</li>
+
 </ol></li>
 <li>Bei der Verarbeitung von Listen müssen in der Regel diese beiden
 Alternativen getrennt behandelt werden. Das bedeutet, dass eine
 Fallunterscheidung erforderlich ist.</li>
 <li>Die leere Liste <code>()</code> kann mit dem Prädikat <code>empty?</code> erkannt werden.</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org6c7ace4" class="outline-3">
-<h3 id="org6c7ace4">Verarbeitung beliebig langer Listen <i>(1)</i></h3>
-<div class="outline-text-3" id="text-org6c7ace4">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org90779b0">
+<h3 id="org90779b0">Verarbeitung beliebig langer Listen <i>(1)</i></h3>
+<ul>
 <li>Es soll geprüft werden können, ob in der Liste mit den Automarken
 <code>’BMW</code> vorkommt.</li>
 <li><p>
@@ -541,7 +318,8 @@ Gemäß Entwurfsvorschrift I schreiben wir Vertrag, Zweckbestimmung und
 Funktionskopf auf:
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">ermittelt, ob das Symbol 'BMW in der </span>
+
+<pre  class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">ermittelt, ob das Symbol 'BMW in der </span>
        <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">liste-von-symbolen auftritt</span>
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">enthaelt-bmw?</span>
           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs<span style="color: #909183;">]</span>
@@ -550,19 +328,19 @@ Funktionskopf auf:
            ...<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org6d4688f" class="outline-3">
-<h3 id="org6d4688f">Verarbeitung beliebig langer Listen <i>(2)</i></h3>
-<div class="outline-text-3" id="text-org6d4688f">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org8ec9e6d">
+<h3 id="org8ec9e6d">Verarbeitung beliebig langer Listen <i>(2)</i></h3>
+<ul>
 <li><p>
 Anschließend formulieren wir drei Tests:
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-enthaelt-bmw?</span>
+
+<pre  class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-enthaelt-bmw?</span>
          <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">not</span> <span style="color: #709870;">(</span>enthaelt-bmw? <span style="color: #907373;">()</span> <span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
          <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> 
           <span style="color: #909183;">(</span><span style="color: #006FE0;">not</span> <span style="color: #709870;">(</span>enthaelt-bmw? 
@@ -577,14 +355,13 @@ Anschließend formulieren wir drei Tests:
                           <span style="color: #858580;">(</span><span style="color: #006FE0;">cons</span> '<span style="color: #6434A3;">Toyota</span> <span style="color: #80A880;">()</span> <span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org3c76e02" class="outline-3">
-<h3 id="org3c76e02">Verarbeitung beliebig langer Listen <i>(3)</i></h3>
-<div class="outline-text-3" id="text-org3c76e02">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-orgb409d03">
+<h3 id="orgb409d03">Verarbeitung beliebig langer Listen <i>(3)</i></h3>
+<ul>
 <li>Nun definieren wir eine <i>Funktionsschablone</i> gemäß Entwurfsvorschrift
 II (für bedingte Funktionen), die der Struktur der Datendefinition
 <i>Liste-von-Symbolen</i> folgt.</li>
@@ -593,41 +370,48 @@ Da diese Definition zwei Fälle &#x2013; die leere und die nicht-leere Liste &#x
 unterscheidet, ergibt sich folgende Schablone:
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">f</span>
+
+<pre  class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">f</span>
           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs<span style="color: #909183;">]</span>
              <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvs<span style="color: #709870;">)</span> ...
                    <span style="color: #D0372D;">:else</span>        ... <span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
+
 </ul>
 
-<ul class="org-ul">
+</section>
+<section >
+
+<ul>
 <li><p>
 Eine nicht-leere Liste ist eine aus zwei Komponenten zusammengesetzte
 Datenstruktur:
 </p>
-<ol class="org-ol">
+<ol>
 <li>dem ersten Element und</li>
 <li>der Restliste (ohne das erste Element).</li>
+
 </ol>
 <p>
 Da für die Verarbeitung einer solchen Struktur in der Regel auf beide
 Komponenten zugegriffen werden muss, ergänzen wir die Schablone nun
 um die Aufrufe der Selektionsfunktionen für diese beiden Komponenten.
 </p></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-orgc2af4e8" class="outline-3">
-<h3 id="orgc2af4e8">Verarbeitung beliebig langer Listen <i>(4)</i></h3>
-<div class="outline-text-3" id="text-orgc2af4e8">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-orgcbe54d9">
+<h3 id="orgcbe54d9">Verarbeitung beliebig langer Listen <i>(4)</i></h3>
+<ul>
 <li>Aus diesen Überlegungen ergibt sich folgende Schablone:</li>
+
 </ul>
 <div class="small">
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">f</span>
+
+<pre  class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">f</span>
           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs<span style="color: #909183;">]</span>
             <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
               <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvs<span style="color: #709870;">)</span> ...
@@ -637,26 +421,26 @@ um die Aufrufe der Selektionsfunktionen für diese beiden Komponenten.
 </div>
 
 </div>
-<ul class="org-ul">
+<ul>
 <li>Die Auslassungszeichen sind dann entsprechend der Zweckbestimmung
 auszufüllen, d.h. die Lösung muss aus den Zugriffen auf das erste
 Element und die Restliste geeignet kombiniert werden.</li>
 <li>Kehren wir dazu zu unserem Beispiel zurück.</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org7de639f" class="outline-3">
-<h3 id="org7de639f">Verarbeitung beliebig langer Listen <i>(5)</i></h3>
-<div class="outline-text-3" id="text-org7de639f">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org79a0c5e">
+<h3 id="org79a0c5e">Verarbeitung beliebig langer Listen <i>(5)</i></h3>
+<ul>
 <li><p>
 Die Schablone angewendet auf <code>enthaelt-bmw?</code>, wobei die Lösung für
 den Fall der leeren Liste bereits eingetragen ist:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">enthaelt-bmw?</span>
+
+<pre  class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">enthaelt-bmw?</span>
           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs<span style="color: #909183;">]</span>
             <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
               <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvs<span style="color: #709870;">)</span> <span style="color: #D0372D;">false</span>
@@ -664,21 +448,21 @@ den Fall der leeren Liste bereits eingetragen ist:
                     ... <span style="color: #709870;">(</span><span style="color: #006FE0;">rest</span> lvs<span style="color: #709870;">)</span> ...<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-orgb629292" class="outline-3">
-<h3 id="orgb629292">Verarbeitung beliebig langer Listen <i>(6)</i></h3>
-<div class="outline-text-3" id="text-orgb629292">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org8668ebc">
+<h3 id="org8668ebc">Verarbeitung beliebig langer Listen <i>(6)</i></h3>
+<ul>
 <li><p>
 Nun betrachten wir die Komponenten der nicht-leeren Liste. Falls das
 erste Element das gesuchte ist, muss die Funktion <code>true</code> liefern:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">enthaelt-bmw?</span>
+
+<pre  class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">enthaelt-bmw?</span>
           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs<span style="color: #909183;">]</span>
             <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
               <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvs<span style="color: #709870;">)</span> <span style="color: #D0372D;">false</span>
@@ -687,22 +471,23 @@ erste Element das gesuchte ist, muss die Funktion <code>true</code> liefern:
                        <span style="color: #D0372D;">:else</span> ... <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lvs<span style="color: #907373;">)</span> ...<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org0c6f207" class="outline-3">
-<h3 id="org0c6f207">Verarbeitung beliebig langer Listen <i>(7)</i></h3>
-<div class="outline-text-3" id="text-org0c6f207">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-orga59e54d">
+<h3 id="orga59e54d">Verarbeitung beliebig langer Listen <i>(7)</i></h3>
+<ul>
 <li>Falls das gesuchte Symbol nicht das erste in der Liste ist, hängt das
 Ergebnis der Funktion davon ab, ob es in der Restliste gefunden wird.
 Da die Restliste ja selbst wieder eine <i>Liste-von-Symbolen</i> ist, ist
 auf sie die Funktion <code>enthaelt-bmw?</code> anwendbar:</li>
+
 </ul>
 <div class="small">
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">enthaelt-bmw?</span>
+
+<pre  class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">enthaelt-bmw?</span>
           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs<span style="color: #909183;">]</span>
            <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> symbol? lvs<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
             <span style="color: #D0372D;">:post</span><span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #0000FF;">or</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">true?</span> <span style="color: #BA36A5;">%</span><span style="color: #6276BA;">)</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">false?</span> <span style="color: #BA36A5;">%</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
@@ -713,60 +498,61 @@ auf sie die Funktion <code>enthaelt-bmw?</code> anwendbar:</li>
 </div>
 
 </div>
-<ul class="org-ul">
+<ul>
 <li>Damit ist die Funktion vollständig. (Zu finden unter enthaelt-bmw.clj
 in <i>moodle</i>.)</li>
-</ul>
-</div>
-</div>
-</div>
 
-<div id="outline-container-org6ea7f1f" class="outline-2">
-<h2 id="org6ea7f1f">Entwurfsvorschrift V</h2>
-<div class="outline-text-2" id="text-org6ea7f1f">
-</div><div id="outline-container-org014bb01" class="outline-3">
-<h3 id="org014bb01">Entwurfsvorschrift V (Verarbeitung von Listen) <i>(1)</i></h3>
-<div class="outline-text-3" id="text-org014bb01">
-<ul class="org-ul">
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org24f4847">
+<h2 id="org24f4847">Entwurfsvorschrift V</h2>
+<div class="outline-text-2" id="text-org24f4847">
+</div></section>
+<section id="slide-org3bd4054">
+<h3 id="org3bd4054">Entwurfsvorschrift V (Verarbeitung von Listen) <i>(1)</i></h3>
+<ul>
 <li>Die Funktion <code>enthaelt-bmw?</code> wurde unter Verwendung der
 Entwurfsvorschriften I und II entwickelt.</li>
 <li>Anpassung der Entwurfsvorschrift für die Entwicklung von Funktionen
 zur Verarbeitung <i>rekursiver Datenstrukturen</i>:
-<ul class="org-ul">
+<ul>
 <li>Die Phase <i>Datenanalyse</i> wird ergänzt um die Aktivität zum Entwurf
 der rekursiven Datenstruktur. Dies ist grundsätzlich dann nötig,
 wenn Datenmengen beliebiger Größe zu verarbeiten sind.</li>
+
 </ul></li>
 <li>Die Definition einer rekursiven Datenstruktur erfolgt durch
 Aufschreiben von mindestens zwei Sätzen, wobei mindestens einer einen
 Rückbezug auf die Definition und mindestens einer keinen Rückbezug
 auf die Definition aufweist.</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-orgd407d48" class="outline-3">
-<h3 id="orgd407d48">Entwurfsvorschrift V <i>(2)</i></h3>
-<div class="outline-text-3" id="text-orgd407d48">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org78abe85">
+<h3 id="org78abe85">Entwurfsvorschrift V <i>(2)</i></h3>
+<ul>
 <li>Betrachten wir dazu noch einmal die Definition der Liste von
 Symbolen:</li>
+
 </ul>
 
 <div class="figure">
 <p><img src="./Abbildungen/lvs.png" alt="lvs.png" width="600px" />
 </p>
 </div>
-<ul class="org-ul">
+<ul>
 <li>Der Pfeil verdeutlicht den Selbstbezug der Definition.</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org63dca6f" class="outline-3">
-<h3 id="org63dca6f">Entwurfsvorschrift V <i>(3)</i></h3>
-<div class="outline-text-3" id="text-org63dca6f">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org02faf1d">
+<h3 id="org02faf1d">Entwurfsvorschrift V <i>(3)</i></h3>
+<ul>
 <li>In der Phase <i>Funktionsschablone</i> wird eine solche für
 eine bedingte Funktion erstellt, die für jeden Satz der Definition
 der rekursiven Datenstruktur eine Frage-Antwort-Kombination enthält.</li>
@@ -775,26 +561,27 @@ gleichartige Datenstruktur selektiert, ein Pfeil auf den
 Funktionsnamen gezeichnet werden.</li>
 <li>Man erhält dann eine Funktionsschablone, die zur rekursiven
 Definition der Datenstruktur gewissermaßen isomorph ist:</li>
+
 </ul>
 
 <div class="figure">
 <p><img src="./Abbildungen/listenfunktion.png" alt="listenfunktion.png" width="600px" />
 </p>
 </div>
-</div>
-</div>
-<div id="outline-container-orgc37b9a5" class="outline-3">
-<h3 id="orgc37b9a5">Entwurfsvorschrift V &#x2013; Funktionsschablone</h3>
-<div class="outline-text-3" id="text-orgc37b9a5">
-<ul class="org-ul">
+</section>
+<section id="slide-org90ad987">
+<h3 id="org90ad987">Entwurfsvorschrift V &#x2013; Funktionsschablone</h3>
+<ul>
 <li>Dieser Rückwärtspfeil wird durch eine rekursive Anwendung der
 Funktion ersetzt.</li>
 <li>Damit ergibt sich für das Beispiel der Verarbeitung beliebig langer
 Listen von Symbolen die folgende Funktionsschablone:</li>
+
 </ul>
 <div class="small">
 <div class="org-src-container">
-<pre class="src src-clojure">           
+
+<pre  class="src src-clojure">           
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">listen-funktion</span>
          <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs<span style="color: #909183;">]</span>
             <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
@@ -805,21 +592,21 @@ Listen von Symbolen die folgende Funktionsschablone:</li>
 </div>
 
 </div>
-<ul class="org-ul">
+<ul>
 <li>Wir sprechen hier von <b>natürlicher Rekursion</b>.</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org7526ce8" class="outline-3">
-<h3 id="org7526ce8">Entwurfsvorschrift V &#x2013; Funktionsrumpf</h3>
-<div class="outline-text-3" id="text-org7526ce8">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-orgc33288f">
+<h3 id="orgc33288f">Entwurfsvorschrift V &#x2013; Funktionsrumpf</h3>
+<ul>
 <li>Die Entwicklung des Funktionsrumpfs beginnt mit den
 Frage-Antwort-Kombinationen, die keine rekursiven Aufrufe enthalten.
-<ul class="org-ul">
+<ul>
 <li>Die Antwort ist in der Regel einfach.</li>
 <li>Sie sollte in den Beispielen bereits vorkommen.</li>
+
 </ul></li>
 <li>Für die rekursiven Fälle ist zunächst vorauszusetzen, dass die
 rekursive Anwendung der Funktion auf die Restliste bereits das
@@ -833,92 +620,93 @@ Dieses ist mit dem Ergebnis für das erste Element der Liste geeignet
 Dieser Schritt besteht in dem Beispiel <code>enthaelt-bmw?</code> in einer
 weiteren Fallunterscheidung.
 </p></li>
-</ul>
-</div>
-</div>
-</div>
 
-<div id="outline-container-org48c4163" class="outline-2">
-<h2 id="org48c4163">Entwurfsvorschrift V &#x2013; Zusammenfassung</h2>
-<div class="outline-text-2" id="text-org48c4163">
-</div><div id="outline-container-orge9cde09" class="outline-3">
-<h3 id="orge9cde09">Entwurfsvorschrift V (Rekursive Datenstrukturen)</h3>
-<div class="outline-text-3" id="text-orge9cde09">
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org357d82a">
+<h2 id="org357d82a">Entwurfsvorschrift V &#x2013; Zusammenfassung</h2>
+<div class="outline-text-2" id="text-org357d82a">
+</div></section>
+<section id="slide-org1b9c1df">
+<h3 id="org1b9c1df">Entwurfsvorschrift V (Rekursive Datenstrukturen)</h3>
 <p>
 Die sechs Phasen der Entwurfsvorschrift II bleiben grundsätzlich bestehen.
 </p>
 
-<ol class="org-ol">
+<ol>
 <li>Vertrag, Funktionskopf, Zweckbestimmung</li>
 <li><b>Datenanalyse / Datendefinition</b></li>
 <li><b>Beispiele / Tests</b></li>
 <li><b>Funktionsschablone</b></li>
 <li>Funktionsrumpf</li>
 <li>Testen</li>
+
 </ol>
 
 <p>
 Es folgt die Beschreibung der neuen bzw. angepassten Phasen.
 </p>
-</div>
-</div>
 
-<div id="outline-container-org2b68e5d" class="outline-3">
-<h3 id="org2b68e5d">Entwurfsvorschrift V - Phase 2</h3>
-<div class="outline-text-3" id="text-org2b68e5d">
+</section>
+<section id="slide-org66e24cf">
+<h3 id="org66e24cf">Entwurfsvorschrift V - Phase 2</h3>
 <p>
 <b>Datenanalyse / Datendefinition</b>
 </p>
-<ul class="org-ul">
+<ul>
 <li>Ziel: Definition von problemangepassten Datenstrukturen</li>
 <li>Aktivitäten:
-<ul class="org-ul">
+<ul>
 <li>Analysiere die Problembeschreibung hinsichtlich der zu
 verarbeitenden Objekte. Definiere für jede Objektmenge eine
 (rekursive) Datenstruktur!</li>
-</ul></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org88e1f83" class="outline-3">
-<h3 id="org88e1f83">Entwurfsvorschrift V - Phase 3</h3>
-<div class="outline-text-3" id="text-org88e1f83">
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org3b1d49a">
+<h3 id="org3b1d49a">Entwurfsvorschrift V - Phase 3</h3>
 <p>
 <b>Beispiele / Tests</b>
 </p>
-<ul class="org-ul">
+<ul>
 <li>Ziel: Untersuche die Problembeschreibung nach Beispielen</li>
 <li>Aktivitäten:
-<ul class="org-ul">
+<ul>
 <li><p>
 Formuliere mindestens einen Test für den Fall, dass die rekursive
 Datenstruktur
 </p>
-<ul class="org-ul">
+<ul>
 <li>keine Elemente,</li>
 <li>genau ein Element oder</li>
 <li>mehr als ein Element</li>
+
 </ul>
 <p>
 enthält!
 </p></li>
-</ul></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-orgc69a9eb" class="outline-3">
-<h3 id="orgc69a9eb">Entwurfsvorschrift V - Phase 4</h3>
-<div class="outline-text-3" id="text-orgc69a9eb">
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-org818bd4e">
+<h3 id="org818bd4e">Entwurfsvorschrift V - Phase 4</h3>
 <p>
 <b>Funktionsschablone</b>
 </p>
-<ul class="org-ul">
+<ul>
 <li>Ziel: Entwurf einer Funktionsschablone, die der rekursiven Struktur
 der Daten folgt.</li>
 <li>Aktivitäten:
-<ul class="org-ul">
+<ul>
 <li>Schreibe das Skelett eines <code>cond</code>-Ausdrucks auf mit je einer
 Frage-Antwort-Klausel für jeden nicht-rekursiven und jeden
 rekursiven Fall!</li>
@@ -926,19 +714,21 @@ rekursiven Fall!</li>
 Selektionsausdrücke <code>(first ...), (rest ...)</code>, <b>wobei auf den</b>
 <b>Ausdruck <code>(rest ...)</code> die zu entwickelnde Funktion rekursiv
 anzuwenden ist</b>.</li>
-</ul></li>
-</ul>
-</div>
-</div>
-</div>
 
-<div id="outline-container-org54686ef" class="outline-2">
-<h2 id="org54686ef">Listen als Resultate</h2>
-<div class="outline-text-2" id="text-org54686ef">
-</div><div id="outline-container-org37ed9bf" class="outline-3">
-<h3 id="org37ed9bf">Anwendung von Entwurfsvorschrift V</h3>
-<div class="outline-text-3" id="text-org37ed9bf">
-<ul class="org-ul">
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org15c6f23">
+<h2 id="org15c6f23">Listen als Resultate</h2>
+<div class="outline-text-2" id="text-org15c6f23">
+</div></section>
+<section id="slide-orgb14d95b">
+<h3 id="orgb14d95b">Anwendung von Entwurfsvorschrift V</h3>
+<ul>
 <li>Dem Gebrauchtwagenhändler soll eine Funktion zur Verfügung gestellt
 werden, mit der er ein Modell aus seiner Angebotspalette entfernen
 kann.</li>
@@ -947,7 +737,8 @@ Vertrag, Funktionskopf, Zweckbestimmung
 </p>
 <div class="small">
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">entfernt eine Modell aus der Modellpalette</span>
+
+<pre  class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">entfernt eine Modell aus der Modellpalette</span>
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">entferne-modell</span>
           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>modellpalette modell<span style="color: #909183;">]</span>
            <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> symbol? modellpalette<span style="color: #907373;">)</span> 
@@ -959,15 +750,15 @@ Vertrag, Funktionskopf, Zweckbestimmung
 
 </div></li>
 <li>Tests s. u. (aus "'Platzgründen"')</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org1892d96" class="outline-3">
-<h3 id="org1892d96">Funktionsschablone für <code>entferne-modell</code></h3>
-<div class="outline-text-3" id="text-org1892d96">
+</ul>
+
+</section>
+<section id="slide-orgbbd858d">
+<h3 id="orgbbd858d">Funktionsschablone für <code>entferne-modell</code></h3>
 <div class="org-src-container">
-<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">entfernt eine Modell aus der Modellpalette</span>
+
+<pre  class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">entfernt eine Modell aus der Modellpalette</span>
     <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">entferne-modell</span>
        <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>modellpalette modell<span style="color: #909183;">]</span>
         <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> symbol? modellpalette<span style="color: #907373;">)</span> 
@@ -981,25 +772,26 @@ Vertrag, Funktionskopf, Zweckbestimmung
             </pre>
 </pre>
 </div>
-</div>
-</div>
 
-<div id="outline-container-orgae83cf8" class="outline-3">
-<h3 id="orgae83cf8">Funktionsrumpf für <code>entferne-modell</code></h3>
-<div class="outline-text-3" id="text-orgae83cf8">
-<ul class="org-ul">
+</section>
+<section id="slide-org0832fee">
+<h3 id="org0832fee">Funktionsrumpf für <code>entferne-modell</code></h3>
+<ul>
 <li>Folgende Fälle sind zu unterscheiden:
-<ol class="org-ol">
+<ol>
 <li>Wenn die Modellpalette die leere Liste ist, ist das Resultat
 <code>empty</code>.</li>
 <li>Wenn das zu entfernende Modell das erste in der Liste ist, so ist
 das Resultat die Restliste.</li>
 <li>Andernfalls besteht die Ergebnisliste aus dem ersten Modell und
 der Restliste, aus der das zu entfernende Modell entfernt wurde.</li>
+
 </ol></li>
+
 </ul>
 <div class="org-src-container">
-<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">entferne-modell</span>
+
+<pre  class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">entferne-modell</span>
       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>modellpalette modell<span style="color: #909183;">]</span>
         <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
           <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> modellpalette<span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
@@ -1011,14 +803,13 @@ der Restliste, aus der das zu entfernende Modell entfernt wurde.</li>
                                      modell<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
-</div>
-</div>
 
-<div id="outline-container-org21f65b8" class="outline-3">
-<h3 id="org21f65b8">Funktion <code>entferne-modell</code> ohne Tests</h3>
-<div class="outline-text-3" id="text-org21f65b8">
+</section>
+<section id="slide-org4a2a679">
+<h3 id="org4a2a679">Funktion <code>entferne-modell</code> ohne Tests</h3>
 <div class="org-src-container">
-<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">entfernt eine Modell aus der Modellpalette</span>
+
+<pre  class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">entfernt eine Modell aus der Modellpalette</span>
     <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">entferne-modell</span>
       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>modellpalette modell<span style="color: #909183;">]</span>
         <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> symbol? modellpalette<span style="color: #907373;">)</span> 
@@ -1034,14 +825,13 @@ der Restliste, aus der das zu entfernende Modell entfernt wurde.</li>
                                      modell<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
-</div>
-</div>
 
-<div id="outline-container-org71a215d" class="outline-3">
-<h3 id="org71a215d">Tests für <code>entferne-modell</code></h3>
-<div class="outline-text-3" id="text-org71a215d">
+</section>
+<section id="slide-org04b48a7">
+<h3 id="org04b48a7">Tests für <code>entferne-modell</code></h3>
 <div class="org-src-container">
-<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-entferne-modell</span>
+
+<pre  class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-entferne-modell</span>
       <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>entferne-modell <span style="color: #907373;">()</span> '<span style="color: #D0372D;">BMW</span><span style="color: #709870;">)</span> <span style="color: #709870;">()</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
       <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>entferne-modell '<span style="color: #907373;">(</span><span style="color: #D0372D;">BMW</span><span style="color: #907373;">)</span> '<span style="color: #D0372D;">BMW</span><span style="color: #709870;">)</span> <span style="color: #709870;">()</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
       <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>entferne-modell '<span style="color: #907373;">(</span><span style="color: #D0372D;">BMW</span><span style="color: #907373;">)</span> '<span style="color: #D0372D;">OPEL</span><span style="color: #709870;">)</span> '<span style="color: #709870;">(</span><span style="color: #D0372D;">BMW</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
@@ -1051,17 +841,17 @@ der Restliste, aus der das zu entfernende Modell entfernt wurde.</li>
              '<span style="color: #709870;">(</span><span style="color: #D0372D;">BMW</span> <span style="color: #D0372D;">FORD</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
-</div>
-</div>
-</div>
 
-<div id="outline-container-org0ecf530" class="outline-2">
-<h2 id="org0ecf530">Entwurfsvorschrift V und Hilfsfunktionen</h2>
-<div class="outline-text-2" id="text-org0ecf530">
-</div><div id="outline-container-org825b0ca" class="outline-3">
-<h3 id="org825b0ca">Top-down-Entwurf</h3>
-<div class="outline-text-3" id="text-org825b0ca">
-<ul class="org-ul">
+</section>
+</section>
+<section>
+<section id="slide-orgc1160f5">
+<h2 id="orgc1160f5">Entwurfsvorschrift V und Hilfsfunktionen</h2>
+<div class="outline-text-2" id="text-orgc1160f5">
+</div></section>
+<section id="slide-orga8fcd8b">
+<h3 id="orga8fcd8b">Top-down-Entwurf</h3>
+<ul>
 <li>Anhand eines weiteren Beispiels soll die Anwendung von
 Entwurfsvorschrift V demonstriert werden.</li>
 <li>Während des Entwurfsprozesses kann es sich als zweckmäßig erweisen,
@@ -1073,47 +863,48 @@ Hauptproblems formulieren zu können.</li>
 <li><p>
 Diese Vorgehensweise wird als
 </p>
-<ul class="org-ul">
+<ul>
 <li><i>Top-down-Entwurf</i> oder auch</li>
 <li><i>schrittweise Verfeinerung</i></li>
+
 </ul>
 <p>
 bezeichnet.
 </p></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org502fecf" class="outline-3">
-<h3 id="org502fecf">Literaturhinweise</h3>
-<div class="outline-text-3" id="text-org502fecf">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-orgbc8c5c9">
+<h3 id="orgbc8c5c9">Literaturhinweise</h3>
+<ul>
 <li>Gelegentlich werden auch die Begriffe Wunschdenken oder Wunschliste
 benutzt, z.B. in
-<ol class="org-ol">
+<ol>
 <li>M. Felleisen, R. Findler, M. Flatt, S. Krishnamurthi: How to
 Design Programs. (<a class='org-ref-reference' href="#Htdp2003">Htdp2003</a>)</li>
 <li>H. Klaeren, M. Sperber: Die Macht der Abstraktion.
 (<a class='org-ref-reference' href="#KlaerenSperber2007">KlaerenSperber2007</a>)</li>
+
 </ol></li>
 <li>Das Prinzip der Entwurfsvorschriften stammt aus HtDP.</li>
 <li><p>
 Ein weiteres empfehlenswertes Buch:
 </p>
-<ol class="org-ol">
+<ol>
 <li>Abelson, G. Sussman, J. Sussman: Structure and Interpretation of</li>
+
 </ol>
 <p>
 Computer Programs. (<a class='org-ref-reference' href="#Sicp1999">Sicp1999</a>)
 </p></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-orga9e4998" class="outline-3">
-<h3 id="orga9e4998">Top-down-Entwurf &#x2013; Beispiel</h3>
-<div class="outline-text-3" id="text-orga9e4998">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org6bee8ff">
+<h3 id="org6bee8ff">Top-down-Entwurf &#x2013; Beispiel</h3>
+<ul>
 <li><p>
 Die Funktion <code>(symbolsin x)</code> liefere, angewandt auf eine Liste von
 Symbolen, eine Liste mit dem einmaligen Auftreten jedes dieser
@@ -1150,7 +941,8 @@ Die Anwendung von Entwurfsvorschrift V (ohne Tests) liefert
 zunächst:
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">entfernt aus eine Liste von Symbolen jedes </span>
+
+<pre  class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">entfernt aus eine Liste von Symbolen jedes </span>
        <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">mehrfache Auftreten eines Symbols</span>
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">symbolsin</span>
           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs<span style="color: #909183;">]</span>
@@ -1161,39 +953,39 @@ zunächst:
                          ... <span style="color: #709870;">(</span>symbolsin <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lvs<span style="color: #907373;">)</span><span style="color: #709870;">)</span> ...<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org65eb005" class="outline-3">
-<h3 id="org65eb005">Top-down-Entwurf &#x2013; Beispiel <i>(2)</i></h3>
-<div class="outline-text-3" id="text-org65eb005">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org87dfb55">
+<h3 id="org87dfb55">Top-down-Entwurf &#x2013; Beispiel <i>(2)</i></h3>
+<ul>
 <li>Das Resultat von <code>symbolsin</code> ist <code>()</code>, wenn das Argument die leere
 Liste ist.</li>
 <li>Für die Kombination des Ergebnisses aus dem ersten Listenelement und
 der rekursiven Anwendung von <code>symbolsin</code> auf die Restliste sind zwei
 Fälle zu unterscheiden:
-<ol class="org-ol">
+<ol>
 <li>Wenn das erste Element in <code>(symbolsin (rest lvs))</code> bereits
 auftaucht, ist <code>(symbolsin (rest lvs))</code> schon das endgültige
 Resultat.</li>
 <li>Wenn es dort noch nicht vorhanden ist, muss das erste Element noch
 hinzugefügt werden.</li>
+
 </ol></li>
 <li>Das Ergebnis von <code>symbolsin</code> kann als eine <i>Menge</i>, repräsentiert
 durch eine Liste ohne Wiederholungen, betrachtet werden. Diese Idee
 führt auf eine Hilfsfunktion <code>addtoset</code>, die ein Element einer Menge
 hinzufügt, wenn es in ihr nicht bereits enthalten ist.</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org37ea420" class="outline-3">
-<h3 id="org37ea420">Top-down-Entwurf &#x2013; Beispiel <i>(3)</i></h3>
-<div class="outline-text-3" id="text-org37ea420">
+</ul>
+
+</section>
+<section id="slide-orgab5f5aa">
+<h3 id="orgab5f5aa">Top-down-Entwurf &#x2013; Beispiel <i>(3)</i></h3>
 <div class="org-src-container">
-<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">fuegt einer Liste von Symbolen ein weiteres hinzu, </span>
+
+<pre  class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">fuegt einer Liste von Symbolen ein weiteres hinzu, </span>
     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">falls es nicht bereits enthalten ist.</span>
     <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">addtoset</span>
        <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs s<span style="color: #909183;">]</span>
@@ -1212,14 +1004,13 @@ hinzufügt, wenn es in ihr nicht bereits enthalten ist.</li>
 <p>
 Mit dieser Funktion kann <code>symbolsin</code> vervollständigt werden.
 </p>
-</div>
-</div>
 
-<div id="outline-container-org53ae40a" class="outline-3">
-<h3 id="org53ae40a">Top-down-Entwurf &#x2013; Beispiel <i>(4)</i></h3>
-<div class="outline-text-3" id="text-org53ae40a">
+</section>
+<section id="slide-org876347a">
+<h3 id="org876347a">Top-down-Entwurf &#x2013; Beispiel <i>(4)</i></h3>
 <div class="org-src-container">
-<pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">entfernt aus eine Liste von Symbolen jedes </span>
+
+<pre  class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">entfernt aus eine Liste von Symbolen jedes </span>
     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">mehrfache Auftreten eines Symbols</span>
     <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">symbolsin</span>
       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs<span style="color: #909183;">]</span>
@@ -1236,25 +1027,25 @@ Mit dieser Funktion kann <code>symbolsin</code> vervollständigt werden.
        <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>symbolsin '<span style="color: #907373;">(</span>a b c a d c<span style="color: #907373;">)</span><span style="color: #709870;">)</span> '<span style="color: #709870;">(</span>b a d c<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
-</div>
-</div>
 
-<div id="outline-container-orgdfab1bc" class="outline-3">
-<h3 id="orgdfab1bc">Top-down-Entwurf &#x2013; Beispiel <i>(5)</i></h3>
-<div class="outline-text-3" id="text-orgdfab1bc">
-<ul class="org-ul">
+</section>
+<section id="slide-org0fc0eae">
+<h3 id="org0fc0eae">Top-down-Entwurf &#x2013; Beispiel <i>(5)</i></h3>
+<ul>
 <li>Für die Funktion <code>addtoset</code> stellen wir folgende Überlegungen an:
-<ul class="org-ul">
+<ul>
 <li>Falls die Liste (Menge) leer ist, kann das neue Element mit <code>cons</code>
 hinzugefügt werden.</li>
 <li>Wenn die Menge nicht leer ist, muss geprüft werden, ob das Element
 bereits in der Liste enthalten ist.</li>
+
 </ul></li>
 <li><p>
 Fügen wir der Wunschliste ein Prädikat <code>member?</code> hinzu.
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">       ...
+
+<pre  class="src src-clojure">       ...
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">addtoset</span>
           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs s<span style="color: #909183;">]</span>
            <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span>  <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> symbol? lvs<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">symbol?</span> s<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
@@ -1267,19 +1058,19 @@ Fügen wir der Wunschliste ein Prädikat <code>member?</code> hinzu.
                     <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> s lvs<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-orgf37cb14" class="outline-3">
-<h3 id="orgf37cb14">Top-down-Entwurf &#x2013; Beispiel <i>(6)</i></h3>
-<div class="outline-text-3" id="text-orgf37cb14">
+</ul>
+
+</section>
+<section id="slide-orgb25725b">
+<h3 id="orgb25725b">Top-down-Entwurf &#x2013; Beispiel <i>(6)</i></h3>
 <p>
 Die Schablone für die Funktion <code>member?</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">    <span style="color: #8D8D84; font-style: italic;">; prueft, ob ein Symbol in einer Liste enthalten ist.</span>
+
+<pre  class="src src-clojure">    <span style="color: #8D8D84; font-style: italic;">; prueft, ob ein Symbol in einer Liste enthalten ist.</span>
     <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">member?</span>
        <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs s<span style="color: #909183;">]</span>
           <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span>  <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> symbol? lvs<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">symbol?</span> s<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
@@ -1294,14 +1085,13 @@ Die Schablone für die Funktion <code>member?</code>:
        <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">not</span> <span style="color: #709870;">(</span>member? '<span style="color: #907373;">(</span>a b x<span style="color: #907373;">)</span> 'y<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
-</div>
-</div>
 
-<div id="outline-container-orgaaea101" class="outline-3">
-<h3 id="orgaaea101">Top-down-Entwurf &#x2013; Beispiel <i>(7)</i></h3>
-<div class="outline-text-3" id="text-orgaaea101">
+</section>
+<section id="slide-org457762d">
+<h3 id="org457762d">Top-down-Entwurf &#x2013; Beispiel <i>(7)</i></h3>
 <div class="org-src-container">
-<pre class="src src-clojure">    <span style="color: #8D8D84; font-style: italic;">; prueft, ob ein Symbol in einer Liste enthalten ist.</span>
+
+<pre  class="src src-clojure">    <span style="color: #8D8D84; font-style: italic;">; prueft, ob ein Symbol in einer Liste enthalten ist.</span>
     <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">member?</span>
        <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lvs s<span style="color: #909183;">]</span>
           <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span>  <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> symbol? lvs<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">symbol?</span> s<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
@@ -1322,58 +1112,59 @@ Die Schablone für die Funktion <code>member?</code>:
 Das vollständige Programm <code>symbolsin</code> ist zu finden unter
 symbolsin.clj in moodle. 
 </p>
-</div>
-</div>
-</div>
 
 
 
-<div id="outline-container-org866fea3" class="outline-2">
-<h2 id="org866fea3">Rekursive Definition der natürlichen Zahlen</h2>
-<div class="outline-text-2" id="text-org866fea3">
-</div><div id="outline-container-org88df8e8" class="outline-3">
-<h3 id="org88df8e8">Mathematische Definition</h3>
-<div class="outline-text-3" id="text-org88df8e8">
-<ul class="org-ul">
+</section>
+</section>
+<section>
+<section id="slide-orgbc158bf">
+<h2 id="orgbc158bf">Rekursive Definition der natürlichen Zahlen</h2>
+<div class="outline-text-2" id="text-orgbc158bf">
+</div></section>
+<section id="slide-org23a4e5b">
+<h3 id="org23a4e5b">Mathematische Definition</h3>
+<ul>
 <li>Bisher wurden nur Listen als rekursive Datenstrukturen betrachtet.</li>
 <li>Mathematisch können die natürlichen Zahlen folgendermaßen definiert
 werden:
-<ul class="org-ul">
+<ul>
 <li>\(0\) ist eine natürliche Zahl.</li>
 <li>Wenn \(n\) eine natürliche Zahl ist, dann ist auch \(succ(n)\) eine
 natürliche Zahl.</li>
+
 </ul></li>
 <li>Wir definieren also
-<ul class="org-ul">
+<ul>
 <li>eine Konstante (\(0\)) und</li>
 <li>eine Nachfolgeroperation (\(succ\)).</li>
+
 </ul></li>
 <li>Der Term \(succ(succ(succ(0)))\) entspricht dann der \(3\),
 ohne dass wir die \(3\) als Konstante einführen müssen.</li>
 <li>Durch die Prämisse im zweiten Teil der Definition ist diese rekursiv.</li>
+
 </ul>
-</div>
-</div>
-<div id="outline-container-org825fdc5" class="outline-3">
-<h3 id="org825fdc5">Definition in Clojure</h3>
-<div class="outline-text-3" id="text-org825fdc5">
-<ul class="org-ul">
+</section>
+<section id="slide-org9b90705">
+<h3 id="org9b90705">Definition in Clojure</h3>
+<ul>
 <li>In Clojure-Notation könnte die Definition lauten:
-<ol class="org-ol">
+<ol>
 <li><code>zero</code> ist eine natürliche Zahl.</li>
 <li><code>(succ n)</code> ist eine natürliche Zahl, wenn <code>n</code> eine natürliche Zahl
 ist.</li>
+
 </ol></li>
 <li>Um Verwechslungen mit den in Clojure eingebauten Zahlen zu vermeiden,
 wird hier die Konstante Null durch <code>zero</code> anstelle von <code>0</code> dargestellt.</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org0385ad7" class="outline-3">
-<h3 id="org0385ad7">Clojure-Definitionen für zero und succ</h3>
-<div class="outline-text-3" id="text-org0385ad7">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org573db88">
+<h3 id="org573db88">Clojure-Definitionen für zero und succ</h3>
+<ul>
 <li><p>
 Konstanten sind u.a. dadurch gekennzeichnet, dass sie zu sich selbst
 ausgewertet werden. Für die Konstante <code>zero</code> können wir das durch die
@@ -1382,7 +1173,8 @@ folgende Definition erreichen:
 
 <div class="smaller">
 <div class="org-src-container">
-<pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">zero</span> 'zero<span style="color: #707183;">)</span></pre>
+
+<pre  class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">zero</span> 'zero<span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
@@ -1394,36 +1186,40 @@ folgende Definition erreichen:
 natürliche Zahlen nur <code>succ</code>-Terme haben, soll auch ein
 Clojure-Ausdruck <code>(succ (succ zero))</code> zu sich selbst ausgewertet
 werden. Dies ist durch folgende Definition zu erreichen:</li>
+
 </ul>
 
+</section>
+<section >
 <div class="smaller">
 <div class="org-src-container">
-<pre class="src src-clojure">        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">succ</span>
+
+<pre  class="src src-clojure">        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">succ</span>
            <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">list</span> 'succ n<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 
 </div>
 
-<ul class="org-ul">
+<ul>
 <li>Die Auswertung von<br />
   <code>(succ (succ (succ zero)))</code> <br />
 liefert damit<br />
   <code>(succ (succ (succ zero)))</code>.</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-orgdea97be" class="outline-3">
-<h3 id="orgdea97be">Der abstrakte Datentyp <b>Nat</b></h3>
-<div class="outline-text-3" id="text-orgdea97be">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org5ce36e9">
+<h3 id="org5ce36e9">Der abstrakte Datentyp <b>Nat</b></h3>
+<ul>
 <li><p>
 Mit den Definitionen für <code>zero</code> und <code>succ</code> haben wir quasi einen
 neuen Datentyp geschaffen, den wir <b>Nat</b> nennen wollen.
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">zero</span> 'zero<span style="color: #707183;">)</span>
+
+<pre  class="src src-clojure">       <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">zero</span> 'zero<span style="color: #707183;">)</span>
 
        <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">succ: Nat -&gt; Nat</span>
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">succ</span>
@@ -1436,14 +1232,13 @@ neuen Datentyp geschaffen, den wir <b>Nat</b> nennen wollen.
 </div></li>
 <li>Mithilfe dieses Datentyps können wir Funktionen definieren, die z.B.
 natürliche Zahlen (d.h. Exemplare von <b>Nat</b>) als Ergebnis liefern.</li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org4220552" class="outline-3">
-<h3 id="org4220552">Anwendung des Datentyps <b>Nat</b></h3>
-<div class="outline-text-3" id="text-org4220552">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org75d8ae7">
+<h3 id="org75d8ae7">Anwendung des Datentyps <b>Nat</b></h3>
+<ul>
 <li>Beispiel: Zählen der Elemente einer Liste.</li>
 
 <li><p>
@@ -1452,7 +1247,8 @@ Schablone:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">zaehlt die Anzahl der Elemente ihres Arguments</span>
+
+<pre  class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">zaehlt die Anzahl der Elemente ihres Arguments</span>
        <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">countElements: (list-of any) -&gt; Nat</span>
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">countElements</span>
          <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
@@ -1467,21 +1263,21 @@ Schablone:
                 <span style="color: #709870;">(</span>succ <span style="color: #907373;">(</span>succ <span style="color: #6276BA;">(</span>succ zero<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-orgb47d575" class="outline-3">
-<h3 id="orgb47d575">Die Funktion <code>countElements</code></h3>
-<div class="outline-text-3" id="text-orgb47d575">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org9e1cec7">
+<h3 id="org9e1cec7">Die Funktion <code>countElements</code></h3>
+<ul>
 <li><p>
 Wenn die Liste nicht leer ist, ist das Resultat der Nachfolger der
 Anwendung von <code>countElements</code> auf die Restliste.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">zaehlt die Anzahl der Elemente ihres Arguments</span>
+
+<pre  class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">zaehlt die Anzahl der Elemente ihres Arguments</span>
        <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">countElements: (list-of any) -&gt; Nat</span>
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">countElements</span>
          <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
@@ -1495,24 +1291,24 @@ Anwendung von <code>countElements</code> auf die Restliste.
                 <span style="color: #709870;">(</span>succ <span style="color: #907373;">(</span>succ <span style="color: #6276BA;">(</span>succ zero<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org93b41ef" class="outline-3">
-<h3 id="org93b41ef">Weitere Operationen für <b>Nat</b></h3>
-<div class="outline-text-3" id="text-org93b41ef">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org6c29914">
+<h3 id="org6c29914">Weitere Operationen für <b>Nat</b></h3>
+<ul>
 <li>Die Operation \(succ\) ermöglicht es bisher nur (vorwärts) zu zählen.</li>
 <li>Wir definieren zwei weitere Operationen zur
-<ul class="org-ul">
+<ul>
 <li>Ermittlung des Vorgängers einer natürlichen Zahl: \(pred\)</li>
 <li>Addition von zwei natürlichen Zahlen: \(plus\)</li>
+
 </ul></li>
 <li>Die Definitionen nehmen wir dadurch vor, dass wir die
 Wechselwirkungen der neuen Operationen mit den Basisoperationen \(0\)
 und \(succ\) zunächst durch Gleichungen beschreiben.
-<ul class="org-ul">
+<ul>
 <li>Für \(pred\) gelte (mit \(n \in \textbf{Nat}\)):
 \[\begin{aligned}
                       pred(succ(n)) & = & n  \\
@@ -1523,15 +1319,15 @@ und \(succ\) zunächst durch Gleichungen beschreiben.
                        plus(0, n) & = & n  \\
                        plus(succ(n), m) & = & succ(plus(n, m))  
                    \end{aligned}\]</li>
-</ul></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org0deb47e" class="outline-3">
-<h3 id="org0deb47e">Prädikat <code>zero?</code></h3>
-<div class="outline-text-3" id="text-org0deb47e">
-<ul class="org-ul">
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgbf5aaf5">
+<h3 id="orgbf5aaf5">Prädikat <code>zero?</code></h3>
+<ul>
 <li>Beide Definitionen basieren auf einer Fallunterscheidung. Um sie in
 entsprechende Clojure-Definitionen zu übertragen, ist es sinnvoll,
 zunächst ein Prädikat <code>=zero?</code> zu definieren, das feststellt, ob sein
@@ -1541,7 +1337,8 @@ Dabei nutzen wir die Tatsache, dass  Exemplare von <b>Nat</b> entweder
 <code>succ</code>-Terme (also Listen) oder <code>zero</code> sind.
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">prueft, ob ihr Argument zero ist.</span>
+
+<pre  class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">prueft, ob ihr Argument zero ist.</span>
        <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">=zero?: Nat -&gt; boolean</span>
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">=zero?</span> 
          <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span>
@@ -1553,20 +1350,20 @@ Dabei nutzen wir die Tatsache, dass  Exemplare von <b>Nat</b> entweder
            </pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org8b4b56c" class="outline-3">
-<h3 id="org8b4b56c">Der abstrakte Datentyp <b>Nat</b>: <code>pred</code></h3>
-<div class="outline-text-3" id="text-org8b4b56c">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-org7436ea5">
+<h3 id="org7436ea5">Der abstrakte Datentyp <b>Nat</b>: <code>pred</code></h3>
+<ul>
 <li><p>
 Definieren wir nun die Funktion <code>pred</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">liefert den Term des Vorgaengers ihres Arguments</span>
+
+<pre  class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">liefert den Term des Vorgaengers ihres Arguments</span>
        <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">pred: Nat -&gt; Nat</span>
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">pred</span>
          <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n<span style="color: #909183;">]</span>
@@ -1583,20 +1380,20 @@ Definieren wir nun die Funktion <code>pred</code>:
          <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>thrown? <span style="color: #6434A3;">Exception</span> <span style="color: #709870;">(</span>pred zero<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-orge11a167" class="outline-3">
-<h3 id="orge11a167">Der abstrakte Datentyp <b>Nat</b>: <code>plus</code></h3>
-<div class="outline-text-3" id="text-orge11a167">
-<ul class="org-ul">
+</ul>
+
+</section>
+<section id="slide-orgef5008f">
+<h3 id="orgef5008f">Der abstrakte Datentyp <b>Nat</b>: <code>plus</code></h3>
+<ul>
 <li><p>
 Die rekursive Definition von \(plus\) übertragen wir in eine rekursive
 Funktion <code>plus</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Summe ihrer Argumente</span>
+
+<pre  class="src src-clojure">       <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Summe ihrer Argumente</span>
        <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">plus: Nat Nat -&gt; Nat</span>
        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">plus</span>
          <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>n m<span style="color: #909183;">]</span>
@@ -1613,18 +1410,17 @@ Funktion <code>plus</code>:
                 <span style="color: #709870;">(</span>succ <span style="color: #907373;">(</span>succ <span style="color: #6276BA;">(</span>succ zero<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div></li>
-</ul>
-</div>
-</div>
 
-<div id="outline-container-org6fd8aea" class="outline-3">
-<h3 id="org6fd8aea">Der Datentyp <b>Nat</b>: Zusammenfassung</h3>
-<div class="outline-text-3" id="text-org6fd8aea">
+</ul>
+
+</section>
+<section id="slide-org947b5bf">
+<h3 id="org947b5bf">Der Datentyp <b>Nat</b>: Zusammenfassung</h3>
 <p>
 Was haben wir gelernt?
 </p>
 
-<ul class="org-ul">
+<ul>
 <li>Rekursive Datenstrukturen können beliebig wachsen.</li>
 <li>Der Datentyp <b>Nat</b> ermöglicht das Rechnen mit beliebig großen
 natürlichen Zahlen.</li>
@@ -1636,46 +1432,82 @@ sich auf eine herkömmliche (maschinenabhängige) Repräsentation von
 Zahlen festlegen zu müssen.</li>
 <li><b>Ausblick:</b> Abstrakte Datentypen haben eine besondere Bedeutung für
 die formale Spezifikation der Semantik von Software erlangt.</li>
+
 </ul>
-</div>
-</div>
-</div>
 
 
-<div id="outline-container-orge495598" class="outline-2">
-<h2 id="orge495598">Zusammenfassung</h2>
-<div class="outline-text-2" id="text-orge495598">
-</div><div id="outline-container-org16076d8" class="outline-3">
-<h3 id="org16076d8">Entwurfsvorschrift (Bedeutung)</h3>
-<div class="outline-text-3" id="text-org16076d8">
-<ul class="org-ul">
+</section>
+</section>
+<section>
+<section id="slide-org0ddea23">
+<h2 id="org0ddea23">Zusammenfassung</h2>
+<div class="outline-text-2" id="text-org0ddea23">
+</div></section>
+<section id="slide-org5aebe9d">
+<h3 id="org5aebe9d">Entwurfsvorschrift (Bedeutung)</h3>
+<ul>
 <li>kein Allheilmittel!</li>
 <li>stellt eine Handlungsanleitung dar.</li>
 <li>Phase 3 stellt hohe Anforderungen:
-<ul class="org-ul">
+<ul>
 <li>Verstehen der Problembeschreibung,</li>
 <li>Vermögen, mathematische Zusammenhänge zu erkennen,</li>
 <li>Einarbeitung in fremde Begriffswelt,</li>
 <li>Entwicklung eigener Fachsprachen.</li>
 <li>Informatik = Sprachingenieurwesen?</li>
-</ul></li>
-</ul>
-</div>
-</div>
-</div>
 
-<div id="outline-container-orga530068" class="outline-2">
-<h2 id="orga530068"><h2>Literaturverzeichnis</h2>
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org56db449">
+<h2 id="org56db449"><h2>Literaturverzeichnis</h2>
 <ul class='org-ref-bib'><li><a id="Htdp2003">[Htdp2003] Matthias Felleisen, Robert Bruce Findler, Matthew Flatt & Shriram Krishnamurthi, How to Design Programs, The MIT Press (2003).</a></li>
 <li><a id="KlaerenSperber2007">[KlaerenSperber2007] Herbert Klaeren & Michael Sperber, Die Macht der Abstraktion, B. G. Teubner (2007).</a></li>
 <li><a id="Sicp1999">[Sicp1999] Harold Abelson, Gerald Jay Sussman & Julie Sussman, Structure and interpretation of computer programs, The MIT Press (1999).</a></li>
 </ul></h2>
+</section>
+</section>
 </div>
 </div>
-<div id="postamble" class="status">
-<p class="author">Autor: Johannes Brauer</p>
-<p class="date">Created: 2017-10-10 Tue 21:32</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
-</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'slide', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,dependencies: [ { src: 'plugin/menu/menu.js', async: true }, { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]});
+</script>
 </body>
 </html>
