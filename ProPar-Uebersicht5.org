@@ -27,10 +27,15 @@
 # M-x load-library und dann ox-reveal
 
 ** Übersicht
-1. [[file:ProPar-Einstieg.org][Einstieg]]
-2. [[file:ProPar-FuProGrndlgn.org][Funktionale Programmierung - Grundlagen]]
-3. [[file:ProPar-FuProBedFktn.org][Funktionale Programmierung - Bedingte Funktionen]]
-4. [[file:ProPar-FuProAlgDat.org][Funktionale Programmierung - Algebraische Datentypen]]
-5. [[file:ProPar-FuProNatRekrsn.org][Funktionale Programmierung - Natürliche Rekursion]]
-6. [[file:ProPar-FuProFormlttn.org][Funktionale Programmierung - Formalisierung]]
-7. [[file:ProPar-FuProTechniken.org][Funktionale Programmierung - Techniken]]
+1. [[file:./Vorlesung/ProPar-Einstieg.org][Einstieg]]
+2. [[file:./Vorlesung/ProPar-FuProGrndlgn.org][Funktionale Programmierung - Grundlagen]]
+3. [[file:./Vorlesung/ProPar-FuProBedFktn.org][Funktionale Programmierung - Bedingte Funktionen]]
+4. Funktionale Programmierung - Algebraische Datentypen
+5. Funktionale Programmierung - Natürliche Rekursion
+6. Funktionale Programmierung - Formalisierung
+7. Funktionale Programmierung - Techniken
+
+# 4. [[file:./Vorlesung/ProPar-FuProAlgDat.org][Funktionale Programmierung - Algebraische Datentypen]]
+# 5. [[file:./Vorlesung/ProPar-FuProNatRekrsn.org][Funktionale Programmierung - Natürliche Rekursion]]
+# 6. [[file:./Vorlesung/ProPar-FuProFormlttn.org][Funktionale Programmierung - Formalisierung]]
+# 7. [[file:./Vorlesung/ProPar-FuProTechniken.org][Funktionale Programmierung - Techniken]]
