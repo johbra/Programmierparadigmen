@@ -28,3 +28,11 @@ können Sie dann am Repl-Prompt mit der Funktion `load-file` laden:
 2. Menüpunkt `View -> Commands -> Editor` wählen und dort: `Set current editor syntax -> Clojure`
 4. Clojure-Ausdrücke eingeben und mit `Strg/Enter` auswerten
 
+## Alternative zu LightTable: Clooj
+Unter T./Dozenten/Brauer finden Sie die Datei
+
+    clooj-0.5-standalone.jar
+
+Am Besten kopieren Sie sich die Datei in Ihr CLJ-Verzeichnis. Durch
+Doppelklick wird Clooj gestartet, eine leichtgewichtige Clojure IDE,
+die sich weitgehend selbst erklärt.
