@@ -1,9 +1,0 @@
-i(Max) :-
-  integer(X,Max).
-  
-integer(0,Max).
-integer(X,Max) :-
-  integer(Y,Max),
-  X is Y+1,
-  X<Max.
-  
