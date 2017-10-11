@@ -1,7 +1,0 @@
-* This is file b.org
-  Some text.
-
-* b.org contains the link to my_anchor
-  [[file:a.org::#my_anchor][My Link to the custom-id]]
-
-  [[file:a.org::*Second Section][My Link to the headline of the second section]]

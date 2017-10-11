@@ -1,6 +1,0 @@
-* Ideen für Clojure session
-+ die Clojure sequnences: list, vector, set, map, string
-+ lazy sequences, thunks
-+ Thinking in sequences
-+ Einblick in Macros
-+ pattern matching
