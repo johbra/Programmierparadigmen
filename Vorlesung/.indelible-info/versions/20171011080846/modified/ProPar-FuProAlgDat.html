@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<title>Funktionale Programmierung &#x2013; Algebraische Datentypen</title>
+<meta name="author" content="(Johannes Brauer)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./mycss/myrevealstyle.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Funktionale Programmierung &#x2013; Algebraische Datentypen</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2016-11-01 Tue 21:13</p>
+</section>
+
+<section>
+<section id="slide-orgheadline5">
+<h2 id="orgheadline5">Datenstrukturen</h2>
+<div class="outline-text-2" id="text-orgheadline5">
+</div></section>
+<section id="slide-orgheadline1">
+<h3 id="orgheadline1">Datenstrukturen als Datenabstraktion</h3>
+<ul>
+<li>Grundgedanke: Einzelne Dinge werden zu einem neuen Ganzen.
+
+<ul>
+<li>Aus 5000 Einzelteilen entsteht ein Auto.</li>
+
+<li>Aus zwei Keksen und Schokocreme entsteht ein Waffelkeks.</li>
+
+<li>Aus zwei Koordinaten entsteht ein Punkt.</li>
+
+<li>Aus einer Menge von Merkmalen entsteht eine Objektstruktur.</li>
+
+</ul></li>
+
+<li>ein Beispiel:</li>
+
+</ul>
+
+<pre class="example">
+; Ein Punkt besteht aus
+; - einer Zahl für die X-,
+; - einer Zahl für die Y-Koordinate
+; -&gt;punkt : number number -&gt; punkt
+; :x :     punkt -&gt; number
+; :y :    punkt -&gt; number
+</pre>
+
+</section>
+<section id="slide-orgheadline2">
+<h3 id="orgheadline2">Record-Definition in Clojure</h3>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">Ein Punkt besteht aus</span>
+<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">- einer Zahl f&#252;r die X-,</span>
+<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">- einer Zahl f&#252;r die Y-Koordinate</span>
+<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">-&gt;punkt : number number -&gt; punkt</span>
+<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">:x</span><span style="color: #8D8D84; font-style: italic;"> :      punkt -&gt; number</span>
+<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">:y</span><span style="color: #8D8D84; font-style: italic;"> :      punkt -&gt; number</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">defrecord</span> <span style="color: #6434A3;">punkt</span> 
+  <span style="color: #7388D6;">[</span>x y<span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline3">
+<h3 id="orgheadline3">Record-Benutzung in Clojure</h3>
+<div class="org-src-container">
+
+<pre  class="src src-clojure">user&gt; <span style="color: #707183;">(</span><span style="color: #0000FF;">defrecord</span> <span style="color: #6434A3;">punkt</span> <span style="color: #7388D6;">[</span>x y<span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">=&gt; user.punkt</span>
+user&gt; <span style="color: #707183;">(</span>-&gt;punkt 2 3<span style="color: #707183;">)</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">=&gt; #user.punkt{</span><span style="color: #8D8D84; font-style: italic;">:x</span><span style="color: #8D8D84; font-style: italic;"> 2, </span><span style="color: #8D8D84; font-style: italic;">:y</span><span style="color: #8D8D84; font-style: italic;"> 3}</span>
+user&gt; <span style="color: #707183;">(</span><span style="color: #D0372D;">:x</span> <span style="color: #7388D6;">(</span>-&gt;punkt 2 3<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">=&gt; 2</span>
+user&gt; <span style="color: #707183;">(</span><span style="color: #D0372D;">:y</span> <span style="color: #7388D6;">(</span>-&gt;punkt 2 3<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">=&gt; 3</span>
+user&gt; <span style="color: #707183;">(</span><span style="color: #006FE0;">instance?</span> punkt <span style="color: #7388D6;">(</span>-&gt;punkt 2 3<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">=&gt; true</span>
+user&gt;
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline4">
+<h3 id="orgheadline4">Strukturverarbeitende Funktionen</h3>
+<p>
+Beispiel: Berechnung der Entfernung eines Punktes vom Ursprung
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #006FE0;">use</span> '<span style="color: #6434A3;">clojure.test</span><span style="color: #707183;">)</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Abstand eines Punktes vom Ursprung berechnen</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">abstand-vom-ursprung: punkt -&gt; number</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">abstand-vom-ursprung</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>p<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span>  <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">instance?</span> punkt p<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    <span style="color: #909183;">(</span><span style="color: #6434A3;">Math</span><span style="color: #000000; background-color: #FFFFFF;">/</span>sqrt
+     <span style="color: #709870;">(</span>+ <span style="color: #907373;">(</span>* <span style="color: #6276BA;">(</span><span style="color: #D0372D;">:x</span> p<span style="color: #6276BA;">)</span> <span style="color: #6276BA;">(</span><span style="color: #D0372D;">:x</span> p<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+        <span style="color: #907373;">(</span>* <span style="color: #6276BA;">(</span><span style="color: #D0372D;">:y</span> p<span style="color: #6276BA;">)</span> <span style="color: #6276BA;">(</span><span style="color: #D0372D;">:y</span> p<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Tests</span>
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-absabstand-vom-ursprung</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>* 0.01 <span style="color: #907373;">(</span><span style="color: #6434A3;">Math</span><span style="color: #000000; background-color: #FFFFFF;">/</span>round <span style="color: #6276BA;">(</span>* 100 <span style="color: #858580;">(</span>abstand-vom-ursprung <span style="color: #80A880;">(</span>-&gt;punkt 2 2<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span>
+         2.83<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #006FE0;">run-tests</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline8">
+<h2 id="orgheadline8">Entwurfsvorschrift III &#x2013; Strukturverarbeitende Funktionen</h2>
+<p>
+Die vier
+Phasen der Entwurfsvorschrift I werden wieder um eine Phase
+<i>Datenanalyse</i> ergänzt, der Phase <i>Funktionsrumpf</i> wird eine Phase
+<i>Funktionsschablone</i> vorgeschaltet:
+</p>
+
+<ol>
+<li>Vertrag, Funktionskopf, Zweckbestimmung</li>
+
+<li><b>Datenanalyse/Datendefinition</b></li>
+
+<li>Beispiele / Tests</li>
+
+<li><b>Funktionsschablone</b></li>
+
+<li>Funktionsrumpf</li>
+
+<li>Testen</li>
+
+</ol>
+
+<p>
+Es folgt die Beschreibung der neuen bzw. angepassten Phasen.
+</p>
+
+</section>
+<section id="slide-orgheadline6">
+<h3 id="orgheadline6">Entwurfsvorschrift III - Phase 2</h3>
+<p>
+Datenanalyse/Datendefinition
+</p>
+
+<ul>
+<li>Ziel: Entwicklung einer adäquaten Datenstruktur</li>
+
+<li>Aktivitäten:
+
+<ul>
+<li><p>
+beschreibe die Datenstruktur in der Form:
+</p>
+
+<p>
+; Ein \(s\) besteht aus<br  />
+; - einem <i>t</i> für die <i>s<sub>1</sub></i>-Komponente,<br  />
+; - \(\ldots\)<br  />
+; -&gt;s  : (\(t \dots\) -&gt; \(s\)) <br  />
+; :s<sub>1</sub> : (\(s\) -&gt; \(t\)))<br  />
+&#x2026;
+</p></li>
+
+<li>definiere die Datenstruktur:<br  />
+(defrecord \(s\) [\(s_1\) &#x2026;])</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline7">
+<h3 id="orgheadline7">Entwurfsvorschrift III - Phase 4</h3>
+<p>
+Funktionsschablone
+</p>
+
+<ul>
+<li>Ziel: Bestimmung der für die Berechnung des Ergebnisses
+erforderlichen Selektoren („Getter”) bzw. Konstruktoren.</li>
+
+<li>Aktivitäten:
+
+<ul>
+<li>Für jede Komponente der Datenstruktur, von deren Wert das Ergebnis
+der Funktion abhängt, schreibe den zugehörigen Selektor in die
+Funktionsschablone.</li>
+
+<li>Falls die Funktion eine Datenstruktur als Resultat liefern muss,
+nimm den Aufruf des Konstruktors in die Schablone mit auf.</li>
+
+</ul></li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">verarbeite-punkt-zu-neuem-punkt</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>p<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">-&gt;</span> ...
+      <span style="color: #709870;">(</span>... <span style="color: #907373;">(</span><span style="color: #D0372D;">:x</span> p<span style="color: #907373;">)</span> ...
+       ... <span style="color: #907373;">(</span><span style="color: #D0372D;">:y</span> p<span style="color: #907373;">)</span> ...<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline13">
+<h2 id="orgheadline13">Gemischte Daten</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+</div></section>
+<section id="slide-orgheadline9">
+<h3 id="orgheadline9">Datenabstraktion durch Generalisierung</h3>
+<ul>
+<li>Funktionen sollen verschiedene &#x2013; aber verwandte &#x2013; Datenstrukturen
+verarbeiten.</li>
+
+<li><p>
+Beispiel: Rechtecke und Kreise sind geometrische Figuren.
+</p>
+
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">Eine figur ist entweder</span>
+<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">- ein Rechteck  </span>
+<span style="color: #8D8D84;">;     </span><span style="color: #8D8D84; font-style: italic;">(-&gt;rechteck b h)</span>
+<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">oder</span>
+<span style="color: #8D8D84;">; </span><span style="color: #8D8D84; font-style: italic;">- ein Kreis</span>
+<span style="color: #8D8D84;">;     </span><span style="color: #8D8D84; font-style: italic;">(-&gt;kreis r)</span>
+</pre>
+</div>
+
+</div></li>
+<li>Ein Wert, der zum Vertrag <code>figur</code> passt, muss entweder den Vertrag
+von <code>rechteck</code> oder von <code>kreis</code> erfüllen.</li>
+
+<li><code>figur</code> setzt natürlich die Definition von <code>rechteck</code> und <code>kreis</code>
+   voraus.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline10">
+<h3 id="orgheadline10">Definition von <code>rechteck</code></h3>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #006FE0;">use</span> '<span style="color: #6434A3;">clojure.test</span><span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Eine Rechteck besteht aus</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- einer Zahl f&#252;r die H&#246;he,</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- einer Zahl f&#252;r die Breite</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">-&gt;rechteck:  number number -&gt; rechteck</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">:breite</span><span style="color: #8D8D84; font-style: italic;"> :    (rechteck -&gt; number))</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">:hoehe</span><span style="color: #8D8D84; font-style: italic;"> :     (rechteck -&gt; number)</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">defrecord</span> <span style="color: #6434A3;">rechteck</span>
+    <span style="color: #7388D6;">[</span>breite hoehe<span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Rechteckfl&#228;che berechnen</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rechteck-flaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>r<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span>  <span style="color: #709870;">[</span>instance? rechteck r<span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span>number? <span style="color: #BA36A5;">%</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    <span style="color: #909183;">(</span>* <span style="color: #709870;">(</span><span style="color: #D0372D;">:breite</span> r<span style="color: #709870;">)</span> <span style="color: #709870;">(</span><span style="color: #D0372D;">:hoehe</span> r<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-rechteck</span> 
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>rechteck-flaeche <span style="color: #907373;">(</span>-&gt;rechteck 3 4<span style="color: #907373;">)</span><span style="color: #709870;">)</span> 12<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">run-tests</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+
+</section>
+<section id="slide-orgheadline11">
+<h3 id="orgheadline11">Definition von <code>kreis</code></h3>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #006FE0;">use</span> '<span style="color: #6434A3;">clojure.test</span><span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Ein Kreis besteht aus</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- einer Zahl f&#252;r den Radius,</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">-&gt;kreis:  number -&gt; kreis</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">:radius</span><span style="color: #8D8D84; font-style: italic;"> : kreis -&gt; number</span>
+
+<span style="color: #707183;">(</span><span style="color: #0000FF;">defrecord</span> <span style="color: #6434A3;">kreis</span>
+    <span style="color: #7388D6;">[</span>radius<span style="color: #7388D6;">]</span><span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Rechteckfl&#228;che berechnen</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">kreis-flaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>k<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span>  <span style="color: #709870;">[</span>instance? kreis k<span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span>number? <span style="color: #BA36A5;">%</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    <span style="color: #909183;">(</span>* <span style="color: #709870;">(</span><span style="color: #D0372D;">:radius</span> k<span style="color: #709870;">)</span> <span style="color: #709870;">(</span><span style="color: #D0372D;">:radius</span> k<span style="color: #709870;">)</span> 3.14159<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-kreis</span> 
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>* 0.01 <span style="color: #907373;">(</span><span style="color: #6434A3;">Math</span><span style="color: #000000; background-color: #FFFFFF;">/</span>round <span style="color: #6276BA;">(</span>* 100  <span style="color: #858580;">(</span>kreis-flaeche <span style="color: #80A880;">(</span>-&gt;kreis 1.0<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span> 3.14<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #006FE0;">run-tests</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12">Flächeninhalt von Figuren</h3>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #006FE0;">use</span> '<span style="color: #6434A3;">clojure.test</span><span style="color: #707183;">)</span>
+
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Eine figur ist entweder</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- ein Rechteck  </span>
+<span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">(-&gt;rechteck b h)</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">oder</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">- ein Kreis</span>
+<span style="color: #8D8D84;">;;     </span><span style="color: #8D8D84; font-style: italic;">(-&gt;kreis r)</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">figur-flaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>f<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span>or <span style="color: #907373;">(</span><span style="color: #006FE0;">instance?</span> rechteck f<span style="color: #907373;">)</span>
+              <span style="color: #907373;">(</span><span style="color: #006FE0;">instance?</span> kreis f<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span>number? <span style="color: #BA36A5;">%</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+      <span style="color: #709870;">(</span><span style="color: #006FE0;">instance?</span> kreis f<span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>kreis-flaeche f<span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span><span style="color: #006FE0;">instance?</span> rechteck f<span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>rechteck-flaeche f<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-figuren</span> 
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>* 0.01 <span style="color: #907373;">(</span><span style="color: #6434A3;">Math</span><span style="color: #000000; background-color: #FFFFFF;">/</span>round <span style="color: #6276BA;">(</span>* 100  <span style="color: #858580;">(</span>figur-flaeche <span style="color: #80A880;">(</span>-&gt;kreis 1.0<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span> 3.14<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>figur-flaeche <span style="color: #907373;">(</span>-&gt;rechteck 3 4<span style="color: #907373;">)</span><span style="color: #709870;">)</span> 12<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #006FE0;">run-tests</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline16">
+<h2 id="orgheadline16">Entwurfsvorschrift IV &#x2013; Verarbeitung gemischter Daten</h2>
+<p>
+Diese
+Entwurfsvorschrift stellt die „Verschmelzung” der Entwurfsvorschriften
+II und III dar. Wenn sich in der Phase <i>Datenanalyse</i> herausstellt, dass
+gemischte Daten zu verarbeiten sind, ergibt sich für eine gemischte
+Daten verarbeitende Funktion eine Fallunterscheidung nach dem Typ der
+Daten. Damit handelt es sich um eine bedingte Funktion.
+</p>
+
+<p>
+Die Phasen von Entwurfsvorschrift III bleiben erhalten.:
+</p>
+
+</section>
+<section>
+<ol>
+<li>Vertrag, Funktionskopf, Zweckbestimmung</li>
+
+<li><b>Datenanalyse/Datendefinition</b></li>
+
+<li>Beispiele / Tests</li>
+
+<li><b>Funktionsschablone</b></li>
+
+<li>Funktionsrumpf</li>
+
+<li>Testen</li>
+
+</ol>
+
+<p>
+Es folgt die Beschreibung der neuen bzw. angepassten Phasen.
+</p>
+
+</section>
+<section id="slide-orgheadline14">
+<h3 id="orgheadline14">Entwurfsvorschrift IV - Phase 2</h3>
+<p>
+<b>Datenanalyse/Datendefinition</b>
+</p>
+
+<ul>
+<li>Ziel: Entwicklung einer adäquaten Datenstruktur</li>
+
+<li><p>
+Aktivität: Beschreibe die Datenstruktur in der Form:
+</p>
+
+<p>
+; Ein \(s\) ist entweder<br  />
+; - ein \(t_1\) oder<br  />
+; - \(\ldots\) oder<br  />
+; - ein \(t_n\)
+</p></li>
+
+<li><p>
+Für den Vertrag:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #7388D6;">[</span><span style="color: #909183;">(</span><span style="color: #0000FF;">or</span> <span style="color: #709870;">(</span><span style="color: #006FE0;">instance?</span> t-1 s<span style="color: #709870;">)</span>
+           ...
+           <span style="color: #709870;">(</span><span style="color: #006FE0;">instance?</span> t-n s<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">]</span><span style="color: #707183;">}</span>
+</pre>
+</div></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline15">
+<h3 id="orgheadline15">Entwurfsvorschrift IV - Phase 4</h3>
+<p>
+<b>Funktionsschablone</b>
+</p>
+
+<ul>
+<li>Ziel: Konstruktion der Fallunterscheidung nach der Art der Daten</li>
+
+<li>Aktivitäten:
+
+<ul>
+<li>Lege die folgende Funktionsschablone an:</li>
+
+</ul></li>
+
+</ul>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">f</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #0000FF;">or</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">instance?</span> t-1 x<span style="color: #6276BA;">)</span>
+               <span style="color: #6276BA;">(</span><span style="color: #006FE0;">instance?</span> t-2 x<span style="color: #6276BA;">)</span>
+                ...
+               <span style="color: #6276BA;">(</span><span style="color: #006FE0;">instance?</span> t-n x<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span>...<span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+       <span style="color: #709870;">(</span><span style="color: #006FE0;">instance?</span> t-1 x<span style="color: #709870;">)</span> ...
+       <span style="color: #709870;">(</span><span style="color: #006FE0;">instance?</span> t-2 x<span style="color: #709870;">)</span> ...
+       ...
+       <span style="color: #709870;">(</span><span style="color: #006FE0;">instance?</span> t-n x<span style="color: #709870;">)</span> ...<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline20">
+<h2 id="orgheadline20">Exkurs: Algebraische Datentypen</h2>
+<div class="outline-text-2" id="text-orgheadline20">
+</div></section>
+<section id="slide-orgheadline17">
+<h3 id="orgheadline17">Produkttypen</h3>
+<ul>
+<li>Die in Kapitel <a href="#/slide-orgheadline5">Datenstrukturen</a> erläuterten Strukturdefinitionen
+nennt man of auch <i>Produkte</i>.</li>
+<li>Die Menge aller Exemplare der Record-Definition <code>punkt</code>
+(vgl. <a href="#/slide-orgheadline2">Record-Definition in Clojure</a>) kann man als als Teilmenge des
+kartesischen Produkts 
+\[number \times number\]
+angesehen werden.</li>
+<li>Daher die Bezeichnung <i>Produkttypen</i>.</li>
+
+</ul>
+</section>
+<section id="slide-orgheadline19">
+<h3 id="orgheadline19">Summentypen</h3>
+<ul>
+<li><p>
+Die in Kapitel <a href="#/slide-orgheadline13">Gemischte Daten</a> eingeführten varianten Typen
+</p>
+<blockquote nil>
+<p>
+Eine Figur ist entweder ein Rechteck oder ein Kreis.
+</p>
+</blockquote>
+<p>
+werden auch als Summentypen bezeichnet.
+</p></li>
+<li>Die Menge aller Figuren ist die Vereinigung der Menge aller Kreise
+mit der Menge aller Rechtecke.</li>
+<li>Die <i>Vereinigung von Mengen</i> wird auch als die <i>Summe der Mengen</i>
+  bezeichnet.</li>
+<li>Daher die Bezeichnung Summentypen.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline18">
+<h4 id="orgheadline18">Haskell</h4>
+<p>
+Der Begriff der algebraischen Datentypen ist inbesondere im Kontext
+der Programmiersprache <a href="https://www.haskell.org">Haskell</a> sehr gebräuchlich.
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgheadline24">
+<h2 id="orgheadline24">Exkurs: Funktionale vs. objektorientierte Programmierung</h2>
+<div class="outline-text-2" id="text-orgheadline24">
+</div></section>
+<section id="slide-orgheadline21">
+<h3 id="orgheadline21">Objektorientierte Programmierung &#x2026;</h3>
+<p>
+&#x2026; ist gekennzeichnet durch dynamische Bindung und Polymorphie
+</p>
+
+<p>
+Polymorphie-Ansatz der meisten OO-Sprachen:
+</p>
+
+<ul>
+<li>Methoden werden innerhalb von Klassen definiert.</li>
+<li>Methodenaktivierung durch „Senden von Nachrichten”: Die zu
+aktivierende Methode wird anhand der Klassenzugehörigkeit des
+Empfängerobjekts bestimmt.</li>
+
+</ul>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-java"><span style="color: #0000FF;">class</span> <span style="color: #6434A3;">Rechteck</span> <span style="color: #707183;">{</span>
+   <span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">breite</span>, <span style="color: #BA36A5;">hoehe</span>;
+   <span style="color: #6434A3;">int</span> <span style="color: #006699;">flaeche</span><span style="color: #7388D6;">()</span> <span style="color: #7388D6;">{</span> ... <span style="color: #7388D6;">}</span><span style="color: #707183;">}</span>
+
+<span style="color: #0000FF;">class</span> <span style="color: #6434A3;">Kreis</span> <span style="color: #707183;">{</span>
+   <span style="color: #6434A3;">int</span> <span style="color: #BA36A5;">radius</span>;
+   <span style="color: #6434A3;">int</span> <span style="color: #006699;">flaeche</span><span style="color: #7388D6;">()</span> <span style="color: #7388D6;">{</span> ... <span style="color: #7388D6;">}</span><span style="color: #707183;">}</span>
+</pre>
+</div>
+
+</div>
+<ul>
+<li>Jeder „Datentyp” definiert seine Operationen.</li>
+<li><b>Problem</b>: Datentypen können ohne Zugriff auf den Quellcode nicht
+erweitert werden.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline22">
+<h3 id="orgheadline22">Funktionale Programmierung &#x2026;</h3>
+<p>
+&#x2026; ist gekennzeichnet durch Funktionen als Werte erster Ordnung und die Abwesenheit von
+Seiteneffekten
+</p>
+
+<ul>
+<li><p>
+Funktionen enthalten Fallunterscheidungen für Datentypen.
+</p>
+
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">figur-flaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>f<span style="color: #909183;">]</span>
+    <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span>
+      <span style="color: #709870;">(</span><span style="color: #006FE0;">instance?</span> kreis f<span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>kreis-flaeche f<span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span><span style="color: #006FE0;">instance?</span> rechteck f<span style="color: #709870;">)</span>
+      <span style="color: #709870;">(</span>rechteck-flaeche f<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</div></li>
+
+<li><b>Problem</b>: Hinzufügen eines neuen Datentyps bedeutet: Alle vorhanden
+Figur-Funktionen müssen angepasst werden.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline23">
+<h3 id="orgheadline23">Das Expression-Problem</h3>
+<ul>
+<li>Die Weiterentwicklung von Programmen betrifft
+<ul>
+<li>das Hinzufügen von Operationen für bestehende Datentypen (Klassen)
+und</li>
+<li>das Hinzufügen von Datentypen für bestehende Operationen.</li>
+
+</ul></li>
+<li>Dabei soll möglichst vermieden werden, bestehenden Code zu ändern
+oder neu zu kompilieren.</li>
+<li>Der Ausdruck <i>expression problem</i> stammt von <a href="https://en.wikipedia.org/wiki/Philip_Wadler">Philip Wadler</a> (<a href="file://www.daimi.au.dk/~madst/tool/papers/expression.txt">The
+ExpressionProblem Philip Wadler, 12 November 1998)</a></li>
+<li>Lösungen
+<ul>
+<li>Haskells Typklassen</li>
+<li>Rubys <i>open classes</i></li>
+<li>Smalltalks <i>class extensions</i></li>
+<li>Clojures <i>protocols</i></li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'slide', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,dependencies: [ { src: 'plugin/menu/menu.js', async: true }, { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]});
+</script>
+</body>
+</html>

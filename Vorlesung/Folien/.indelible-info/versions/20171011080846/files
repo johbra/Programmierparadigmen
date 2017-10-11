@@ -1,0 +1,78 @@
+<files>
+    <file>
+        <name enc="t" charSet="UTF-8">.DS_Store</name>
+        <modified>1504285720000</modified>
+    </file>
+    <symlink>
+        <name enc="t" charSet="UTF-8">Abbildungen</name>
+        <modified>1503335011000</modified>
+    </symlink>
+    <symlink>
+        <name enc="t" charSet="UTF-8">mycss</name>
+        <modified>1503335103000</modified>
+    </symlink>
+    <symlink>
+        <name enc="t" charSet="UTF-8">plugin</name>
+        <modified>1503335117000</modified>
+    </symlink>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-ConProgEinf.html</name>
+        <modified>1503333222000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-ConProgGrndlgn.html</name>
+        <modified>1505568465000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-Einstieg.html</name>
+        <modified>1507657526000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-FuProAlgDat.html</name>
+        <modified>1478031217000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-FuProBedFktn.html</name>
+        <modified>1477579802000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-FuProErgnzngn.html</name>
+        <modified>1502743114000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-FuProFormlttn.html</name>
+        <modified>1480458438000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-FuProGrndlgn.html</name>
+        <modified>1477579169000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-FuProNatRekrsn.html</name>
+        <modified>1507663903000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-FuProTechniken.html</name>
+        <modified>1480412796000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-RelLogProg.html</name>
+        <modified>1504460246000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-RelProgUebrscht.html</name>
+        <modified>1502743465000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-ZustndsbhfttPrgrmmrung.html</name>
+        <modified>1503400052000</modified>
+    </file>
+    <symlink>
+        <name enc="t" charSet="UTF-8">reveal.js</name>
+        <modified>1503335130000</modified>
+    </symlink>
+    <symlink>
+        <name enc="t" charSet="UTF-8">styles</name>
+        <modified>1503335142000</modified>
+    </symlink>
+</files>

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<title>Funktionale Programmierung &#x2013; Grundlagen</title>
+<meta name="author" content="(Johannes Brauer)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="./reveal.js/css/theme/simple.css" id="theme"/>
+
+<link rel="stylesheet" href="./mycss/myrevealstyle.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Funktionale Programmierung &#x2013; Grundlagen</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2016-10-27 Thu 16:39</p>
+</section>
+
+<section>
+<section id="slide-orgheadline3">
+<h2 id="orgheadline3">Programmieren mit Funktionen</h2>
+<div class="outline-text-2" id="text-orgheadline3">
+</div></section>
+<section id="slide-orgheadline1">
+<h3 id="orgheadline1">Merkmale der imperativen Programmierung</h3>
+<ol>
+<li>Wesentliche Konzepte:
+<ul>
+<li>Variablen: benannte Speicherzellen</li>
+<li>Zuweisung: Verändern des Wertes einer Variablen</li>
+
+</ul></li>
+<li>Die Werte der Variablen repräsentieren den Zustand der Maschine.</li>
+<li>Das Programm ist eine Folge von Zustandsänderungen.</li>
+<li>Im imperativen Programmierstil spiegelt sich die
+Von-Neumann-Architektur wider (hinderlich bei der Programmierung
+komplexer Anwendungen).</li>
+<li>Imperative Programme sind nicht referenztransparent: \(f(x)+f(x)\)
+      ist nicht notwendigerweise gleich \(2\cdot f(x)\).</li>
+
+</ol>
+
+</section>
+<section id="slide-orgheadline2">
+<h3 id="orgheadline2">Merkmale der funktionalen Programmierung</h3>
+<ol>
+<li>Gute mathematische Grundlage der Programmierung (Funktionsbegriff)</li>
+<li>Programme werden kürzer und besser lesbar.</li>
+<li>Verarbeitung komplexer (häufig symbolischer) Datenstrukturen</li>
+<li>Keine Variablen als benannte Speicherzellen</li>
+<li>Keine Iteration</li>
+<li>Funktionale Sprachen haben besondere Bedeutung für die Definition
+der Semantik von Programmiersprachen:</li>
+<li>z.B. durch Definition eines Interpreters, geschrieben in einer
+funktionalen Sprache.</li>
+
+</ol>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline7">
+<h2 id="orgheadline7">Ein erstes Beispiel</h2>
+<p>
+Tafelübung funktionale Abstraktion (fn) einführen
+</p>
+
+</section>
+<section id="slide-orgheadline4">
+<h3 id="orgheadline4">Eine einfache Funktion</h3>
+<ul>
+<li>Berechnung des Bruttobetrags einer Rechnung aus dem Nettobetrag:
+<ul>
+<li>mathematisch<br  />
+\(brutto(netto, mhrwrtstr) = netto + netto \frac{mhrwrtstr}{100}\)</li>
+<li><p>
+Definition einer Funktion <code>brutto</code>:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">brutto</span>
+      <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>netto mhrwrtstr<span style="color: #909183;">]</span>
+        <span style="color: #909183;">(</span>+ netto <span style="color: #709870;">(</span>/ <span style="color: #907373;">(</span>* netto mhrwrtstr<span style="color: #907373;">)</span> 100<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline5">
+<h3 id="orgheadline5">Aufbau von Ausdrücken</h3>
+<ul>
+<li>Jeder Ausdruck ist von der Form<br  />
+\[(operator\ operand_{1} \ldots\ operand_{n})\]</li>
+<li><i>Operatoren</i> sind Namen von
+<ul>
+<li>Standardfunktionen: +, /, <code>sqrt</code>, &#x2026;</li>
+<li>eigenen Funktionen: <code>brutto</code>, &#x2026;</li>
+<li>Pseudofunktionen: <code>def</code>, <code>fn</code>, &#x2026;</li>
+
+</ul></li>
+<li><i>Operanden</i> sind
+<ul>
+<li>Konstanten: 3.14, &#x2026;</li>
+<li>Variable: <code>netto</code>, &#x2026;</li>
+<li>Ausdrücke: <code>(f ....)</code></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline6">
+<h3 id="orgheadline6">Wert eines Ausdrucks</h3>
+<ul>
+<li>Anwendung einer Funktion auf ihre Argumente:<br  />
+<code>(brutto 100.0 16.0)</code></li>
+<li>Ersetze jedes Auftreten von <code>netto</code> durch 100.0 und von <code>mhrwrtstr</code>
+durch 16.0:<br  />
+<code>= (+ 100.0 (/ (* 100.0 16.0) 100))</code></li>
+<li>Auswertung erfolgt von innen nach außen:<br  />
+<code>= (+ 100.0 (/ (* 100.0 16.0) 100))</code><br  />
+<code>= (+ 100.0 (/ 1600.0 100))</code></li>
+<li>im nächsten Schritt:<br  />
+<code>= (+ 100.0 (/ 1600.0 100))</code><br  />
+<code>= (+ 100.0 16.0))</code></li>
+<li>schließlich:<br  />
+<code>= 116.0</code></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline13">
+<h2 id="orgheadline13">Clojure</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+</div></section>
+<section id="slide-orgheadline8">
+<h3 id="orgheadline8">Eigenschaften von Clojure</h3>
+<p>
+Clojure &#x2026;
+</p>
+<ul>
+<li>ist ein Lisp-Dialekt.</li>
+<li>läuft auf der Java Virtual Machine.</li>
+<li>ermöglicht verschiedene Programmierstile (imperativ, <b>funktional</b>,
+objektorientiert, &#x2026;).</li>
+<li>behandelt Funktionen als Werte erster Ordnung (first class values),
+d.h. sie können u.a. &#x2026;
+<ul>
+<li>als Argumente an Prozeduren/Funktionen/Methoden übergeben werden,</li>
+<li>als Resultate von Prozeduren/Funktionen/Methoden auftreten.</li>
+
+</ul></li>
+<li>besitzt eine einzige Auswertungsregel für die Anwendung von
+Funktionen (Ausnahmen für Pseudofunktionen).</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline9">
+<h3 id="orgheadline9">Web-Seiten zu Clojure</h3>
+<ul>
+<li><a href="http://clojure.org">Hauptseite</a></li>
+<li><a href="http://clojure.org/features">Features</a></li>
+<li><a href="http://clojure.org/downloads">Download</a></li>
+<li>Dokumentation
+<ul>
+<li><a href="http://clojuredocs.org">clojuredocs</a></li>
+<li><a href="http://clojure-doc.org">clojure-doc</a></li>
+
+</ul></li>
+<li><a href="http://groups.google.com/group/clojure">Google Gruppe</a></li>
+<li>Tutorials
+<ul>
+<li><a href="http://dev.clojure.org/display/doc/Getting+Started">Getting Started</a></li>
+<li><a href="http://www.braveclojure.com">CLOJURE for the BRAVE and TRUE</a></li>
+<li><a href="http://www.moxleystratton.com/blog/2008/05/01/clojure-tutorial-for-the-non-lisp-programmer/">Clojure Tutorial For the Non-Lisp Programmer</a></li>
+<li><a href="http://java.ociweb.com/mark/clojure/article.html">Clojure - Functional Programming for the JVM</a></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline10">
+<h3 id="orgheadline10">Benutzung von Clojure</h3>
+<ul>
+<li><a href="http://try-clojure.org/">Try Clojure</a></li>
+<li>Command line tool - the repl
+<code>java -cp clojure.jar clojure.main</code></li>
+<li>Clooj - editor and IDE written entirely in Clojure itself
+<ul>
+<li><a href="https://github.com/arthuredelstein/clooj">clooj, a lightweight IDE for clojure</a></li>
+<li><a href="https://www.mediafire.com/?kxa2an0k0ings">Download</a></li>
+
+</ul></li>
+<li><a href="http://www.lighttable.com">LightTable</a> is a new interactive IDE &#x2026;</li>
+<li><a href="http://leiningen.org/index.html">Leiningen</a></li>
+<li><a href="http://dev.clojure.org/display/doc/Getting+Started+with+La+Clojure+and+IntelliJ+IDEA">La Clojure and IntelliJ IDEA</a></li>
+<li><a href="http://dev.clojure.org/display/doc/Getting+Started+with+Eclipse+and+Counterclockwise">Eclipse and Counterclockwise</a></li>
+<li><a href="http://clojure-doc.org/articles/tutorials/emacs.html">Clojure with Emacs</a></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline11">
+<h3 id="orgheadline11">Die Read-Eval-Print-Loop</h3>
+<ul>
+<li>Read: lies einen Ausdruck</li>
+<li>Eval(uate): werte ihn aus</li>
+<li>Print: gib das Ergebnis aus</li>
+
+</ul>
+
+<div class="figure">
+<p><img src="./Abbildungen/ReadEvalPrint.png" alt="ReadEvalPrint.png" width="650px" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12"><code>brutto</code> in der Repl</h3>
+<p>
+Demonstration
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline19">
+<h2 id="orgheadline19">Methodische Abstraktion &#x2013; Entwurfsvorschrift I</h2>
+<div class="outline-text-2" id="text-orgheadline19">
+</div></section>
+<section id="slide-orgheadline14">
+<h3 id="orgheadline14">Entwurfsvorschriften - Übersicht</h3>
+<ul>
+<li><i>Entwurfsvorschriften</i> sind Handlungsanleitungen für die Entwicklung
+kleiner (zunächst funktionaler) Programme.</li>
+<li>Programmstrukturen folgen den Datenstrukturen.</li>
+<li>Abstraktion von der Lösung von Einzelproblemen zur Lösung von
+Problemklassen.</li>
+<li>Entwicklung funktionaler Programme:
+<ul>
+<li>Funktionen im mathematischen Sinne:
+<ul>
+<li>keine Nebeneffekte</li>
+<li>kein Gedächtnis (stateless)</li>
+
+</ul></li>
+<li>Nutzung der funktionalen Abstraktion</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline15">
+<h3 id="orgheadline15">Entwurfsvorschrift I <i>(1)</i></h3>
+<p>
+Programm für die Berechnung der Fläche eines Dreiecks aus Grundseite und
+Höhe:
+</p>
+
+<ol>
+<li><p>
+die <b>Zweckbestimmung</b>:
+</p>
+
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Flaeche eines Dreiecks aus</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Grundseite und Hoehe</span>
+</pre>
+</div>
+
+</div></li>
+
+<li>Hinzufügen des <b>Funktionskopfs</b></li>
+
+</ol>
+
+<div class="fragment roll-in smaLl">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Flaeche eines Dreiecks aus</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Grundseite und Hoehe</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dreiecksflaeche</span>
+   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>grundseite hoehe<span style="color: #909183;">]</span> 
+      <span style="color: #D0372D;">nil</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</div>
+<p>
+<code>nil</code> steht hier als Platzhalter für den Funktionsrumpf.
+</p>
+
+</section>
+<section id="slide-orgheadline16">
+<h3 id="orgheadline16">Entwurfsvorschrift I <i>(2)</i></h3>
+<ol>
+<li value="3">Festlegen des <b>Vertrags</b>:</li>
+
+</ol>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Flaeche eines Dreiecks aus</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Grundseite und Hoehe</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dreiecksflaeche</span>
+   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>grundseite hoehe<span style="color: #909183;">]</span>
+      <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> grundseite<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> hoehe<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+       <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+      <span style="color: #D0372D;">nil</span><span style="color: #7388D6;">)</span>
+</pre>
+</div>
+
+</div>
+<ol>
+<li value="4">Hinzufügen von <b>Beispielanwendungen / Tests</b></li>
+
+</ol>
+<div class="org-src-container">
+
+<pre  class="fragment roll-in"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Flaeche eines Dreiecks aus</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dreiecksflaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>grundseite hoehe<span style="color: #909183;">]</span>
+     <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> grundseite<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> hoehe<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+      <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span> 
+     <span style="color: #D0372D;">nil</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-dreiecksflaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span>  <span style="color: #909183;">(</span>= 25 <span style="color: #709870;">(</span>dreiecksflaeche 10 5<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline17">
+<h3 id="orgheadline17">Entwurfsvorschrift I <i>(3)</i></h3>
+<ol>
+<li value="5">Ersetzen von <code>nil</code> als Platzhalter im Funktionsrumpf durch die
+korrekte Berechnungsvorschrift:</li>
+
+</ol>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Flaeche eines Dreiecks aus</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dreiecksflaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>grundseite hoehe<span style="color: #909183;">]</span>
+     <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> grundseite<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> hoehe<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+      <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span> 
+     <span style="color: #D0372D;">nil</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</div>
+<div class="fragment roll-in small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">dreiecksflaeche</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>grundseite hoehe<span style="color: #909183;">]</span>
+     <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> grundseite<span style="color: #907373;">)</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> hoehe<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+      <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+     <span style="color: #909183;">(</span>/ <span style="color: #709870;">(</span>* grundseite hoehe<span style="color: #709870;">)</span> 2<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-dreiecksflaeche</span> 
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span>  <span style="color: #909183;">(</span>= 25 <span style="color: #709870;">(</span>dreiecksflaeche 10 5<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</div>
+
+</section>
+<section id="slide-orgheadline18">
+<h3 id="orgheadline18"><code>dreiecksflaeche</code> in Clooj</h3>
+
+<div class="figure">
+<p><img src="./Abbildungen/dreiecksflaecheInClooj.png" alt="dreiecksflaecheInClooj.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline25">
+<h2 id="orgheadline25">Entwurfsvorschrift I &#x2013; Zusammenfassung</h2>
+<p>
+Vier Phasen:
+</p>
+
+<ol>
+<li>Zweckbestimmung, Vertrag, Funktionskopf</li>
+<li>Tests</li>
+<li>Funktionsrumpf</li>
+<li>Testen</li>
+
+</ol>
+
+</section>
+<section id="slide-orgheadline20">
+<h3 id="orgheadline20">Entwurfsvorschrift I &#x2013; Phase 1 <i>(1)</i></h3>
+<p>
+<b>Zweckbestimmung, Vertrag, Funktionskopf</b>
+</p>
+<ul>
+<li>Ziele:
+<ul>
+<li>Beschreiben des Zwecks der Funktionen</li>
+<li>Spezifizieren der Art der Eingabedaten und des Ergebnisses</li>
+<li>Benennen der Funktion</li>
+<li>Aufschreiben ihres Kopfes</li>
+
+</ul></li>
+<li>Aktivitäten:
+<ul>
+<li>Wähle einen Funktionsnamen.</li>
+<li>Analysiere das Problem daraufhin, welche unbestimmten Größen sie
+verarbeiten muss.</li>
+<li>Wähle einen Namen für jede Eingangsgröße, der sich möglichst in
+der Problembeschreibung wiederfindet.</li>
+<li>&#x2026;</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline21">
+<h3 id="orgheadline21">Entwurfsvorschrift I &#x2013; Phase 1 <i>(2)</i></h3>
+<p>
+<b>Vertrag, Funktionskopf, Zweckbestimmung</b>
+</p>
+<ul>
+<li>Aktivitäten:
+<ul>
+<li>&#x2026;</li>
+<li>Beschreibe unter Verwendung der Namen für die Eingangsgrößen, was
+die Funktion aus diesen ermitteln soll.</li>
+<li><p>
+Formuliere den Vertrag und den Funktionskopf.
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet ... aus x1 ... </span>
+        <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">name</span> 
+           <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x1 ... <span style="color: #909183;">]</span> 
+             <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> x1<span style="color: #907373;">)</span> ... <span style="color: #709870;">]</span>
+              <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+             ... <span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline22">
+<h3 id="orgheadline22">Entwurfsvorschrift I &#x2013; Phase 2</h3>
+<p>
+<b>Beispiele / Tests</b>
+</p>
+<ul>
+<li>Ziel: Veranschaulichung der Beziehung zwischen Ein- und Ausgabedaten
+anhand von Beispielen</li>
+<li>Aktivitäten:
+<ul>
+<li>Versuche, aus der Problembeschreibung Beispiele abzuleiten.</li>
+<li>Bestätige die Resultate.</li>
+<li><p>
+Schreibe die Beispiele als Tests auf.
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">name</span> 
+   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>x1 ... <span style="color: #909183;">]</span> 
+      <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> x1<span style="color: #907373;">)</span> ... <span style="color: #709870;">]</span>
+       <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+      ... <span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-name</span> 
+   <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span><span style="color: #006FE0;">name</span> ... <span style="color: #709870;">)</span> ...<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline23">
+<h3 id="orgheadline23">Entwurfsvorschrift I &#x2013; Phase 3</h3>
+<p>
+<b>Funktionsrumpf</b>
+</p>
+
+<ul>
+<li>Ziel: Definition der Funktion</li>
+<li>Aktivitäten:
+<ul>
+<li>Entwickle die Berechnungsvorschrift für die Ermittlung des
+Resultats bestehend aus
+<ul>
+<li>Clojure-Standardfunktionen,</li>
+<li>eigenen Funktionen und</li>
+<li>den Variablen (Parameter).</li>
+
+</ul></li>
+<li>Wenn vorhanden, benutze die mathematische Formel aus der
+Problembeschreibung.</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline24">
+<h3 id="orgheadline24">Entwurfsvorschrift I &#x2013; Phase 4</h3>
+<p>
+<b>Testen</b>
+</p>
+
+<ul>
+<li>Ziele: Aufspüren von
+<ul>
+<li>Fehlern in der Berechnungsvorschrift,</li>
+<li>auch Tippfehler,</li>
+<li>Vertragsverletzungen in der Formulierung der Tests</li>
+
+</ul></li>
+<li>Aktivitäten:
+<ul>
+<li>Wende die Funktion auf die in den Beispielen angegebenen
+Eingabedaten (Argumente) an.</li>
+<li>Prüfe, ob die Resultate mit den erwarteten übereinstimmen
+(geschieht durch <code>(run-tests)</code> automatisch).</li>
+<li>Füge weitere Tests hinzu.</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline40">
+<h2 id="orgheadline40">Verwendung von Hilfsfunktionen</h2>
+<div class="outline-text-2" id="text-orgheadline40">
+</div></section>
+<section id="slide-orgheadline26">
+<h3 id="orgheadline26">Ein Anwendungsbeispiel</h3>
+<ul>
+<li>Problembeschreibung:
+Der Eigentümer eines Vorstadtkinos kann seine Preise für
+Eintrittskarten frei festlegen. Er hat einen exakten Zusammenhang
+zwischen dem Kartenpreis und der durchschnittlichen Besucheranzahl
+empirisch festgestellt: Bei einem Preis von 5€ pro Karte kommen im
+Schnitt 120 Zuschauer. Reduziert er den Preis um 0,10€, erhöht sich die
+Besucherzahl um 15. Aber mehr Besucher verursachen höhere Kosten.
+Jede Veranstaltung kostet 180€ plus 0,05€ für jeden Zuschauer. Der Eigentümer
+möchte nun wissen, wie groß der Profit bei einem bestimmten
+Kartenpreis ist.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline27">
+<h3 id="orgheadline27">Lösungsansatz</h3>
+<ul>
+<li>Können wir dem Kinoeigentümer helfen?</li>
+<li><p>
+Versuchen wir zunächst die Abhängigkeiten zu erkennen, die sich aus
+der Problembeschreibung ableiten lassen:
+</p>
+<ol>
+<li class="fragment roll-in">Der <i>Profit</i> ist die Differenz aus Einnahmen und Kosten.</li>
+<li class="fragment roll-in">Die <i>Einnahmen</i> sind das Produkt aus Kartenpreis und Besucheranzahl.</li>
+<li class="fragment roll-in">Die <i>Kosten</i> sind die Summe aus den Fixkosten (180€) und dem
+Produkt aus Besucheranzahl und den Kosten pro Besucher (0,05€).</li>
+<li class="fragment roll-in">Schließlich gibt es noch den Zusammenhang zwischen
+<i>Besucheranzahl</i> und Kartenpreis.</li>
+
+</ol></li>
+
+</ul>
+<ul class="fragment roll-in">
+<li>Entwerfen wir nun für jeden Zusammenhang eine Funktion und wenden
+dabei die Entwurfsvorschrift an.</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline31">
+<h3 id="orgheadline31">Lösung unter Anwendung der Entwurfsvorschrift</h3>
+<div class="outline-text-3" id="text-orgheadline31">
+</div></section>
+<section id="slide-orgheadline28">
+<h4 id="orgheadline28">Schablone der Funktion <code>profit</code></h4>
+<ul>
+<li>Gemäß Entwurfsvorschrift ist in Phase 1 zunächst der Vertrag, der Funktionskopf und die
+Zweckbestimmung aufzuschreiben.</li>
+<li><p>
+Beginnen wir mit der Hauptfunktion für den Profit:
+</p>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet den Profit aus der Differenz zwischen</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Einnahmen und Kosten bei gegebenem Kartenpreis</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">profit</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span><span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    ...<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline29">
+<h4 id="orgheadline29">Die Schablonen für <code>einnahmen</code> und <code>kosten</code></h4>
+<ul>
+<li><p>
+Die Berechnung der Einnahmen:
+</p>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Einnahmen aus dem Produkt von </span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Besucherzahl und Kartenpreis</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">einnahmen</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span><span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    ...<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</div></li>
+<li><p>
+Die Kosten:
+</p>
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die entstehenden Kosten bei gegebenem</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Kartenpreis aus Fixkosten und variablen Kosten</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">kosten</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+   ...<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</div></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline30">
+<h4 id="orgheadline30">Die Schablone für <code>besucherzahl</code></h4>
+<ul>
+<li><p>
+Die Anzahl der Besucher:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Besucherzahl bei gegebenem</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Kartenpreis nach empirisch ermittelter Formel</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">besucherzahl</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+   ...<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline32">
+<h3 id="orgheadline32">Beispiele, Test</h3>
+<ul>
+<li>In Phase II versuchen wir Beispiele zu finden; beginnen wir mit der
+Funktion <code>besucherzahl</code>.</li>
+
+<li>Aus der Problembeschreibung lassen sich folgende Beispiele ableiten:
+
+<ul>
+<li>(besucherzahl 500) = 120</li>
+
+<li>(besucherzahl 490) = 135</li>
+
+<li>(besucherzahl 510) = 105</li>
+
+<li>(besucherzahl 400) = 270</li>
+
+</ul></li>
+
+<li>Hinweis: Um Rundungsfehler zu vermeiden, werden alle Beträge in Cent
+angegeben.</li>
+
+<li>Lässt sich aus den Beispielen ein allgemeiner Zusammenhang ableiten?</li>
+
+</ul>
+
+<ul class="fragment roll-in">
+<li>Antwort: <br  />
+<code>(besucherzahl p) = (+ 120 (* (/ 15 10) (- 500 p)))</code></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline37">
+<h3 id="orgheadline37">Funktionsdefinitionen</h3>
+<div class="outline-text-3" id="text-orgheadline37">
+</div></section>
+<section id="slide-orgheadline33">
+<h4 id="orgheadline33">Die Funktion <code>besucherzahl</code></h4>
+<p>
+&#x2026; ergibt sich somit zu:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Besucherzahl bei gegebenem</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Kartenpreis nach empirisch ermittelter Formel</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">besucherzahl</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+   <span style="color: #909183;">(</span>+ 120 <span style="color: #709870;">(</span>*<span style="color: #907373;">(</span>/ 15 10 <span style="color: #907373;">)</span> <span style="color: #907373;">(</span>- 500 kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-besucherzahl</span>
+   <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>besucherzahl 500<span style="color: #709870;">)</span> 120<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+   <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>besucherzahl 490<span style="color: #709870;">)</span> 135<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+   <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>besucherzahl 510<span style="color: #709870;">)</span> 105<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+   <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>besucherzahl 400<span style="color: #709870;">)</span> 270<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline34">
+<h4 id="orgheadline34">Die Funktion <code>kosten</code></h4>
+<ul>
+<li><p>
+Für die Funktion <code>kosten</code> gehen wir ähnlich vor und erhalten
+schließlich:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die entstehenden Kosten bei gegebenem</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Kartenpreis aus Fixkosten und variablen Kosten</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">kosten</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span><span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span> <span style="color: #909183;">}</span>
+    <span style="color: #909183;">(</span>+ 18000 <span style="color: #709870;">(</span>* 5 <span style="color: #907373;">(</span>besucherzahl kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-kosten</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>kosten 500<span style="color: #709870;">)</span> 18600<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>kosten 400<span style="color: #709870;">)</span> 19350<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline35">
+<h4 id="orgheadline35">Die Funktion <code>einnahmen</code></h4>
+<ul>
+<li><p>
+ebenso für die Funktion <code>einnahmen</code>:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet die Einnahmen aus dem Produkt von </span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Besucherzahlund Kartenpreis</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">einnahmen</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    <span style="color: #909183;">(</span>* <span style="color: #709870;">(</span>besucherzahl kartenpreis<span style="color: #709870;">)</span> kartenpreis<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-einnahmen</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>einnahmen 500<span style="color: #709870;">)</span> 60000<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>einnahmen 400<span style="color: #709870;">)</span> 108000<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline36">
+<h4 id="orgheadline36">Die Funktion <code>profit</code></h4>
+<ul>
+<li><p>
+zum Schluss die Funktion <code>profit</code>:
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet den Profit aus der Differenz zwischen</span>
+<span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">Einnahmen und Kosten bei gegebenem Kartenpreis</span>
+<span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">profit</span>
+  <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+    <span style="color: #909183;">{</span><span style="color: #D0372D;">:pre</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> kartenpreis<span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+     <span style="color: #D0372D;">:post</span><span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">number?</span> <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
+    <span style="color: #909183;">(</span>- <span style="color: #709870;">(</span>einnahmen kartenpreis<span style="color: #709870;">)</span>
+       <span style="color: #709870;">(</span>kosten kartenpreis<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+
+<span style="color: #707183;">(</span><span style="color: #006FE0;">deftest</span> <span style="color: #006699;">test-profit</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>profit 500<span style="color: #709870;">)</span> 41400<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
+  <span style="color: #7388D6;">(</span><span style="color: #006FE0;">is</span> <span style="color: #909183;">(</span>= <span style="color: #709870;">(</span>profit 400<span style="color: #709870;">)</span> 88650<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline38">
+<h3 id="orgheadline38">Regel für Hilfsfunktionen</h3>
+<blockquote nil>
+<p>
+<b>Definiere für jeden Zusammenhang zwischen Größen, die sich aus der
+Problembeschreibung ergeben, eine Funktion.</b>
+</p>
+</blockquote>
+
+</section>
+<section id="slide-orgheadline39">
+<h3 id="orgheadline39">So nicht!!</h3>
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">profit</span>
+   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>kartenpreis<span style="color: #909183;">]</span>
+     <span style="color: #909183;">(</span>-
+       <span style="color: #709870;">(</span>*
+         <span style="color: #907373;">(</span>+ 120
+            <span style="color: #6276BA;">(</span>* <span style="color: #858580;">(</span>/ 15 10 <span style="color: #858580;">)</span>
+               <span style="color: #858580;">(</span>- 500 kartenpreis<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span>
+         kartenpreis<span style="color: #709870;">)</span>
+       <span style="color: #709870;">(</span>+ 18000
+          <span style="color: #907373;">(</span>* 5
+             <span style="color: #6276BA;">(</span>+ 120
+                <span style="color: #858580;">(</span>* <span style="color: #80A880;">(</span>/ 15 10 <span style="color: #80A880;">)</span>
+                <span style="color: #80A880;">(</span>- 500 kartenpreis<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline43">
+<h2 id="orgheadline43">Variablendefinitionen</h2>
+<div class="outline-text-2" id="text-orgheadline43">
+</div></section>
+<section id="slide-orgheadline41">
+<h3 id="orgheadline41">Regel</h3>
+<p>
+Weitere Verbesserung der Lesbarkeit des
+Programms durch
+</p>
+
+<p>
+<b>Regel für Variablendefinitionen:</b>
+</p>
+
+<blockquote nil>
+<p>
+<b>Ersetze jede Konstante, deren Bedeutung sich nicht aus dem Kontext
+ergibt, durch einen sprechenden Variablennamen.</b>
+</p>
+</blockquote>
+
+<p>
+Anmerkung: Der Begriff <i>Variable</i> ist hier vorläufig mit <i>benannter
+Konstante</i> gleichzusetzen.
+</p>
+
+</section>
+<section id="slide-orgheadline42">
+<h3 id="orgheadline42">Beispiel</h3>
+<p>
+Zum Beispiel für die Funktion <code>profit</code> und ihre Hilfsfunktionen:
+</p>
+
+<div class="small">
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">fixkosten</span> 18000<span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">kosten-pro-besucher</span> 5<span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">basis-besucherzahl</span> 120<span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">besucher-preis-faktor</span> <span style="color: #7388D6;">(</span>/ 15 10<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">preis-fuer-basis-besucherzahl</span> 500<span style="color: #707183;">)</span>
+</pre>
+</div>
+
+</div>
+
+<p>
+(Das vollständige Programm <code>profit</code> (kino.clj) steht in Moodle zur
+Verfügung.)
+</p>
+
+<p>
+<b>Gegenbeispiel:</b> für die Formel zur Berechnung der Dreiecksfläche<br  />
+<code>(/ (* grundseite hoehe) 2)</code>
+</p>
+
+<p>
+<b>nicht</b> die Konstante 2 durch eine Variable zwei ersetzen.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline44">
+<h2 id="orgheadline44">Zusammenfassung</h2>
+<ul>
+<li>Funktionen (im Sinne der funktionalen Programmierung) stellen ein
+bedeutsames Mittel der funktionalen Abstraktion dar durch:
+
+<ul>
+<li>Abstraktion konkreter Ausdrücke zu parametrisierten Funktionen,</li>
+
+<li>Benennung der Funktionen.</li>
+
+</ul></li>
+
+<li>Abstraktion von Teilausdrücken führt durch die Einführung von
+Hilfsfunktionen zu einer Abstraktionshierarchie.</li>
+
+<li>Eine Entwurfsvorschrift
+
+<ul>
+<li>ist kein Allheilmittel,</li>
+
+<li>stellt eine Handlungsanleitung dar,</li>
+
+<li>dient der „Disziplinierung“ der Programmierer.</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section>
+<ul>
+<li>Phase 3 stellt hohe Anforderungen:
+
+<ul>
+<li>Verstehen der Problembeschreibung</li>
+
+<li>Vermögen, mathematische Zusammenhänge zu erkennen</li>
+
+<li>Einarbeitung in fremde Begriffswelt</li>
+
+<li>Entwicklung eigener Fachsprachen</li>
+
+<li>Fähigkeit zur Abstraktion</li>
+
+</ul></li>
+
+</ul>
+<ul>
+<li>Hilfsfunktionen entsprechen dem Prinzip der funktionalen Abstraktion</li>
+
+<li>oder der hierarchischen Dekomposition</li>
+
+<li>vgl. auch <a class='org-ref-reference' href="#Beck97">Beck97</a>: <i>method invocation</i></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline45">
+<h2 id="orgheadline45"><h1 class='org-ref-bib-h1'>Bibliography</h1>
+<ul class='org-ref-bib'><li><a id="Beck97">[Beck97] Beck, Smalltalk: best practice patterns, Prentice-Hall, Inc. (1997).</a></li>
+</ul></h2>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+margin: 0.05,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'slide', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: './reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: './reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+,dependencies: [ { src: 'plugin/menu/menu.js', async: true }, { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]});
+</script>
+</body>
+</html>
