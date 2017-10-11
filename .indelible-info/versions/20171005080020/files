@@ -1,0 +1,130 @@
+<files>
+    <file>
+        <name enc="t" charSet="UTF-8">.DS_Store</name>
+        <modified>1507133933000</modified>
+    </file>
+    <directory>
+        <name enc="t" charSet="UTF-8">.git</name>
+        <modified>1506534752000</modified>
+    </directory>
+    <file>
+        <name enc="t" charSet="UTF-8">.gitignore</name>
+        <modified>1504392298000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">.gitmodules</name>
+        <modified>1503341892000</modified>
+    </file>
+    <directory>
+        <name enc="t" charSet="UTF-8">Aufgaben</name>
+        <modified>1506359144000</modified>
+    </directory>
+    <directory>
+        <name enc="t" charSet="UTF-8">Clojure</name>
+        <modified>1506326450000</modified>
+    </directory>
+    <file>
+        <name enc="t" charSet="UTF-8">clojure-session.clj</name>
+        <modified>1482238305000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">clojuresession.org</name>
+        <modified>1481012070000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">index.html</name>
+        <modified>1503524968000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">mystyle.css</name>
+        <modified>1470574660000</modified>
+    </file>
+    <directory>
+        <name enc="t" charSet="UTF-8">orgmode-probleme-beispiele</name>
+        <modified>1491391461000</modified>
+    </directory>
+    <file>
+        <name enc="t" charSet="UTF-8">Programmierparadigmen.html</name>
+        <modified>1503524968000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">Programmierparadigmen.org</name>
+        <modified>1503525150000</modified>
+    </file>
+    <directory>
+        <name enc="t" charSet="UTF-8">prolog</name>
+        <modified>1506411854000</modified>
+    </directory>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-Orga.org</name>
+        <modified>1506359950000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-Uebersicht5.html</name>
+        <modified>1491474511000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-Uebersicht5.org</name>
+        <modified>1491421047000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-Uebersicht6.html</name>
+        <modified>1503526845000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">ProPar-Uebersicht6.org</name>
+        <modified>1503526663000</modified>
+    </file>
+    <directory>
+        <name enc="t" charSet="UTF-8">Pruefungen</name>
+        <modified>1507122630000</modified>
+    </directory>
+    <directory>
+        <name enc="t" charSet="UTF-8">Quellen</name>
+        <modified>1506953111000</modified>
+    </directory>
+    <file>
+        <name enc="t" charSet="UTF-8">README.md</name>
+        <modified>1503268220000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">referenzen.bib</name>
+        <modified>1429094327000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">snm.ws</name>
+        <modified>1468450841000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">squint.clj</name>
+        <modified>1480025104000</modified>
+    </file>
+    <symlink>
+        <name enc="t" charSet="UTF-8">styles</name>
+        <modified>1503516801000</modified>
+    </symlink>
+    <file>
+        <name enc="t" charSet="UTF-8">table.html</name>
+        <modified>1470173040000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">table.org</name>
+        <modified>1470173037000</modified>
+    </file>
+    <symlink>
+        <name enc="t" charSet="UTF-8">theme-bigblow-local.setup</name>
+        <modified>1503516868000</modified>
+    </symlink>
+    <file>
+        <name enc="t" charSet="UTF-8">VieleThemen.webloc</name>
+        <modified>1144354068000</modified>
+    </file>
+    <directory>
+        <name enc="t" charSet="UTF-8">Vorlesung</name>
+        <modified>1506509169000</modified>
+    </directory>
+    <directory>
+        <name enc="t" charSet="UTF-8">Wuyts</name>
+        <modified>1505480263000</modified>
+    </directory>
+</files>

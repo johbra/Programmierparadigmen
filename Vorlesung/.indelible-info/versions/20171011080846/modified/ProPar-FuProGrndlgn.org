@@ -1,0 +1,637 @@
+# +SETUPFILE: /Users/johannes/Documents/myOrg/org-html-themes/setup/theme-bigblow.setup
+#+SETUPFILE: ./theme-bigblow-local.setup
+#+TITLE: Funktionale Programmierung -- Grundlagen
+#+SUBTITLE: Programmierparadigmen
+#+AUTHOR: Johannes Brauer
+#+OPTIONS:   H:4
+#+OPTIONS: num:nil d:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: reveal_single_file:nil
+#+Language:  de
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+# +REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_THEME: solarized
+#+REVEAL_TRANS: slide
+#+REVEAL_HLEVEL: 1
+#+REVEAL_INIT_SCRIPT: dependencies: [ { src: 'plugin/menu/menu.js', async: true },
+#+REVEAL_INIT_SCRIPT:                 { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]
+#+REVEAL_MARGIN: 0.05
+#+REVEAL_EXTRA_CSS: ./mycss/myrevealstyle.css
+#+OPTIONS: reveal_control:t
+
+# um Folien mit reveal.js erzeugen zu können:ml
+# M-x load-library und dann ox-reveal
+
+* Programmieren mit Funktionen
+
+** Merkmale der imperativen Programmierung
+
+   1. Wesentliche Konzepte:
+      -  Variablen: benannte Speicherzellen
+      -  Zuweisung: Verändern des Wertes einer Variablen
+   2. Die Werte der Variablen repräsentieren den Zustand der Maschine.
+   3. Das Programm ist eine Folge von Zustandsänderungen.
+   4. Im imperativen Programmierstil spiegelt sich die
+      Von-Neumann-Architektur wider (hinderlich bei der Programmierung
+      komplexer Anwendungen).
+   5. Imperative Programme sind nicht referenztransparent: $f(x)+f(x)$
+      ist nicht notwendigerweise gleich $2\cdot f(x)$.
+
+** Merkmale der funktionalen Programmierung
+
+   1. Gute mathematische Grundlage der Programmierung (Funktionsbegriff)
+   2. Programme werden kürzer und besser lesbar.
+   3. Verarbeitung komplexer (häufig symbolischer) Datenstrukturen
+   4. Keine Variablen als benannte Speicherzellen
+   5. Keine Iteration
+   6. Funktionale Sprachen haben besondere Bedeutung für die Definition
+      der Semantik von Programmiersprachen:
+   7. z.B. durch Definition eines Interpreters, geschrieben in einer
+      funktionalen Sprache.
+
+* Ein erstes Beispiel
+
+Tafelübung funktionale Abstraktion (fn) einführen
+
+** Eine einfache Funktion
+
+-  Berechnung des Bruttobetrags einer Rechnung aus dem Nettobetrag:
+   -  mathematisch\\
+      $brutto(netto, mhrwrtstr) = netto + netto \frac{mhrwrtstr}{100}$
+   -  Definition einer Funktion =brutto=:
+      #+BEGIN_SRC clojure
+          (def brutto
+                (fn [netto mhrwrtstr]
+                  (+ netto (/ (* netto mhrwrtstr) 100))))
+      #+END_SRC
+
+** Aufbau von Ausdrücken
+-  Jeder Ausdruck ist von der Form\\
+   $$(operator\ operand_{1} \ldots\ operand_{n})$$
+-  /Operatoren/ sind Namen von
+   -  Standardfunktionen: +, /, =sqrt=, ...
+   -  eigenen Funktionen: =brutto=, ...
+   -  Pseudofunktionen: ~def~, =fn=, ...
+-  /Operanden/ sind
+   -  Konstanten: 3.14, ...
+   -  Variable: =netto=, ...
+   -  Ausdrücke: =(f ....)=
+
+** Wert eines Ausdrucks
+
+-  Anwendung einer Funktion auf ihre Argumente:\\
+   =(brutto 100.0 16.0)=
+-  Ersetze jedes Auftreten von =netto= durch 100.0 und von =mhrwrtstr=
+   durch 16.0:\\
+   == (+ 100.0 (/ (* 100.0 16.0) 100))=
+-  Auswertung erfolgt von innen nach außen:\\
+   == (+ 100.0 (/ (* 100.0 16.0) 100))=\\
+   == (+ 100.0 (/ 1600.0 100))=
+-  im nächsten Schritt:\\
+   == (+ 100.0 (/ 1600.0 100))=\\
+   == (+ 100.0 16.0))=
+-  schließlich:\\
+   == 116.0=
+
+* Clojure
+
+** Eigenschaften von Clojure
+
+Clojure ...
+-  ist ein Lisp-Dialekt.
+-  läuft auf der Java Virtual Machine.
+-  ermöglicht verschiedene Programmierstile (imperativ, *funktional*,
+   objektorientiert, ...).
+-  behandelt Funktionen als Werte erster Ordnung (first class values),
+   d.h. sie können u.a. ...
+   -  als Argumente an Prozeduren/Funktionen/Methoden übergeben werden,
+   -  als Resultate von Prozeduren/Funktionen/Methoden auftreten.
+-  besitzt eine einzige Auswertungsregel für die Anwendung von
+   Funktionen (Ausnahmen für Pseudofunktionen).
+
+** Web-Seiten zu Clojure
+-  [[http://clojure.org][Hauptseite]]
+-  [[http://clojure.org/features][Features]]
+-  [[http://clojure.org/downloads][Download]]
+-  Dokumentation
+   -  [[http://clojuredocs.org][clojuredocs]]
+   -  [[http://clojure-doc.org][clojure-doc]]
+-  [[http://groups.google.com/group/clojure][Google Gruppe]]
+-  Tutorials
+   -  [[http://dev.clojure.org/display/doc/Getting+Started][Getting Started]]
+   -  [[http://www.braveclojure.com][CLOJURE for the BRAVE and TRUE]]
+   -  [[http://www.moxleystratton.com/blog/2008/05/01/clojure-tutorial-for-the-non-lisp-programmer/][Clojure Tutorial For the Non-Lisp Programmer]]
+   -  [[http://java.ociweb.com/mark/clojure/article.html][Clojure - Functional Programming for the JVM]]
+
+** Benutzung von Clojure
+-  [[http://try-clojure.org/][Try Clojure]]
+-  Command line tool - the repl
+   =java -cp clojure.jar clojure.main=
+-  Clooj - editor and IDE written entirely in Clojure itself
+   -  [[https://github.com/arthuredelstein/clooj][clooj, a lightweight IDE for clojure]]
+   -  [[https://www.mediafire.com/?kxa2an0k0ings][Download]]
+-  [[http://www.lighttable.com][LightTable]] is a new interactive IDE ...
+-  [[http://leiningen.org/index.html][Leiningen]]
+-  [[http://dev.clojure.org/display/doc/Getting+Started+with+La+Clojure+and+IntelliJ+IDEA][La Clojure and IntelliJ IDEA]]
+-  [[http://dev.clojure.org/display/doc/Getting+Started+with+Eclipse+and+Counterclockwise][Eclipse and Counterclockwise]]
+-  [[http://clojure-doc.org/articles/tutorials/emacs.html][Clojure with Emacs]]
+
+** Die Read-Eval-Print-Loop
+-  Read: lies einen Ausdruck
+-  Eval(uate): werte ihn aus
+-  Print: gib das Ergebnis aus
+#+attr_html: :width 650px
+[[./Abbildungen/ReadEvalPrint.png]]
+
+** =brutto= in der Repl
+
+Demonstration
+
+* Methodische Abstraktion -- Entwurfsvorschrift I
+
+** Entwurfsvorschriften - Übersicht
+-  /Entwurfsvorschriften/ sind Handlungsanleitungen für die Entwicklung
+   kleiner (zunächst funktionaler) Programme.
+-  Programmstrukturen folgen den Datenstrukturen.
+-  Abstraktion von der Lösung von Einzelproblemen zur Lösung von
+   Problemklassen.
+-  Entwicklung funktionaler Programme:
+   -  Funktionen im mathematischen Sinne:
+      -  keine Nebeneffekte
+      -  kein Gedächtnis (stateless)
+   -  Nutzung der funktionalen Abstraktion
+
+** Entwurfsvorschrift I /(1)/
+Programm für die Berechnung der Fläche eines Dreiecks aus Grundseite und
+Höhe:
+
+1. die *Zweckbestimmung*:
+
+   #+begin_small
+   #+BEGIN_SRC clojure
+       ;; berechnet die Flaeche eines Dreiecks aus
+       ;; Grundseite und Hoehe
+   #+END_SRC
+   #+end_small
+
+2. Hinzufügen des *Funktionskopfs*
+
+#+ATTR_REVEAL: :frag roll-in
+   #+begin_smaLl
+#+BEGIN_SRC clojure
+;; berechnet die Flaeche eines Dreiecks aus
+;; Grundseite und Hoehe
+(def dreiecksflaeche
+   (fn [grundseite hoehe] 
+      nil))
+#+END_SRC
+#+end_small
+=nil= steht hier als Platzhalter für den Funktionsrumpf.
+
+** Entwurfsvorschrift I /(2)/ 
+3. [@3]Festlegen des *Vertrags*:
+#+begin_small
+#+BEGIN_SRC clojure
+;; berechnet die Flaeche eines Dreiecks aus
+;; Grundseite und Hoehe
+(def dreiecksflaeche
+   (fn [grundseite hoehe]
+      {:pre [(number? grundseite) (number? hoehe)]
+       :post [(number? %)]}
+      nil)
+#+END_SRC
+#+end_small
+4. [@4]Hinzufügen von *Beispielanwendungen / Tests*
+#+ATTR_REVEAL: :frag roll-in
+#+BEGIN_SRC clojure
+;; berechnet die Flaeche eines Dreiecks aus
+(def dreiecksflaeche
+  (fn [grundseite hoehe]
+     {:pre [(number? grundseite) (number? hoehe)]
+      :post [(number? %)]} 
+     nil))
+
+(deftest test-dreiecksflaeche
+  (is  (= 25 (dreiecksflaeche 10 5))))
+#+END_SRC
+
+** Entwurfsvorschrift I /(3)/ 
+5. [@5]Ersetzen von =nil= als Platzhalter im Funktionsrumpf durch die
+   korrekte Berechnungsvorschrift:
+#+begin_small
+#+BEGIN_SRC clojure
+;; berechnet die Flaeche eines Dreiecks aus
+(def dreiecksflaeche
+  (fn [grundseite hoehe]
+     {:pre [(number? grundseite) (number? hoehe)]
+      :post [(number? %)]} 
+     nil))
+#+END_SRC
+#+end_small
+#+ATTR_REVEAL: :frag roll-in
+#+begin_small
+#+BEGIN_SRC clojure
+(def dreiecksflaeche
+  (fn [grundseite hoehe]
+     {:pre [(number? grundseite) (number? hoehe)]
+      :post [(number? %)]}
+     (/ (* grundseite hoehe) 2)))
+
+(deftest test-dreiecksflaeche 
+  (is  (= 25 (dreiecksflaeche 10 5))))
+#+END_SRC
+#+end_small
+
+** =dreiecksflaeche= in Clooj
+
+[[./Abbildungen/dreiecksflaecheInClooj.png]]
+
+* Entwurfsvorschrift I -- Zusammenfassung 
+
+Vier Phasen:
+
+1. Zweckbestimmung, Vertrag, Funktionskopf
+2. Tests
+3. Funktionsrumpf
+4. Testen
+
+** Entwurfsvorschrift I -- Phase 1 /(1)/
+
+*Zweckbestimmung, Vertrag, Funktionskopf*
+-  Ziele:
+   -  Beschreiben des Zwecks der Funktionen
+   -  Spezifizieren der Art der Eingabedaten und des Ergebnisses
+   -  Benennen der Funktion
+   -  Aufschreiben ihres Kopfes
+-  Aktivitäten:
+   -  Wähle einen Funktionsnamen.
+   -  Analysiere das Problem daraufhin, welche unbestimmten Größen sie
+      verarbeiten muss.
+   -  Wähle einen Namen für jede Eingangsgröße, der sich möglichst in
+      der Problembeschreibung wiederfindet.
+   -  ...
+
+** Entwurfsvorschrift I -- Phase 1 /(2)/
+
+*Vertrag, Funktionskopf, Zweckbestimmung*
+-  Aktivitäten:
+   -  ...
+   -  Beschreibe unter Verwendung der Namen für die Eingangsgrößen, was
+      die Funktion aus diesen ermitteln soll.
+   -  Formuliere den Vertrag und den Funktionskopf.
+      #+BEGIN_SRC clojure
+          ;; berechnet ... aus x1 ... 
+                  (def name 
+                     (fn [x1 ... ] 
+                       {:pre [(number? x1) ... ]
+                        :post [(number? %)]}
+                       ... ))
+      #+END_SRC
+
+** Entwurfsvorschrift I -- Phase 2
+
+*Beispiele / Tests*
+-  Ziel: Veranschaulichung der Beziehung zwischen Ein- und Ausgabedaten
+   anhand von Beispielen
+-  Aktivitäten:
+   -  Versuche, aus der Problembeschreibung Beispiele abzuleiten.
+   -  Bestätige die Resultate.
+   -  Schreibe die Beispiele als Tests auf.
+      #+BEGIN_SRC clojure
+          (def name 
+             (fn [x1 ... ] 
+                {:pre [(number? x1) ... ]
+                 :post [(number? %)]}
+                ... ))
+          (deftest test-name 
+             (is (= (name ... ) ...)))        
+      #+END_SRC
+
+** Entwurfsvorschrift I -- Phase 3
+
+*Funktionsrumpf*
+
+-  Ziel: Definition der Funktion
+-  Aktivitäten:
+   -  Entwickle die Berechnungsvorschrift für die Ermittlung des
+      Resultats bestehend aus
+      -  Clojure-Standardfunktionen,
+      -  eigenen Funktionen und
+      -  den Variablen (Parameter).
+   -  Wenn vorhanden, benutze die mathematische Formel aus der
+      Problembeschreibung.
+
+** Entwurfsvorschrift I -- Phase 4
+
+*Testen*
+
+-  Ziele: Aufspüren von
+   -  Fehlern in der Berechnungsvorschrift,
+   -  auch Tippfehler,
+   -  Vertragsverletzungen in der Formulierung der Tests
+-  Aktivitäten:
+   -  Wende die Funktion auf die in den Beispielen angegebenen
+      Eingabedaten (Argumente) an.
+   -  Prüfe, ob die Resultate mit den erwarteten übereinstimmen
+      (geschieht durch =(run-tests)= automatisch).
+   -  Füge weitere Tests hinzu.
+
+* Verwendung von Hilfsfunktionen
+
+** Ein Anwendungsbeispiel
+
+-  Problembeschreibung:
+   Der Eigentümer eines Vorstadtkinos kann seine Preise für
+   Eintrittskarten frei festlegen. Er hat einen exakten Zusammenhang
+   zwischen dem Kartenpreis und der durchschnittlichen Besucheranzahl
+   empirisch festgestellt: Bei einem Preis von 5€ pro Karte kommen im
+   Schnitt 120 Zuschauer. Reduziert er den Preis um 0,10€, erhöht sich die
+   Besucherzahl um 15. Aber mehr Besucher verursachen höhere Kosten.
+   Jede Veranstaltung kostet 180€ plus 0,05€ für jeden Zuschauer. Der Eigentümer
+   möchte nun wissen, wie groß der Profit bei einem bestimmten
+   Kartenpreis ist.
+
+** Lösungsansatz
+
+- Können wir dem Kinoeigentümer helfen?
+- Versuchen wir zunächst die Abhängigkeiten zu erkennen, die sich aus
+  der Problembeschreibung ableiten lassen:
+  :student:
+  #+ATTR_REVEAL: :frag (roll-in roll-in roll-in roll-in)
+  1. Der /Profit/ ist die Differenz aus Einnahmen und Kosten.
+  2. Die /Einnahmen/ sind das Produkt aus Kartenpreis und Besucheranzahl.
+  3. Die /Kosten/ sind die Summe aus den Fixkosten (180€) und dem
+     Produkt aus Besucheranzahl und den Kosten pro Besucher (0,05€).
+  4. Schließlich gibt es noch den Zusammenhang zwischen
+     /Besucheranzahl/ und Kartenpreis.
+  :END:
+#+ATTR_REVEAL: :frag roll-in
+-  Entwerfen wir nun für jeden Zusammenhang eine Funktion und wenden
+   dabei die Entwurfsvorschrift an.
+
+** Lösung unter Anwendung der Entwurfsvorschrift
+*** Schablone der Funktion =profit=
+
+-  Gemäß Entwurfsvorschrift ist in Phase 1 zunächst der Vertrag, der Funktionskopf und die
+   Zweckbestimmung aufzuschreiben.
+-  Beginnen wir mit der Hauptfunktion für den Profit:
+   #+BEGIN_SRC clojure
+       ;; berechnet den Profit aus der Differenz zwischen
+       ;; Einnahmen und Kosten bei gegebenem Kartenpreis
+       (def profit
+         (fn [kartenpreis]
+           {:pre [(number? kartenpreis)]
+            :post[(number? %)]}
+           ...))
+   #+END_SRC
+
+*** Die Schablonen für =einnahmen= und =kosten=
+
+-  Die Berechnung der Einnahmen:
+   #+begin_small
+   #+BEGIN_SRC clojure
+       ;; berechnet die Einnahmen aus dem Produkt von 
+       ;; Besucherzahl und Kartenpreis
+       (def einnahmen
+         (fn [kartenpreis]
+           {:pre [(number? kartenpreis)]
+            :post[(number? %)]}
+           ...))
+   #+END_SRC
+   #+end_small
+-  Die Kosten:
+   #+begin_small
+   #+BEGIN_SRC clojure
+       ;; berechnet die entstehenden Kosten bei gegebenem
+       ;; Kartenpreis aus Fixkosten und variablen Kosten
+       (def kosten
+         (fn [kartenpreis]
+           {:pre [(number? kartenpreis)]
+            :post [(number? %)]}
+          ...))
+   #+END_SRC
+   #+end_small
+
+*** Die Schablone für =besucherzahl=
+
+-  Die Anzahl der Besucher:
+
+   #+BEGIN_SRC clojure
+       ;; berechnet die Besucherzahl bei gegebenem
+       ;; Kartenpreis nach empirisch ermittelter Formel
+       (def besucherzahl
+         (fn [kartenpreis]
+           {:pre [(number? kartenpreis)]
+            :post [(number? %)]}
+          ...))
+   #+END_SRC
+
+** Beispiele, Test
+
+- In Phase II versuchen wir Beispiele zu finden; beginnen wir mit der
+  Funktion =besucherzahl=.
+
+- Aus der Problembeschreibung lassen sich folgende Beispiele ableiten:
+
+  - (besucherzahl 500) = 120
+
+  - (besucherzahl 490) = 135
+
+  - (besucherzahl 510) = 105
+
+  - (besucherzahl 400) = 270
+
+- Hinweis: Um Rundungsfehler zu vermeiden, werden alle Beträge in Cent
+  angegeben.
+
+- Lässt sich aus den Beispielen ein allgemeiner Zusammenhang ableiten?
+
+:student:
+#+ATTR_REVEAL: :frag roll-in
+- Antwort: \\
+  ~(besucherzahl p) = (+ 120 (* (/ 15 10) (- 500 p)))~
+:END:
+
+** Funktionsdefinitionen
+*** Die Funktion =besucherzahl=
+
+... ergibt sich somit zu:
+
+   #+BEGIN_SRC clojure
+       ;; berechnet die Besucherzahl bei gegebenem
+       ;; Kartenpreis nach empirisch ermittelter Formel
+       (def besucherzahl
+         (fn [kartenpreis]
+           {:pre [(number? kartenpreis)]
+            :post [(number? %)]}
+          (+ 120 (*(/ 15 10 ) (- 500 kartenpreis)))))
+
+       (deftest test-besucherzahl
+          (is (= (besucherzahl 500) 120))
+          (is (= (besucherzahl 490) 135))
+          (is (= (besucherzahl 510) 105))
+          (is (= (besucherzahl 400) 270)))
+   #+END_SRC
+
+*** Die Funktion =kosten=
+
+-  Für die Funktion =kosten= gehen wir ähnlich vor und erhalten
+   schließlich:
+
+   #+BEGIN_SRC clojure
+       ;; berechnet die entstehenden Kosten bei gegebenem
+       ;; Kartenpreis aus Fixkosten und variablen Kosten
+       (def kosten
+         (fn [kartenpreis]
+           {:pre [(number? kartenpreis)]
+            :post[(number? %)] }
+           (+ 18000 (* 5 (besucherzahl kartenpreis)))))
+
+       (deftest test-kosten
+         (is (= (kosten 500) 18600))
+         (is (= (kosten 400) 19350)))
+   #+END_SRC
+
+*** Die Funktion =einnahmen=
+
+-  ebenso für die Funktion =einnahmen=:
+
+   #+BEGIN_SRC clojure
+       ;; berechnet die Einnahmen aus dem Produkt von 
+       ;; Besucherzahlund Kartenpreis
+       (def einnahmen
+         (fn [kartenpreis]
+           {:pre [(number? kartenpreis)]
+            :post [(number? %)]}
+           (* (besucherzahl kartenpreis) kartenpreis)))
+
+       (deftest test-einnahmen
+         (is (= (einnahmen 500) 60000))
+         (is (= (einnahmen 400) 108000)))
+   #+END_SRC
+
+*** Die Funktion =profit=
+
+-  zum Schluss die Funktion =profit=:
+
+   #+BEGIN_SRC clojure
+       ;; berechnet den Profit aus der Differenz zwischen
+       ;; Einnahmen und Kosten bei gegebenem Kartenpreis
+       (def profit
+         (fn [kartenpreis]
+           {:pre [(number? kartenpreis)]
+            :post[(number? %)]}
+           (- (einnahmen kartenpreis)
+              (kosten kartenpreis))))
+
+       (deftest test-profit
+         (is (= (profit 500) 41400))
+         (is (= (profit 400) 88650)))
+   #+END_SRC
+
+** Regel für Hilfsfunktionen
+
+#+BEGIN_QUOTE
+*Definiere für jeden Zusammenhang zwischen Größen, die sich aus der
+Problembeschreibung ergeben, eine Funktion.*
+#+END_QUOTE
+
+** So nicht!!
+
+#+BEGIN_SRC clojure
+    (def profit
+       (fn [kartenpreis]
+         (-
+           (*
+             (+ 120
+                (* (/ 15 10 )
+                   (- 500 kartenpreis)))
+             kartenpreis)
+           (+ 18000
+              (* 5
+                 (+ 120
+                    (* (/ 15 10 )
+                    (- 500 kartenpreis))))))))
+#+END_SRC
+
+* Variablendefinitionen
+
+** Regel 
+
+Weitere Verbesserung der Lesbarkeit des
+Programms durch
+
+*Regel für Variablendefinitionen:*
+
+#+BEGIN_QUOTE
+*Ersetze jede Konstante, deren Bedeutung sich nicht aus dem Kontext
+ergibt, durch einen sprechenden Variablennamen.*
+
+#+END_QUOTE
+
+Anmerkung: Der Begriff /Variable/ ist hier vorläufig mit /benannter
+Konstante/ gleichzusetzen.
+
+** Beispiel 
+
+Zum Beispiel für die Funktion =profit= und ihre Hilfsfunktionen:
+
+#+begin_small
+#+BEGIN_SRC clojure
+    (def fixkosten 18000)
+        (def kosten-pro-besucher 5)
+        (def basis-besucherzahl 120)
+        (def besucher-preis-faktor (/ 15 10))
+        (def preis-fuer-basis-besucherzahl 500)
+#+END_SRC
+#+end_small
+
+(Das vollständige Programm =profit= (kino.clj) steht in Moodle zur
+Verfügung.)
+
+*Gegenbeispiel:* für die Formel zur Berechnung der Dreiecksfläche\\
+~(/ (* grundseite hoehe) 2)~
+
+*nicht* die Konstante 2 durch eine Variable zwei ersetzen.
+
+* Zusammenfassung
+
+-  Funktionen (im Sinne der funktionalen Programmierung) stellen ein
+   bedeutsames Mittel der funktionalen Abstraktion dar durch:
+
+   -  Abstraktion konkreter Ausdrücke zu parametrisierten Funktionen,
+
+   -  Benennung der Funktionen.
+
+-  Abstraktion von Teilausdrücken führt durch die Einführung von
+   Hilfsfunktionen zu einer Abstraktionshierarchie.
+
+-  Eine Entwurfsvorschrift
+
+   -  ist kein Allheilmittel,
+
+   -  stellt eine Handlungsanleitung dar,
+
+   -  dient der „Disziplinierung“ der Programmierer.
+#+REVEAL: split
+   -  Phase 3 stellt hohe Anforderungen:
+
+      -  Verstehen der Problembeschreibung
+
+      -  Vermögen, mathematische Zusammenhänge zu erkennen
+
+      -  Einarbeitung in fremde Begriffswelt
+
+      -  Entwicklung eigener Fachsprachen
+
+      -  Fähigkeit zur Abstraktion
+
+-  Hilfsfunktionen entsprechen dem Prinzip der funktionalen Abstraktion
+
+-  oder der hierarchischen Dekomposition
+
+-  vgl. auch cite:Beck97: /method invocation/
+
+* bibliography:referenzen.bib

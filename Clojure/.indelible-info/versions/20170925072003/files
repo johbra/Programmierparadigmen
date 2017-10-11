@@ -1,0 +1,146 @@
+<files>
+    <symlink>
+        <name enc="t" charSet="UTF-8">.%23streams.clj</name>
+        <modified>1506279127000</modified>
+    </symlink>
+    <file>
+        <name enc="t" charSet="UTF-8">.DS_Store</name>
+        <modified>1503400420000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">abstand-vom-ursprung.clj</name>
+        <modified>1473239373000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">adt.clj</name>
+        <modified>1473365672000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">arithmexpr.clj</name>
+        <modified>1496666387000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">belaste.clj</name>
+        <modified>1479127537000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">Bill+the+Lizard%3A+SICP+2.6%3A+Church+numerals.html</name>
+        <modified>1495575589000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">CljUnterWindows.md</name>
+        <modified>1475225053000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">CljUnterWindows.pdf</name>
+        <modified>1475225162000</modified>
+    </file>
+    <directory>
+        <name enc="t" charSet="UTF-8">cn</name>
+        <modified>1495745017000</modified>
+    </directory>
+    <file>
+        <name enc="t" charSet="UTF-8">cn.zip</name>
+        <modified>1495744669000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">dataasproc.clj</name>
+        <modified>1502915443000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">defrecord.clj</name>
+        <modified>1473166720000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">erzeugekonto.clj</name>
+        <modified>1479130067000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">erzeugekonto2.clj</name>
+        <modified>1497729987000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">figuren.clj</name>
+        <modified>1487278152000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">geldwechsler.clj</name>
+        <modified>1492363014000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">lazylistasstates.clj</name>
+        <modified>1492257963000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">listasrecords.clj</name>
+        <modified>1492370571000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">monatslohn.clj</name>
+        <modified>1479378294000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">myforcedelay.clj</name>
+        <modified>1502270903000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">myif.clj</name>
+        <modified>1496588185000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">peano.clj</name>
+        <modified>1498931857000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">person.clj</name>
+        <modified>1503786017000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">punkte.clj</name>
+        <modified>1493757075000</modified>
+    </file>
+    <directory>
+        <name enc="t" charSet="UTF-8">rel-prog</name>
+        <modified>1497798241000</modified>
+    </directory>
+    <file>
+        <name enc="t" charSet="UTF-8">relationalProgramming.clj</name>
+        <modified>1496924401000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">relativ-absolut-akku.clj</name>
+        <modified>1482498319000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">relativ-absolut.clj</name>
+        <modified>1482498365000</modified>
+    </file>
+    <directory>
+        <name enc="t" charSet="UTF-8">sicp-cps</name>
+        <modified>1504391848000</modified>
+    </directory>
+    <file>
+        <name enc="t" charSet="UTF-8">sicp-cps.zip</name>
+        <modified>1497732312000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">singletons-akku.clj</name>
+        <modified>1482498044000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">singletons.clj</name>
+        <modified>1482496407000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">streams.clj</name>
+        <modified>1503310069000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">test.sml</name>
+        <modified>1473368953000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">zeitseitmitternacht.clj</name>
+        <modified>1479392911000</modified>
+    </file>
+</files>

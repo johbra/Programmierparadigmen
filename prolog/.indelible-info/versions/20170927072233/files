@@ -1,0 +1,62 @@
+<files>
+    <file>
+        <name enc="t" charSet="UTF-8">beasts.pl</name>
+        <modified>1504885821000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">bibel.pl</name>
+        <modified>1505805842000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">celsiusfahrenheit.pl</name>
+        <modified>1505501222000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">collatz.pl</name>
+        <modified>1499363841000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">count.pl</name>
+        <modified>1505063625000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">darlehen.pl</name>
+        <modified>1506351640000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">kloetze.pl</name>
+        <modified>1506411854000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">natural.pl</name>
+        <modified>1499032427000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">PoPL-Exmpl7-1.pl</name>
+        <modified>1497367452000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">smm.pl</name>
+        <modified>1497367382000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">smm2.pl</name>
+        <modified>1504962487000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">smmalt.pl</name>
+        <modified>1505043342000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">stammbaum.pl</name>
+        <modified>1505300424000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">travel.pl</name>
+        <modified>1505807666000</modified>
+    </file>
+    <file>
+        <name enc="t" charSet="UTF-8">zehnziffern.pl</name>
+        <modified>1505063502000</modified>
+    </file>
+</files>
