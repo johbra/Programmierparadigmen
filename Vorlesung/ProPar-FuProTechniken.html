@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
 <head>
-<!-- 2017-10-10 Tue 21:59 -->
+<!-- 2017-12-16 Sat 17:39 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Funktionale Programmierung &#x2013; Techniken</title>
@@ -68,6 +68,7 @@
   pre.src-fortran:before { content: 'Fortran'; }
   pre.src-gnuplot:before { content: 'gnuplot'; }
   pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
   pre.src-java:before { content: 'Java'; }
   pre.src-js:before { content: 'Javascript'; }
   pre.src-latex:before { content: 'LaTeX'; }
@@ -267,12 +268,13 @@ for the JavaScript code in this tag.
 <span class="subtitle">Programmierparadigmen</span>
 </h1>
 
-<div id="outline-container-org6a44fae" class="outline-2">
-<h2 id="org6a44fae">Anwendung von Entwurfsvorschrift V auf zwei Listen</h2>
-<div class="outline-text-2" id="text-org6a44fae">
-</div><div id="outline-container-orgca1b47d" class="outline-3">
-<h3 id="orgca1b47d">Drei Fälle</h3>
-<div class="outline-text-3" id="text-orgca1b47d">
+<div id="outline-container-orgfa29bc0" class="outline-2">
+<h2 id="orgfa29bc0">Anwendung von Entwurfsvorschrift V auf zwei Listen</h2>
+<div class="outline-text-2" id="text-orgfa29bc0">
+</div>
+<div id="outline-container-org987eae2" class="outline-3">
+<h3 id="org987eae2">Drei Fälle</h3>
+<div class="outline-text-3" id="text-org987eae2">
 <ol class="org-ol">
 <li>Ein Argument kann atomar behandelt werden, d.h. eine Liste muss nicht
 zerlegt werden.</li>
@@ -302,9 +304,9 @@ Das führt zur folgenden angepassten Funktionsschablone:
 </div>
 </div>
 
-<div id="outline-container-org6a3e1b8" class="outline-3">
-<h3 id="org6a3e1b8">Funktionsschablone für Fall 2</h3>
-<div class="outline-text-3" id="text-org6a3e1b8">
+<div id="outline-container-org466ecad" class="outline-3">
+<h3 id="org466ecad">Funktionsschablone für Fall 2</h3>
+<div class="outline-text-3" id="text-org466ecad">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">listen-funktion</span>
        <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst1 lst2<span style="color: #909183;">]</span>
@@ -320,9 +322,9 @@ Das führt zur folgenden angepassten Funktionsschablone:
 </div>
 </div>
 
-<div id="outline-container-org33ece30" class="outline-3">
-<h3 id="org33ece30">Behandlung von Fall 3</h3>
-<div class="outline-text-3" id="text-org33ece30">
+<div id="outline-container-org27a0e05" class="outline-3">
+<h3 id="org27a0e05">Behandlung von Fall 3</h3>
+<div class="outline-text-3" id="text-org27a0e05">
 <p>
 Es gibt keine nutzbare Abhängigkeit
 der beiden Parameter. Hier müssen grundsätzlich alle (vier) Fälle
@@ -346,9 +348,9 @@ berücksichtigt werden:
 </div>
 </div>
 
-<div id="outline-container-org4c188c6" class="outline-3">
-<h3 id="org4c188c6">Drei mögliche Rekursionsschemata</h3>
-<div class="outline-text-3" id="text-org4c188c6">
+<div id="outline-container-org96181d9" class="outline-3">
+<h3 id="org96181d9">Drei mögliche Rekursionsschemata</h3>
+<div class="outline-text-3" id="text-org96181d9">
 <p>
 Man beachte, dass die Schablone noch keine rekursiven Aufrufe
 enthält. Nur für den Fall, dass beide Argumente nicht leer sind, ist
@@ -378,12 +380,13 @@ entschieden werden.
 </div>
 </div>
 
-<div id="outline-container-org346870d" class="outline-2">
-<h2 id="org346870d">Lokale Definitionen</h2>
-<div class="outline-text-2" id="text-org346870d">
-</div><div id="outline-container-org9b80cb3" class="outline-3">
-<h3 id="org9b80cb3">Ineffiziente Funktion <code>sumprod</code></h3>
-<div class="outline-text-3" id="text-org9b80cb3">
+<div id="outline-container-org851644c" class="outline-2">
+<h2 id="org851644c">Lokale Definitionen</h2>
+<div class="outline-text-2" id="text-org851644c">
+</div>
+<div id="outline-container-org98505d9" class="outline-3">
+<h3 id="org98505d9">Ineffiziente Funktion <code>sumprod</code></h3>
+<div class="outline-text-3" id="text-org98505d9">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet eine zweielementige Liste bestehend </span>
     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">aus der Summe und dem Produkt der Elemente der </span>
@@ -408,9 +411,9 @@ entschieden werden.
 </div>
 </div>
 
-<div id="outline-container-org5767726" class="outline-3">
-<h3 id="org5767726">Verwendung einer <i>lokalen Definition</i></h3>
-<div class="outline-text-3" id="text-org5767726">
+<div id="outline-container-org4910ba1" class="outline-3">
+<h3 id="org4910ba1">Verwendung einer <i>lokalen Definition</i></h3>
+<div class="outline-text-3" id="text-org4910ba1">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">berechnet ... </span>
     <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span> 
@@ -437,9 +440,9 @@ Ausdrucks zum Zweck der Vermeidung von Mehrfachberechnungen.
 </div>
 </div>
 
-<div id="outline-container-orgae92ccd" class="outline-3">
-<h3 id="orgae92ccd">Syntax und Semantik von <code>let</code></h3>
-<div class="outline-text-3" id="text-orgae92ccd">
+<div id="outline-container-orge9cb946" class="outline-3">
+<h3 id="orge9cb946">Syntax und Semantik von <code>let</code></h3>
+<div class="outline-text-3" id="text-orge9cb946">
 <ul class="org-ul">
 <li><p>
 Die Syntax der Anwendung der Pseudofunktion <code>let</code>, ein sogenannter
@@ -472,9 +475,9 @@ durch den folgenden <code>fn</code>-Ausdruck ersetzt werden kann:<br />
 </div>
 </div>
 
-<div id="outline-container-org6107483" class="outline-3">
-<h3 id="org6107483">Pragmatik von <code>let</code></h3>
-<div class="outline-text-3" id="text-org6107483">
+<div id="outline-container-orgd4e6a38" class="outline-3">
+<h3 id="orgd4e6a38">Pragmatik von <code>let</code></h3>
+<div class="outline-text-3" id="text-orgd4e6a38">
 <ul class="org-ul">
 <li>Einen Anwendungszweck von <code>let</code> haben wir in der Funktion <code>sumprod</code>
 bereits gesehen: Benennung eines Zwischenergebnisses zur Vermeidung
@@ -502,9 +505,9 @@ Die Benennung von Werten kann ein Programm besser lesbar machen:
 </div>
 </div>
 
-<div id="outline-container-org038ae99" class="outline-3">
-<h3 id="org038ae99">Gültigkeitsbereich der durch <code>let</code> definierten Bezeichner</h3>
-<div class="outline-text-3" id="text-org038ae99">
+<div id="outline-container-org0f6c69e" class="outline-3">
+<h3 id="org0f6c69e">Gültigkeitsbereich der durch <code>let</code> definierten Bezeichner</h3>
+<div class="outline-text-3" id="text-org0f6c69e">
 <ul class="org-ul">
 <li><p>
 Die Variablen \(v_{i}\) in einem <code>let</code>-Ausdruck
@@ -530,9 +533,9 @@ werden.</li>
 </div>
 </div>
 
-<div id="outline-container-org909fbf8" class="outline-3">
-<h3 id="org909fbf8">Pragmatik von <code>let</code> <i>(2)</i></h3>
-<div class="outline-text-3" id="text-org909fbf8">
+<div id="outline-container-org88eb746" class="outline-3">
+<h3 id="org88eb746">Pragmatik von <code>let</code> <i>(2)</i></h3>
+<div class="outline-text-3" id="text-org88eb746">
 <ul class="org-ul">
 <li>Wenn Hilfsfunktionen nur reinen Hilfscharakter haben, d.h. nur im
 Kontext der Hauptfunktion sinnvoll sind, kann es &#x2013; schon zur
@@ -544,9 +547,9 @@ Hilfsfunktionen.</li>
 </div>
 </div>
 
-<div id="outline-container-org1d55ee8" class="outline-3">
-<h3 id="org1d55ee8"><code>sumprod</code> mit Hilfsfunktionen</h3>
-<div class="outline-text-3" id="text-org1d55ee8">
+<div id="outline-container-org5521ba0" class="outline-3">
+<h3 id="org5521ba0"><code>sumprod</code> mit Hilfsfunktionen</h3>
+<div class="outline-text-3" id="text-org5521ba0">
 <div class="small">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span>
@@ -575,9 +578,9 @@ Hilfsfunktionen.</li>
 </div>
 </div>
 
-<div id="outline-container-org8226a98" class="outline-3">
-<h3 id="org8226a98"><code>sumprod</code> mit lokalen Hilfsfunktionen</h3>
-<div class="outline-text-3" id="text-org8226a98">
+<div id="outline-container-org93ad385" class="outline-3">
+<h3 id="org93ad385"><code>sumprod</code> mit lokalen Hilfsfunktionen</h3>
+<div class="outline-text-3" id="text-org93ad385">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sumprod</span>
       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lon<span style="color: #909183;">]</span>
@@ -602,12 +605,13 @@ die Pseudofunktion <code>letfn</code> verwendet werden muss.
 </div>
 </div>
 </div>
-<div id="outline-container-org3a5aec5" class="outline-2">
-<h2 id="org3a5aec5">Funktionen höherer Ordnung (1)</h2>
-<div class="outline-text-2" id="text-org3a5aec5">
-</div><div id="outline-container-orgaf72b32" class="outline-3">
-<h3 id="orgaf72b32">Entwurfsvorschriften bewirken ähnliche Funktionen</h3>
-<div class="outline-text-3" id="text-orgaf72b32">
+<div id="outline-container-org09b4a4c" class="outline-2">
+<h2 id="org09b4a4c">Funktionen höherer Ordnung (1)</h2>
+<div class="outline-text-2" id="text-org09b4a4c">
+</div>
+<div id="outline-container-org87d06f9" class="outline-3">
+<h3 id="org87d06f9">Entwurfsvorschriften bewirken ähnliche Funktionen</h3>
+<div class="outline-text-3" id="text-org87d06f9">
 <p>
 Zum Beispiel
 </p>
@@ -633,9 +637,9 @@ Worin unterscheiden sich die beiden Funktionen?
 </div>
 </div>
 
-<div id="outline-container-orga237419" class="outline-3">
-<h3 id="orga237419">Entwurfsvorschriften bewirken ähnliche Funktionen</h3>
-<div class="outline-text-3" id="text-orga237419">
+<div id="outline-container-orgf102ec8" class="outline-3">
+<h3 id="orgf102ec8">Entwurfsvorschriften bewirken ähnliche Funktionen</h3>
+<div class="outline-text-3" id="text-orgf102ec8">
 <p>
 Hier:
 </p>
@@ -660,9 +664,9 @@ Hier:
 </div>
 </div>
 
-<div id="outline-container-org761915f" class="outline-3">
-<h3 id="org761915f">Noch zwei ähnliche Funktionen</h3>
-<div class="outline-text-3" id="text-org761915f">
+<div id="outline-container-org25181ca" class="outline-3">
+<h3 id="org25181ca">Noch zwei ähnliche Funktionen</h3>
+<div class="outline-text-3" id="text-org25181ca">
 <p>
 Beispiel: Aus einer ungeordneten Liste von Zahlen werden alle unterhalb/oberhalb eines
 Schwellwerts heraus gefiltert:
@@ -675,21 +679,21 @@ Schwellwerts heraus gefiltert:
          <span style="color: #D0372D;">:post</span> <span style="color: #709870;">[</span><span style="color: #907373;">(</span><span style="color: #006FE0;">every?</span> number? <span style="color: #BA36A5;">%</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span><span style="color: #909183;">}</span>
         <span style="color: #909183;">(</span><span style="color: #0000FF;">cond</span> 
           <span style="color: #709870;">(</span><span style="color: #006FE0;">empty?</span> lvz <span style="color: #709870;">)</span> <span style="color: #709870;">()</span>
-          <span style="color: #709870;">(</span><span style="color: #6434A3;">&lt;</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #ffffff;">/</span>&gt; <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span>
+          <span style="color: #709870;">(</span><span style="color: #6434A3;">&lt;</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #FFFFFF;">/</span>&gt; <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span>
 <span style="color: #8D8D84;">;;         </span><span style="color: #8D8D84; font-style: italic;">===</span>
           <span style="color: #709870;">(</span><span style="color: #006FE0;">cons</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">first</span> lvz<span style="color: #907373;">)</span>
-                <span style="color: #907373;">(</span><span style="color: #6434A3;">unterhalb</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #ffffff;">/</span>oberhalb
+                <span style="color: #907373;">(</span><span style="color: #6434A3;">unterhalb</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #FFFFFF;">/</span>oberhalb
                    <span style="color: #6276BA;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #6276BA;">)</span> schwelle<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #6434A3;">unterhalb</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #ffffff;">/</span>oberhalb
+          <span style="color: #D0372D;">:else</span> <span style="color: #709870;">(</span><span style="color: #6434A3;">unterhalb</span><span style="font-family: DejaVu Sans Mono,monospace,sans-serif; color: #000000; background-color: #FFFFFF;">/</span>oberhalb
                    <span style="color: #907373;">(</span><span style="color: #006FE0;">rest</span> lvz <span style="color: #907373;">)</span> schwelle<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org63479a4" class="outline-3">
-<h3 id="org63479a4">Ähnliche Funktionen vermeiden</h3>
-<div class="outline-text-3" id="text-org63479a4">
+<div id="outline-container-org7dfc63d" class="outline-3">
+<h3 id="org7dfc63d">Ähnliche Funktionen vermeiden</h3>
+<div class="outline-text-3" id="text-org7dfc63d">
 <ul class="org-ul">
 <li>Die beiden Funktionen <code>unterhalb</code> und <code>oberhalb</code> unterscheiden sich
 &#x2013; abgesehen von ihrem Namen &#x2013; nur in dem Vergleichsoperator.</li>
@@ -706,9 +710,9 @@ akzeptiert: <i>Funktion höherer Ordnung</i> (Typ 1).</li>
 </div>
 </div>
 
-<div id="outline-container-orgc49b07c" class="outline-3">
-<h3 id="orgc49b07c">Eine Filterfunktion</h3>
-<div class="outline-text-3" id="text-orgc49b07c">
+<div id="outline-container-org7b088c8" class="outline-3">
+<h3 id="org7b088c8">Eine Filterfunktion</h3>
+<div class="outline-text-3" id="text-org7b088c8">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">filtere: (number number -&gt; boolean) </span>
     <span style="color: #8D8D84;">;;            </span><span style="color: #8D8D84; font-style: italic;">(list-of number) number </span>
@@ -737,9 +741,9 @@ akzeptiert: <i>Funktion höherer Ordnung</i> (Typ 1).</li>
 </div>
 </div>
 
-<div id="outline-container-orgaa7d124" class="outline-3">
-<h3 id="orgaa7d124">Funktionen sind Werte erster Ordnung</h3>
-<div class="outline-text-3" id="text-orgaa7d124">
+<div id="outline-container-orgb185a8e" class="outline-3">
+<h3 id="orgb185a8e">Funktionen sind Werte erster Ordnung</h3>
+<div class="outline-text-3" id="text-orgb185a8e">
 <ul class="org-ul">
 <li><p>
 Die Möglichkeit, Funktionen zu bauen, die andere Funktionen als
@@ -780,9 +784,9 @@ von Funktionen <b>willkürlich</b> ein!</li>
 </div>
 </div>
 
-<div id="outline-container-org92c64e6" class="outline-3">
-<h3 id="org92c64e6">Verallgemeinerung der Filterfunktion</h3>
-<div class="outline-text-3" id="text-org92c64e6">
+<div id="outline-container-orga81bf92" class="outline-3">
+<h3 id="orga81bf92">Verallgemeinerung der Filterfunktion</h3>
+<div class="outline-text-3" id="text-orga81bf92">
 <p>
 Die Funktion <code>filter</code> wendet auf jedes Element der Zahlenliste das Prädikat <code>praed?</code>
 an. In die Ergebnisliste werden die Elemente aufgenommen, für die das
@@ -811,9 +815,9 @@ Prädikat <code>true</code> liefert.
 </div>
 </div>
 
-<div id="outline-container-org928c247" class="outline-3">
-<h3 id="org928c247">Eine Abstraktion für <code>sum</code> und <code>prod</code></h3>
-<div class="outline-text-3" id="text-org928c247">
+<div id="outline-container-org6a3f6d5" class="outline-3">
+<h3 id="org6a3f6d5">Eine Abstraktion für <code>sum</code> und <code>prod</code></h3>
+<div class="outline-text-3" id="text-org6a3f6d5">
 <ul class="org-ul">
 <li>Es kommt häufiger vor, dass man z.B. eine Liste von Zahlen zu einem
 Wert zusammenfalten will.</li>
@@ -845,12 +849,13 @@ Man beachte auch hier wieder den Vertrag der Funktion!
 </div>
 </div>
 
-<div id="outline-container-org72c621e" class="outline-2">
-<h2 id="org72c621e">Systematisierung der Ableitung von Funktionen höherer Ordnung</h2>
-<div class="outline-text-2" id="text-org72c621e">
-</div><div id="outline-container-orgb48e8e9" class="outline-3">
-<h3 id="orgb48e8e9">Zunächst zwei Beispiele</h3>
-<div class="outline-text-3" id="text-orgb48e8e9">
+<div id="outline-container-org23abfe4" class="outline-2">
+<h2 id="org23abfe4">Systematisierung der Ableitung von Funktionen höherer Ordnung</h2>
+<div class="outline-text-2" id="text-org23abfe4">
+</div>
+<div id="outline-container-org0cad7ff" class="outline-3">
+<h3 id="org0cad7ff">Zunächst zwei Beispiele</h3>
+<div class="outline-text-3" id="text-org0cad7ff">
 <ol class="org-ol">
 <li>Quadrieren einer Liste von Zahlen</li>
 </ol>
@@ -891,9 +896,9 @@ Man beachte auch hier wieder den Vertrag der Funktion!
 </div>
 </div>
 
-<div id="outline-container-orgbb381a4" class="outline-3">
-<h3 id="orgbb381a4">„Abstraktionsvorschrift“</h3>
-<div class="outline-text-3" id="text-orgbb381a4">
+<div id="outline-container-org91f8c5b" class="outline-3">
+<h3 id="org91f8c5b">„Abstraktionsvorschrift“</h3>
+<div class="outline-text-3" id="text-org91f8c5b">
 <ul class="org-ul">
 <li>Die beiden Funktionen <code>quadrieren</code> und <code>produkt-namen</code> unterscheiden
 sich &#x2013; abgesehen von ihren Namen &#x2013; nur in der Funktion, die auf das
@@ -923,9 +928,9 @@ neuen abstrakten Funktion.</li>
 </div>
 </div>
 
-<div id="outline-container-org50781ee" class="outline-3">
-<h3 id="org50781ee">Die Funktion <code>map</code></h3>
-<div class="outline-text-3" id="text-org50781ee">
+<div id="outline-container-org5ad4885" class="outline-3">
+<h3 id="org5ad4885">Die Funktion <code>map</code></h3>
+<div class="outline-text-3" id="text-org5ad4885">
 <div class="small">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">map: (listOf X) (X -&gt; Y) -&gt; (list-of Y)</span>
@@ -957,12 +962,13 @@ Originalfunktionen mithilfe der neuen abstrahierten Funktion.</li>
 </div>
 </div>
 
-<div id="outline-container-org2a006b6" class="outline-2">
-<h2 id="org2a006b6">Noch einmal: Falten</h2>
-<div class="outline-text-2" id="text-org2a006b6">
-</div><div id="outline-container-org441a9ab" class="outline-3">
-<h3 id="org441a9ab">Ein anderes Verständnis für <code>falte</code></h3>
-<div class="outline-text-3" id="text-org441a9ab">
+<div id="outline-container-orgf6ac94b" class="outline-2">
+<h2 id="orgf6ac94b">Noch einmal: Falten</h2>
+<div class="outline-text-2" id="text-orgf6ac94b">
+</div>
+<div id="outline-container-orgaba9c2d" class="outline-3">
+<h3 id="orgaba9c2d">Ein anderes Verständnis für <code>falte</code></h3>
+<div class="outline-text-3" id="text-orgaba9c2d">
 <ul class="org-ul">
 <li>Die Reduktion einer Liste zu einem Wert ist eine häufig vorkommende
 Aufgabe.</li>
@@ -988,9 +994,9 @@ Basiswert ersetzt.</li>
 </div>
 </div>
 
-<div id="outline-container-org453dbaf" class="outline-3">
-<h3 id="org453dbaf">Weitere Anwendungen von <code>falte</code></h3>
-<div class="outline-text-3" id="text-org453dbaf">
+<div id="outline-container-org7a54fd8" class="outline-3">
+<h3 id="org7a54fd8">Weitere Anwendungen von <code>falte</code></h3>
+<div class="outline-text-3" id="text-org7a54fd8">
 <ul class="org-ul">
 <li>Was liefern die Ausdrücke
 
@@ -1003,9 +1009,9 @@ Basiswert ersetzt.</li>
 </div>
 </div>
 
-<div id="outline-container-org843035b" class="outline-3">
-<h3 id="org843035b">Ein generisches <code>falte</code>: <code>reduce</code></h3>
-<div class="outline-text-3" id="text-org843035b">
+<div id="outline-container-org3a37b13" class="outline-3">
+<h3 id="org3a37b13">Ein generisches <code>falte</code>: <code>reduce</code></h3>
+<div class="outline-text-3" id="text-org3a37b13">
 <ul class="org-ul">
 <li>Wir abstrahieren die Funktion <code>falte</code> bezüglich des Typs der
 Listenelemente.</li>
@@ -1036,9 +1042,9 @@ wird:
 </div>
 
 
-<div id="outline-container-org6341bd1" class="outline-3">
-<h3 id="org6341bd1">Die Funktionsdefinition für <code>reduce</code></h3>
-<div class="outline-text-3" id="text-org6341bd1">
+<div id="outline-container-orgddb77a7" class="outline-3">
+<h3 id="orgddb77a7">Die Funktionsdefinition für <code>reduce</code></h3>
+<div class="outline-text-3" id="text-orgddb77a7">
 <div class="small">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">reduce: (X Y -&gt; Y) Y (list-of X) -&gt; Y</span>
@@ -1065,15 +1071,15 @@ ermittelt, falls die Liste <code>l</code> nicht leer ist.</li>
 </div>
 </div>
 
-<div id="outline-container-org6ec69ad" class="outline-3">
-<h3 id="org6ec69ad">Anwendungen von <code>reduce</code></h3>
-<div class="outline-text-3" id="text-org6ec69ad">
+<div id="outline-container-orgab4a8c8" class="outline-3">
+<h3 id="orgab4a8c8">Anwendungen von <code>reduce</code></h3>
+<div class="outline-text-3" id="text-orgab4a8c8">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">sum: (list-of number)  -&gt;  number</span>
-    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>list<span style="background-color: #FFDCDC; text-decoration: underline;">)</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">reduce</span> + 0 list<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">sum</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>list<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">reduce</span> + 0 list<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 
     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">product: (list-of number)  -&gt;  number</span>
-    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">product</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>list<span style="background-color: #FFDCDC; text-decoration: underline;">)</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">reduce</span> * 1 list<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
+    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">product</span> <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>list<span style="color: #909183;">]</span> <span style="color: #909183;">(</span><span style="color: #006FE0;">reduce</span> * 1 list<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
       
     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">erzeugt eine Liste aus all den Elemente von alox,</span>
     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">fuer die praedikat? gilt </span>
@@ -1091,12 +1097,13 @@ ermittelt, falls die Liste <code>l</code> nicht leer ist.</li>
 </div>
 </div>
 
-<div id="outline-container-org97dbecf" class="outline-2">
-<h2 id="org97dbecf">Funktionen höherer Ordnung (2)</h2>
-<div class="outline-text-2" id="text-org97dbecf">
-</div><div id="outline-container-org427df52" class="outline-3">
-<h3 id="org427df52">Funktionen mit Funktionen als Resultat</h3>
-<div class="outline-text-3" id="text-org427df52">
+<div id="outline-container-orgb59c12d" class="outline-2">
+<h2 id="orgb59c12d">Funktionen höherer Ordnung (2)</h2>
+<div class="outline-text-2" id="text-orgb59c12d">
+</div>
+<div id="outline-container-org50223ed" class="outline-3">
+<h3 id="org50223ed">Funktionen mit Funktionen als Resultat</h3>
+<div class="outline-text-3" id="text-org50223ed">
 <ul class="org-ul">
 <li><p>
 Was liefert der Ausdruck <code>(inc 3)</code>, wenn die Funktion <code>inc</code> wie folgt
@@ -1143,9 +1150,9 @@ Anwendung von <code>inc</code> und <code>dot</code>:
 </div>
 </div>
 
-<div id="outline-container-org2131424" class="outline-3">
-<h3 id="org2131424">Ableitung einer <code>map</code>-Alternative</h3>
-<div class="outline-text-3" id="text-org2131424">
+<div id="outline-container-org66af56a" class="outline-3">
+<h3 id="org66af56a">Ableitung einer <code>map</code>-Alternative</h3>
+<div class="outline-text-3" id="text-org66af56a">
 <ul class="org-ul">
 <li>Die Anwendung der „Abstraktionsvorschrift” aus dem Abschnitt
 <i>Systematisierung der Ableitung von Funktionen höherer Ordnung</i> auf
@@ -1179,9 +1186,9 @@ Resultat liefert, die <code>f</code> auf jedes Element einer Liste anwendet.</li
 </div>
 
 
-<div id="outline-container-orgacfd863" class="outline-3">
-<h3 id="orgacfd863">Modifikation der Abstraktionsvorschrift</h3>
-<div class="outline-text-3" id="text-orgacfd863">
+<div id="outline-container-org0a67f18" class="outline-3">
+<h3 id="org0a67f18">Modifikation der Abstraktionsvorschrift</h3>
+<div class="outline-text-3" id="text-org0a67f18">
 <ul class="org-ul">
 <li><p>
 Setzen wir die Existenz von <code>mapp</code> voraus, können wir <code>produkt-namen</code>
@@ -1206,9 +1213,9 @@ wiederum so definieren:
 </div>
 </div>
 
-<div id="outline-container-org0b5751f" class="outline-3">
-<h3 id="org0b5751f">Modifizierte Abstraktionsvorschrift</h3>
-<div class="outline-text-3" id="text-org0b5751f">
+<div id="outline-container-org1d2b362" class="outline-3">
+<h3 id="org1d2b362">Modifizierte Abstraktionsvorschrift</h3>
+<div class="outline-text-3" id="text-org1d2b362">
 <ul class="org-ul">
 <li>Ausgangspunkt sind wieder zwei ähnliche Funktionen wie z.B.
 <code>quadrieren</code> und <code>produkt-namen</code></li>
@@ -1285,12 +1292,13 @@ die, angewendet auf eine Liste (von Zahlen), jedes Element quadriert.
 </div>
 </div>
 
-<div id="outline-container-org84204d7" class="outline-2">
-<h2 id="org84204d7">Rekursive und iterative Prozesse</h2>
-<div class="outline-text-2" id="text-org84204d7">
-</div><div id="outline-container-org3ec59a5" class="outline-3">
-<h3 id="org3ec59a5">Fakultät rekursiv</h3>
-<div class="outline-text-3" id="text-org3ec59a5">
+<div id="outline-container-org2f47806" class="outline-2">
+<h2 id="org2f47806">Rekursive und iterative Prozesse</h2>
+<div class="outline-text-2" id="text-org2f47806">
+</div>
+<div id="outline-container-orgeea373c" class="outline-3">
+<h3 id="orgeea373c">Fakultät rekursiv</h3>
+<div class="outline-text-3" id="text-orgeea373c">
 <p>
 Ausgehend von der mathematischen 
 efinition:
@@ -1324,9 +1332,9 @@ Abarbeitungsprozess, siehe nächste Folie.
 </div>
 </div>
 
-<div id="outline-container-org0465c3f" class="outline-3">
-<h3 id="org0465c3f">rekursive Abarbeitung der Fakultät</h3>
-<div class="outline-text-3" id="text-org0465c3f">
+<div id="outline-container-org61125c2" class="outline-3">
+<h3 id="org61125c2">rekursive Abarbeitung der Fakultät</h3>
+<div class="outline-text-3" id="text-org61125c2">
 
 <div class="figure">
 <p><img src="./Abbildungen/faktreku.png" alt="faktreku.png" width="600px" />
@@ -1339,9 +1347,9 @@ Abarbeitungsprozess, siehe nächste Folie.
 </div>
 </div>
 
-<div id="outline-container-orga9fa06e" class="outline-3">
-<h3 id="orga9fa06e">Fakultät iterativ</h3>
-<div class="outline-text-3" id="text-orga9fa06e">
+<div id="outline-container-orga4330e8" class="outline-3">
+<h3 id="orga4330e8">Fakultät iterativ</h3>
+<div class="outline-text-3" id="text-orga4330e8">
 <p>
 \(n! = 1  \cdot 2 \cdot\cdot\cdot (n-1) \cdot n\)
 </p>
@@ -1379,9 +1387,9 @@ Berechnung der Fakultät im „Vorwärtsgang” mit zwei Hilfsvariablen:
 </div>
 </div>
 
-<div id="outline-container-org3775524" class="outline-3">
-<h3 id="org3775524">iterative Abarbeitung der Fakultät</h3>
-<div class="outline-text-3" id="text-org3775524">
+<div id="outline-container-orgac364bf" class="outline-3">
+<h3 id="orgac364bf">iterative Abarbeitung der Fakultät</h3>
+<div class="outline-text-3" id="text-orgac364bf">
 
 <div class="figure">
 <p><img src="./Abbildungen/faktiter.png" alt="faktiter.png" width="500px" />
@@ -1391,9 +1399,9 @@ Berechnung der Fakultät im „Vorwärtsgang” mit zwei Hilfsvariablen:
 </div>
 
 
-<div id="outline-container-orge3dea61" class="outline-3">
-<h3 id="orge3dea61">Fakultät iterativ mit lokaler Hilfsfunktion</h3>
-<div class="outline-text-3" id="text-orge3dea61">
+<div id="outline-container-orgc29e467" class="outline-3">
+<h3 id="orgc29e467">Fakultät iterativ mit lokaler Hilfsfunktion</h3>
+<div class="outline-text-3" id="text-orgc29e467">
 <ul class="org-ul">
 <li>Die Funktion <code>fact-iter</code> hat einen reinen Hilfscharakter, d.h. sollte
 nur von <code>factorial</code> aufgerufen werden.</li>
@@ -1421,9 +1429,9 @@ geworden.</li>
 </div>
 </div>
 
-<div id="outline-container-org146fa60" class="outline-3">
-<h3 id="org146fa60">loop/recur in Clojure</h3>
-<div class="outline-text-3" id="text-org146fa60">
+<div id="outline-container-orgd6270f4" class="outline-3">
+<h3 id="orgd6270f4">loop/recur in Clojure</h3>
+<div class="outline-text-3" id="text-orgd6270f4">
 <ul class="org-ul">
 <li>Clojure erlaubt wegen der Java-Aufrufkonventionen keine
 Endrekursionsoptimierung.</li>
@@ -1445,9 +1453,9 @@ Endrekursionsoptimierung.</li>
 </div>
 </div>
 
-<div id="outline-container-org86a8f3a" class="outline-3">
-<h3 id="org86a8f3a">Akkumulierende Parameter</h3>
-<div class="outline-text-3" id="text-org86a8f3a">
+<div id="outline-container-org4e72993" class="outline-3">
+<h3 id="org4e72993">Akkumulierende Parameter</h3>
+<div class="outline-text-3" id="text-org4e72993">
 <ul class="org-ul">
 <li>Ein <i>rekursiver Prozess</i> ist durch eine Folge von verzögerten
 Operationen gekennzeichnet.</li>
@@ -1470,12 +1478,13 @@ rekursiver Funktionen.</li>
 </div>
 </div>
 
-<div id="outline-container-org002d4bd" class="outline-2">
-<h2 id="org002d4bd">Akkumulierende Parameter</h2>
-<div class="outline-text-2" id="text-org002d4bd">
-</div><div id="outline-container-orgffe84c8" class="outline-3">
-<h3 id="orgffe84c8">Invertieren einer Liste</h3>
-<div class="outline-text-3" id="text-orgffe84c8">
+<div id="outline-container-orga311268" class="outline-2">
+<h2 id="orga311268">Akkumulierende Parameter</h2>
+<div class="outline-text-2" id="text-orga311268">
+</div>
+<div id="outline-container-org08c2752" class="outline-3">
+<h3 id="org08c2752">Invertieren einer Liste</h3>
+<div class="outline-text-3" id="text-org08c2752">
 <div class="large">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">kehrt die Reihenfolge der Symbole einer Liste um</span>
@@ -1502,9 +1511,9 @@ rekursiver Funktionen.</li>
 </div>
 </div>
 
-<div id="outline-container-orgf5f2157" class="outline-3">
-<h3 id="orgf5f2157">Effizienzbetrachtung:</h3>
-<div class="outline-text-3" id="text-orgf5f2157">
+<div id="outline-container-orgc45471b" class="outline-3">
+<h3 id="orgc45471b">Effizienzbetrachtung:</h3>
+<div class="outline-text-3" id="text-orgc45471b">
 <ul class="org-ul">
 <li>Vorbemerkung: Beide Funktionen entstehen durch Anwendung der
 bekannten Entwurfsvorschriften.</li>
@@ -1533,9 +1542,9 @@ erfordern.</li>
 </div>
 </div>
 
-<div id="outline-container-org17e383c" class="outline-3">
-<h3 id="org17e383c">Invertieren einer Liste</h3>
-<div class="outline-text-3" id="text-org17e383c">
+<div id="outline-container-orgc983ba2" class="outline-3">
+<h3 id="orgc983ba2">Invertieren einer Liste</h3>
+<div class="outline-text-3" id="text-orgc983ba2">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">kehrt die Reihenfolge der Symbole einer Liste um</span>
     <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">rev-list: (list-of symbol) -&gt; (list-of symbol)</span>
@@ -1557,9 +1566,9 @@ der Liste.</li>
 </div>
 </div>
 
-<div id="outline-container-org9b44113" class="outline-3">
-<h3 id="org9b44113">Einsatz von akkumulierenden Parametern</h3>
-<div class="outline-text-3" id="text-org9b44113">
+<div id="outline-container-orga370c99" class="outline-3">
+<h3 id="orga370c99">Einsatz von akkumulierenden Parametern</h3>
+<div class="outline-text-3" id="text-orga370c99">
 <ul class="org-ul">
 <li>Im Zusammenhang mit akkumulierenden Parametern sind zwei Fragen
 interessant:
@@ -1578,9 +1587,9 @@ Entwurfsvorschriften sind nicht ohne weiteres anwendbar.</li>
 </div>
 </div>
 
-<div id="outline-container-org187edba" class="outline-3">
-<h3 id="org187edba">Vorgehensweise beim Entwurf</h3>
-<div class="outline-text-3" id="text-org187edba">
+<div id="outline-container-orgb275618" class="outline-3">
+<h3 id="orgb275618">Vorgehensweise beim Entwurf</h3>
+<div class="outline-text-3" id="text-orgb275618">
 <ul class="org-ul">
 <li>Da war zunächst die Frage, ob eine Funktion mit akkumulierendem
 Parameter zweckmäßig ist.</li>
@@ -1612,9 +1621,9 @@ Folie!</li>
 </div>
 </div>
 
-<div id="outline-container-orgcd885c6" class="outline-3">
-<h3 id="orgcd885c6">Funktionsschablone für <code>rev-list</code> mit <code>rev</code></h3>
-<div class="outline-text-3" id="text-orgcd885c6">
+<div id="outline-container-org9ffd865" class="outline-3">
+<h3 id="org9ffd865">Funktionsschablone für <code>rev-list</code> mit <code>rev</code></h3>
+<div class="outline-text-3" id="text-org9ffd865">
 <div class="org-src-container">
 <pre class="src src-clojure">    <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">rev-list</span>
       <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>lst<span style="color: #909183;">]</span>
@@ -1641,9 +1650,9 @@ Akkumulatorinvariante gültig bleibt.</li>
 </div>
 </div>
 
-<div id="outline-container-org379d693" class="outline-3">
-<h3 id="org379d693">Akkumulatorinvariante für <code>rev</code></h3>
-<div class="outline-text-3" id="text-org379d693">
+<div id="outline-container-org341e464" class="outline-3">
+<h3 id="org341e464">Akkumulatorinvariante für <code>rev</code></h3>
+<div class="outline-text-3" id="text-org341e464">
 <ul class="org-ul">
 <li>Eine Akkumulatorinvariante ist eine Aussage über das Argument der
 Hauptfunktion (hier: <code>lst</code>), das entsprechende Argument der
@@ -1701,9 +1710,9 @@ Da die Funktion <code>rev</code> end-rekursiv ist, sollte in <b>Clojure</b> das
 </div>
 </div>
 
-<div id="outline-container-org4299aba" class="outline-2">
-<h2 id="org4299aba">Zusammenfassung</h2>
-<div class="outline-text-2" id="text-org4299aba">
+<div id="outline-container-orgf31b2ff" class="outline-2">
+<h2 id="orgf31b2ff">Zusammenfassung</h2>
+<div class="outline-text-2" id="text-orgf31b2ff">
 <ul class="org-ul">
 <li>Funktionen sind Werte erster Ordnung.</li>
 
@@ -1731,7 +1740,7 @@ funktionale Ausdrucksmittel bzw. Programmiertechniken.</li>
 </div>
 <div id="postamble" class="status">
 <p class="author">Autor: Johannes Brauer</p>
-<p class="date">Created: 2017-10-10 Tue 21:59</p>
+<p class="date">Created: 2017-12-16 Sat 17:39</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
