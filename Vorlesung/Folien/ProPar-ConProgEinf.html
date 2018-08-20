@@ -29,19 +29,19 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Constraint-Programmierung &#x2013; Intuitive Einführung</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2017-08-21 Mon 18:33</p>
+<section id="sec-title-slide"><h1 class="title">Constraint-Programmierung &#x2013; Intuitive Einführung</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2018-08-20 Mon 15:36</p>
 </section>
 
 <section>
-<section id="slide-org39c0d42">
-<h2 id="org39c0d42">Einstieg</h2>
+<section id="slide-orgef5b9b9">
+<h2 id="orgef5b9b9">Einstieg</h2>
 <p>
 Darstellungen angelehnt an <a class='org-ref-reference' href="#Fruehwirth2010">Fruehwirth2010</a> und <a class='org-ref-reference' href="#Sicp1999">Sicp1999</a>
 </p>
 
 </section>
-<section id="slide-orge839c7f">
-<h3 id="orge839c7f">Begriff</h3>
+<section id="slide-org93057a9">
+<h3 id="org93057a9">Begriff</h3>
 <ul>
 <li>Die Constraint-Programmierung wird meist als eine Spielart der
 logischen Programmierung angesehen.</li>
@@ -74,8 +74,8 @@ bis 9 öffnet. Wir wissen, dass \(x\)
 </ul>
 
 </section>
-<section id="slide-org5991397">
-<h3 id="org5991397">Prinzip</h3>
+<section id="slide-org7b5e37a">
+<h3 id="org7b5e37a">Prinzip</h3>
 <ul>
 <li>In der regelbasierten Programmierung wird ein ein Satz von Regeln
 (constraints) angegeben, denen die Lösung genügen muss.</li>
@@ -95,11 +95,10 @@ Lösung.</li>
 </ul>
 
 </section>
-<section id="slide-org46babb0">
-<h3 id="org46babb0">Anwendungen</h3>
+<section id="slide-orgccde29f">
+<h3 id="orgccde29f">Anwendungen</h3>
 <ul>
 <li>Verarbeitung natürlicher Sprachen</li>
-<li>Integrierte Schaltungen (Berechnung von Layouts),</li>
 <li>Datenbanksysteme (Konsistenzsicherung)</li>
 <li>Operations Research (Optimierungsprobleme)</li>
 <li>Ökonomie (Optionshandel)</li>
@@ -107,16 +106,11 @@ Lösung.</li>
 <li>Erstellung von Stundenplänen</li>
 <li>Entscheidungsunterstützungssysteme für Planung und Konfiguration</li>
 <li>Kommerzielle Anwendungsbeispiele nach <a class='org-ref-reference' href="#Fruehwirth2010">Fruehwirth2010</a>
-
 <ul>
 <li>Lufthansa: Short-term staff planning.</li>
-
 <li>Renault: Short-term production planning.</li>
-
 <li>Nokia: Software configuration for mobile phones.</li>
-
 <li>Airbus: Cabin layout.</li>
-
 <li>Siemens: Circuit verification.</li>
 
 </ul></li>
@@ -124,8 +118,8 @@ Lösung.</li>
 </ul>
 
 </section>
-<section id="slide-orgaec0e92">
-<h3 id="orgaec0e92">Contstraints im Straßenverkehr</h3>
+<section id="slide-org17dc17b">
+<h3 id="org17dc17b">Contstraints im Straßenverkehr</h3>
 
 <div class="figure">
 <p><img src="./Abbildungen/verkehr.png" alt="verkehr.png" width="600px" />
@@ -138,8 +132,8 @@ Lösung.</li>
 </p>
 
 </section>
-<section id="slide-org23e0a90">
-<h3 id="org23e0a90">Holy Grail of programming</h3>
+<section id="slide-org24cf467">
+<h3 id="org24cf467">Holy Grail of programming</h3>
 <blockquote nil>
 <p>
 Constraint Programming represents one of the closest approaches computer
@@ -155,8 +149,8 @@ the problem, the computer solves it.
 </section>
 </section>
 <section>
-<section id="slide-org15a5536">
-<h2 id="org15a5536">Ein simples Constraint-propagation-system</h2>
+<section id="slide-orgb105ded">
+<h2 id="orgb105ded">Ein simples Constraint-propagation-system</h2>
 <ul>
 <li>Von Regelfortpflanzung (constraint propagation) wurde erstmals im
 Programm <a href="https://de.wikipedia.org/wiki/Sketchpad">Sketchpad</a> Gebrauch gemacht, mit dessen Hilfe 1962 erstmals
@@ -169,8 +163,8 @@ berechnen einen Wert in Abhängigkeit von ihre Eingangsgrößen
 </ul>
 
 </section>
-<section id="slide-org5e99f16">
-<h3 id="org5e99f16">Gleichungen</h3>
+<section id="slide-org0267b88">
+<h3 id="org0267b88">Gleichungen</h3>
 <ul>
 <li>Aus der Zinseszinsrechnung ist die folgende Gleichung bekannt:
 \[\frac{K_{n}}{K_{0}}=(1+\frac{p}{100})^{n}\]</li>
@@ -185,8 +179,8 @@ Prozedur (Funktion) schreiben.</li>
 </ul>
 
 </section>
-<section id="slide-org7e98415">
-<h3 id="org7e98415">Elementare Constraints</h3>
+<section id="slide-org85d5d63">
+<h3 id="org85d5d63">Elementare Constraints</h3>
 <ul>
 <li>Um mit Gleichungen (Relationen) direkt umgehen zu können, führen wir
 als Elemente einer constraint language <i>primitive constraints</i> ein.</li>
@@ -211,8 +205,8 @@ vorkommt.</li>
 </ul>
 
 </section>
-<section id="slide-orgdb0f434">
-<h3 id="orgdb0f434">Beispiel: Celsius-Fahrenheit-Konverter</h3>
+<section id="slide-orgeb66b3f">
+<h3 id="orgeb66b3f">Beispiel: Celsius-Fahrenheit-Konverter</h3>
 <ul>
 <li>Zusammenhang zwischen Fahrenheit und Celsius: \[9C=5(F-32)\]</li>
 <li>Schaltbild aus Addierern, Multiplizierern und Konstanten:</li>
@@ -235,8 +229,8 @@ aus der Gleichung.</li>
 </ul>
 
 </section>
-<section id="slide-orgdbd7e6f">
-<h3 id="orgdbd7e6f">Berechnungsprozess</h3>
+<section id="slide-org26cd977">
+<h3 id="org26cd977">Berechnungsprozess</h3>
 <ul>
 <li>Ein Konnektor erhält einen Wert (wird aktiviert) durch
 <ul>
@@ -267,8 +261,8 @@ Wert für F bzw. C berechnet.</li>
 </ul>
 
 </section>
-<section id="slide-org9d8cae1">
-<h3 id="org9d8cae1">Der Celsius-Fahrenheit-Konverter in Clojure</h3>
+<section id="slide-org2101a0f">
+<h3 id="org2101a0f">Der Celsius-Fahrenheit-Konverter in Clojure</h3>
 <ul>
 <li>Der Fahrenheit-Celsius-Konverter als black box:</li>
 
@@ -286,7 +280,7 @@ in Clojure:
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">C</span> <span style="color: #7388D6;">(</span>make-connector<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">F</span> <span style="color: #7388D6;">(</span>make-connector<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
-<span style="color: #707183;">(</span>celsius-fahrenheit-converter <span style="color: #D0372D;">C</span> <span style="color: #D0372D;">F</span><span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; ok</span></pre>
+<span style="color: #707183;">(</span>celsius-fahrenheit-converter C F<span style="color: #707183;">)</span> <span style="color: #8D8D84; font-style: italic;">;=&gt; ok</span>
 </pre>
 </div></li>
 
@@ -313,15 +307,15 @@ Die Prozedur <code>celsius-fahrenheit-converter</code>
       <span style="color: #709870;">(</span>constant 9 w<span style="color: #709870;">)</span>
       <span style="color: #709870;">(</span>constant 5 x<span style="color: #709870;">)</span>
       <span style="color: #709870;">(</span>constant 32 y<span style="color: #709870;">)</span>
-      'ok<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+      'ok<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div></li>
 
 </ul>
 
 </section>
-<section id="slide-org4f37d20">
-<h3 id="org4f37d20">Anbringen von Messfühlern</h3>
+<section id="slide-orgae206cd">
+<h3 id="orgae206cd">Anbringen von Messfühlern</h3>
 <ul>
 <li><p>
 Die Verknüpfung eines Konnektors mit einem Messfühler (probe)
@@ -388,12 +382,13 @@ berechnen, und umgekehrt.</li>
 </section>
 </section>
 <section>
-<section id="slide-org76542e3">
-<h2 id="org76542e3">Implementierung des Constraint-Systems</h2>
-<div class="outline-text-2" id="text-org76542e3">
-</div></section>
-<section id="slide-orgd9eadf0">
-<h3 id="orgd9eadf0">Struktur des <code>adder</code></h3>
+<section id="slide-orgcc83585">
+<h2 id="orgcc83585">Implementierung des Constraint-Systems</h2>
+<div class="outline-text-2" id="text-orgcc83585">
+</div>
+</section>
+<section id="slide-orgfd90555">
+<h3 id="orgfd90555">Struktur des <code>adder</code></h3>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">adder</span>
@@ -406,11 +401,11 @@ berechnen, und umgekehrt.</li>
              <span style="color: #858580;">(</span>= request 'I-have-a-value<span style="color: #858580;">)</span>  <span style="color: #858580;">(</span>process-new-value<span style="color: #858580;">)</span>
              <span style="color: #858580;">(</span>= request 'I-lost-my-value<span style="color: #858580;">)</span> <span style="color: #858580;">(</span>process-forget-value<span style="color: #858580;">)</span>
              <span style="color: #D0372D;">:else</span> 
-             <span style="color: #858580;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #80A880;">(</span><span style="color: #6434A3;">Exception.</span> <span style="color: #008000;">"Unknown request -- ADDER"</span> request<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+             <span style="color: #858580;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #80A880;">(</span>Exception. <span style="color: #008000;">"Unknown request -- ADDER"</span> request<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
       <span style="color: #709870;">(</span>connect a1 me<span style="color: #709870;">)</span>
       <span style="color: #709870;">(</span>connect a2 me<span style="color: #709870;">)</span>
       <span style="color: #709870;">(</span>connect sum me<span style="color: #709870;">)</span>
-      me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+      me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 </section>
@@ -437,8 +432,8 @@ Konnektoren definiert.</li>
 </ul>
 
 </section>
-<section id="slide-orgc4fa268">
-<h3 id="orgc4fa268">Basisoperationen für Konnektoren</h3>
+<section id="slide-org30262d9">
+<h3 id="org30262d9">Basisoperationen für Konnektoren</h3>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">has-value?: connector -&gt; boolean</span>
@@ -451,7 +446,7 @@ Konnektoren definiert.</li>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">liefert den Wert eines Konnektors</span>
 <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">get-value</span> 
   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>connector<span style="color: #909183;">]</span>
-    @<span style="color: #909183;">(</span>connector 'value<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+    @<span style="color: #909183;">(</span>connector 'value<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -478,13 +473,13 @@ Konnektoren definiert.</li>
 <span style="color: #8D8D84;">;; </span><span style="color: #8D8D84; font-style: italic;">verbindet einen Konnektor mit einem neuen constraint</span>
 <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">connect</span> 
   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>connector new-constraint<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span><span style="color: #709870;">(</span>connector 'connect<span style="color: #709870;">)</span> new-constraint<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+    <span style="color: #909183;">(</span><span style="color: #709870;">(</span>connector 'connect<span style="color: #709870;">)</span> new-constraint<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 </section>
-<section id="slide-org2e0c41d">
-<h4 id="org2e0c41d">Lokale Hilfsfunktionen für <code>adder</code></h4>
+<section id="slide-org577eb62">
+<h4 id="org577eb62">Lokale Hilfsfunktionen für <code>adder</code></h4>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span>process-new-value <span style="color: #7388D6;">[]</span>
@@ -501,7 +496,7 @@ Konnektoren definiert.</li>
                  <span style="color: #909183;">(</span><span style="color: #0000FF;">and</span> <span style="color: #709870;">(</span>has-value? a2<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>has-value? sum<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
                  <span style="color: #909183;">(</span>set-value! a1
                              <span style="color: #709870;">(</span>- <span style="color: #907373;">(</span>get-value sum<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>get-value a2<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-                             me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+                             me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -514,13 +509,13 @@ Konnektoren definiert.</li>
            <span style="color: #7388D6;">(</span>forget-value! sum me<span style="color: #7388D6;">)</span>
            <span style="color: #7388D6;">(</span>forget-value! a1 me<span style="color: #7388D6;">)</span>
            <span style="color: #7388D6;">(</span>forget-value! a2 me<span style="color: #7388D6;">)</span>
-           <span style="color: #7388D6;">(</span>process-new-value<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+           <span style="color: #7388D6;">(</span>process-new-value<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 </section>
-<section id="slide-orga7a061e">
-<h4 id="orga7a061e">Struktur des <code>multiplier</code></h4>
+<section id="slide-orge5c6e54">
+<h4 id="orge5c6e54">Struktur des <code>multiplier</code></h4>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">multiplier</span>
@@ -531,17 +526,17 @@ Konnektoren definiert.</li>
               <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span> <span style="color: #858580;">(</span>= request 'I-have-a-value<span style="color: #858580;">)</span>  <span style="color: #858580;">(</span>process-new-value<span style="color: #858580;">)</span>
                     <span style="color: #858580;">(</span>= request 'I-lost-my-value<span style="color: #858580;">)</span> <span style="color: #858580;">(</span>process-forget-value<span style="color: #858580;">)</span>
                     <span style="color: #D0372D;">:else</span>
-                    <span style="color: #858580;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #80A880;">(</span><span style="color: #6434A3;">Exception.</span> <span style="color: #008000;">"Unknown request -- MULTIPLIER"</span> request<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+                    <span style="color: #858580;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #80A880;">(</span>Exception. <span style="color: #008000;">"Unknown request -- MULTIPLIER"</span> request<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
       <span style="color: #709870;">(</span>connect m1 me<span style="color: #709870;">)</span>
       <span style="color: #709870;">(</span>connect m2 me<span style="color: #709870;">)</span>
       <span style="color: #709870;">(</span>connect product me<span style="color: #709870;">)</span>
-      me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+      me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 </section>
-<section id="slide-org1bb621d">
-<h4 id="org1bb621d">Lokale Hilfsfunktionen für <code>multiplier</code></h4>
+<section id="slide-org34a36b5">
+<h4 id="org34a36b5">Lokale Hilfsfunktionen für <code>multiplier</code></h4>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span>process-new-value <span style="color: #7388D6;">[]</span>
@@ -562,7 +557,7 @@ Konnektoren definiert.</li>
                     <span style="color: #909183;">(</span><span style="color: #0000FF;">and</span> <span style="color: #709870;">(</span>has-value? product<span style="color: #709870;">)</span> <span style="color: #709870;">(</span>has-value? m2<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
                     <span style="color: #909183;">(</span>set-value! m1
                                 <span style="color: #709870;">(</span>/ <span style="color: #907373;">(</span>get-value product<span style="color: #907373;">)</span> <span style="color: #907373;">(</span>get-value m2<span style="color: #907373;">)</span><span style="color: #709870;">)</span>
-                                me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+                                me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -575,23 +570,23 @@ Konnektoren definiert.</li>
               <span style="color: #7388D6;">(</span>forget-value! product me<span style="color: #7388D6;">)</span>
               <span style="color: #7388D6;">(</span>forget-value! m1 me<span style="color: #7388D6;">)</span>
               <span style="color: #7388D6;">(</span>forget-value! m2 me<span style="color: #7388D6;">)</span>
-              <span style="color: #7388D6;">(</span>process-new-value<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+              <span style="color: #7388D6;">(</span>process-new-value<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 </section>
-<section id="slide-orgbd5138b">
-<h3 id="orgbd5138b">Der Konstantenerzeuger</h3>
+<section id="slide-orgf97dc52">
+<h3 id="orgf97dc52">Der Konstantenerzeuger</h3>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">constant</span> 
    <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>value connector<span style="color: #909183;">]</span>
     <span style="color: #909183;">(</span><span style="color: #0000FF;">letfn</span> 
         <span style="color: #709870;">[</span><span style="color: #907373;">(</span>me <span style="color: #6276BA;">[</span>request<span style="color: #6276BA;">]</span>
-           <span style="color: #6276BA;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #858580;">(</span><span style="color: #6434A3;">Exception.</span> <span style="color: #008000;">"Unknown request -- CONSTANT"</span> request<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+           <span style="color: #6276BA;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #858580;">(</span>Exception. <span style="color: #008000;">"Unknown request -- CONSTANT"</span> request<span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
       <span style="color: #709870;">(</span>connect connector me<span style="color: #709870;">)</span>
       <span style="color: #709870;">(</span>set-value! connector value me<span style="color: #709870;">)</span>
-      me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>        </pre>
+      me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>        
 </pre>
 </div>
 <ul>
@@ -601,8 +596,8 @@ Konnektoren definiert.</li>
 </ul>
 
 </section>
-<section id="slide-orgb84eb9b">
-<h3 id="orgb84eb9b">Der Messfühler</h3>
+<section id="slide-orge711d3e">
+<h3 id="orge711d3e">Der Messfühler</h3>
 <p>
 Der Messfühler gibt beim Setzen bzw. Vergessen des Wertes des mit ihm
 verbundenen Konnektors einen Text aus.
@@ -623,15 +618,15 @@ verbundenen Konnektors einen Text aus.
            <span style="color: #6276BA;">(</span><span style="color: #0000FF;">cond</span>
              <span style="color: #858580;">(</span>= request 'I-have-a-value<span style="color: #858580;">)</span> <span style="color: #858580;">(</span>process-new-value<span style="color: #858580;">)</span>
              <span style="color: #858580;">(</span>= request 'I-lost-my-value<span style="color: #858580;">)</span> <span style="color: #858580;">(</span>process-forget-value<span style="color: #858580;">)</span>
-             <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #80A880;">(</span><span style="color: #6434A3;">Exception.</span> <span style="color: #008000;">"Unknown request -- PROBE"</span> request<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
+             <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #80A880;">(</span>Exception. <span style="color: #008000;">"Unknown request -- PROBE"</span> request<span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
       <span style="color: #709870;">(</span>connect connector me<span style="color: #709870;">)</span>
-      me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+      me<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
 </section>
-<section id="slide-org99ef4fe">
-<h3 id="org99ef4fe">Konnektoren</h3>
+<section id="slide-orgcc43292">
+<h3 id="orgcc43292">Konnektoren</h3>
 <ul>
 <li><p>
 Ein Konnektor wird als Prozedur mit drei lokalen Zustandsvariablen
@@ -644,7 +639,7 @@ und vier lokalen Prozeduren definiert:
   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[]</span>
     <span style="color: #909183;">(</span><span style="color: #0000FF;">let</span> <span style="color: #709870;">[</span>value <span style="color: #907373;">(</span><span style="color: #006FE0;">atom</span> <span style="color: #D0372D;">false</span><span style="color: #907373;">)</span> informant <span style="color: #907373;">(</span><span style="color: #006FE0;">atom</span> <span style="color: #D0372D;">false</span><span style="color: #907373;">)</span> constraints  <span style="color: #907373;">(</span><span style="color: #006FE0;">atom</span> '<span style="color: #6276BA;">()</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
       <span style="color: #709870;">(</span><span style="color: #0000FF;">letfn</span> <span style="color: #907373;">[</span> ... <span style="color: #907373;">]</span>
-        me<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+        me<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -661,8 +656,8 @@ Wertes informiert werden müssen.</dd>
 </ul>
 
 </section>
-<section id="slide-orgf4b8c67">
-<h4 id="orgf4b8c67"><code>make-connector -- set-my-value</code></h4>
+<section id="slide-org6e38836">
+<h4 id="org6e38836"><code>make-connector -- set-my-value</code></h4>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span>set-my-value <span style="color: #7388D6;">[</span>newval setter<span style="color: #7388D6;">]</span>
@@ -673,8 +668,8 @@ Wertes informiert werden müssen.</dd>
                                            inform-about-value
                                            constraints<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
                       <span style="color: #909183;">(</span><span style="color: #006FE0;">not</span> <span style="color: #709870;">(</span>= @value newval<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-                      <span style="color: #909183;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #709870;">(</span><span style="color: #6434A3;">Exception.</span> <span style="color: #907373;">(</span><span style="color: #006FE0;">str</span> <span style="color: #008000;">"Contradiction"</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">list</span> @value newval<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-                      <span style="color: #D0372D;">:else</span> 'ignored<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+                      <span style="color: #909183;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #709870;">(</span>Exception. <span style="color: #907373;">(</span><span style="color: #006FE0;">str</span> <span style="color: #008000;">"Contradiction"</span> <span style="color: #6276BA;">(</span><span style="color: #006FE0;">list</span> @value newval<span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">)</span><span style="color: #909183;">)</span>
+                      <span style="color: #D0372D;">:else</span> 'ignored<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 <ul>
@@ -687,8 +682,8 @@ Ausnahme des Informanten) darüber informiert.</li>
 </ul>
 
 </section>
-<section id="slide-orgc34e9cd">
-<h4 id="orgc34e9cd"><code>make-connector -- forget-my-value</code></h4>
+<section id="slide-org2cd2b96">
+<h4 id="org2cd2b96"><code>make-connector -- forget-my-value</code></h4>
 <div class="small">
 <div class="org-src-container">
 
@@ -698,7 +693,7 @@ Ausnahme des Informanten) darüber informiert.</li>
                       <span style="color: #709870;">(</span>for-each-except retractor
                                        inform-about-no-value
                                        constraints<span style="color: #709870;">)</span><span style="color: #909183;">)</span>
-                  'ignored<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+                  'ignored<span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 
@@ -714,8 +709,8 @@ Ausnahme des Informanten) darüber informiert.</li>
 </ul>
 
 </section>
-<section id="slide-orgd389efb">
-<h4 id="orgd389efb"><code>make-connector -- connect</code></h4>
+<section id="slide-org1a6e84a">
+<h4 id="org1a6e84a"><code>make-connector -- connect</code></h4>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span>connect <span style="color: #7388D6;">[</span>new-constraint<span style="color: #7388D6;">]</span>
@@ -723,7 +718,7 @@ Ausnahme des Informanten) darüber informiert.</li>
                   <span style="color: #909183;">(</span><span style="color: #006FE0;">swap!</span> constraints conj new-constraint<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
                 <span style="color: #7388D6;">(</span><span style="color: #0000FF;">if</span> <span style="color: #909183;">(</span>has-value? me<span style="color: #909183;">)</span>
                   <span style="color: #909183;">(</span>inform-about-value new-constraint<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
-                'done<span style="color: #707183;">)</span></pre>
+                'done<span style="color: #707183;">)</span>
 </pre>
 </div>
 <ul>
@@ -735,8 +730,8 @@ Constraint-Element darüber informiert.</li>
 </ul>
 
 </section>
-<section id="slide-org3678f37">
-<h4 id="org3678f37"><code>make-connector -- me</code></h4>
+<section id="slide-org8164fe8">
+<h4 id="org8164fe8"><code>make-connector -- me</code></h4>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span>me <span style="color: #7388D6;">[</span>request<span style="color: #7388D6;">]</span>
@@ -746,8 +741,8 @@ Constraint-Element darüber informiert.</li>
                   <span style="color: #909183;">(</span>= request 'set-value!<span style="color: #909183;">)</span> set-my-value
                   <span style="color: #909183;">(</span>= request 'forget<span style="color: #909183;">)</span>     forget-my-value
                   <span style="color: #909183;">(</span>= request 'connect<span style="color: #909183;">)</span>    connect
-                  <span style="color: #D0372D;">:else</span> <span style="color: #909183;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #709870;">(</span><span style="color: #6434A3;">Exception.</span> <span style="color: #008000;">"Unknown operation -- CONNECTOR"</span>
-                                           request<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+                  <span style="color: #D0372D;">:else</span> <span style="color: #909183;">(</span><span style="color: #0000FF;">throw</span> <span style="color: #709870;">(</span>Exception. <span style="color: #008000;">"Unknown operation -- CONNECTOR"</span>
+                                           request<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 <ul>
@@ -755,8 +750,8 @@ Constraint-Element darüber informiert.</li>
 
 </ul>
 </section>
-<section id="slide-org5eca80e">
-<h3 id="org5eca80e">Hilfsprozeduren</h3>
+<section id="slide-org497bc39">
+<h3 id="org497bc39">Hilfsprozeduren</h3>
 <ul>
 <li>Es fehlen jetzt noch die Prozeduren:
 <ul>
@@ -769,8 +764,8 @@ Constraint-Element darüber informiert.</li>
 </ul>
 
 </section>
-<section id="slide-org56504ef">
-<h4 id="org56504ef">Iterator <code>for-each-except</code></h4>
+<section id="slide-org5db5400">
+<h4 id="org5db5400">Iterator <code>for-each-except</code></h4>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">for-each-except</span> 
@@ -783,7 +778,7 @@ Constraint-Element darüber informiert.</li>
              <span style="color: #D0372D;">:else</span> <span style="color: #858580;">(</span><span style="color: #0000FF;">do</span> <span style="color: #80A880;">(</span>procedure <span style="color: #887070;">(</span><span style="color: #006FE0;">first</span> items<span style="color: #887070;">)</span><span style="color: #80A880;">)</span>
                        <span style="color: #80A880;">(</span><span style="color: #0000FF;">loop</span> <span style="color: #887070;">(</span><span style="color: #006FE0;">rest</span> items<span style="color: #887070;">)</span><span style="color: #80A880;">)</span><span style="color: #858580;">)</span><span style="color: #6276BA;">)</span><span style="color: #907373;">)</span><span style="color: #709870;">]</span>
       <span style="color: #709870;">(</span><span style="color: #0000FF;">loop</span> @list<span style="color: #709870;">)</span><span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>
-        </pre>
+        
 </pre>
 </div>
 <ul>
@@ -793,8 +788,8 @@ mit Ausnahme des Elements <code>exception</code>.</li>
 </ul>
 
 </section>
-<section id="slide-orge3ad356">
-<h4 id="orge3ad356"><code>inform-about-…</code></h4>
+<section id="slide-orgd9e2af8">
+<h4 id="orgd9e2af8"><code>inform-about-…</code></h4>
 <div class="org-src-container">
 
 <pre  class="src src-clojure"><span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">inform-about-value</span>
@@ -803,7 +798,7 @@ mit Ausnahme des Elements <code>exception</code>.</li>
 
 <span style="color: #707183;">(</span><span style="color: #0000FF;">def</span> <span style="color: #BA36A5;">inform-about-no-value</span>
   <span style="color: #7388D6;">(</span><span style="color: #0000FF;">fn</span> <span style="color: #909183;">[</span>constraint<span style="color: #909183;">]</span>
-    <span style="color: #909183;">(</span>constraint 'I-lost-my-value<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span></pre>
+    <span style="color: #909183;">(</span>constraint 'I-lost-my-value<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span><span style="color: #707183;">)</span>
 </pre>
 </div>
 <ul>
@@ -815,15 +810,15 @@ mit Ausnahme des Elements <code>exception</code>.</li>
 </section>
 </section>
 <section>
-<section id="slide-org3838100">
-<h2 id="org3838100">Literatur</h2>
+<section id="slide-org4fccc46">
+<h2 id="org4fccc46">Literatur</h2>
 </section>
 </section>
 <section>
-<section id="slide-org1056611">
-<h2 id="org1056611"><h1 class='org-ref-bib-h1'>Bibliography</h1>
-<ul class='org-ref-bib'><li><a id="Fruehwirth2010">[Fruehwirth2010] Thom Frühwirth & Slim Abdennadher, Essentials of Constraint Programming (Cognitive Technologies), Springer (2010).</a></li>
-<li><a id="Sicp1999">[Sicp1999] Harold Abelson, Gerald Jay Sussman & Julie Sussman, Structure and interpretation of computer programs, The MIT Press (1999).</a></li>
+<section id="slide-org1b4647d">
+<h2 id="org1b4647d"><h2>Literaturverzeichnis</h2>
+<ul class='org-ref-bib'><li><a id="Fruehwirth2010">[Fruehwirth2010]</a> <a name="Fruehwirth2010"></a>Thom Frühwirth & Slim Abdennadher, Essentials of Constraint Programming (Cognitive Technologies), Springer (2010).</li>
+<li><a id="Sicp1999">[Sicp1999]</a> <a name="Sicp1999"></a>Harold Abelson, Gerald Jay Sussman & Julie Sussman, Structure and interpretation of computer programs, The MIT Press (1999).</li>
 </ul></h2>
 </section>
 </section>
