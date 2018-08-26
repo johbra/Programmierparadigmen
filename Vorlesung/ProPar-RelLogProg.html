@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
 <head>
-<!-- 2017-09-03 Sun 19:39 -->
+<!-- 2018-08-26 Sun 23:49 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Relational-logische Programmierung</title>
@@ -68,6 +68,7 @@
   pre.src-fortran:before { content: 'Fortran'; }
   pre.src-gnuplot:before { content: 'gnuplot'; }
   pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
   pre.src-java:before { content: 'Java'; }
   pre.src-js:before { content: 'Javascript'; }
   pre.src-latex:before { content: 'LaTeX'; }
@@ -196,7 +197,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -267,9 +268,9 @@ for the JavaScript code in this tag.
 <span class="subtitle">Programmierparadigmen</span>
 </h1>
 
-<div id="outline-container-org88689e5" class="outline-2">
-<h2 id="org88689e5">Einführung</h2>
-<div class="outline-text-2" id="text-org88689e5">
+<div id="outline-container-orgc5d9c13" class="outline-2">
+<h2 id="orgc5d9c13">Einführung</h2>
+<div class="outline-text-2" id="text-orgc5d9c13">
 <ul class="org-ul">
 <li>Relational-logische Programmierung: Programme spezifizieren
 Relationen zwischen Größen.</li>
@@ -301,9 +302,9 @@ bzw. ausgeführt werden.</li>
 </div>
 </div>
 
-<div id="outline-container-org67de90f" class="outline-2">
-<h2 id="org67de90f">Relationale Programmierung mit Prolog</h2>
-<div class="outline-text-2" id="text-org67de90f">
+<div id="outline-container-org7d9af26" class="outline-2">
+<h2 id="org7d9af26">Relationale Programmierung mit Prolog</h2>
+<div class="outline-text-2" id="text-org7d9af26">
 <ul class="org-ul">
 <li>Prolog (Programming in Logic) wurde Anfang der 1970er Jahre von dem
 französischen Informatiker Alain Colmerauer entwickelt.</li>
@@ -316,9 +317,9 @@ sind hinzugekommen.</li>
 </ul>
 </div>
 
-<div id="outline-container-orgd9e745c" class="outline-3">
-<h3 id="orgd9e745c">Syntax und Semantik relational-logischer Programme</h3>
-<div class="outline-text-3" id="text-orgd9e745c">
+<div id="outline-container-orgff6666a" class="outline-3">
+<h3 id="orgff6666a">Syntax und Semantik relational-logischer Programme</h3>
+<div class="outline-text-3" id="text-orgff6666a">
 <ul class="org-ul">
 <li>Die Syntax basiert auf einer Teilmenge der Prädikatenkalküls. Ein
 relational-logisches Programm besteht aus einer Menge von Formeln,
@@ -342,9 +343,9 @@ gleich werden.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc0417f4" class="outline-3">
-<h3 id="orgc0417f4">Einstiegsbeispiel</h3>
-<div class="outline-text-3" id="text-orgc0417f4">
+<div id="outline-container-org35bcd79" class="outline-3">
+<h3 id="org35bcd79">Einstiegsbeispiel</h3>
+<div class="outline-text-3" id="text-org35bcd79">
 <ul class="org-ul">
 <li>Das „Hallo Welt“-Äquivalent für ein Prolog-Programm ist meistens
 eine Wissensdatenbank mit Verwandtschaftsverhältnissen.
@@ -362,15 +363,15 @@ Fakten in Prolog:
   mutter(klaus, elfriede).
   mutter(claudia, elfriede).
   mutter(monika, elfriede).
-  verheiratet(paul, elfriede).</pre>
+  verheiratet(paul, elfriede).
 </pre>
 </div></li>
 </ul>
 </div>
 
-<div id="outline-container-org44c905e" class="outline-4">
-<h4 id="org44c905e">Start des Prolog-Interpreters</h4>
-<div class="outline-text-4" id="text-org44c905e">
+<div id="outline-container-orgb9fa217" class="outline-4">
+<h4 id="orgb9fa217">Start des Prolog-Interpreters</h4>
+<div class="outline-text-4" id="text-orgb9fa217">
 <ul class="org-ul">
 <li>Im folgenden wird <a href="http://www.swi-prolog.org">SWI-Prolog</a> benutzt.</li>
 <li>Nach dem Start des Interpreters und der Konsultation der Faktendatei
@@ -391,14 +392,14 @@ true.
 true.
 
 3 ?- mutter(claudia, paul).
-false.</pre>
+false.
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org6f7eb09" class="outline-4">
-<h4 id="org6f7eb09">Weitere Beispiele für Fragen (Zielausdrücke, goals):</h4>
-<div class="outline-text-4" id="text-org6f7eb09">
+<div id="outline-container-org38e3a33" class="outline-4">
+<h4 id="org38e3a33">Weitere Beispiele für Fragen (Zielausdrücke, goals):</h4>
+<div class="outline-text-4" id="text-org38e3a33">
 <p>
 Fragen können Variablen benutzen, die stets mit einem Großbuchstaben
 beginnen müssen.
@@ -416,14 +417,14 @@ beginnen müssen.
     <span style="color: #BA36A5;">X</span>=monika.
 ?-  verheiratet(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>).
     <span style="color: #BA36A5;">X</span>=paul<span style="color: #0000FF;">;</span>
-    <span style="color: #BA36A5;">Y</span>=elfriede.</pre>
+    <span style="color: #BA36A5;">Y</span>=elfriede.
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgdc9827a" class="outline-4">
-<h4 id="orgdc9827a">Regeln</h4>
-<div class="outline-text-4" id="text-orgdc9827a">
+<div id="outline-container-orgdd75dd6" class="outline-4">
+<h4 id="orgdd75dd6">Regeln</h4>
+<div class="outline-text-4" id="text-orgdd75dd6">
 <p>
 Nehmen wir an, wir möchten auch Anfragen über die
 Schwesterbeziehung in die Datenbasis aufnehmen, um entsprechende
@@ -439,7 +440,7 @@ Neue Fakten hinzufügen:
 <pre class="src src-prolog">   schwester(claudia, monika).
    schwester(monika, claudia).
    schwester(klaus, claudia).
-   schwester(klaus, monika).</pre>
+   schwester(klaus, monika).
 </pre>
 </div>
 
@@ -456,9 +457,9 @@ Fakten neue herzuleiten!</li>
 </div>
 </div>
 
-<div id="outline-container-orgd525aed" class="outline-4">
-<h4 id="orgd525aed">Prolog-Programm mit Schwesterregel</h4>
-<div class="outline-text-4" id="text-orgd525aed">
+<div id="outline-container-orge0f6678" class="outline-4">
+<h4 id="orge0f6678">Prolog-Programm mit Schwesterregel</h4>
+<div class="outline-text-4" id="text-orge0f6678">
 <p>
 Fakten:
 </p>
@@ -472,7 +473,7 @@ Fakten:
 <span style="color: #006699;">verheiratet</span>(paul, elfriede).
 <span style="color: #006699;">weiblich</span>(claudia).
 <span style="color: #006699;">weiblich</span>(monika).
-<span style="color: #006699;">weiblich</span>(elfriede).</pre>
+<span style="color: #006699;">weiblich</span>(elfriede).
 </pre>
 </div>
 
@@ -484,7 +485,7 @@ Regeln:
 <pre class="src src-prolog"><span style="color: #006699;">schwester</span>(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>):- weiblich(<span style="color: #BA36A5;">Y</span>), 
        mutter(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Z</span>), mutter(<span style="color: #BA36A5;">Y</span>, <span style="color: #BA36A5;">Z</span>), 
        vater(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">W</span>), vater(<span style="color: #BA36A5;">Y</span>, <span style="color: #BA36A5;">W</span>),
-       <span style="color: #BA36A5;">X</span> \== <span style="color: #BA36A5;">Y</span>.</pre>
+       <span style="color: #BA36A5;">X</span> \== <span style="color: #BA36A5;">Y</span>.
 </pre>
 </div>
 
@@ -492,12 +493,12 @@ Regeln:
 </div>
 </div>
 
-<div id="outline-container-orgad3aa5b" class="outline-4">
-<h4 id="orgad3aa5b">Beispielanfragen</h4>
-<div class="outline-text-4" id="text-orgad3aa5b">
+<div id="outline-container-orgb8e7f8d" class="outline-4">
+<h4 id="orgb8e7f8d">Beispielanfragen</h4>
+<div class="outline-text-4" id="text-orgb8e7f8d">
 <div class="smaller">
 <div class="org-src-container">
-<pre class="src src-prolog">?- schwester(klaus, claudia).</pre>
+<pre class="src src-prolog">?- schwester(klaus, claudia).
 </pre>
 </div>
 
@@ -518,7 +519,7 @@ Das Prolog-System muss
 
 <div class="smaller">
 <div class="org-src-container">
-<pre class="src src-prolog">?- schwester(klaus, <span style="color: #BA36A5;">X</span>).</pre>
+<pre class="src src-prolog">?- schwester(klaus, <span style="color: #BA36A5;">X</span>).
 </pre>
 </div>
 
@@ -540,7 +541,7 @@ Daher liefert die Anfrage die Antwort:
 <div class="org-src-container">
 <pre class="src src-prolog">   <span style="color: #BA36A5;">X</span>=claudia<span style="color: #0000FF;">;</span>
    <span style="color: #BA36A5;">X</span>=monika<span style="color: #0000FF;">;</span>
-   false.</pre>
+   false.
 </pre>
 </div>
 
@@ -549,7 +550,7 @@ Daher liefert die Anfrage die Antwort:
 
 <div class="smaller">
 <div class="org-src-container">
-<pre class="src src-prolog">?- schwester(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>).</pre>
+<pre class="src src-prolog">?- schwester(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>).
 </pre>
 </div>
 
@@ -566,7 +567,7 @@ folgende Ausgabe erzeugt wird:
 <span style="color: #BA36A5;">X</span> = monika, <span style="color: #BA36A5;">Y</span> = claudia <span style="color: #0000FF;">;</span>
 <span style="color: #BA36A5;">X</span> = klaus, <span style="color: #BA36A5;">Y</span> = monika <span style="color: #0000FF;">;</span>
 <span style="color: #BA36A5;">X</span> = claudia, <span style="color: #BA36A5;">Y</span> = monika <span style="color: #0000FF;">;</span>
-false.</pre>
+false.
 </pre>
 </div>
 
@@ -575,12 +576,13 @@ false.</pre>
 </div>
 </div>
 
-<div id="outline-container-org63e514e" class="outline-3">
-<h3 id="org63e514e">Basiskonzepte von Prolog</h3>
-<div class="outline-text-3" id="text-org63e514e">
-</div><div id="outline-container-org640b20a" class="outline-4">
-<h4 id="org640b20a">Terme</h4>
-<div class="outline-text-4" id="text-org640b20a">
+<div id="outline-container-orgf1a3564" class="outline-3">
+<h3 id="orgf1a3564">Basiskonzepte von Prolog</h3>
+<div class="outline-text-3" id="text-orgf1a3564">
+</div>
+<div id="outline-container-org1cce185" class="outline-4">
+<h4 id="org1cce185">Terme</h4>
+<div class="outline-text-4" id="text-org1cce185">
 <ul class="org-ul">
 <li>Alle Daten (einschließlich der Prolog-Programme) in Prolog werden
 durch <i>Terme</i> repräsentiert.</li>
@@ -603,9 +605,9 @@ Beispiele: <code>f(a)</code>, <code>g(f(X))</code>, <code>+(a, f(X))</code></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb9f4920" class="outline-4">
-<h4 id="orgb9f4920">Programme</h4>
-<div class="outline-text-4" id="text-orgb9f4920">
+<div id="outline-container-org23fcf62" class="outline-4">
+<h4 id="org23fcf62">Programme</h4>
+<div class="outline-text-4" id="text-org23fcf62">
 <ul class="org-ul">
 <li>Ein Prolog-Programm besteht aus einer Menge von Prädikaten.</li>
 <li>Prädikate beschreiben Relationen zwischen ihren Argumenten. Logisch
@@ -625,9 +627,9 @@ Prädikat war.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2e0ecdb" class="outline-4">
-<h4 id="org2e0ecdb">Klauseln &#x2013; Regeln</h4>
-<div class="outline-text-4" id="text-org2e0ecdb">
+<div id="outline-container-org8f3f0c5" class="outline-4">
+<h4 id="org8f3f0c5">Klauseln &#x2013; Regeln</h4>
+<div class="outline-text-4" id="text-org8f3f0c5">
 <ul class="org-ul">
 <li>Ein Klausel ist entweder ein <i>Fakt</i> oder eine <i>Regel</i>.</li>
 <li>Eine Regel hat die Form:<br />
@@ -663,9 +665,9 @@ wie folgt gelesen werden: <code>Dad</code> (eine Variable) ist <code>father</cod
 </ul>
 </div>
 </div>
-<div id="outline-container-org5a48b5f" class="outline-4">
-<h4 id="org5a48b5f">Klauseln &#x2013; Fakten</h4>
-<div class="outline-text-4" id="text-org5a48b5f">
+<div id="outline-container-org44cddc4" class="outline-4">
+<h4 id="org44cddc4">Klauseln &#x2013; Fakten</h4>
+<div class="outline-text-4" id="text-org44cddc4">
 <ul class="org-ul">
 <li>Ein Faktum wird so aufgeschrieben:<br />
 <code>Kopf.</code></li>
@@ -676,9 +678,9 @@ Standardprädikat <code>true/0</code> immer wahr ist.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orged52a97" class="outline-4">
-<h4 id="orged52a97">Starten von Prolog-Programmen</h4>
-<div class="outline-text-4" id="text-orged52a97">
+<div id="outline-container-orgab365b6" class="outline-4">
+<h4 id="orgab365b6">Starten von Prolog-Programmen</h4>
+<div class="outline-text-4" id="text-orgab365b6">
 <ul class="org-ul">
 <li>Eingabe von Fragen/Zielausdrücken (queries) am Eingabeprompt des
 Prolog-Interpreters</li>
@@ -699,9 +701,9 @@ Leerzeichen oder Semikolon).</li>
 </div>
 </div>
 
-<div id="outline-container-org34bfae1" class="outline-4">
-<h4 id="org34bfae1">Ausführung von Prolog-Programmen</h4>
-<div class="outline-text-4" id="text-org34bfae1">
+<div id="outline-container-orgaceab84" class="outline-4">
+<h4 id="orgaceab84">Ausführung von Prolog-Programmen</h4>
+<div class="outline-text-4" id="text-orgaceab84">
 <p>
 Die operationale Semantik von Prolog
 </p>
@@ -720,7 +722,7 @@ Zielausdruck ausgewählt, wird diese auf die Argumente von beiden
 Termen angewendet.</li>
 <li>Daraus folgt, dass es in Prolog keine Unterscheidung zwischen Ein-
 und Ausgabeparametern gibt.
-(Vgl. <a href="ProPar-RelProgUebrscht.html#MissingReference">Implementierung von natürlichen Zahlen</a>!)</li>
+(Vgl. <a href="ProPar-RelProgUebrscht.html#beispiel-natuerliche-zahlen">Implementierung von natürlichen Zahlen</a>!)</li>
 </ul>
 <ul class="org-ul">
 <li>Sind die Köpfe mehrerer Klauseln mit einem Zielausdruck
@@ -732,9 +734,9 @@ abgearbeitet.</li>
 </div>
 </div>
 
-<div id="outline-container-org931d752" class="outline-4">
-<h4 id="org931d752">Standardprädikate</h4>
-<div class="outline-text-4" id="text-org931d752">
+<div id="outline-container-org3a094a8" class="outline-4">
+<h4 id="org3a094a8">Standardprädikate</h4>
+<div class="outline-text-4" id="text-org3a094a8">
 <ul class="org-ul">
 <li>Es gibt einige vordefinierte Standardprädikate, z. B.
 <ul class="org-ul">
@@ -766,7 +768,7 @@ Verfügung:
 <pre class="src src-prolog">  ?- <span style="color: #BA36A5;">X</span> = 3 + 4.
   <span style="color: #BA36A5;">X</span> = 3+4.
   ?- <span style="color: #BA36A5;">X</span> is 3+4.
-  <span style="color: #BA36A5;">X</span> = 7.</pre>
+  <span style="color: #BA36A5;">X</span> = 7.
 </pre>
 </div>
 
@@ -775,9 +777,9 @@ Verfügung:
 </div>
 </div>
 
-<div id="outline-container-org3f7df4a" class="outline-4">
-<h4 id="org3f7df4a">Resolution / Backtracking</h4>
-<div class="outline-text-4" id="text-org3f7df4a">
+<div id="outline-container-org18adac2" class="outline-4">
+<h4 id="org18adac2">Resolution / Backtracking</h4>
+<div class="outline-text-4" id="text-org18adac2">
 <ul class="org-ul">
 <li>Resolution: Grundlage für eine automatische Beweisführung</li>
 <li>basiert auf dem Prinzip der Unifikation und des automatischen
@@ -797,9 +799,9 @@ Stelle gemachten Variablenbindungen auf und wählt die nächste
 alternative Klausel aus.</li>
 </ul>
 </div>
-<div id="outline-container-org1fc048a" class="outline-5">
-<h5 id="org1fc048a">Beispiel</h5>
-<div class="outline-text-5" id="text-org1fc048a">
+<div id="outline-container-orge332446" class="outline-5">
+<h5 id="orge332446">Beispiel</h5>
+<div class="outline-text-5" id="text-orge332446">
 <div class="org-src-container">
 <pre class="src src-prolog"><span style="color: #006699;">father</span>(abraham,isaac).
 <span style="color: #006699;">father</span>(haran,lot).
@@ -810,7 +812,7 @@ alternative Klausel aus.</li>
 <span style="color: #006699;">female</span>(milcah).
 <span style="color: #006699;">female</span>(yiscah).
 <span style="color: #006699;">son</span>(<span style="color: #BA36A5;">X</span>,<span style="color: #BA36A5;">Y</span>) :- father(<span style="color: #BA36A5;">Y</span>,<span style="color: #BA36A5;">X</span>), male(<span style="color: #BA36A5;">X</span>).
-<span style="color: #006699;">daughter</span>(<span style="color: #BA36A5;">X</span>,<span style="color: #BA36A5;">Y</span>) :- father(<span style="color: #BA36A5;">Y</span>,<span style="color: #BA36A5;">X</span>), female(<span style="color: #BA36A5;">X</span>).</pre>
+<span style="color: #006699;">daughter</span>(<span style="color: #BA36A5;">X</span>,<span style="color: #BA36A5;">Y</span>) :- father(<span style="color: #BA36A5;">Y</span>,<span style="color: #BA36A5;">X</span>), female(<span style="color: #BA36A5;">X</span>).
 </pre>
 </div>
 <p>
@@ -862,19 +864,19 @@ keine Alternativen mehr vorhanden sind</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org8210175" class="outline-2">
-<h2 id="org8210175">Literatur</h2>
+<div id="outline-container-org68422be" class="outline-2">
+<h2 id="org68422be">Literatur</h2>
 </div>
-<div id="outline-container-org034fb4c" class="outline-2">
-<h2 id="org034fb4c"><h1 class='org-ref-bib-h1'>Bibliography</h1>
-<ul class='org-ref-bib'><li><a id="Bramer2013">[Bramer2013] Max Bramer, Logic Programming with Prolog, Springer (2013).</a></li>
-<li><a id="Clocksin2003">[Clocksin2003] William Clocksin & Christopher Mellish, Programming in Prolog: Using the ISO Standard, Springer (2003).</a></li>
+<div id="outline-container-org7118539" class="outline-2">
+<h2 id="org7118539"><h2>Literaturverzeichnis</h2>
+<ul class='org-ref-bib'><li><a id="Bramer2013">[Bramer2013]</a> <a name="Bramer2013"></a>Max Bramer, Logic Programming with Prolog, Springer (2013).</li>
+<li><a id="Clocksin2003">[Clocksin2003]</a> <a name="Clocksin2003"></a>William Clocksin & Christopher Mellish, Programming in Prolog: Using the ISO Standard, Springer (2003).</li>
 </ul></h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Autor: Johannes Brauer</p>
-<p class="date">Created: 2017-09-03 Sun 19:39</p>
+<p class="date">Created: 2018-08-26 Sun 23:49</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

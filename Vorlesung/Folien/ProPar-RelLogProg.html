@@ -29,12 +29,12 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Relational-logische Programmierung</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2017-09-03 Sun 19:37</p>
+<section id="sec-title-slide"><h1 class="title">Relational-logische Programmierung</h1><h2 class="author">Johannes Brauer</h2><p class="date">Created: 2018-08-27 Mon 00:13</p>
 </section>
 
 <section>
-<section id="slide-orgbb73556">
-<h2 id="orgbb73556">Einführung</h2>
+<section id="orgf3a3b68">
+<h2 id="orgf3a3b68">Einführung</h2>
 <ul>
 <li>Relational-logische Programmierung: Programme spezifizieren
 Relationen zwischen Größen.</li>
@@ -74,8 +74,8 @@ bzw. ausgeführt werden.</li>
 </section>
 </section>
 <section>
-<section id="slide-orgf73d02f">
-<h2 id="orgf73d02f">Relationale Programmierung mit Prolog</h2>
+<section id="orge2a497d">
+<h2 id="orge2a497d">Relationale Programmierung mit Prolog</h2>
 <ul>
 <li>Prolog (Programming in Logic) wurde Anfang der 1970er Jahre von dem
 französischen Informatiker Alain Colmerauer entwickelt.</li>
@@ -89,8 +89,8 @@ sind hinzugekommen.</li>
 </ul>
 
 </section>
-<section id="slide-org9aa46fd">
-<h3 id="org9aa46fd">Syntax und Semantik relational-logischer Programme</h3>
+<section id="orgce53387">
+<h3 id="orgce53387">Syntax und Semantik relational-logischer Programme</h3>
 <ul>
 <li>Die Syntax basiert auf einer Teilmenge der Prädikatenkalküls. Ein
 relational-logisches Programm besteht aus einer Menge von Formeln,
@@ -115,8 +115,8 @@ gleich werden.</li>
 
 </ul>
 </section>
-<section id="slide-orgca166f5">
-<h3 id="orgca166f5">Einstiegsbeispiel</h3>
+<section id="org2dd5def">
+<h3 id="org2dd5def">Einstiegsbeispiel</h3>
 <ul>
 <li>Das „Hallo Welt“-Äquivalent für ein Prolog-Programm ist meistens
 eine Wissensdatenbank mit Verwandtschaftsverhältnissen.
@@ -136,15 +136,15 @@ Fakten in Prolog:
   mutter(klaus, elfriede).
   mutter(claudia, elfriede).
   mutter(monika, elfriede).
-  verheiratet(paul, elfriede).</pre>
+  verheiratet(paul, elfriede).
 </pre>
 </div></li>
 
 </ul>
 
 </section>
-<section id="slide-org1d8392a">
-<h4 id="org1d8392a">Start des Prolog-Interpreters</h4>
+<section id="orge21c445">
+<h4 id="orge21c445">Start des Prolog-Interpreters</h4>
 <ul>
 <li>Im folgenden wird <a href="http://www.swi-prolog.org">SWI-Prolog</a> benutzt.</li>
 <li>Nach dem Start des Interpreters und der Konsultation der Faktendatei
@@ -167,12 +167,12 @@ true.
 true.
 
 3 ?- mutter(claudia, paul).
-false.</pre>
+false.
 </pre>
 </div>
 </section>
-<section id="slide-orgfad3aa8">
-<h4 id="orgfad3aa8">Weitere Beispiele für Fragen (Zielausdrücke, goals):</h4>
+<section id="org0106545">
+<h4 id="org0106545">Weitere Beispiele für Fragen (Zielausdrücke, goals):</h4>
 <p>
 Fragen können Variablen benutzen, die stets mit einem Großbuchstaben
 beginnen müssen.
@@ -191,18 +191,17 @@ beginnen müssen.
     <span style="color: #BA36A5;">X</span>=monika.
 ?-  verheiratet(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>).
     <span style="color: #BA36A5;">X</span>=paul<span style="color: #0000FF;">;</span>
-    <span style="color: #BA36A5;">Y</span>=elfriede.</pre>
+    <span style="color: #BA36A5;">Y</span>=elfriede.
 </pre>
 </div>
 </section>
-<section id="slide-org434f42c">
-<h4 id="org434f42c">Regeln</h4>
+<section id="org19b97c8">
+<h4 id="org19b97c8">Regeln</h4>
 <p>
 Nehmen wir an, wir möchten auch Anfragen über die
 Schwesterbeziehung in die Datenbasis aufnehmen, um entsprechende
 Anfragen beantworten zu können. Dann hat man zwei Möglichkeiten:
 </p>
-
 <ol>
 <li><p>
 Neue Fakten hinzufügen:
@@ -213,16 +212,14 @@ Neue Fakten hinzufügen:
 <pre  class="src src-prolog">   schwester(claudia, monika).
    schwester(monika, claudia).
    schwester(klaus, claudia).
-   schwester(klaus, monika).</pre>
+   schwester(klaus, monika).
 </pre>
 </div>
 
 </div></li>
-
 <li>Formulierung einer Regel: <code>Y</code> ist Schwester von <code>X</code>, falls <code>Y</code> 
 weiblich und Mutter von <code>X</code> gleich Mutter von <code>Y</code> ist und Vater von
 <code>X</code> gleich Vater von <code>Y</code>.<br />
-<br />
 Dann muss man nur noch als Fakten festhalten, welche
 Familienmitglieder weiblich sind. Die Regel erlaubt es, aus bekannten 
 Fakten neue herzuleiten!</li>
@@ -230,8 +227,8 @@ Fakten neue herzuleiten!</li>
 </ol>
 
 </section>
-<section id="slide-org68b0bd4">
-<h4 id="org68b0bd4">Prolog-Programm mit Schwesterregel</h4>
+<section id="orgce521b6">
+<h4 id="orgce521b6">Prolog-Programm mit Schwesterregel</h4>
 <p>
 Fakten:
 </p>
@@ -246,7 +243,7 @@ Fakten:
 <span style="color: #006699;">verheiratet</span>(paul, elfriede).
 <span style="color: #006699;">weiblich</span>(claudia).
 <span style="color: #006699;">weiblich</span>(monika).
-<span style="color: #006699;">weiblich</span>(elfriede).</pre>
+<span style="color: #006699;">weiblich</span>(elfriede).
 </pre>
 </div>
 
@@ -259,19 +256,19 @@ Regeln:
 <pre  class="src src-prolog"><span style="color: #006699;">schwester</span>(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>):- weiblich(<span style="color: #BA36A5;">Y</span>), 
        mutter(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Z</span>), mutter(<span style="color: #BA36A5;">Y</span>, <span style="color: #BA36A5;">Z</span>), 
        vater(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">W</span>), vater(<span style="color: #BA36A5;">Y</span>, <span style="color: #BA36A5;">W</span>),
-       <span style="color: #BA36A5;">X</span> \== <span style="color: #BA36A5;">Y</span>.</pre>
+       <span style="color: #BA36A5;">X</span> \== <span style="color: #BA36A5;">Y</span>.
 </pre>
 </div>
 
 </div>
 
 </section>
-<section id="slide-orgcebcc8d">
-<h4 id="orgcebcc8d">Beispielanfragen</h4>
+<section id="org5d02c3c">
+<h4 id="org5d02c3c">Beispielanfragen</h4>
 <div class="smaller">
 <div class="org-src-container">
 
-<pre  class="src src-prolog">?- schwester(klaus, claudia).</pre>
+<pre  class="src src-prolog">?- schwester(klaus, claudia).
 </pre>
 </div>
 
@@ -297,7 +294,7 @@ Das Prolog-System muss
 <div class="smaller">
 <div class="org-src-container">
 
-<pre  class="src src-prolog">?- schwester(klaus, <span style="color: #BA36A5;">X</span>).</pre>
+<pre  class="src src-prolog">?- schwester(klaus, <span style="color: #BA36A5;">X</span>).
 </pre>
 </div>
 
@@ -321,7 +318,7 @@ Daher liefert die Anfrage die Antwort:
 
 <pre  class="src src-prolog">   <span style="color: #BA36A5;">X</span>=claudia<span style="color: #0000FF;">;</span>
    <span style="color: #BA36A5;">X</span>=monika<span style="color: #0000FF;">;</span>
-   false.</pre>
+   false.
 </pre>
 </div>
 
@@ -335,7 +332,7 @@ Daher liefert die Anfrage die Antwort:
 <div class="smaller">
 <div class="org-src-container">
 
-<pre  class="src src-prolog">?- schwester(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>).</pre>
+<pre  class="src src-prolog">?- schwester(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Y</span>).
 </pre>
 </div>
 
@@ -353,19 +350,20 @@ folgende Ausgabe erzeugt wird:
 <span style="color: #BA36A5;">X</span> = monika, <span style="color: #BA36A5;">Y</span> = claudia <span style="color: #0000FF;">;</span>
 <span style="color: #BA36A5;">X</span> = klaus, <span style="color: #BA36A5;">Y</span> = monika <span style="color: #0000FF;">;</span>
 <span style="color: #BA36A5;">X</span> = claudia, <span style="color: #BA36A5;">Y</span> = monika <span style="color: #0000FF;">;</span>
-false.</pre>
+false.
 </pre>
 </div>
 
 </div>
 
 </section>
-<section id="slide-org54022ab">
-<h3 id="org54022ab">Basiskonzepte von Prolog</h3>
-<div class="outline-text-3" id="text-org54022ab">
-</div></section>
-<section id="slide-orgb7c30e2">
-<h4 id="orgb7c30e2">Terme</h4>
+<section id="org9194fa3">
+<h3 id="org9194fa3">Basiskonzepte von Prolog</h3>
+<div class="outline-text-3" id="text-org9194fa3">
+</div>
+</section>
+<section id="orga6d8f84">
+<h4 id="orga6d8f84">Terme</h4>
 <ul>
 <li>Alle Daten (einschließlich der Prolog-Programme) in Prolog werden
 durch <i>Terme</i> repräsentiert.</li>
@@ -390,8 +388,8 @@ Beispiele: <code>f(a)</code>, <code>g(f(X))</code>, <code>+(a, f(X))</code></li>
 
 </ul>
 </section>
-<section id="slide-orgafcf9dd">
-<h4 id="orgafcf9dd">Programme</h4>
+<section id="org918142c">
+<h4 id="org918142c">Programme</h4>
 <ul>
 <li>Ein Prolog-Programm besteht aus einer Menge von Prädikaten.</li>
 <li>Prädikate beschreiben Relationen zwischen ihren Argumenten. Logisch
@@ -412,8 +410,8 @@ Prädikat war.</li>
 
 </ul>
 </section>
-<section id="slide-org13a179f">
-<h4 id="org13a179f">Klauseln &#x2013; Regeln</h4>
+<section id="org8b4cd5a">
+<h4 id="org8b4cd5a">Klauseln &#x2013; Regeln</h4>
 <ul>
 <li>Ein Klausel ist entweder ein <i>Fakt</i> oder eine <i>Regel</i>.</li>
 <li>Eine Regel hat die Form:<br />
@@ -454,8 +452,8 @@ wie folgt gelesen werden: <code>Dad</code> (eine Variable) ist <code>father</cod
 
 </ul>
 </section>
-<section id="slide-org01b6699">
-<h4 id="org01b6699">Klauseln &#x2013; Fakten</h4>
+<section id="org2831456">
+<h4 id="org2831456">Klauseln &#x2013; Fakten</h4>
 <ul>
 <li>Ein Faktum wird so aufgeschrieben:<br />
 <code>Kopf.</code></li>
@@ -466,8 +464,8 @@ Standardprädikat <code>true/0</code> immer wahr ist.</li>
 
 </ul>
 </section>
-<section id="slide-org9eb1337">
-<h4 id="org9eb1337">Starten von Prolog-Programmen</h4>
+<section id="org420b6c5">
+<h4 id="org420b6c5">Starten von Prolog-Programmen</h4>
 <ul>
 <li>Eingabe von Fragen/Zielausdrücken (queries) am Eingabeprompt des
 Prolog-Interpreters</li>
@@ -488,8 +486,8 @@ Leerzeichen oder Semikolon).</li>
 </ul>
 
 </section>
-<section id="slide-orge7fea38">
-<h4 id="orge7fea38">Ausführung von Prolog-Programmen</h4>
+<section id="org56ce7bb">
+<h4 id="org56ce7bb">Ausführung von Prolog-Programmen</h4>
 <p>
 Die operationale Semantik von Prolog
 </p>
@@ -508,7 +506,7 @@ Zielausdruck ausgewählt, wird diese auf die Argumente von beiden
 Termen angewendet.</li>
 <li>Daraus folgt, dass es in Prolog keine Unterscheidung zwischen Ein-
 und Ausgabeparametern gibt.
-(Vgl. <a href="ProPar-RelProgUebrscht.html#MissingReference">Implementierung von natürlichen Zahlen</a>!)</li>
+(Vgl. <a href="ProPar-RelProgUebrscht.html#beispiel-natuerliche-zahlen">Implementierung von natürlichen Zahlen</a>!)</li>
 
 </ul>
 </section>
@@ -523,8 +521,8 @@ abgearbeitet.</li>
 </ul>
 
 </section>
-<section id="slide-orgd7f9083">
-<h4 id="orgd7f9083">Standardprädikate</h4>
+<section id="org88f7347">
+<h4 id="org88f7347">Standardprädikate</h4>
 <ul>
 <li>Es gibt einige vordefinierte Standardprädikate, z. B.
 <ul>
@@ -562,7 +560,7 @@ Verfügung:
 <pre  class="src src-prolog">  ?- <span style="color: #BA36A5;">X</span> = 3 + 4.
   <span style="color: #BA36A5;">X</span> = 3+4.
   ?- <span style="color: #BA36A5;">X</span> is 3+4.
-  <span style="color: #BA36A5;">X</span> = 7.</pre>
+  <span style="color: #BA36A5;">X</span> = 7.
 </pre>
 </div>
 
@@ -571,8 +569,8 @@ Verfügung:
 </ul>
 
 </section>
-<section id="slide-org3789032">
-<h4 id="org3789032">Resolution / Backtracking</h4>
+<section id="orgd61beae">
+<h4 id="orgd61beae">Resolution / Backtracking</h4>
 <ul>
 <li>Resolution: Grundlage für eine automatische Beweisführung</li>
 <li>basiert auf dem Prinzip der Unifikation und des automatischen
@@ -593,8 +591,8 @@ alternative Klausel aus.</li>
 
 </ul>
 </section>
-<section id="slide-org7b83d66">
-<h5 id="org7b83d66">Beispiel</h5>
+<section id="org5a7720a">
+<h5 id="org5a7720a">Beispiel</h5>
 <div class="org-src-container">
 
 <pre  class="src src-prolog"><span style="color: #006699;">father</span>(abraham,isaac).
@@ -606,7 +604,7 @@ alternative Klausel aus.</li>
 <span style="color: #006699;">female</span>(milcah).
 <span style="color: #006699;">female</span>(yiscah).
 <span style="color: #006699;">son</span>(<span style="color: #BA36A5;">X</span>,<span style="color: #BA36A5;">Y</span>) :- father(<span style="color: #BA36A5;">Y</span>,<span style="color: #BA36A5;">X</span>), male(<span style="color: #BA36A5;">X</span>).
-<span style="color: #006699;">daughter</span>(<span style="color: #BA36A5;">X</span>,<span style="color: #BA36A5;">Y</span>) :- father(<span style="color: #BA36A5;">Y</span>,<span style="color: #BA36A5;">X</span>), female(<span style="color: #BA36A5;">X</span>).</pre>
+<span style="color: #006699;">daughter</span>(<span style="color: #BA36A5;">X</span>,<span style="color: #BA36A5;">Y</span>) :- father(<span style="color: #BA36A5;">Y</span>,<span style="color: #BA36A5;">X</span>), female(<span style="color: #BA36A5;">X</span>).
 </pre>
 </div>
 <p>
@@ -629,7 +627,8 @@ Unifikation <code>daughter(X,Y)</code> und <code>daughter(X,haran)</code> <br />
 \(\rightarrow\) neue Zielanfrage: <code>father(haran,X), female(X).</code></li>
 <li>linkes Teilziel wird ausgewählt: <code>father(haran,X)</code><br />
 erste Programmklausel wird ausgewählt: <code>father(abraham,isaac).</code><br />
-\(\rightarrow\) Unifikation nicht möglich \(\rightarrow\) Backtracking</li>
+\(\rightarrow\) Unifikation nicht möglich<br />
+\(\rightarrow\) Backtracking</li>
 <li>nächste alternative Programmklausel wird ausgewählt: <code>father(haran,lot)</code><br />
 \(\rightarrow\) Substitution <code>X=lot</code></li>
 <li>rechtes Teilziel wird ausgewählt und Substitution angewendet: <code>female(lot)</code><br />
@@ -651,26 +650,31 @@ alternative Lösungen zu finden</li>
 <li>Substitution <code>X=milcah</code> wird aufgehoben, nächste Klausel im
 Programmtext ausgewählt: <code>father(haran,yiscah)</code> <br />
 \(\rightarrow\) Substitution <code>X=yiscah</code></li>
-<li>rechtes Teilziel wird ausgewählt und Substitution angewendet:<br />
+
+</ol>
+</section>
+<section >
+<ol>
+<li value="10">rechtes Teilziel wird ausgewählt und Substitution angewendet:<br />
 <code>female(yiscah)</code> <br />
 \(\rightarrow\) passende Programmklausel vorhanden<br />
 \(\rightarrow\) Prolog gibt die Substitution <code>X=yiscah.</code> aus und
 schließt die Beantwortung der ursprünglichen Anfrage, da
-keine Alternativen mehr vorhanden sind</li>
+keine Alternativen mehr vorhanden sind.</li>
 
 </ol>
 </section>
 </section>
 <section>
-<section id="slide-org0d45638">
-<h2 id="org0d45638">Literatur</h2>
+<section id="org67f297b">
+<h2 id="org67f297b">Literatur</h2>
 </section>
 </section>
 <section>
-<section id="slide-org77bc3ee">
-<h2 id="org77bc3ee"><h1 class='org-ref-bib-h1'>Bibliography</h1>
-<ul class='org-ref-bib'><li><a id="Bramer2013">[Bramer2013] Max Bramer, Logic Programming with Prolog, Springer (2013).</a></li>
-<li><a id="Clocksin2003">[Clocksin2003] William Clocksin & Christopher Mellish, Programming in Prolog: Using the ISO Standard, Springer (2003).</a></li>
+<section id="orgbb2a152">
+<h2 id="orgbb2a152"><h2>Literaturverzeichnis</h2>
+<ul class='org-ref-bib'><li><a id="Bramer2013">[Bramer2013]</a> <a name="Bramer2013"></a>Max Bramer, Logic Programming with Prolog, Springer (2013).</li>
+<li><a id="Clocksin2003">[Clocksin2003]</a> <a name="Clocksin2003"></a>William Clocksin & Christopher Mellish, Programming in Prolog: Using the ISO Standard, Springer (2003).</li>
 </ul></h2>
 </section>
 </section>
