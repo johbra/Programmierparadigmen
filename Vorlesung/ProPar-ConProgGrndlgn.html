@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
 <head>
-<!-- 2017-09-16 Sat 15:32 -->
+<!-- 2018-08-27 Mon 14:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Constraint-Programmierung &#x2013; Grundlagen</title>
@@ -68,6 +68,7 @@
   pre.src-fortran:before { content: 'Fortran'; }
   pre.src-gnuplot:before { content: 'gnuplot'; }
   pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
   pre.src-java:before { content: 'Java'; }
   pre.src-js:before { content: 'Javascript'; }
   pre.src-latex:before { content: 'LaTeX'; }
@@ -196,7 +197,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2017 Free Software Foundation, Inc.
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -267,9 +268,9 @@ for the JavaScript code in this tag.
 <span class="subtitle">Programmierparadigmen</span>
 </h1>
 
-<div id="outline-container-orga1ab154" class="outline-2">
-<h2 id="orga1ab154">Begriffe</h2>
-<div class="outline-text-2" id="text-orga1ab154">
+<div id="outline-container-org3ff6819" class="outline-2">
+<h2 id="org3ff6819">Begriffe</h2>
+<div class="outline-text-2" id="text-org3ff6819">
 <p>
 Hier verwendete und weiterführende Literatur:
 </p>
@@ -283,9 +284,9 @@ Hier verwendete und weiterführende Literatur:
 </ul>
 </div>
 
-<div id="outline-container-orgea39a70" class="outline-3">
-<h3 id="orgea39a70">Einschränkung (<i>constraint</i>)</h3>
-<div class="outline-text-3" id="text-orgea39a70">
+<div id="outline-container-org475d96f" class="outline-3">
+<h3 id="org475d96f">Einschränkung (<i>constraint</i>)</h3>
+<div class="outline-text-3" id="text-org475d96f">
 <ul class="org-ul">
 <li>Eine <i>Einschränkung</i> (<i>constraint</i>) stellt eine Beziehung zwischen
 verschiedenen Unbekannten (Variablen) her. Jede Variable kann Werte
@@ -300,9 +301,9 @@ Beziehung erzwungen werden kann.</li>
 </div>
 </div>
 
-<div id="outline-container-orge387805" class="outline-3">
-<h3 id="orge387805">Erfüllbarkeit (<i>satisfiability</i>)</h3>
-<div class="outline-text-3" id="text-orge387805">
+<div id="outline-container-org116af67" class="outline-3">
+<h3 id="org116af67">Erfüllbarkeit (<i>satisfiability</i>)</h3>
+<div class="outline-text-3" id="text-org116af67">
 <dl class="org-dl">
 <dt>erfüllbar:</dt><dd>Es existiert eine Lösung für die Einschränkungen.</dd>
 
@@ -333,9 +334,9 @@ Einschränkungen.</dd>
 </div>
 </div>
 
-<div id="outline-container-org46d6fac" class="outline-3">
-<h3 id="org46d6fac">Lösungsverfahren</h3>
-<div class="outline-text-3" id="text-org46d6fac">
+<div id="outline-container-org19ef82a" class="outline-3">
+<h3 id="org19ef82a">Lösungsverfahren</h3>
+<div class="outline-text-3" id="text-org19ef82a">
 <ul class="org-ul">
 <li>Zwei Lösungsstrategien
 <ul class="org-ul">
@@ -354,12 +355,13 @@ Integration, Taylor-Reihen etc.).</li>
 </ul>
 </div>
 
-<div id="outline-container-orgc756f9c" class="outline-4">
-<h4 id="orgc756f9c">Constraint-satisfaction</h4>
-<div class="outline-text-4" id="text-orgc756f9c">
-</div><div id="outline-container-org2c43bbf" class="outline-5">
-<h5 id="org2c43bbf">Prinzip</h5>
-<div class="outline-text-5" id="text-org2c43bbf">
+<div id="outline-container-org38656a8" class="outline-4">
+<h4 id="org38656a8">Constraint-satisfaction</h4>
+<div class="outline-text-4" id="text-org38656a8">
+</div>
+<div id="outline-container-org32c09b1" class="outline-5">
+<h5 id="org32c09b1">Prinzip</h5>
+<div class="outline-text-5" id="text-org32c09b1">
 <ul class="org-ul">
 <li><p>
 Ein Constraint-satisfaction-Problem (CSP) wird 
@@ -372,6 +374,7 @@ Werte (Domäne)</li>
 <li>eine Menge von Einschränkungen (constraints), die Werte, die die
 Variablen gleichzeitig annehmen können, einschränken</li>
 </ul>
+
 <p>
 Beispiel: \[X=\{1,2\}, Y=\{1,2\}, Z=\{1,2\}\]
 \[X = Y, X \neq Z, Y > Z\]
@@ -389,9 +392,9 @@ Beispiel: \[X=2, Y=2, Z=1\]
 </div>
 </div>
 
-<div id="outline-container-orge1bb8f7" class="outline-5">
-<h5 id="orge1bb8f7">Systematische Suche</h5>
-<div class="outline-text-5" id="text-orge1bb8f7">
+<div id="outline-container-org7a4d130" class="outline-5">
+<h5 id="org7a4d130">Systematische Suche</h5>
+<div class="outline-text-5" id="text-org7a4d130">
 <ul class="org-ul">
 <li>Grundsätzlich kann ein CSP durch systematisches Durchsuchen des
 Lösungsraums gelöst werden.</li>
@@ -413,9 +416,9 @@ Teillösungen zur Gesamtlösung.</li>
 </div>
 </div>
 
-<div id="outline-container-org82af379" class="outline-5">
-<h5 id="org82af379">Generate &amp; Test</h5>
-<div class="outline-text-5" id="text-org82af379">
+<div id="outline-container-org29d610a" class="outline-5">
+<h5 id="org29d610a">Generate &amp; Test</h5>
+<div class="outline-text-5" id="text-org29d610a">
 <ul class="org-ul">
 <li>Grundlegendes Verfahren zur Lösung von CSPs</li>
 
@@ -446,9 +449,9 @@ Nachteile:
 </div>
 </div>
 
-<div id="outline-container-orgb53fade" class="outline-5">
-<h5 id="orgb53fade">Backtracking</h5>
-<div class="outline-text-5" id="text-orgb53fade">
+<div id="outline-container-orgdca1279" class="outline-5">
+<h5 id="orgdca1279">Backtracking</h5>
+<div class="outline-text-5" id="text-orgdca1279">
 <ul class="org-ul">
 <li>Partielle Lösung wird schrittweise zur vollständigen erweitert.</li>
 <li>Algorithmus (vereinfacht):</li>
@@ -483,9 +486,9 @@ Nachteile:
 </div>
 </div>
 
-<div id="outline-container-orga79a1a9" class="outline-5">
-<h5 id="orga79a1a9">Anwendungsbeispiel für GT und BT</h5>
-<div class="outline-text-5" id="text-orga79a1a9">
+<div id="outline-container-orga5668e8" class="outline-5">
+<h5 id="orga5668e8">Anwendungsbeispiel für GT und BT</h5>
+<div class="outline-text-5" id="text-orga5668e8">
 <p>
 <b>Aufgabenstellung</b>:
  \[X=\{1,2\}, Y=\{1,2\}, Z=\{1,2\}\]
@@ -643,9 +646,9 @@ Nachteile:
 </div>
 </div>
 
-<div id="outline-container-org93ea514" class="outline-5">
-<h5 id="org93ea514">Optimierungen der systematischen Suche</h5>
-<div class="outline-text-5" id="text-org93ea514">
+<div id="outline-container-org4556b3e" class="outline-5">
+<h5 id="org4556b3e">Optimierungen der systematischen Suche</h5>
+<div class="outline-text-5" id="text-org4556b3e">
 <ul class="org-ul">
 <li>Grundidee: Entfernung von inkonsistenten Werten aus der Wertemenge
 einer Variablen</li>
@@ -698,12 +701,13 @@ Einschränkungen)</li>
 </div>
 </div>
 
-<div id="outline-container-org290ff65" class="outline-2">
-<h2 id="org290ff65">Constraint Logic Programming (CLP)</h2>
-<div class="outline-text-2" id="text-org290ff65">
-</div><div id="outline-container-orgc7080ef" class="outline-3">
-<h3 id="orgc7080ef">Vorbemerkungen</h3>
-<div class="outline-text-3" id="text-orgc7080ef">
+<div id="outline-container-org1389047" class="outline-2">
+<h2 id="org1389047">Constraint Logic Programming (CLP)</h2>
+<div class="outline-text-2" id="text-org1389047">
+</div>
+<div id="outline-container-org0bc248f" class="outline-3">
+<h3 id="org0bc248f">Vorbemerkungen</h3>
+<div class="outline-text-3" id="text-org0bc248f">
 <ul class="org-ul">
 <li>Traditionelle Logikprogrammierung kennt nur eine Art von Constraint:
 Logische Äquivalenz über Termen</li>
@@ -753,12 +757,13 @@ Finanzwesen, Verarbeitung raumbezogener Daten (Navigation), &#x2026;</li>
 </div>
 </div>
 
-<div id="outline-container-org80393af" class="outline-3">
-<h3 id="org80393af">Implementierung</h3>
-<div class="outline-text-3" id="text-org80393af">
-</div><div id="outline-container-org8d86e59" class="outline-4">
-<h4 id="org8d86e59">Sprachschnittstellen</h4>
-<div class="outline-text-4" id="text-org8d86e59">
+<div id="outline-container-org22f4fe2" class="outline-3">
+<h3 id="org22f4fe2">Implementierung</h3>
+<div class="outline-text-3" id="text-org22f4fe2">
+</div>
+<div id="outline-container-org89266c1" class="outline-4">
+<h4 id="org89266c1">Sprachschnittstellen</h4>
+<div class="outline-text-4" id="text-org89266c1">
 <ul class="org-ul">
 <li>Benutzung einer Bibliothek, die Gleichungen, Variablen etc.
 implementiert, in einer Wirtssprache</li>
@@ -779,9 +784,9 @@ anderen in Beziehung gesetzt werden und unbestimmete Werte enthalten.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-org8391bb9" class="outline-4">
-<h4 id="org8391bb9">Anforderungen an CP-Sprachen</h4>
-<div class="outline-text-4" id="text-org8391bb9">
+<div id="outline-container-org6fe908c" class="outline-4">
+<h4 id="org6fe908c">Anforderungen an CP-Sprachen</h4>
+<div class="outline-text-4" id="text-org6fe908c">
 <ul class="org-ul">
 <li>Es muss ein <i>Constraint-solver</i> zur Verfügung stehen, der Gleichungen
 löst bzw. ihre Unlösbarkeit mitteilt.</li>
@@ -793,12 +798,13 @@ Einschränkungen zu übermitteln und Lösungen entgegen zu nehmen.</li>
 </div>
 </div>
 
-<div id="outline-container-org5a18652" class="outline-3">
-<h3 id="org5a18652">Beispiel: Send more money</h3>
-<div class="outline-text-3" id="text-org5a18652">
-</div><div id="outline-container-orgcc4e533" class="outline-4">
-<h4 id="orgcc4e533">Mehr Geld bitte!</h4>
-<div class="outline-text-4" id="text-orgcc4e533">
+<div id="outline-container-org43fb79b" class="outline-3">
+<h3 id="org43fb79b">Beispiel: Send more money</h3>
+<div class="outline-text-3" id="text-org43fb79b">
+</div>
+<div id="outline-container-orgda90ccd" class="outline-4">
+<h4 id="orgda90ccd">Mehr Geld bitte!</h4>
+<div class="outline-text-4" id="text-orgda90ccd">
 <p>
 Sie senden einen Brief an Ihre Eltern mit dem Inhalt:
 </p>
@@ -827,9 +833,9 @@ Wahl! Beachten Sie Nebenbedingungen.
 </div>
 </div>
 
-<div id="outline-container-org00570d9" class="outline-4">
-<h4 id="org00570d9">Lösungsansatz: „Rohe Gewalt“</h4>
-<div class="outline-text-4" id="text-org00570d9">
+<div id="outline-container-orgcba75c8" class="outline-4">
+<h4 id="orgcba75c8">Lösungsansatz: „Rohe Gewalt“</h4>
+<div class="outline-text-4" id="text-orgcba75c8">
 <ul class="org-ul">
 <li>Alles durchprobieren!</li>
 <li>Man braucht 8 ineinander geschachtelte Schleifen.</li>
@@ -889,14 +895,14 @@ used := Set <span style="color: #0000FF;">new</span>.
                       used remove: d<span style="color: #858580;">]</span><span style="color: #6276BA;">]</span>.
                 used remove: n<span style="color: #907373;">]</span><span style="color: #709870;">]</span>.
           used remove: e<span style="color: #909183;">]</span><span style="color: #7388D6;">]</span>.            
-    used remove:s<span style="color: #707183;">]</span>. </pre>
+    used remove:s<span style="color: #707183;">]</span>. 
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org4115c3c" class="outline-4">
-<h4 id="org4115c3c">Lösungsansatz: Constraint Satisfaction</h4>
-<div class="outline-text-4" id="text-org4115c3c">
+<div id="outline-container-org15ab97e" class="outline-4">
+<h4 id="org15ab97e">Lösungsansatz: Constraint Satisfaction</h4>
+<div class="outline-text-4" id="text-org15ab97e">
 <ul class="org-ul">
 <li>Einfaches Modell durch Spezifikation der folgenden Gleichung als Einschränkung:
 \[1000*S+100*E+10*N+D \]
@@ -912,9 +918,9 @@ schon belegt sein müssen, bevor die „Haupteinschränkung”
 geprüft werden kann.</li>
 </ul>
 </div>
-<div id="outline-container-org11f3cbb" class="outline-5">
-<h5 id="org11f3cbb">Implementierung in Prolog &#x2026;</h5>
-<div class="outline-text-5" id="text-org11f3cbb">
+<div id="outline-container-orgb5f1d2b" class="outline-5">
+<h5 id="orgb5f1d2b">Implementierung in Prolog &#x2026;</h5>
+<div class="outline-text-5" id="text-orgb5f1d2b">
 <p>
 &#x2026; unter Nutzung der <a href="http://www.swi-prolog.org/pldoc/man?section=clpfd">Constraint Logic Programming over Finite Domains Library</a>
 </p>
@@ -931,15 +937,15 @@ geprüft werden kann.</li>
         1000*<span style="color: #BA36A5;">S</span> + 100*<span style="color: #BA36A5;">E</span> + 10*<span style="color: #BA36A5;">N</span> + <span style="color: #BA36A5;">D</span> <span style="color: #8D8D84; font-style: italic;">% Haupt-Constraint</span>
         + 1000*<span style="color: #BA36A5;">M</span> + 100*<span style="color: #BA36A5;">O</span> + 10*<span style="color: #BA36A5;">R</span> + <span style="color: #BA36A5;">E</span>
         #= 10000*<span style="color: #BA36A5;">M</span> + 1000*<span style="color: #BA36A5;">O</span> + 100*<span style="color: #BA36A5;">N</span> + 10*<span style="color: #BA36A5;">E</span> + <span style="color: #BA36A5;">Y</span>,
-        label(<span style="color: #BA36A5;">Digits</span>).          <span style="color: #8D8D84; font-style: italic;">% sorgt f&#252;r die Belegung aller Variablenwerte </span></pre>
+        label(<span style="color: #BA36A5;">Digits</span>).          <span style="color: #8D8D84; font-style: italic;">% sorgt f&#252;r die Belegung aller Variablenwerte </span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org01c5751" class="outline-5">
-<h5 id="org01c5751">Implementierung in Standard-Prolog</h5>
-<div class="outline-text-5" id="text-org01c5751">
+<div id="outline-container-orgd0e50e8" class="outline-5">
+<h5 id="orgd0e50e8">Implementierung in Standard-Prolog</h5>
+<div class="outline-text-5" id="text-orgd0e50e8">
 <div class="org-src-container">
 <pre class="src src-prolog"><span style="color: #006699;">select</span>(<span style="color: #BA36A5;">X</span>, <span style="color: #0000FF;">[</span><span style="color: #BA36A5;">X</span><span style="color: #0000FF;">|</span><span style="color: #BA36A5;">R</span><span style="color: #0000FF;">]</span>, <span style="color: #BA36A5;">R</span>).
 <span style="color: #006699;">select</span>(<span style="color: #BA36A5;">X</span>, <span style="color: #0000FF;">[</span><span style="color: #BA36A5;">Y</span><span style="color: #0000FF;">|</span><span style="color: #BA36A5;">Xs</span><span style="color: #0000FF;">]</span>, <span style="color: #0000FF;">[</span><span style="color: #BA36A5;">Y</span><span style="color: #0000FF;">|</span><span style="color: #BA36A5;">Ys</span><span style="color: #0000FF;">]</span>):- select(<span style="color: #BA36A5;">X</span>, <span style="color: #BA36A5;">Xs</span>, <span style="color: #BA36A5;">Ys</span>).
@@ -957,15 +963,15 @@ geprüft werden kann.</li>
                   1000*<span style="color: #BA36A5;">S</span> + 100*<span style="color: #BA36A5;">E</span> + 10*<span style="color: #BA36A5;">N</span> + <span style="color: #BA36A5;">D</span> +
                   1000*<span style="color: #BA36A5;">M</span> + 100*<span style="color: #BA36A5;">O</span> + 10*<span style="color: #BA36A5;">R</span> + <span style="color: #BA36A5;">E</span> =:=
         10000*<span style="color: #BA36A5;">M</span> + 1000*<span style="color: #BA36A5;">O</span> + 100*<span style="color: #BA36A5;">N</span> + 10*<span style="color: #BA36A5;">E</span> + <span style="color: #BA36A5;">Y</span>,
-        write(<span style="color: #BA36A5;">X</span>).        </pre>
+        write(<span style="color: #BA36A5;">X</span>).        
 </pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org1895575" class="outline-4">
-<h4 id="org1895575">Verfeinertes CSP-Modell</h4>
-<div class="outline-text-4" id="text-org1895575">
+<div id="outline-container-org3fa6c9a" class="outline-4">
+<h4 id="org3fa6c9a">Verfeinertes CSP-Modell</h4>
+<div class="outline-text-4" id="text-org3fa6c9a">
 <ul class="org-ul">
 <li><p>
 Nutzung der Überträge der Addition für die Zerlegung der „großen“
@@ -991,9 +997,9 @@ der Belegungsphase früher geprüft und damit inkonsistente Belegungen
 ausgeschlossen.</li>
 </ul>
 </div>
-<div id="outline-container-orge11a581" class="outline-5">
-<h5 id="orge11a581">Implementierung in Prolog &#x2026;</h5>
-<div class="outline-text-5" id="text-orge11a581">
+<div id="outline-container-orge5efd54" class="outline-5">
+<h5 id="orge5efd54">Implementierung in Prolog &#x2026;</h5>
+<div class="outline-text-5" id="text-orge5efd54">
 <p>
 &#x2026; unter Nutzung der <a href="http://www.swi-prolog.org/pldoc/man?section=clpfd">Constraint Logic Programming over Finite Domains Library</a>
 </p>
@@ -1012,16 +1018,16 @@ ausgeschlossen.</li>
         <span style="color: #BA36A5;">C1</span> + <span style="color: #BA36A5;">N</span> + <span style="color: #BA36A5;">R</span> #= <span style="color: #BA36A5;">E</span> + 10 * <span style="color: #BA36A5;">C2</span>,
         <span style="color: #BA36A5;">C2</span> + <span style="color: #BA36A5;">E</span> + <span style="color: #BA36A5;">O</span> #= <span style="color: #BA36A5;">N</span> + 10 * <span style="color: #BA36A5;">C3</span>,
         <span style="color: #BA36A5;">C3</span> + <span style="color: #BA36A5;">S</span> + <span style="color: #BA36A5;">M</span> #= 10 * <span style="color: #BA36A5;">M</span> + <span style="color: #BA36A5;">O</span>,
-        label(<span style="color: #BA36A5;">Digits</span>).          </pre>
+        label(<span style="color: #BA36A5;">Digits</span>).          
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf9073b2" class="outline-4">
-<h4 id="orgf9073b2">Implementierung in C++ (ILOG Solver)</h4>
-<div class="outline-text-4" id="text-orgf9073b2">
+<div id="outline-container-org1bc1924" class="outline-4">
+<h4 id="org1bc1924">Implementierung in C++ (ILOG Solver)</h4>
+<div class="outline-text-4" id="text-org1bc1924">
 <div class="org-src-container">
 <pre class="src src-cpp"><span style="color: #808080;">#include</span> <span style="color: #707183;">&lt;</span><span style="color: #008000;">ilsolver/ctint.h</span><span style="color: #707183;">&gt;</span>
 <span style="color: #6434A3;">CtInt</span> <span style="color: #BA36A5;">dummy</span> = CtInit<span style="color: #707183;">()</span>;
@@ -1037,7 +1043,7 @@ ausgeschlossen.</li>
     CtSolve<span style="color: #7388D6;">(</span>CtGenerate<span style="color: #909183;">(</span>8, AllVars<span style="color: #909183;">)</span><span style="color: #7388D6;">)</span>;
     PrintSol<span style="color: #7388D6;">(</span>CtInt, AllVars<span style="color: #7388D6;">)</span>;
                 CtEnd<span style="color: #7388D6;">()</span>;
-                <span style="color: #0000FF;">return</span> 0; <span style="color: #707183;">}</span></pre>
+                <span style="color: #0000FF;">return</span> 0; <span style="color: #707183;">}</span>
 </pre>
 </div>
 </div>
@@ -1046,17 +1052,17 @@ ausgeschlossen.</li>
 </div>
 
 
-<div id="outline-container-org18578ac" class="outline-2">
-<h2 id="org18578ac">Constraint solving mit SWI-Prolog</h2>
-<div class="outline-text-2" id="text-org18578ac">
+<div id="outline-container-orgc92ea2f" class="outline-2">
+<h2 id="orgc92ea2f">Constraint solving mit SWI-Prolog</h2>
+<div class="outline-text-2" id="text-orgc92ea2f">
 <p>
 Die clpr-Library erlaubt die Verwendung eines Constraint-Lösers für
   nicht-endliche Wertebereiche.
 </p>
 </div>
-<div id="outline-container-org9105bf7" class="outline-3">
-<h3 id="org9105bf7">Darlehensberechnung</h3>
-<div class="outline-text-3" id="text-org9105bf7">
+<div id="outline-container-org7e9bac4" class="outline-3">
+<h3 id="org7e9bac4">Darlehensberechnung</h3>
+<div class="outline-text-3" id="text-org7e9bac4">
 <ul class="org-ul">
 <li>Berechnung von Annuitäten-Darlehen (Beispiel entnommen aus <a class='org-ref-reference' href="#Fruehwirth2010">Fruehwirth2010</a>)</li>
 <li>Bedeutung der Größen:
@@ -1070,9 +1076,9 @@ Die clpr-Library erlaubt die Verwendung eines Constraint-Lösers für
 </ul>
 </div>
 
-<div id="outline-container-orgfa14376" class="outline-4">
-<h4 id="orgfa14376">Lösung SWI-Prolog</h4>
-<div class="outline-text-4" id="text-orgfa14376">
+<div id="outline-container-org4890c23" class="outline-4">
+<h4 id="org4890c23">Lösung SWI-Prolog</h4>
+<div class="outline-text-4" id="text-org4890c23">
 <div class="small">
 <div class="org-src-container">
 <pre class="src src-prolog">:- <span style="color: #006FE0;">use_module</span>(library(clpr)).  
@@ -1080,7 +1086,7 @@ Die clpr-Library erlaubt die Verwendung eines Constraint-Lösers für
    <span style="color: #8D8D84; font-style: italic;">% nach 0 Monaten ist die Restschuld gleich der Darlehensh&#246;he</span>
 <span style="color: #006699;">darlehen</span>(<span style="color: #BA36A5;">D</span>, <span style="color: #BA36A5;">T</span>, <span style="color: #BA36A5;">Z</span>, <span style="color: #BA36A5;">R</span>, <span style="color: #BA36A5;">S</span>) :- <span style="color: #0000FF;">{</span><span style="color: #BA36A5;">T</span>&gt;0, <span style="color: #BA36A5;">T1</span> = <span style="color: #BA36A5;">T</span>-1, <span style="color: #BA36A5;">D1</span> = <span style="color: #BA36A5;">D</span> + <span style="color: #BA36A5;">D</span>*<span style="color: #BA36A5;">Z</span> - <span style="color: #BA36A5;">R</span><span style="color: #0000FF;">}</span>,
         darlehen(<span style="color: #BA36A5;">D1</span>, <span style="color: #BA36A5;">T1</span>, <span style="color: #BA36A5;">Z</span>, <span style="color: #BA36A5;">R</span>, <span style="color: #BA36A5;">S</span>).
-   <span style="color: #8D8D84; font-style: italic;">% nach einem Monat werden die Laufzeit und die Darlehensh&#246;he reduziert.</span></pre>
+   <span style="color: #8D8D84; font-style: italic;">% nach einem Monat werden die Laufzeit und die Darlehensh&#246;he reduziert.</span>
 </pre>
 </div>
 
@@ -1099,13 +1105,13 @@ Fragen:
 </div>
 </div>
 
-<div id="outline-container-org8ae5eba" class="outline-3">
-<h3 id="org8ae5eba">Der Celsius-Fahrenheit-Konverter</h3>
-<div class="outline-text-3" id="text-org8ae5eba">
+<div id="outline-container-org2b75e85" class="outline-3">
+<h3 id="org2b75e85">Der Celsius-Fahrenheit-Konverter</h3>
+<div class="outline-text-3" id="text-org2b75e85">
 <div class="small">
 <div class="org-src-container">
 <pre class="src src-prolog">:- <span style="color: #006FE0;">use_module</span>(library(clpr)). 
-<span style="color: #006699;">cf</span>(<span style="color: #BA36A5;">C</span>, <span style="color: #BA36A5;">F</span>) :- <span style="color: #0000FF;">{</span>9*<span style="color: #BA36A5;">C</span>=5*(<span style="color: #BA36A5;">F</span>-32)<span style="color: #0000FF;">}</span>.</pre>
+<span style="color: #006699;">cf</span>(<span style="color: #BA36A5;">C</span>, <span style="color: #BA36A5;">F</span>) :- <span style="color: #0000FF;">{</span>9*<span style="color: #BA36A5;">C</span>=5*(<span style="color: #BA36A5;">F</span>-32)<span style="color: #0000FF;">}</span>.
 </pre>
 </div>
 
@@ -1121,30 +1127,26 @@ Anwendungen:
 <span style="color: #BA36A5;">C</span> = 25.0 
 
 ?- cf(15, 77).
-false.</pre>
+false.
 </pre>
 </div>
-
-<p>
-Lösungsverfahren verwenden &#x2013; besser als Aufgabe
-</p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd6cb573" class="outline-2">
-<h2 id="orgd6cb573"><h2>Literaturverzeichnis</h2>
-<ul class='org-ref-bib'><li><a id="Fruehwirth2010">[Fruehwirth2010] Thom Frühwirth & Slim Abdennadher, Essentials of Constraint Programming (Cognitive Technologies), Springer (2010).</a></li>
-<li><a id="Marriott1998">[Marriott1998] Kimbal Marriott & Peter Stuckey, Programming with Constraints: An Introduction, The MIT Press (1998).</a></li>
-<li><a id="Bartak99">[Bartak99] Roman Bart\`ak, Constraint programming: In pursuit of the holy grail, 555-564, in in: In Proceedings of the Week of Doctoral Students (WDS99 -invited lecture, edited by (1999)</a></li>
-<li><a id="Sicp1999">[Sicp1999] Harold Abelson, Gerald Jay Sussman & Julie Sussman, Structure and interpretation of computer programs, The MIT Press (1999).</a></li>
-<li><a id="Carro1998">[Carro1998] Manuel Carro, An Introductory Course on Constraint Logic  Programming, (1998), zuletzt aufgerufen am 10.09.2017: <a href="https://cliplab.org/~vocal/public_info/seminar_notes/seminar_notes.html">https://cliplab.org/~vocal/public_info/seminar_notes/seminar_notes.html</a> </a></li>
+<div id="outline-container-orgdc23c88" class="outline-2">
+<h2 id="orgdc23c88"><h2>Literaturverzeichnis</h2>
+<ul class='org-ref-bib'><li><a id="Fruehwirth2010">[Fruehwirth2010]</a> <a name="Fruehwirth2010"></a>Thom Frühwirth & Slim Abdennadher, Essentials of Constraint Programming (Cognitive Technologies), Springer (2010).</li>
+<li><a id="Marriott1998">[Marriott1998]</a> <a name="Marriott1998"></a>Kimbal Marriott & Peter Stuckey, Programming with Constraints: An Introduction, The MIT Press (1998).</li>
+<li><a id="Bartak99">[Bartak99]</a> <a name="Bartak99"></a>Roman Bart\`ak, Constraint programming: In pursuit of the holy grail, 555-564, in in: In Proceedings of the Week of Doctoral Students (WDS99 -invited lecture, edited by (1999)</li>
+<li><a id="Sicp1999">[Sicp1999]</a> <a name="Sicp1999"></a>Harold Abelson, Gerald Jay Sussman & Julie Sussman, Structure and interpretation of computer programs, The MIT Press (1999).</li>
+<li><a id="Carro1998">[Carro1998]</a> <a name="Carro1998"></a>Manuel Carro, An Introductory Course on Constraint Logic  Programming, (1998), zuletzt aufgerufen am 10.09.2017: <a href="https://cliplab.org/~vocal/public_info/seminar_notes/seminar_notes.html">https://cliplab.org/~vocal/public_info/seminar_notes/seminar_notes.html</a> </li>
 </ul></h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Autor: Johannes Brauer</p>
-<p class="date">Created: 2017-09-16 Sat 15:32</p>
+<p class="date">Created: 2018-08-27 Mon 14:28</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
