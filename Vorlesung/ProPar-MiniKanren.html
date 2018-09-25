@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
 <head>
-<!-- 2018-09-25 Tue 15:17 -->
+<!-- 2018-09-25 Tue 21:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Logische Programmierung mit miniKanren</title>
@@ -268,9 +268,9 @@ for the JavaScript code in this tag.
 <span class="subtitle">Programmierparadigmen</span>
 </h1>
 
-<div id="outline-container-orga5e63ad" class="outline-2">
-<h2 id="orga5e63ad">Grundlagen</h2>
-<div class="outline-text-2" id="text-orga5e63ad">
+<div id="outline-container-org285b51a" class="outline-2">
+<h2 id="org285b51a">Grundlagen</h2>
+<div class="outline-text-2" id="text-org285b51a">
 <ul class="org-ul">
 <li><a href="http://minikanren.org">miniKanren</a> ist eine domänenspezifische Sprache (DSL) für die
 Einbettung der Logikprogrammierung in verschiedene <a href="http://minikanren.org/#implementations">Wirtssprachen</a>.</li>
@@ -282,13 +282,13 @@ Programming.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc12684b" class="outline-2">
-<h2 id="orgc12684b">Einführung</h2>
-<div class="outline-text-2" id="text-orgc12684b">
+<div id="outline-container-orgb0127df" class="outline-2">
+<h2 id="orgb0127df">Einführung</h2>
+<div class="outline-text-2" id="text-orgb0127df">
 </div>
-<div id="outline-container-org095b898" class="outline-3">
-<h3 id="org095b898">Kernbestandteile der Sprache</h3>
-<div class="outline-text-3" id="text-org095b898">
+<div id="outline-container-org4a0c956" class="outline-3">
+<h3 id="org4a0c956">Kernbestandteile der Sprache</h3>
+<div class="outline-text-3" id="text-org4a0c956">
 <ul class="org-ul">
 <li>Die Wirtsprache (hier: Clojure) wird um drei Operationen erweitert:
 <ul class="org-ul">
@@ -315,9 +315,9 @@ schreiben, wobei <code>n</code> die Anzahl der gewünschten Resultate angibt.</l
 </ul>
 </div>
 </div>
-<div id="outline-container-org425b0f9" class="outline-3">
-<h3 id="org425b0f9">Elementare Beispiele</h3>
-<div class="outline-text-3" id="text-org425b0f9">
+<div id="outline-container-orgdb45935" class="outline-3">
+<h3 id="orgdb45935">Elementare Beispiele</h3>
+<div class="outline-text-3" id="text-orgdb45935">
 <ul class="org-ul">
 <li><p>
 Einbindung der <a href="https://github.com/clojure/core.logic">core.logic-Bibliothek</a> (<a href="https://clojure.github.io/core.logic/#clojure.core.logic.fd/!=">Dokumentation</a>), die die Einbettung von
@@ -437,9 +437,9 @@ leer sein, wenn der Ausdruck im Rumpf logisch inkonsistent ist.
 </div>
 </div>
 
-<div id="outline-container-orgb02ccb4" class="outline-3">
-<h3 id="orgb02ccb4">Definitionen</h3>
-<div class="outline-text-3" id="text-orgb02ccb4">
+<div id="outline-container-org3a6abfe" class="outline-3">
+<h3 id="org3a6abfe">Definitionen</h3>
+<div class="outline-text-3" id="text-org3a6abfe">
 <ul class="org-ul">
 <li>Ein <i>logischer Ausdruck</i> besteht aus einer Menge von <i>logischen
 Variablen</i> und einer Menge von <i>Regeln</i> (constraints), die die Werte
@@ -467,9 +467,9 @@ des Vektors [2 3 4] ist.
 </p></li>
 </ul>
 </div>
-<div id="outline-container-org0b50dde" class="outline-4">
-<h4 id="org0b50dde">Namenskonventionen</h4>
-<div class="outline-text-4" id="text-org0b50dde">
+<div id="outline-container-orgd29eb8b" class="outline-4">
+<h4 id="orgd29eb8b">Namenskonventionen</h4>
+<div class="outline-text-4" id="text-orgd29eb8b">
 <ul class="org-ul">
 <li>Clojure bietet mit seiner miniKanren-Einbettung core.logic die
 Möglichkeit funktionales und logisches Programmieren miteinander zu verbinden.</li>
@@ -480,9 +480,9 @@ ein Vokal angehängt.</li>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc308a87" class="outline-3">
-<h3 id="orgc308a87">Logische Variablen</h3>
-<div class="outline-text-3" id="text-orgc308a87">
+<div id="outline-container-org70378e8" class="outline-3">
+<h3 id="org70378e8">Logische Variablen</h3>
+<div class="outline-text-3" id="text-org70378e8">
 <ul class="org-ul">
 <li>entsprechen weitgehend lokalen Variablen in Clojure: begrenzter
 Gültigkeitsbereich, keine Mutation</li>
@@ -524,9 +524,9 @@ werden drei lvars deklariert, die innerhalb der <code>logic
 </ul>
 </div>
 </div>
-<div id="outline-container-org01cdfd8" class="outline-3">
-<h3 id="org01cdfd8">Regeln</h3>
-<div class="outline-text-3" id="text-org01cdfd8">
+<div id="outline-container-org3c8019f" class="outline-3">
+<h3 id="org3c8019f">Regeln</h3>
+<div class="outline-text-3" id="text-org3c8019f">
 <ul class="org-ul">
 <li>Logische Ausdrücke schränken die Wertebereiche logischer Variablen ein.</li>
 <li>Alle Ausdrücke innerhalb der <code>run</code>-Form werden konjunktiv verknüpft.</li>
@@ -561,30 +561,30 @@ erreicht werden (goal succeeds) oder verfehlt werden (goal fails).
 </div>
 </div>
 
-<div id="outline-container-orga32c93a" class="outline-3">
-<h3 id="orga32c93a">Die Operatoren</h3>
-<div class="outline-text-3" id="text-orga32c93a">
+<div id="outline-container-org318bc0d" class="outline-3">
+<h3 id="org318bc0d">Die Operatoren</h3>
+<div class="outline-text-3" id="text-org318bc0d">
 </div>
-<div id="outline-container-org33b78e9" class="outline-4">
-<h4 id="org33b78e9"><code>fresh</code></h4>
-<div class="outline-text-4" id="text-org33b78e9">
+<div id="outline-container-org85edef3" class="outline-4">
+<h4 id="org85edef3"><code>fresh</code></h4>
+<div class="outline-text-4" id="text-org85edef3">
 <p>
 siehe oben
 </p>
 </div>
 </div>
-<div id="outline-container-org21df4a5" class="outline-4">
-<h4 id="org21df4a5">Die Unifikation: <code>==</code></h4>
-<div class="outline-text-4" id="text-org21df4a5">
+<div id="outline-container-orgb6180dc" class="outline-4">
+<h4 id="orgb6180dc">Die Unifikation: <code>==</code></h4>
+<div class="outline-text-4" id="text-orgb6180dc">
 <ul class="org-ul">
 <li>Der Ausdruck <code>(== lvar1 lvar2)</code> sorgt dafür, dass die beiden lvars
 die gleiche Menge möglicher Werte besitzen. Das Ziel wird erreicht,
 wenn <code>lvar1</code> in Übereinstimmung mit <code>lvar2</code> gebracht werden kann.</li>
 </ul>
 </div>
-<div id="outline-container-org46c56f8" class="outline-5">
-<h5 id="org46c56f8">Unifikation einer einzelnen Variablen mit einem Literal</h5>
-<div class="outline-text-5" id="text-org46c56f8">
+<div id="outline-container-org9652136" class="outline-5">
+<h5 id="org9652136">Unifikation einer einzelnen Variablen mit einem Literal</h5>
+<div class="outline-text-5" id="text-org9652136">
 <ul class="org-ul">
 <li>Für eine der Variablen kann ein Clojure Literal verwendet werden.</li>
 <li><p>
@@ -641,9 +641,9 @@ liefert (1).
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc7dbc52" class="outline-5">
-<h5 id="orgc7dbc52">Unifikation von zwei Variablen</h5>
-<div class="outline-text-5" id="text-orgc7dbc52">
+<div id="outline-container-org2bc1193" class="outline-5">
+<h5 id="org2bc1193">Unifikation von zwei Variablen</h5>
+<div class="outline-text-5" id="text-org2bc1193">
 <ul class="org-ul">
 <li><p>
 Beispiel:
@@ -668,9 +668,9 @@ Schnittmenge gebunden werden.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfa9f0b6" class="outline-5">
-<h5 id="orgfa9f0b6">Die Reihenfolge der Ziele ist irrelevant &#x2026;</h5>
-<div class="outline-text-5" id="text-orgfa9f0b6">
+<div id="outline-container-org84758e1" class="outline-5">
+<h5 id="org84758e1">Die Reihenfolge der Ziele ist irrelevant &#x2026;</h5>
+<div class="outline-text-5" id="text-org84758e1">
 <ul class="org-ul">
 <li>&#x2026; bezüglich der Bestimmung des Wertes einer <code>run</code>-Form.</li>
 <li><p>
@@ -704,9 +704,9 @@ liefern das gleiche Ergebnis: (3).
 </div>
 </div>
 </div>
-<div id="outline-container-org1b9c62c" class="outline-4">
-<h4 id="org1b9c62c"><code>conde</code></h4>
-<div class="outline-text-4" id="text-org1b9c62c">
+<div id="outline-container-org1f1b37e" class="outline-4">
+<h4 id="org1f1b37e"><code>conde</code></h4>
+<div class="outline-text-4" id="text-org1f1b37e">
 <ul class="org-ul">
 <li><code>conde</code> ermöglicht die disjunktive Verknüpfung von Zielen.</li>
 <li><p>
@@ -738,9 +738,9 @@ ist vergleichbar mit
 </div></li>
 </ul>
 </div>
-<div id="outline-container-org60d2c6a" class="outline-5">
-<h5 id="org60d2c6a">Beispiele</h5>
-<div class="outline-text-5" id="text-org60d2c6a">
+<div id="outline-container-org96052ea" class="outline-5">
+<h5 id="org96052ea">Beispiele</h5>
+<div class="outline-text-5" id="text-org96052ea">
 <div class="org-src-container">
 <pre class="src src-clojure">  <span style="color: #707183;">(</span>run* <span style="color: #7388D6;">[</span>q<span style="color: #7388D6;">]</span>
      <span style="color: #7388D6;">(</span>conde
@@ -854,9 +854,9 @@ für <code>fail</code>)
 </div>
 </div>
 
-<div id="outline-container-orgda6af58" class="outline-3">
-<h3 id="orgda6af58">Die „Relationifizierung” einer Funktion</h3>
-<div class="outline-text-3" id="text-orgda6af58">
+<div id="outline-container-org59dc795" class="outline-3">
+<h3 id="org59dc795">Die „Relationifizierung” einer Funktion</h3>
+<div class="outline-text-3" id="text-org59dc795">
 <ul class="org-ul">
 <li><p>
 Eine klassische Funktion:
@@ -918,18 +918,15 @@ Umwandlung in eine Relation (2. Versuch):
 </div>
 </div>
 </div>
-<div id="outline-container-org41c0f0c" class="outline-2">
-<h2 id="org41c0f0c">Literatur</h2>
-</div>
-<div id="outline-container-org8fd5c23" class="outline-2">
-<h2 id="org8fd5c23"><h2>Literaturverzeichnis</h2>
+<div id="outline-container-org482fd46" class="outline-2">
+<h2 id="org482fd46"><h2>Literaturverzeichnis</h2>
 <ul class='org-ref-bib'><li><a id="Friedman2018">[Friedman2018]</a> <a name="Friedman2018"></a>Daniel Friedman, William Byrd, Oleg Kiselyov & Jason Hemann, The Reasoned Schemer (The MIT Press), The MIT Press (2018).</li>
 </ul></h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Autor: Johannes Brauer</p>
-<p class="date">Created: 2018-09-25 Tue 15:17</p>
+<p class="date">Created: 2018-09-25 Tue 21:53</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

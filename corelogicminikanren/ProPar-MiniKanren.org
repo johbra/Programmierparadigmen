@@ -434,6 +434,5 @@ siehe oben
   #'user/rembero1((e g h i f j k l))
 
 # * Weitere Anwendungen
- siehe [[file:~/Dropbox/Programmierparadigmen/Clojure/logic-tutorial/ProPar-CoreLogicAnwndngn.org][dort]]
-* Literatur
+# siehe [[file:~/Dropbox/Programmierparadigmen/Clojure/logic-tutorial/ProPar-CoreLogicAnwndngn.org][dort]]
 * bibliography:referenzen.bib
