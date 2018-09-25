@@ -1,0 +1,193 @@
+#+SETUPFILE: ./theme-bigblow-local.setup
+#+TITLE: Anwendungen mit core.logic
+#+SUBTITLE: Programmierparadigmen
+#+AUTHOR: Johannes Brauer
+#+OPTIONS:   H:4
+#+OPTIONS: num:nil d:nil
+#+OPTIONS: toc:nil
+#+OPTIONS: reveal_single_file:nil
+#+Language:  de
+#+STARTUP: latexpreview
+#+STARTUP: inlineimages
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="mycss/mystyle.css" />
+#+REVEAL_THEME: simple
+#+REVEAL_TRANS: slide
+#+REVEAL_HLEVEL: 1
+#+REVEAL_INIT_SCRIPT: dependencies: [ { src: 'plugin/menu/menu.js', async: true },
+#+REVEAL_INIT_SCRIPT:                 { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true } ]
+#+REVEAL_MARGIN: 0.05
+#+REVEAL_EXTRA_CSS: ./mycss/myrevealstyle.css
+#+OPTIONS: reveal_control:t
+
+* Elementare Beispiele 
++ Einbindung der [[https://github.com/clojure/core.logic][core.logic-Bibliothek]]:
+  #+BEGIN_SRC clojure :results results :tangle yes :exports yes 
+  (use 'clojure.core.logic)
+  (use 'clojure.core.logic.pldb)
+  #+END_SRC
+
+  #+RESULTS:
+  : nilnil
+
+** Liebesbeziehungen
++ Definition von Fakten; hier: Es gibt Männer ...
+#+BEGIN_SRC  clojure :results results :tangle yes :exports yes 
+ (db-rel man x)
+#+END_SRC
+
+#+RESULTS:
+: #'user/man
+
++ ... und zwar diese:
+  #+BEGIN_SRC clojure :results results :tangle yes :exports yes
+  (def men
+           (db
+             [man 'Bob]
+             [man 'John]))
+  #+END_SRC
+
+  #+RESULTS:
+  : #'user/men
+
++ Frage: Wer ist Mann?
+  #+BEGIN_SRC clojure :results raw :tangle yes :exports yes 
+  (with-db men
+           (run* [q] (man q)))
+  #+END_SRC
+
+  #+RESULTS:
+  (John Bob)
+
++ Weitere Relation und ein Faktum:
+  #+BEGIN_SRC clojure :results results :tangle yes :exports yes
+  (db-rel fun x)
+  (def fun-people
+           (db
+             [fun 'Bob]))
+  #+END_SRC
+
+  #+RESULTS:
+  : #'user/fun #'user/fun-people
+
++ Welche Männer sind amüsant?
+  #+BEGIN_SRC clojure :results raw :tangle yes :exports yes
+  (with-dbs [men fun-people]
+           (run* [q]
+             (man q)
+             (fun q)))
+  #+END_SRC
+
+  #+RESULTS:
+  (Bob)
+
++ Frauen und Liebesbeziehungen:
+  #+BEGIN_SRC clojure :results results :tangle yes :exports yes
+  (db-rel woman x)
+  (def facts
+           (db
+             [woman 'Lucy]
+             [woman 'Mary]))
+  (db-rel likes x y)
+  #+END_SRC
+
+  #+RESULTS:
+  : #'user/woman #'user/facts #'user/likes
+
+  Die Faktendatenbank hat jetzt einen generischen Namen: =facts=
+
++ Erweiterung von =facts=
+  #+BEGIN_SRC clojure :results results :tangle yes :exports yes
+  (def facts
+           (-> facts
+             (db-fact likes 'Bob 'Mary)
+             (db-fact likes 'John 'Lucy)))
+  (with-dbs [men facts] (run* [q] (likes 'Bob q)))
+  #+END_SRC
+
+  #+RESULTS:
+  : #'user/facts (Mary)
+
++ Wen liebt Mary?
+  #+BEGIN_SRC clojure :results raw :tangle yes :exports yes
+  (with-dbs [men facts] (run* [q] (likes 'Mary q)))
+  #+END_SRC
+
+  #+RESULTS:
+  ()
+
++ erneute Erweiterung von =facts= und Erweiterung der Frage
+  #+BEGIN_SRC clojure :results results :tangle yes :exports yes
+  (def facts (db-fact facts likes 'Mary 'Bob))
+  (with-dbs [men facts] (run* [q] (fresh [x y] (likes x y) (== q [x y]))))
+  #+END_SRC
+
+  #+RESULTS:
+  : #'user/facts ([Bob Mary] [Mary Bob] [John Lucy])
+
++ Welche Frage wird mit dem folgenden Ausdruck beantwortet?
+  #+BEGIN_SRC clojure :results results :tangle yes :exports yes
+  (with-dbs [men facts] (run* [q] (fresh [x y] (likes x y) (likes y x) (== q [x y]))))
+  #+END_SRC
+
+  #+RESULTS:
+  | Bob  | Mary |
+  | Mary | Bob  |
+
+** Das Bibel-Beispiel
+*** Die Prolog-Version
+#+BEGIN_SRC prolog
+father(abraham,isaac).
+father(haran,lot).
+father(haran,milcah).
+father(haran,yiscah).
+male(isaac).
+male(lot).
+female(milcah).
+female(yiscah).
+son(X,Y) :- father(Y,X), male(X).
+daughter(X,Y) :- father(Y,X), female(X).
+#+END_SRC
+
+*** Eine core-logic-Version
++ Definition der Relationen und Fakten:
+  #+BEGIN_SRC clojure :results results :tangle yes :exports yes
+  (db-rel father f s)
+  (db-rel male m)
+  (db-rel female f)
+  (def bible-facts
+    (db [father 'abraham 'isaac]
+        [father 'haran 'lot]
+        [father 'haran 'milcah]
+        [father 'haran 'yiscah]
+        [male 'isaac]
+        [male 'lot]
+        [female 'milcah]
+        [female 'yiscah]))
+  #+END_SRC
+
+  #+RESULTS:
+  : #'user/father #'user/male #'user/female #'user/bible-facts
+
++ Relationen können als Funktionen definiert werden:
+  #+BEGIN_SRC clojure :results r esults :tangle yes :exports yes 
+  (defn son [x y]
+    (all
+     (father y x)
+     (male x)))
+
+  (defn daughter [x y]
+    (all
+     (father y x)
+     (female x)))
+   #+END_SRC
+
+   #+RESULTS:
+   : #'user/son #'user/daughter
+
++ Fragen in der bekannten Art
+  #+BEGIN_SRC clojure :results results :tangle yes :exports yes
+  (with-db bible-facts (run* [q] (daughter 'yiscah q)))
+  #+END_SRC
+
+  #+RESULTS:
+  | haran |
